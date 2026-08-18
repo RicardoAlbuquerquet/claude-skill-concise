@@ -33,5 +33,6 @@ check 'hooks.json: hook count'    "$(count '"type"' $EN/hooks/hooks.json)" "$(co
 check 'plugin.json: version'      "$(version $EN/.claude-plugin/plugin.json)" "$(version $PT/.claude-plugin/plugin.json)"
 check 'commands/: files'          "$(files $EN/commands)"               "$(files $PT/commands)"
 check 'agents/: files'            "$(files $EN/agents)"                 "$(files $PT/agents)"
+check 'README: ## sections'       "$(count '^## ' README.md)"           "$(count '^## ' README.pt-BR.md)"
 
 exit $fail
