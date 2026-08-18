@@ -97,10 +97,14 @@ Plugin skills are namespaced by the plugin that ships them, so this registers as
 `/concise:concise`, not `/concise`. Run `/plugin` and open the **Installed** tab
 to see the exact name it took.
 
-Updating later is one command:
+Updating later is one command, in either form:
 
 ```
 /plugin marketplace update claude-skill-concise
+```
+
+```bash
+claude plugin marketplace update claude-skill-concise
 ```
 
 Third-party marketplaces ship with auto-update off. To skip running that by
