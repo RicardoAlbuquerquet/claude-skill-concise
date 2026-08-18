@@ -163,8 +163,13 @@ is what makes it a choice instead of a pitch.
 ## Pull request descriptions
 
 Everything above applies: the first line says what the PR does, a recommendation
-carries its cost, process narration stays out. A PR carries one thing a chat
-reply doesn't — **how the reviewer checks it themselves**.
+carries its cost, process narration stays out. That includes the headers a
+template hands you ready-made — `## Summary` over two lines, `## Changes` over a
+diff the reviewer is already looking at. Same decoration as anywhere else, now
+with the template's authority behind it.
+
+A PR carries one thing a chat reply doesn't — **how the reviewer checks it
+themselves**.
 
 End every PR with this:
 

@@ -163,8 +163,13 @@ ser uma escolha em vez de um discurso de venda.
 ## Descrição de PR
 
 Vale tudo acima: a primeira linha diz o que a PR faz, recomendação vem com o
-custo, narração de processo continua fora. A PR carrega uma coisa a mais que uma
-resposta de chat não carrega — **como o revisor confere sozinho**.
+custo, narração de processo continua fora. Isso inclui os cabeçalhos que o
+template entrega prontos — `## Resumo` sobre duas linhas, `## Mudanças` sobre um
+diff que o revisor já está olhando. O mesmo enfeite de sempre, agora com a
+autoridade do template atrás.
+
+A PR carrega uma coisa a mais que uma resposta de chat não carrega — **como o
+revisor confere sozinho**.
 
 Termine toda PR com isso:
 
