@@ -9,12 +9,12 @@
     {
       "name": "concise",
       "source": "./skills/concise",
-      "description": "English. The answer goes in the first sentence; cut preamble and process narration; keep every caveat that changes what the reader does."
+      "description": "English. The answer goes in the first sentence; cut preamble and process narration; keep every caveat that changes what the reader does. Ships a SessionStart hook that keeps the core style in context all session."
     },
     {
       "name": "respostas-curtas",
       "source": "./skills/respostas-curtas",
-      "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão."
+      "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão. Embarca um hook SessionStart que mantém o núcleo do estilo no contexto a sessão inteira."
     }
   ]
 }

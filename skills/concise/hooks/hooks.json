@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"$CLAUDE_PLUGIN_ROOT/hooks/core.md\"",
+            "statusMessage": "Loading the concise style",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
