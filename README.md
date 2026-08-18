@@ -97,17 +97,27 @@ Plugin skills are namespaced by the plugin that ships them, so this registers as
 `/concise:concise`, not `/concise`. Run `/plugin` and open the **Installed** tab
 to see the exact name it took.
 
-Updating later is one command, in either form:
+Updating later takes two commands, not one — the first refreshes the catalogue,
+the second moves the copy that actually runs:
 
 ```
 /plugin marketplace update claude-skill-concise
+/plugin update concise@claude-skill-concise
 ```
 
 ```bash
 claude plugin marketplace update claude-skill-concise
+claude plugin update concise@claude-skill-concise
 ```
 
-Third-party marketplaces ship with auto-update off. To skip running that by
+Running only the first is the common mistake: it reports `✔ Successfully updated
+marketplace` and the installed skill stays exactly where it was. The second one
+needs the marketplace inside the name — `claude plugin update concise` on its own
+answers `Plugin "concise" not found` — and it moves only when the release bumped
+`version`, because it compares version numbers rather than content. Restart
+Claude Code afterwards, or run `/reload-plugins`.
+
+Third-party marketplaces ship with auto-update off. To skip the first one by
 hand, turn it on in `/plugin` → **Marketplaces** → **Enable auto-update**.
 
 ### Copying the file instead
