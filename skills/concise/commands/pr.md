@@ -22,7 +22,9 @@ How:
    with their costs, what was left out of scope, and anything unverified —
    named as unverified.
 3. No template headers over short content, no prose restating the diff, no
-   process narration, no credit to an AI agent anywhere.
+   process narration, no credit to an AI agent anywhere. Several deliverables
+   read as a short list — one line each, label first — never a paragraph
+   chained with semicolons.
 4. End with the test steps: the exact copy-pasteable command, what appears if
    it's right, and what would prove it broke when the command doesn't cover
    the case. When you did not run a step, say so inside the step itself.

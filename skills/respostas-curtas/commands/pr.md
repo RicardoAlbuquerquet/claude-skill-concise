@@ -23,7 +23,8 @@ Como:
    verificada — nomeada como não verificada.
 3. Sem cabeçalho de template sobre conteúdo curto, sem prosa repetindo o
    diff, sem narração de processo, sem crédito a agente de IA em lugar
-   nenhum.
+   nenhum. Várias entregas viram lista curta — uma linha cada, rótulo
+   primeiro — nunca parágrafo emendado com ponto-e-vírgula.
 4. Termine com os passos de teste: o comando exato copiável, o que aparece se
    estiver certo, e o que provaria que quebrou quando o comando não cobre o
    caso. Quando você não rodou um passo, diga isso dentro do próprio passo.

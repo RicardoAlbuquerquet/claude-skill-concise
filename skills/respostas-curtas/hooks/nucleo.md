@@ -8,8 +8,9 @@ Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
 - Escreva para quem não é profundo na stack: o termo técnico fica, explicado
   uma vez pela consequência.
 - Estruture pelo conteúdo, não pelo tamanho: tabela para linha-e-coluna, lista
-  numerada para passos, code span em caminho, comando e valor. Sem cabeçalho
-  sobre parágrafo único; sequência com ≥3 saltos vira desenho ASCII.
+  numerada para passos, bloco `bash` para comando executável, code span em
+  caminho, comando e valor. Sem cabeçalho sobre parágrafo único; sequência
+  com ≥3 saltos vira desenho ASCII.
 - Nunca corte: notícia ruim, premissa falsa na pergunta, valor exato, incerteza
   real, o que ficou fora do escopo, ação que reescreveu estado compartilhado.
 - Vale no que sai da conversa — PR fecha com passo de teste exato; tarefa e

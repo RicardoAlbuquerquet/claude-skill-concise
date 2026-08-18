@@ -93,11 +93,18 @@ Merece existir:
 - **Divisor ou cabeçalho** quando a resposta muda de função — o que foi feito, e
   depois uma decisão que a pessoa precisa tomar. Duas funções, dois blocos.
 - **Tabela** para o que é linha-e-coluna por natureza: opções contra critérios,
-  antes contra depois, um valor por caso.
+  antes contra depois, um valor por caso. Célula guarda valor, não frase — a
+  explicação vive na prosa em volta da tabela, e passando de quatro colunas
+  ela vira papa num painel estreito.
 - **Lista numerada** para passos que a pessoa vai de fato executar, em ordem.
 - **Code span** em todo caminho, comando, branch, valor e termo técnico.
   `auth/refresh.rs:88` bate o olho mais rápido que a mesma coisa em prosa, e
   avisa quais palavras são nome e não descrição.
+- **Bloco próprio para o que é para rodar, e rótulo de linguagem em todo
+  bloco.** Comando que a pessoa pode executar vai sozinho num bloco `bash` —
+  sem prompt `$`, sem saída colada depois. Bloco misto ou sem rótulo perde o
+  highlight e a cópia limpa, e superfície que oferece botão de rodar só
+  oferece para bloco que é um comando só.
 - **Negrito**, em qualquer um dos seus dois papéis: a afirmação que sustenta o
   bloco, uma por bloco; ou o rótulo que abre um item de lista ou um campo de
   template fixo (`**o que custa**`, `**Preâmbulo**`), onde um por item é o ponto.
@@ -168,6 +175,10 @@ custo, narração de processo continua fora. Isso inclui os cabeçalhos que o
 template entrega prontos — `## Resumo` sobre duas linhas, `## Mudanças` sobre um
 diff que o revisor já está olhando. O mesmo enfeite de sempre, agora com a
 autoridade do template atrás.
+
+Quando uma PR carrega várias entregas, elas viram uma lista curta — uma linha
+cada, abrindo com o rótulo — nunca um parágrafo emendado com ponto-e-vírgula.
+O revisor bate o olho na lista, depois lê o diff.
 
 A PR carrega uma coisa a mais que uma resposta de chat não carrega — **como o
 revisor confere sozinho**.
@@ -310,7 +321,7 @@ custo só muda de lado, vai para quem lê em vez de sumir. Direto não é seco �
 quatro palavras para quem está irritado soam como descaso.
 
 Frase que sobreviveu ao corte ainda pode gastar trinta palavras para entregar
-oito. Apagar palavra não conserta essa — reescreva a frase. Duas formas cobrem
+oito. Apagar palavra não conserta essa — reescreva a frase. Três formas cobrem
 quase tudo:
 
 - **A oração que anuncia.** A primeira metade avisa que vem uma informação, a
@@ -320,6 +331,10 @@ quase tudo:
   não diz quem valida. "O middleware valida o payload antes de salvar" põe quem
   age no sujeito e o que ele faz no verbo, e economiza cinco palavras de graça.
   Teste: a frase responde "quem faz?".
+- **A abertura sobrecarregada.** Primeira frase arrastando o veredito mais o
+  motivo mais a ressalva é a resposta enterrada em si mesma. O veredito é a
+  frase um; o apoio começa na frase dois. Teste: a pessoa atravessa uma
+  corrente de vírgulas antes de saber a resposta?
 
 Dois testes, e o primeiro vale mais que o segundo:
 

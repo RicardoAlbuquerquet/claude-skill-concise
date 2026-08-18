@@ -5,6 +5,16 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.6.0 — 2026-08-18
+
+- Four aesthetic rules for what the model outputs, at zero budget cost: a
+  runnable command gets a `bash` fence of its own (and every fence a
+  language tag); table cells hold values with the prose staying outside; a
+  PR that ships several deliverables lists them one per line instead of
+  chaining semicolons; and the overloaded opening joins "Before sending" —
+  verdict in sentence one, support from sentence two.
+- Both hook cores name the `bash` fence.
+
 ## 1.5.1 — 2026-08-18
 
 - Catalogue and manifest descriptions catch up with 1.5.0: three commands and
