@@ -29,6 +29,11 @@ Como:
    estiver certo, e o que provaria que quebrou quando o comando não cobre o
    caso. Quando você não rodou um passo, diga isso dentro do próprio passo.
 
+Antes de entregar, audite o rascunho contra o checklist você mesmo — primeira
+linha diz o que a PR faz, valores exatos em span, entregas em lista, passos
+de teste com os não rodados marcados — e corrija o que falhar. Entregue só a
+versão limpa.
+
 Entregue a descrição em bloco de código, pronta para colar no
 `gh pr create --body` ou no formulário do GitHub. Nada depois do bloco além
 de buracos que você não conseguiu preencher pela branch, uma linha cada,

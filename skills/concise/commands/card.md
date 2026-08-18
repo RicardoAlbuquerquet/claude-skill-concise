@@ -29,6 +29,11 @@ Rules of the card:
   headers, no tables, bold only as item labels. Priority, assignee, and due
   date are fields, not body text — the *reason* for a date is body.
 
+Before delivering, audit the draft against the card checklist yourself —
+verb in the title, current → expected, exact values, done criterion, no
+headers or tables, body standing alone — and fix what fails. Deliver only
+the clean version.
+
 Delivery: title on the first line, body in a fenced block, ready to paste. If
 the invocation names a destination — a board, a repo, a project — and a tool
 for it is available (MCP, `gh`), create the card there after drafting and

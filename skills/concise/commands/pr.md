@@ -29,6 +29,11 @@ How:
    it's right, and what would prove it broke when the command doesn't cover
    the case. When you did not run a step, say so inside the step itself.
 
+Before delivering, audit the draft against the checklist yourself — first
+line says what the PR does, exact values in spans, deliverables as a list,
+test steps with the unrun ones marked — and fix what fails. Deliver only the
+clean version.
+
 Deliver the description in a fenced block, ready to paste into
 `gh pr create --body` or the GitHub form. Nothing after the block except
 holes you could not fill from the branch, one line each, opening with

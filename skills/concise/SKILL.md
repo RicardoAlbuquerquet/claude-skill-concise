@@ -258,6 +258,24 @@ What stays out is the history: how you got there, what you ruled out on the way,
 the conversation pasted into the body. It fattens the card without changing what
 the reader will do — a card describes what is left, not the route to finding it.
 
+## Commit messages
+
+The highest-volume surface that leaves the conversation, and the one read in
+the narrowest window — `git log --oneline` shows the title and nothing else.
+
+- **The title says what changes when the commit lands**, verb first, 72
+  characters or fewer, no trailing period. "Fix the invoice filter dropping
+  the timezone" — in a log listing, that line is all anyone gets.
+- **The body says why, not what.** The diff already shows what changed; the
+  body carries what the diff can't: why now, what behaviour changes, what to
+  watch. A body restating the diff is prose restating code.
+- **Exact references survive** — the issue number, the path, the flag name.
+- **One commit, one change.** A message that needs "and also" is describing
+  two commits.
+- **No AI credit**, ever — no `Co-Authored-By` for a model, no "generated
+  with". Since 1.7.0 a `PreToolUse` hook enforces this at `git commit` and
+  `gh pr create`.
+
 ## Always cut
 
 - **Preamble** — "great question", "let me check", "I'll take a look".

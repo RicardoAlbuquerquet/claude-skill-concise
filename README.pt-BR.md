@@ -80,6 +80,8 @@ reais. Quatro saem mais longas.
 | `/respostas-curtas:reescrever` | reescreve um texto pronto pelas regras, sem perder nada |
 | `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
 | `/respostas-curtas:card` | rascunha o card que se sustenta sozinho; cria quando o destino é nomeado |
+| `/respostas-curtas:commit` | rascunha a mensagem de commit do staged — título com verbo, corpo com o porquê |
+| Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
 | Agente `auditar` | devolve só as violações de um rascunho — citação, regra, correção |
 | [`extras/stop-audit`](extras/stop-audit/README.md) | juiz de estilo por turno, opcional, instalado à mão |
 
@@ -261,6 +263,10 @@ escrito:
   exatos, critério de pronto — e cria quando você nomeia um destino que uma
   ferramenta alcança (um board por MCP, um repo via `gh`). EN:
   `/concise:card`.
+- **`/respostas-curtas:commit [contexto]`** rascunha a mensagem de commit do
+  que está staged — título com o verbo primeiro e 72 caracteres ou menos,
+  corpo dizendo o porquê em vez de recontar o diff. Só rascunho; nunca roda
+  `git commit`. EN: `/concise:commit`.
 - **O agente `auditar`** (EN: `audit`) confere um rascunho contra o checklist
   e devolve só as violações — linha citada, regra, correção em uma linha —
   mais o conteúdo obrigatório que falta. Nunca reescreve; peça quando quiser o
@@ -268,6 +274,14 @@ escrito:
 
 Tudo isso vem só com a instalação por plugin; o caminho da cópia leva a skill
 sozinha.
+
+**Desde a 1.7.0 uma guarda de crédito vem ligada.** Um hook `PreToolUse` nega
+qualquer `git commit` ou `gh pr create` cujo texto carregue crédito a agente
+de IA — `Co-Authored-By` de modelo, rodapé "generated with" — por comparação
+determinística de string, sem chamada de API. Ela transforma a regra mais
+dura da skill em regra de sistema: o commit é barrado com o motivo, e a
+mensagem sai reescrita sem o rodapé. Sair dela significa desligar os hooks
+do plugin.
 
 Há também um **auditor de Stop opcional** em
 [`extras/stop-audit/`](extras/stop-audit/README.md): um hook que você instala

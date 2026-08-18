@@ -9,12 +9,12 @@
     {
       "name": "concise",
       "source": "./skills/concise",
-      "description": "English. The answer goes in the first sentence; cut preamble and process narration; keep every caveat that changes what the reader does. Ships an always-on SessionStart hook with self-update, the rewrite/pr/card commands, and an audit agent."
+      "description": "English. The answer goes in the first sentence; cut preamble and process narration; keep every caveat that changes what the reader does. Ships an always-on SessionStart hook with self-update, a credit guard on commits and PRs, the rewrite/pr/card/commit commands, and an audit agent."
     },
     {
       "name": "respostas-curtas",
       "source": "./skills/respostas-curtas",
-      "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão. Embarca um hook SessionStart sempre ligado com auto-update, os comandos reescrever/pr/card, e um agente de auditoria."
+      "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão. Embarca um hook SessionStart sempre ligado com auto-update, guarda de crédito em commit e PR, os comandos reescrever/pr/card/commit, e um agente de auditoria."
     }
   ]
 }
