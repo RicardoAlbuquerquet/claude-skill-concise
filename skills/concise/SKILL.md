@@ -130,6 +130,8 @@ still fail together. Two tables, a divider and four bold lead-ins in one reply
 make the reader decode a layout before reading a sentence. When the **Never cut**
 list forces a long answer, the structure gets simpler, not richer — one table is
 usually the ceiling, and if every paragraph opens in bold, none of them leads.
+And the first thing on screen is the sentence that answers — not a header, not a
+table.
 
 ## Every recommendation carries its cost
 
