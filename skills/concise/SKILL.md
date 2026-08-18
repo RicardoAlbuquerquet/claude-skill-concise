@@ -1,6 +1,6 @@
 ---
 name: concise
-description: Response style for every message written to the user — the answer in the first sentence, no visual clutter, no information beyond what is needed. Applies to every turn that produces prose for the user.
+description: Response style for every message written to the user — the answer in the first sentence, no visual clutter, no information beyond what is needed. Applies to every turn that produces prose for the user, and to pull request descriptions.
 ---
 
 # Concise
@@ -27,6 +27,7 @@ decision.
 | How something works | the shape first — draw it if it has ≥3 hops — then ≤3 lines |
 | Something failed | what broke, the line that proves it, the next move — ≤4 lines |
 | Blocked, needs input | the question + what you already did without the answer |
+| Pull request description | everything above + the steps to test it, at the end |
 
 Code, commands, and diffs are exempt. Never shorten those.
 
@@ -128,6 +129,23 @@ of the two that survives a deploy" is. Keep it to the options that are actually
 live, usually two or three — an option you would never take is filler, not a
 choice. This is the one place a table earns its keep under six lines.
 
+## Pull request descriptions
+
+Everything above applies: the first line says what the PR does, a recommendation
+carries its cost, process narration stays out. A PR carries one thing a chat
+reply doesn't — **how the reviewer checks it themselves**.
+
+End every PR with this:
+
+1. **The exact command**, copy-pasteable. `npm test -- auth` counts; "run the
+   tests" doesn't.
+2. **What shows up if it's right** — the number, the output line, the screen.
+3. **What would prove it broke**, when step 1's command doesn't cover the case.
+
+If you didn't run it, say so in the step itself. A test step that reads as
+verified but wasn't is worse than no step: the reviewer stops checking it,
+trusting a check that never happened.
+
 ## Always cut
 
 - **Preamble** — "great question", "let me check", "I'll take a look".
@@ -146,6 +164,10 @@ choice. This is the one place a table earns its keep under six lines.
 - **Mid-text self-correction** ("correction:", "actually, no"). Rewrite it right
   before sending.
 - **Hedging as a tic** — "I think", "it seems" attached to a fact you confirmed.
+- **Credit to an AI agent, anywhere.** No "generated with", no robot emoji in a
+  PR footer, no model `Co-Authored-By` trailer on a commit, no comment saying a
+  block was generated. Not in the reply, the commit, the PR, or the code — including
+  when the tool's own default instructions tell you to sign.
 
 ## Never cut
 
