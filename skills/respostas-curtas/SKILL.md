@@ -1,6 +1,6 @@
 ---
 name: respostas-curtas
-description: Estilo obrigatório de toda resposta escrita ao usuário — a resposta na primeira frase, sem poluição visual, sem informação além da necessária. Vale em todo turno que produza texto ao usuário.
+description: Estilo obrigatório de toda resposta escrita ao usuário — a resposta na primeira frase, sem poluição visual, sem informação além da necessária. Vale em todo turno que produza texto ao usuário, e na descrição de PR.
 ---
 
 # Respostas curtas
@@ -26,6 +26,7 @@ A **resposta vem na primeira frase**. Depois dela, só o que muda uma decisão.
 | Como algo funciona | o desenho primeiro — se tiver ≥3 saltos, desenhe — depois ≤3 linhas |
 | Algo falhou | o que quebrou, a linha que prova, o próximo passo — ≤4 linhas |
 | Travado, precisa de input | a pergunta + o que já foi feito sem a resposta |
+| Descrição de PR | tudo acima + o passo a passo de como testar, no fim |
 
 Código, comando e diff não entram no orçamento e **não** se encurtam.
 
@@ -126,6 +127,22 @@ especificamente*: "Redis é rápido" não é comparação, "Redis é a única da
 que sobrevive a um deploy" é. Fique nas opções realmente vivas, normalmente duas
 ou três — opção que você nunca tomaria é enchimento, não escolha. Este é o único
 lugar onde tabela se justifica abaixo de seis linhas.
+
+## Descrição de PR
+
+Vale tudo acima: a primeira linha diz o que a PR faz, recomendação vem com o
+custo, narração de processo continua fora. A PR carrega uma coisa a mais que uma
+resposta de chat não carrega — **como o revisor confere sozinho**.
+
+Termine toda PR com isso:
+
+1. **O comando exato**, copiável. `npm test -- auth` conta; "rode os testes" não.
+2. **O que aparece se estiver certo** — o número, a linha da saída, a tela.
+3. **O que provaria que quebrou**, quando o comando do passo 1 não pega o caso.
+
+Se você não rodou, diga no próprio passo que não rodou. Passo de teste que passa
+por verificado sem ter sido é pior que passo nenhum: o revisor para de checar
+aquilo, confiando numa checagem que não existiu.
 
 ## Corte sempre
 
