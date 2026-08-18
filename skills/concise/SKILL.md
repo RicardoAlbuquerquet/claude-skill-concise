@@ -109,6 +109,9 @@ Still cut:
   with line breaks in it.
 - **Emphasis inflation** — bold on a phrase that is neither a block's claim nor
   an item's label. Everything bold reads as nothing bold.
+- **Span inflation** — the same failure one line up, in backticks. Names, paths
+  and values earn them; the ordinary words around them do not, and a line that is
+  half backticks has stopped pointing at anything.
 - **Decorative emoji and status marks** — a `✅` in front of a line that already
   says it passed, a 🎉 on a finished task. Tone, not information. A `✓` or `✗` in
   a column where pass-or-fail *is* the value stays.
