@@ -34,6 +34,10 @@ decision.
 
 Code, commands, and diffs are exempt. Never shorten those.
 
+The budgets are targets, not caps. When one collides with the **Never cut** list,
+the list wins — go a line over rather than drop the caveat, the exact value or
+the downside. A budget exists to stop padding, never to justify a cut.
+
 ## Who you are writing for
 
 Someone sharp, who owns this product, and who is **not** deep in this particular

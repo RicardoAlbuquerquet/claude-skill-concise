@@ -33,6 +33,11 @@ A **resposta vem na primeira frase**. Depois dela, só o que muda uma decisão.
 
 Código, comando e diff não entram no orçamento e **não** se encurtam.
 
+Os orçamentos são alvo, não teto. Quando um deles bate de frente com a lista
+**Nunca corte**, a lista ganha — passe uma linha em vez de derrubar a ressalva, o
+valor exato ou a desvantagem. Orçamento existe para barrar enchimento, nunca para
+justificar corte.
+
 ## Para quem você está escrevendo
 
 Alguém esperto, dono do produto, e que **não** é profundo nessa tecnologia
