@@ -5,6 +5,13 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.5.1 — 2026-08-18
+
+- Catalogue and manifest descriptions catch up with 1.5.0: three commands and
+  the self-update hook, not just `rewrite`.
+- Changelog dates corrected to the real merge dates (every release so far
+  landed on 2026-08-18).
+
 ## 1.5.0 — 2026-08-18
 
 - `/concise:pr` (`/respostas-curtas:pr`): drafts the pull request description
@@ -39,18 +46,18 @@ without an entry tells nobody what it brought.
 - `SessionStart` hook injects a ~20-line core of the style into every
   session, making the style always-on without depending on invocation.
 
-## 1.2.0 — 2026-08-17
+## 1.2.0 — 2026-08-18
 
 - Tasks and issues: everything a card carries, what enters under condition,
   and the structure a narrow panel holds (no headers, no tables, bold only
   as item labels).
 
-## 1.1.0 — 2026-08-17
+## 1.1.0 — 2026-08-18
 
 - Tasks and issues as a destination surface; the version-bump rule that makes
   `claude plugin update` actually move.
 
-## 1.0.0 — 2026-08-16
+## 1.0.0 — 2026-08-18
 
 - First plugin release: install via marketplace in two commands instead of
   clone and copy.

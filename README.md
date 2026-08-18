@@ -219,7 +219,7 @@ cut preamble and process narration, keep any caveat that would change what I do.
 The skill holds the full ruleset; the hook or the `CLAUDE.md` line holds the
 pointer that guarantees it's in context. Neither one replaces the other.
 
-## The command and the agent
+## The commands and the agent
 
 Since 1.4.0 each plugin also ships two tools for text that already exists —
 the skill governs what Claude writes next; these act on what is written:

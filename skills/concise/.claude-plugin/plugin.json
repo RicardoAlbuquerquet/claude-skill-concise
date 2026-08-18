@@ -1,7 +1,7 @@
 {
   "name": "concise",
-  "description": "English. The answer goes in the first sentence; cut preamble and process narration; keep every caveat that changes what the reader does. Ships a SessionStart hook that keeps the core style in context all session, a /concise:rewrite command, and an audit agent.",
-  "version": "1.5.0",
+  "description": "English. The answer goes in the first sentence; cut preamble and process narration; keep every caveat that changes what the reader does. Ships an always-on SessionStart hook with self-update, the rewrite/pr/card commands, and an audit agent.",
+  "version": "1.5.1",
   "author": {
     "name": "Ricardo Albuquerque",
     "url": "https://github.com/RicardoAlbuquerquet"
