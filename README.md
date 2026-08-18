@@ -187,6 +187,26 @@ cut preamble and process narration, keep any caveat that would change what I do.
 The skill holds the full ruleset; the hook or the `CLAUDE.md` line holds the
 pointer that guarantees it's in context. Neither one replaces the other.
 
+## The command and the agent
+
+Since 1.4.0 each plugin also ships two tools for text that already exists —
+the skill governs what Claude writes next; these act on what is written:
+
+- **`/concise:rewrite <text>`** rewrites a finished text — a PR description,
+  an issue body, an e-mail — to the ruleset without losing information: every
+  exact value and caveat survives, and anything the original *owed* (a
+  missing cost, a missing test step) is either filled from the original or
+  reported as a hole, never invented. Empty arguments target Claude's own
+  previous reply. PT: `/respostas-curtas:reescrever`.
+- **The `audit` agent** (PT: `auditar`) checks a draft against the checklist
+  and returns only the violations — quoted line, rule, one-line fix — plus
+  required content that is missing. It never rewrites; ask for it when you
+  want the diagnosis without the surgery: *"run the audit agent on this
+  draft"*.
+
+Both ship only with the plugin install; the copy-the-file path takes the
+skill alone.
+
 ## Languages
 
 | Skill | Language | Plugin name | Invoke |

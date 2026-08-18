@@ -1,7 +1,7 @@
 {
   "name": "respostas-curtas",
-  "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão. Embarca um hook SessionStart que mantém o núcleo do estilo no contexto a sessão inteira.",
-  "version": "1.3.0",
+  "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão. Embarca um hook SessionStart que mantém o núcleo do estilo no contexto a sessão inteira, um comando /respostas-curtas:reescrever e um agente de auditoria.",
+  "version": "1.4.0",
   "author": {
     "name": "Ricardo Albuquerque",
     "url": "https://github.com/RicardoAlbuquerquet"
