@@ -97,7 +97,9 @@ Earns its place:
 - **Code spans** on every path, command, branch, value, and technical term.
   `auth/refresh.rs:88` is faster to spot than the same thing in prose, and it
   tells the reader at a glance which words are names rather than description.
-- **Bold** on the one claim holding up a block — one per block.
+- **Bold**, doing either of its two jobs: the one claim holding up a block, one
+  per block; or the label opening an item in a list or a slot in a fixed template
+  (`**Cost:**`, `**Preamble** —`), where one per item is the point.
 
 Still cut:
 
@@ -105,7 +107,8 @@ Still cut:
   the response has no second block.
 - **Bullets that are one clause each inside the same idea** — that's a sentence
   with line breaks in it.
-- **Emphasis inflation.** Everything bold reads as nothing bold.
+- **Emphasis inflation** — bold on a phrase that is neither a block's claim nor
+  an item's label. Everything bold reads as nothing bold.
 - **Decorative emoji and status marks** — a `✅` in front of a line that already
   says it passed, a 🎉 on a finished task. Tone, not information. A `✓` or `✗` in
   a column where pass-or-fail *is* the value stays.

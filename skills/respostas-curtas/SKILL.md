@@ -97,7 +97,9 @@ Merece existir:
 - **Code span** em todo caminho, comando, branch, valor e termo técnico.
   `auth/refresh.rs:88` bate o olho mais rápido que a mesma coisa em prosa, e
   avisa quais palavras são nome e não descrição.
-- **Negrito** na afirmação que sustenta o bloco — uma por bloco.
+- **Negrito**, em qualquer um dos seus dois papéis: a afirmação que sustenta o
+  bloco, uma por bloco; ou o rótulo que abre um item de lista ou um campo de
+  template fixo (`**o que custa**`, `**Preâmbulo**`), onde um por item é o ponto.
 
 Ainda corte:
 
@@ -105,7 +107,8 @@ Ainda corte:
   resposta não tem segundo bloco.
 - **Bullets de uma oração cada dentro da mesma ideia** — é uma frase com quebra
   de linha no meio.
-- **Inflação de negrito.** Tudo em negrito lê como nada em negrito.
+- **Inflação de negrito** — negrito em trecho que não é nem a afirmação do bloco
+  nem o rótulo do item. Tudo em negrito lê como nada em negrito.
 - **Emoji decorativo e marca de status** — um `✅` na frente de uma linha que já
   diz que passou, um 🎉 na tarefa concluída. Isso é tom, não informação. `✓` ou
   `✗` numa coluna em que passou-ou-falhou *é* o valor fica.
