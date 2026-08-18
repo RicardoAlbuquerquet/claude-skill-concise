@@ -71,19 +71,23 @@ git clone https://github.com/RicardoAlbuquerquet/claude-skill-concise.git
 ```
 
 ```bash
+mkdir -p ~/.claude/skills
 cp -r claude-skill-concise/skills/concise ~/.claude/skills/
 ```
 
 PowerShell:
 
 ```powershell
+New-Item -ItemType Directory -Force -Path $HOME\.claude\skills | Out-Null
 Copy-Item -Recurse claude-skill-concise\skills\concise $HOME\.claude\skills\
 ```
 
-Project-level instead, committed with the repo so your team shares it: copy into
-`.claude/skills/` at the project root.
+Project-level instead, committed with the repo so your team shares it: create
+`.claude/skills/` at the project root and copy into that.
 
-Verify it registered by typing `/concise` in Claude Code.
+Verify it registered by typing `/concise` in Claude Code. If it doesn't appear,
+check the path: copying into a `skills/` directory that doesn't exist yet lands
+`SKILL.md` directly in it, one level too high, and reports no error.
 
 ## Making it always-on
 
