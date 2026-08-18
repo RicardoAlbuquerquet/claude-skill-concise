@@ -31,6 +31,7 @@ decision.
 | You got something wrong | the correction + what to undo if it was already acted on — ≤3 lines |
 | Blocked, needs input | the question + what you already did without the answer |
 | Pull request description | everything above + the steps to test it, at the end |
+| Task or issue | current behaviour, expected behaviour, exact values, how it closes |
 
 Code, commands, and diffs are exempt. Never shorten those.
 
@@ -190,19 +191,61 @@ later, by someone else, with the conversation that produced it out of reach.
 There, "don't restate what was already settled" stops applying — what was
 settled doesn't travel with it.
 
-- **The title is an action, not a subject.** "Fix the invoice filter that ignores
-  the timezone" beats "Invoice filter" and "Billing bug": in a list, the reader
-  sees what changes once it closes.
-- **The body stands on its own.** No "as we discussed", no "the problem you
-  mentioned". Test: read it three weeks from now with no conversation — can you
-  act on it?
-- **Exact values inside the body**, not a description of them: the path, the
-  command, the error line, the number. There is nobody here to ask.
-- **One line on how you know it's done.** It's the PR test step in short form:
-  what has to be true to close it.
+A good description answers three things with nobody around to ask: **what
+changes, why now, and how you know it's finished.** Every card carries this:
+
+- **A title with the action verb in it.** "Fix the invoice filter that ignores
+  the timezone" instead of "Invoice filter": in the board's list, the reader sees
+  what changes once the card closes.
+- **Current behaviour and expected behaviour**, in that order and in two
+  sentences. The gap between them is what defines the work.
+- **Exact values, not a description of them** — path, command, error line,
+  number, environment, version. "`/auth/refresh` takes 2.1 s in production" says
+  what "login is slow" doesn't, and there is nobody here to ask.
+- **One line of done criterion** — what has to be true to close it. It's the PR
+  test step in short form.
+- **Closed scope**, small enough for one delivery. If the description needs an
+  "and also", it's two cards. Say what this card does *not* do when someone could
+  widen it on their own.
+
+And this when the case calls for it:
+
+- **How to reproduce**, on a bug: numbered steps from the starting state to the
+  symptom. If it doesn't fail every time, say how often — intermittent changes
+  who picks the card up.
+- **Impact and urgency, with who feels it** — how many users, which customer,
+  what happens while it sits. That is what sets priority; the word "urgent" in
+  the title decides nothing.
+- **Dependencies and blockers, linked** — the card, the PR or the access that has
+  to land first. Without it the card gets picked up and handed back.
+- **An attachment that proves it** — screenshot, log, payload, trace ID. One
+  image of the error saves half the investigation.
+
+Fifteen lines is already a long card, and the body stands on its own: no "as we
+discussed", no "that problem you mentioned". Test: read it three weeks from now
+with no conversation — can you act on it?
+
+A card is read in a narrow panel, often on a phone, next to a wall of other
+cards. It holds *less* structure than a chat reply, not more:
+
+- **No header over a block.** Short paragraphs, with a single list where the
+  steps are, is the entire layout. `## The problem` over two lines is decoration
+  with a template's confidence behind it.
+- **No table unless you know the panel is wide.** Column widths that work in a
+  chat reply wrap to mush in a narrow card; content that really is rows and
+  columns sits better in a linked document.
+- **Bold only on the label that opens an item.** In a six-line body the second
+  bold phrase competes with the first, and neither one leads.
+
+**A filled field is not repeated in the body.** Priority, assignee, due date,
+status and labels are fields on the card; restating them in the text creates a
+copy that goes stale the moment someone edits the field. The reason, on the other
+hand, is content: "the deadline is the 28th because the invoice run is on the
+29th" is a fact no date field can hold.
 
 What stays out is the history: how you got there, what you ruled out on the way,
-the conversation pasted in. A task is what's left to do.
+the conversation pasted into the body. It fattens the card without changing what
+the reader will do — a card describes what is left, not the route to finding it.
 
 ## Always cut
 
