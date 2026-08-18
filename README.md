@@ -64,7 +64,36 @@ transformations. Four come out longer.
 
 ## Install
 
-User-level, applies to every project:
+Two commands inside Claude Code, identical on every platform:
+
+```
+/plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
+```
+
+```
+/plugin install concise@claude-skill-concise
+```
+
+Swap `concise` for `respostas-curtas` to get the Portuguese port. Install one,
+not both — see [Languages](#languages).
+
+Plugin skills are namespaced by the plugin that ships them, so this registers as
+`/concise:concise`, not `/concise`. Run `/plugin` and open the **Installed** tab
+to see the exact name it took.
+
+Updating later is one command:
+
+```
+/plugin marketplace update claude-skill-concise
+```
+
+Third-party marketplaces ship with auto-update off. To skip running that by
+hand, turn it on in `/plugin` → **Marketplaces** → **Enable auto-update**.
+
+### Copying the file instead
+
+It's one Markdown file with no dependencies, so copying it works too — and keeps
+the unprefixed `/concise`:
 
 ```bash
 git clone https://github.com/RicardoAlbuquerquet/claude-skill-concise.git
@@ -109,12 +138,18 @@ cut preamble and process narration, keep any caveat that would change what I do.
 The skill holds the full ruleset; `CLAUDE.md` holds the pointer that guarantees
 it's in context. Neither one replaces the other.
 
+Installing as a plugin doesn't change this. A plugin can ship skills, agents, and
+hooks, but it can't write to your `CLAUDE.md` — that line stays yours to add.
+
 ## Languages
 
-| Skill | Language | Invoke |
-|---|---|---|
-| [`skills/concise`](skills/concise/SKILL.md) | English | `/concise` |
-| [`skills/respostas-curtas`](skills/respostas-curtas/SKILL.md) | Portuguese (BR) | `/respostas-curtas` |
+| Skill | Language | Plugin name | Invoke |
+|---|---|---|---|
+| [`skills/concise`](skills/concise/SKILL.md) | English | `concise` | `/concise:concise` |
+| [`skills/respostas-curtas`](skills/respostas-curtas/SKILL.md) | Portuguese (BR) | `respostas-curtas` | `/respostas-curtas:respostas-curtas` |
+
+Installed by copy rather than as a plugin, they invoke unprefixed: `/concise`
+and `/respostas-curtas`.
 
 Install one, not both — they're the same ruleset and would compete. The rules are
 about structure, not vocabulary, so a translation is a faithful port rather than

@@ -1,0 +1,20 @@
+{
+  "name": "claude-skill-concise",
+  "description": "Response-style skills: the answer first, nothing padding it, and no sacrifice in correctness.",
+  "owner": {
+    "name": "Ricardo Albuquerque",
+    "url": "https://github.com/RicardoAlbuquerquet"
+  },
+  "plugins": [
+    {
+      "name": "concise",
+      "source": "./skills/concise",
+      "description": "English. The answer goes in the first sentence; cut preamble and process narration; keep every caveat that changes what the reader does."
+    },
+    {
+      "name": "respostas-curtas",
+      "source": "./skills/respostas-curtas",
+      "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão."
+    }
+  ]
+}
