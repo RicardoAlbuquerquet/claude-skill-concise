@@ -30,6 +30,7 @@ A **resposta vem na primeira frase**. Depois dela, só o que muda uma decisão.
 | Você errou | a correção + o que desfazer, se já agiram em cima — ≤3 linhas |
 | Travado, precisa de input | a pergunta + o que já foi feito sem a resposta |
 | Descrição de PR | tudo acima + o passo a passo de como testar, no fim |
+| Tarefa ou issue | comportamento atual, esperado, valor exato, como fecha |
 
 Código, comando e diff não entram no orçamento e **não** se encurtam.
 
@@ -188,19 +189,61 @@ tarefa criada por MCP ou uma issue no GitHub é lida semanas depois, por outra
 pessoa, com a conversa que a gerou fora de alcance. Ali "não repita o que já
 ficou estabelecido" para de valer — o que ficou estabelecido não viaja junto.
 
-- **Título é ação, não assunto.** "Corrigir o filtro de faturas que ignora o
-  fuso" ganha de "Filtro de faturas" e de "Bug no faturamento": na lista, a
-  pessoa vê o que muda quando aquilo fechar.
-- **O corpo se sustenta sozinho.** Sem "como conversamos", sem "o problema que
-  você mencionou". Teste: leia daqui a três semanas, sem a conversa — dá para
-  agir?
-- **Valor exato dentro do corpo**, não a descrição dele: o caminho, o comando, a
-  linha do erro, o número. Aqui não tem a quem perguntar.
-- **Uma linha de como saber que terminou.** É o passo de teste da PR na versão
-  curta: o que precisa ser verdade para fechar.
+Uma boa descrição responde três coisas sem ninguém por perto para consultar: **o
+que muda, por que agora, e como saber que acabou.** Todo card carrega isto:
 
-O que fica de fora é o histórico: como você chegou lá, o que descartou no
-caminho, a conversa recolada. Tarefa é o que falta fazer.
+- **Título com o verbo da ação.** "Corrigir o filtro de faturas que ignora o
+  fuso" em vez de "Filtro de faturas": na lista do board, a pessoa vê o que muda
+  quando o card fechar.
+- **Comportamento atual e comportamento esperado**, nesta ordem e em duas frases.
+  É a diferença entre os dois que define o trabalho.
+- **Valor exato, não a descrição dele** — caminho, comando, linha do erro,
+  número, ambiente, versão. "`/auth/refresh` demora 2,1 s em produção" diz o que
+  "o login está lento" não diz, e aqui não tem a quem perguntar.
+- **Critério de pronto, em uma linha** — o que precisa ser verdade para fechar. É
+  o passo de teste da PR na forma curta.
+- **Escopo fechado**, que cabe em uma entrega. Se a descrição precisa de "e
+  também", são dois cards. Diga o que este card *não* faz quando existe risco de
+  alguém ampliar.
+
+E isto quando o caso pedir:
+
+- **Como reproduzir**, em bug: passos numerados do estado inicial até o sintoma.
+  Se não falha sempre, diga com que frequência — intermitente muda quem pega.
+- **Impacto e urgência com quem sente** — quantos usuários, qual cliente, o que
+  acontece se ficar parado. É isso que decide prioridade; o adjetivo "urgente" no
+  título não decide nada.
+- **Dependência e bloqueio com link** — o card, a PR ou o acesso que precisa vir
+  antes. Sem isso o card é pego e devolvido.
+- **Anexo que prova** — print, log, payload, ID do trace. Uma imagem do erro
+  economiza metade da investigação.
+
+Quinze linhas já é um card longo, e o corpo se sustenta sozinho: sem "como
+conversamos", sem "aquele problema que você mencionou". Teste: leia daqui a três
+semanas, sem a conversa — dá para agir?
+
+Um card é lido num painel estreito, muitas vezes no celular, ao lado de uma
+parede de outros cards. Ele aguenta *menos* estrutura que uma resposta de chat,
+não mais:
+
+- **Sem cabeçalho sobre bloco.** Parágrafos curtos, com uma lista só onde estão
+  os passos, é o layout inteiro. `## O problema` sobre duas linhas é enfeite com
+  a confiança de um template atrás.
+- **Sem tabela, a não ser que você saiba que o painel é largo.** A largura de
+  coluna que funciona no chat vira papa num card estreito; o que é mesmo linha e
+  coluna fica melhor num documento linkado.
+- **Negrito só no rótulo que abre um item.** Num corpo de seis linhas, o segundo
+  negrito disputa com o primeiro e nenhum dos dois lidera.
+
+**Campo preenchido não se repete no corpo.** Prioridade, responsável, prazo,
+status e etiqueta são campos do card; repetir no texto cria uma cópia que
+envelhece assim que alguém mexe no campo. O motivo, esse sim, é conteúdo: "o
+prazo é dia 28 porque o faturamento roda no 29" é um fato que campo de data
+nenhum guarda.
+
+Fica de fora o histórico: como você chegou até ali, o que descartou no caminho, a
+conversa colada no corpo. Isso engorda o card sem mudar o que a pessoa vai fazer
+— o card descreve o que falta, não o percurso até descobrir.
 
 ## Corte sempre
 
