@@ -152,6 +152,9 @@ choice. This is the one place a table earns its keep under six lines.
 Brevity is not omission:
 
 - **Bad news.** A failing test, a skipped step, a partial result.
+- **An action that rewrote shared state.** Force-push, rebase, dropped commit,
+  branch you synced, conflict you resolved. Say what disappeared, what replaced
+  it, and how to check — including when it went fine.
 - **The downside of your own recommendation.** Not an optional caveat.
 - **A caveat that changes what the user does** — cost, risk, data loss, or
   something you did not verify.

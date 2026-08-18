@@ -150,6 +150,9 @@ lugar onde tabela se justifica abaixo de seis linhas.
 Brevidade não é omissão:
 
 - **Notícia ruim.** Teste vermelho, etapa pulada, resultado parcial.
+- **Ação que reescreveu estado compartilhado.** Force-push, rebase, commit
+  descartado, branch sincronizada, conflito resolvido. Diga o que sumiu, o que
+  entrou no lugar e como conferir — inclusive quando deu certo.
 - **A desvantagem da sua própria recomendação.** Não é ressalva opcional.
 - **Ressalva que muda o que o usuário faria** — custo, risco, perda de dado, ou
   algo que você não verificou.
