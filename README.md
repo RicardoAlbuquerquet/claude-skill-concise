@@ -29,16 +29,30 @@ bloated version. The skill states outright that bad news, a risk, an exact path
 or version, a false premise in the question, and an unverified assumption all
 survive the edit.
 
-One rule runs the other way and *adds* text: **a recommendation always ships with
-its cost.** Recommendation, up to three lines of why, up to three lines of what
-it makes worse or what you give up. A recommendation with no stated downside
-either has one nobody looked for or is hiding it, and from the reader's side an
-empty slot is indistinguishable from "examined it, it's cheap" — only one of
-those deserves trust.
+Three rules run the other way and *add* text, because what was missing was
+information rather than words:
 
-See [`examples/before-after.md`](examples/before-after.md) for six real
-transformations. Two of them come out *longer*, which is the honest result when
-what was missing was information rather than words.
+- **A recommendation always ships with its cost.** Recommendation, ≤3 lines of
+  why, ≤3 lines of what gets worse or what you give up. A recommendation with no
+  stated downside either has one nobody looked for or is hiding it — and from the
+  reader's side, an empty slot is indistinguishable from "I examined it and it's
+  cheap".
+- **When the decision is the user's, the options go side by side**, then you
+  still recommend one and say why it beats *the others specifically*. Deciding a
+  money or risk question silently is shorter and not yours to do.
+- **Draw the shape.** When the answer is a sequence or a branch, a five-line
+  ASCII diagram beats the paragraph the reader would have to assemble in their
+  head.
+
+It also fixes the audience. The skill is written for a reader who owns the
+product but is not deep in the stack: keep the precise term, then pay for it once
+by glossing it **through its consequence** rather than its definition — not
+"`timestamptz` is a timezone-aware type" but "the column stores UTC, so a filter
+built in local time asks for a window that hasn't started yet". An answer the
+reader can't act on isn't concise, it's just short.
+
+See [`examples/before-after.md`](examples/before-after.md) for eight real
+transformations. Four come out longer.
 
 ## Install
 

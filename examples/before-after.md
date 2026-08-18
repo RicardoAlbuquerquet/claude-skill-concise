@@ -1,8 +1,8 @@
 # Before / after
 
-Six transformations. Two of them come out *longer* after the edit — that's the
-point of the "never cut" list and of the rule that a recommendation ships with
-its cost.
+Eight transformations. Four come out *longer* after the edit — the point of the
+"never cut" list, of the rule that a recommendation ships with its cost, and of
+the rule that an answer the reader can't act on isn't concise, just short.
 
 ---
 
@@ -198,3 +198,77 @@ would otherwise have been discovered in production.
 "before" version spent its words on reassurance ("well-trodden path", "at this
 scale"); the "after" version spends them on the two facts that make this a
 decision instead of a preference, plus the bill.
+
+---
+
+## 7. Explaining how something works
+
+> **Prompt:** how does it keep me logged in between sessions?
+
+### Before — correct, and unreadable to its reader
+
+> The PWA holds a short-lived JWT access token in memory and a long-lived refresh
+> token in persistent storage. On 401 the client transparently calls the refresh
+> endpoint, which validates the presented token against the stored hash, checks
+> the revocation epoch, and mints a new access token. Rotation is disabled in
+> favour of an epoch bump so concurrent contexts don't leapfrog each other.
+
+### After — the shape first, terms glossed by consequence
+
+> Two keys, not one. A short one that expires in minutes and lives only in the
+> tab's memory, and a long one saved on the device that can mint new short ones:
+>
+> ```
+> open app ──> short key expired? ──no──> just works
+>                     │
+>                    yes
+>                     ↓
+>              long key on device ──> server ──> new short key
+>                     │
+>                     └─ missing or revoked ──> login screen
+> ```
+>
+> That bottom branch is your logout bug: iOS drops the long key when it reclaims
+> storage from a backgrounded app, so the device arrives with nothing to trade.
+
+**What survived:** the whole mechanism, and the branch that explains the bug.
+
+**What changed:** "JWT access token", "revocation epoch" and "rotation" are gone
+— not simplified away, but replaced by what they *do* for this reader. The one
+term that matters is drawn instead of named.
+
+**Why longer is right:** the "before" is three sentences shorter and leaves the
+product owner unable to reason about their own logout bug.
+
+---
+
+## 8. A choice that belongs to the user
+
+> **Prompt:** storage is getting expensive. how long should we keep support
+> attachments?
+
+### Before — decided silently
+
+> I'd go with 90 days. That's a common retention window and it should cut the
+> bill substantially. I can implement the sweep job today.
+
+### After — options side by side, then a recommendation
+
+> Your call — it trades money against being able to reopen an old case.
+>
+> | Window | Storage bill | What you lose |
+> |---|---|---|
+> | 30 days | ~R$ 40/mo | any case reopened after a month has no photos |
+> | 90 days | ~R$ 110/mo | covers every reopen we've actually seen (longest: 41 days) |
+> | 1 year | ~R$ 430/mo | nothing, in practice |
+>
+> **Recommendation: 90 days.** It's the only one of the three that covers the
+> longest real reopen with room to spare, and it's a quarter of the yearly bill.
+> 30 days would have lost the photos on two threads from last month.
+
+**What survived from "before":** the recommendation, still first-class and still
+under three lines.
+
+**What's new:** the reader can now disagree with it on their own terms. The
+"before" version isn't shorter by accident — it's shorter because it quietly made
+a money decision that wasn't its own.
