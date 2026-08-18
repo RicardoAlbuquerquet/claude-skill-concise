@@ -48,6 +48,9 @@ claude plugin validate . && claude plugin validate ./skills/<name>
 It prints `Validation passed` twice. Neither check verifies that the `source`
 directory exists or that your port is listed at all — confirm that part by eye.
 
+A new port also gets added to `scripts/check-parity.sh` — it compares the
+ports pairwise and only knows the ones named in it.
+
 ## Keeping the hook core in sync
 
 Each plugin ships the style twice: the full ruleset in `SKILL.md`, and a
@@ -58,10 +61,23 @@ The core drifting from the skill is worse than either alone: the model reads
 one in context and the other on invocation, and follows whichever it saw
 last.
 
+CI enforces the mechanical half of this: `scripts/check-parity.sh` compares
+the structure of the two ports — section, bullet, and table counts in
+`SKILL.md`, bullets in the hook core, versions, file counts under `commands/`
+and `agents/` — and the `parity` workflow fails the PR on any drift. It
+counts structure, not meaning: a translation that keeps the bullet count but
+drops the rule still gets through, so the by-eye check above stays.
+
 ## Bumping the version
 
-Every PR that changes a `SKILL.md` bumps `version` in that plugin's
-`.claude-plugin/plugin.json`. Both ports move together, so they stay comparable.
+Every PR that changes anything inside a plugin — `SKILL.md`, the hook core,
+`hooks.json`, a command, an agent — bumps `version` in that plugin's
+`.claude-plugin/plugin.json`. Both ports move together, so they stay
+comparable.
+
+Since 1.4.0 the self-update hook rides on this: it runs `claude plugin
+update`, which compares version numbers, so an unbumped change lands on
+`main` and never reaches a single installed copy.
 
 Without the bump, an installed copy never updates. `claude plugin update
 concise@claude-skill-concise` compares version numbers, not content, and answers
@@ -74,9 +90,17 @@ catalogue, not the installed plugin.
 
 ## Testing a change
 
-There is no test suite; the subject is prose. What works instead:
+The subject is prose, so the test suite is partial by nature. Three layers,
+cheapest first:
 
-- Install your edited skill and run a week of ordinary work with it.
-- Keep the responses that got **worse**. A rule that makes answers shorter but
-  less useful is a regression, and dogfooding is the only way to catch it.
-- Add the convincing pairs to `examples/before-after.md`.
+- **Parity**, free: `bash scripts/check-parity.sh` — CI runs it on every PR.
+- **Evals**, ~12 API calls: `bash evals/run.sh` sends six prompts from
+  `examples/before-after.md` through the skill and grades the responses
+  against rubrics — see [`evals/README.md`](evals/README.md). Run it before
+  and after a `SKILL.md` edit and compare; the judge is a model grading
+  prose, so read a FAIL before believing it.
+- **Dogfooding**, still the real test: install your edited skill and run a
+  week of ordinary work. Keep the responses that got **worse** — a rule that
+  makes answers shorter but less useful is a regression, and this is the only
+  layer that catches it. Add the convincing pairs to
+  `examples/before-after.md`.

@@ -120,6 +120,22 @@ Claude Code afterwards, or run `/reload-plugins`.
 Third-party marketplaces ship with auto-update off. To skip the first one by
 hand, turn it on in `/plugin` → **Marketplaces** → **Enable auto-update**.
 
+**Since 1.4.0 the plugin runs the pair itself.** A second `SessionStart` hook
+fires both commands in the background at each session start, so an installed
+copy follows the marketplace with one session of delay — the session that
+starts downloads the update, the next one runs it. Know what that implies
+before relying on it:
+
+- It moves only when the release bumped `version`, same as the manual pair —
+  an unbumped change on `main` never propagates.
+- It costs a network round-trip per session start, and fails silently without
+  the `claude` CLI on PATH or without network — the next session just tries
+  again.
+- Copies on 1.3.0 or earlier don't have the hook yet. Reaching 1.4.0 still
+  takes one manual update, or the marketplace toggle above.
+- Opting out of self-update while keeping the skill means installing by copy —
+  that path carries no hooks — or disabling the plugin's hooks wholesale.
+
 ### Copying the file instead
 
 It's one Markdown file with no dependencies, so copying it works too — and keeps
@@ -186,6 +202,26 @@ cut preamble and process narration, keep any caveat that would change what I do.
 
 The skill holds the full ruleset; the hook or the `CLAUDE.md` line holds the
 pointer that guarantees it's in context. Neither one replaces the other.
+
+## The command and the agent
+
+Since 1.4.0 each plugin also ships two tools for text that already exists —
+the skill governs what Claude writes next; these act on what is written:
+
+- **`/concise:rewrite <text>`** rewrites a finished text — a PR description,
+  an issue body, an e-mail — to the ruleset without losing information: every
+  exact value and caveat survives, and anything the original *owed* (a
+  missing cost, a missing test step) is either filled from the original or
+  reported as a hole, never invented. Empty arguments target Claude's own
+  previous reply. PT: `/respostas-curtas:reescrever`.
+- **The `audit` agent** (PT: `auditar`) checks a draft against the checklist
+  and returns only the violations — quoted line, rule, one-line fix — plus
+  required content that is missing. It never rewrites; ask for it when you
+  want the diagnosis without the surgery: *"run the audit agent on this
+  draft"*.
+
+Both ship only with the plugin install; the copy-the-file path takes the
+skill alone.
 
 ## Languages
 
