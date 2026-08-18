@@ -25,11 +25,28 @@ or fires so constantly it has become noise, open a PR that deletes it.
 
 ## Ports to other languages
 
-Copy `skills/concise/SKILL.md` to `skills/<name>/SKILL.md`, translate the body,
-and set `name:` in the frontmatter to match the new directory. Keep the structure
-identical — the rules describe the shape of a response, not its vocabulary, so a
-port should be recognisably the same document. Add a row to the language table in
-the README.
+Copy the whole `skills/concise/` directory to `skills/<name>/` — `SKILL.md` and
+`.claude-plugin/plugin.json` both — translate the body, and set `name:` to match
+the new directory in both files. A port that ships only `SKILL.md` installs as
+nothing: a plugin directory with no `.claude-plugin/plugin.json` is rejected.
+
+Keep the structure identical — the rules describe the shape of a response, not
+its vocabulary, so a port should be recognisably the same document.
+
+Then register it, in both places:
+
+- an entry in `.claude-plugin/marketplace.json` carrying `name`, `source`
+  (`./skills/<name>`) and `description`
+- a row in the language table in the README
+
+Both manifests have a validator. Run it before opening the PR:
+
+```bash
+claude plugin validate . && claude plugin validate ./skills/<name>
+```
+
+It prints `Validation passed` twice. Neither check verifies that the `source`
+directory exists or that your port is listed at all — confirm that part by eye.
 
 ## Testing a change
 
