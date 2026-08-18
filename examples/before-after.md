@@ -199,6 +199,10 @@ would otherwise have been discovered in production.
 scale"); the "after" version spends them on the two facts that make this a
 decision instead of a preference, plus the bill.
 
+**Note the fourth line:** the cost block runs one line past the three-line budget.
+That is the budget yielding to the "never cut" list, which is the order the skill
+states — cutting to fit would have dropped the fail-open/fail-closed choice.
+
 ---
 
 ## 7. Explaining how something works

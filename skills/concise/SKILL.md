@@ -34,6 +34,10 @@ decision.
 
 Code, commands, and diffs are exempt. Never shorten those.
 
+The budgets are targets, not caps. When one collides with the **Never cut** list,
+the list wins — go a line over rather than drop the caveat, the exact value or
+the downside. A budget exists to stop padding, never to justify a cut.
+
 ## Who you are writing for
 
 Someone sharp, who owns this product, and who is **not** deep in this particular
@@ -93,7 +97,9 @@ Earns its place:
 - **Code spans** on every path, command, branch, value, and technical term.
   `auth/refresh.rs:88` is faster to spot than the same thing in prose, and it
   tells the reader at a glance which words are names rather than description.
-- **Bold** on the one claim holding up a block — one per block.
+- **Bold**, doing either of its two jobs: the one claim holding up a block, one
+  per block; or the label opening an item in a list or a slot in a fixed template
+  (`**Cost:**`, `**Preamble** —`), where one per item is the point.
 
 Still cut:
 
@@ -101,13 +107,31 @@ Still cut:
   the response has no second block.
 - **Bullets that are one clause each inside the same idea** — that's a sentence
   with line breaks in it.
-- **Emphasis inflation.** Everything bold reads as nothing bold.
+- **Emphasis inflation** — bold on a phrase that is neither a block's claim nor
+  an item's label. Everything bold reads as nothing bold.
+- **Span inflation** — the same failure one line up, in backticks. Names, paths
+  and values earn them; the ordinary words around them do not, and a line that is
+  half backticks has stopped pointing at anything.
 - **Decorative emoji and status marks** — a `✅` in front of a line that already
   says it passed, a 🎉 on a finished task. Tone, not information. A `✓` or `✗` in
   a column where pass-or-fail *is* the value stays.
 
+Everything in that list removes structure, and the failure it does not name is
+the opposite one. Eight lines of prose covering three things — because a header
+felt like decoration and a list felt like fragmenting a thought — is as hard to
+read as four bold lead-ins and worse to skim. A paragraph that changes subject
+halfway is already two blocks; write it as two.
+
 The test: if you can say what each block is *for*, the structure is real. If the
 blocks are "part one, part two", it's decoration.
+
+Then one test on the whole response, because blocks that each pass alone can
+still fail together. Two tables, a divider and four bold lead-ins in one reply
+make the reader decode a layout before reading a sentence. When the **Never cut**
+list forces a long answer, the structure gets simpler, not richer — one table is
+usually the ceiling, and if every paragraph opens in bold, none of them leads.
+And the first thing on screen is the sentence that answers — not a header, not a
+table.
 
 ## Every recommendation carries its cost
 
@@ -133,13 +157,19 @@ Then **Recommendation: X**, with up to 3 lines for why it wins *against the
 others specifically*: "Redis is fast" is not a comparison, "Redis is the only one
 of the two that survives a deploy" is. Keep it to the options that are actually
 live, usually two or three — an option you would never take is filler, not a
-choice. This is the one place a table earns its keep under six lines.
+choice. Build the table even when the whole answer is four lines: side by side
+is what makes it a choice instead of a pitch.
 
 ## Pull request descriptions
 
 Everything above applies: the first line says what the PR does, a recommendation
-carries its cost, process narration stays out. A PR carries one thing a chat
-reply doesn't — **how the reviewer checks it themselves**.
+carries its cost, process narration stays out. That includes the headers a
+template hands you ready-made — `## Summary` over two lines, `## Changes` over a
+diff the reviewer is already looking at. Same decoration as anywhere else, now
+with the template's authority behind it.
+
+A PR carries one thing a chat reply doesn't — **how the reviewer checks it
+themselves**.
 
 End every PR with this:
 
@@ -195,7 +225,8 @@ Brevity is not omission:
 - **Exact values** — number, file path, branch, version. Shorter *and* more
   useful than the adjective.
 - **Real uncertainty**, named precisely: which part you are unsure of and why.
-- **What you left out of scope**, when you left something out.
+- **What you left out of scope**, when you left something out — including the
+  second question in a two-question message, when you only answered the first.
 
 A long subject can have a long answer — a plan, an audit, a migration. What it
 cannot have is a line that carries no information.
