@@ -116,6 +116,12 @@ Still cut:
 The test: if you can say what each block is *for*, the structure is real. If the
 blocks are "part one, part two", it's decoration.
 
+Then one test on the whole response, because blocks that each pass alone can
+still fail together. Two tables, a divider and four bold lead-ins in one reply
+make the reader decode a layout before reading a sentence. When the **Never cut**
+list forces a long answer, the structure gets simpler, not richer — one table is
+usually the ceiling, and if every paragraph opens in bold, none of them leads.
+
 ## Every recommendation carries its cost
 
 Never hand over a recommendation without its downside, in the same message: **the

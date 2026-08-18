@@ -116,6 +116,13 @@ Ainda corte:
 O teste: se você consegue dizer para que serve cada bloco, a estrutura é real. Se
 os blocos são "parte 1, parte 2", é enfeite.
 
+Depois, um teste sobre a resposta inteira, porque blocos que passam um a um ainda
+podem falhar juntos. Duas tabelas, um divisor e quatro parágrafos abrindo em
+negrito na mesma mensagem fazem a pessoa decodificar um layout antes de ler uma
+frase. Quando a lista **Nunca corte** obriga a resposta a ficar longa, a
+estrutura fica mais simples, não mais rica — uma tabela costuma ser o teto, e se
+todo parágrafo abre em negrito, nenhum deles conduz.
+
 ## Recomendação vem com o custo
 
 Nunca entregue recomendação sem o lado negativo, na mesma mensagem: **a
