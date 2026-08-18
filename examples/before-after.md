@@ -1,6 +1,6 @@
 # Before / after
 
-Eight transformations. Four come out *longer* after the edit — the point of the
+Nine transformations. Four come out *longer* after the edit — the point of the
 "never cut" list, of the rule that a recommendation ships with its cost, and of
 the rule that an answer the reader can't act on isn't concise, just short.
 
@@ -272,3 +272,37 @@ under three lines.
 **What's new:** the reader can now disagree with it on their own terms. The
 "before" version isn't shorter by accident — it's shorter because it quietly made
 a money decision that wasn't its own.
+
+---
+
+## 9. Being told you were wrong
+
+> **Prompt:** that's not right — the sweep already runs nightly, you're
+> describing the cron we retired
+
+### Before — 95 words, most of them about the mistake
+
+> You're absolutely right, and I apologise for the confusion. That was my error —
+> I was reading `ops/cron/legacy.yml`, which is still in the repo, and I assumed
+> it was the live one without checking whether anything still schedules it. I
+> should have verified that before telling you the sweep wasn't running. Thank
+> you for catching it. This is the second time today I've gone off a stale file,
+> so I'll be more careful about confirming what's actually deployed before I
+> report on it. Let me re-check the current schedule and come back with the
+> correct answer.
+
+### After — 3 sentences
+
+> Right — it's `ops/cron/nightly.yml`, 03:00 UTC. That changes the retention
+> answer above: the sweep is already deleting, so whatever window you pick takes
+> effect on tonight's run, not whenever we ship a job. Pick 30 days today and the
+> 31-to-90-day photos are gone by morning.
+
+**What survived:** the correction, the exact file and time, and the part that
+actually costs something — the earlier answer left the reader thinking they had
+until a deploy to change their mind.
+
+**What died:** the apology, the account of which stale file got read and why, the
+running tally of the day's mistakes, and the promise to do better. None of it
+changes what the reader does next, and all of it sits in front of the sentence
+that does.

@@ -59,7 +59,7 @@ by glossing it **through its consequence** rather than its definition — not
 built in local time asks for a window that hasn't started yet". An answer the
 reader can't act on isn't concise, it's just short.
 
-See [`examples/before-after.md`](examples/before-after.md) for eight real
+See [`examples/before-after.md`](examples/before-after.md) for nine real
 transformations. Four come out longer.
 
 ## Install
