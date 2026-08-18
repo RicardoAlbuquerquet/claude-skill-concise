@@ -33,6 +33,11 @@ A **resposta vem na primeira frase**. Depois dela, só o que muda uma decisão.
 
 Código, comando e diff não entram no orçamento e **não** se encurtam.
 
+Os orçamentos são alvo, não teto. Quando um deles bate de frente com a lista
+**Nunca corte**, a lista ganha — passe uma linha em vez de derrubar a ressalva, o
+valor exato ou a desvantagem. Orçamento existe para barrar enchimento, nunca para
+justificar corte.
+
 ## Para quem você está escrevendo
 
 Alguém esperto, dono do produto, e que **não** é profundo nessa tecnologia
@@ -92,7 +97,9 @@ Merece existir:
 - **Code span** em todo caminho, comando, branch, valor e termo técnico.
   `auth/refresh.rs:88` bate o olho mais rápido que a mesma coisa em prosa, e
   avisa quais palavras são nome e não descrição.
-- **Negrito** na afirmação que sustenta o bloco — uma por bloco.
+- **Negrito**, em qualquer um dos seus dois papéis: a afirmação que sustenta o
+  bloco, uma por bloco; ou o rótulo que abre um item de lista ou um campo de
+  template fixo (`**o que custa**`, `**Preâmbulo**`), onde um por item é o ponto.
 
 Ainda corte:
 
@@ -100,13 +107,21 @@ Ainda corte:
   resposta não tem segundo bloco.
 - **Bullets de uma oração cada dentro da mesma ideia** — é uma frase com quebra
   de linha no meio.
-- **Inflação de negrito.** Tudo em negrito lê como nada em negrito.
+- **Inflação de negrito** — negrito em trecho que não é nem a afirmação do bloco
+  nem o rótulo do item. Tudo em negrito lê como nada em negrito.
 - **Emoji decorativo e marca de status** — um `✅` na frente de uma linha que já
   diz que passou, um 🎉 na tarefa concluída. Isso é tom, não informação. `✓` ou
   `✗` numa coluna em que passou-ou-falhou *é* o valor fica.
 
 O teste: se você consegue dizer para que serve cada bloco, a estrutura é real. Se
 os blocos são "parte 1, parte 2", é enfeite.
+
+Depois, um teste sobre a resposta inteira, porque blocos que passam um a um ainda
+podem falhar juntos. Duas tabelas, um divisor e quatro parágrafos abrindo em
+negrito na mesma mensagem fazem a pessoa decodificar um layout antes de ler uma
+frase. Quando a lista **Nunca corte** obriga a resposta a ficar longa, a
+estrutura fica mais simples, não mais rica — uma tabela costuma ser o teto, e se
+todo parágrafo abre em negrito, nenhum deles conduz.
 
 ## Recomendação vem com o custo
 
@@ -131,8 +146,9 @@ um catálogo. Ponha as opções vivas lado a lado, e ainda assim recomende uma:
 Depois **Recomendação: X**, com até 3 linhas do porquê ela ganha *das outras
 especificamente*: "Redis é rápido" não é comparação, "Redis é a única das duas
 que sobrevive a um deploy" é. Fique nas opções realmente vivas, normalmente duas
-ou três — opção que você nunca tomaria é enchimento, não escolha. Este é o único
-lugar onde tabela se justifica abaixo de seis linhas.
+ou três — opção que você nunca tomaria é enchimento, não escolha. Monte a tabela
+mesmo quando a resposta inteira tem quatro linhas: lado a lado é o que faz aquilo
+ser uma escolha em vez de um discurso de venda.
 
 ## Descrição de PR
 
@@ -194,7 +210,8 @@ Brevidade não é omissão:
 - **Valor exato** — número, caminho, branch, versão. Mais curto **e** mais útil
   que o adjetivo.
 - **Incerteza real**, nomeada com precisão: qual parte você não sabe e por quê.
-- **O que ficou fora do escopo**, quando ficou.
+- **O que ficou fora do escopo**, quando ficou — inclusive a segunda pergunta de
+  uma mensagem com duas, quando você só respondeu a primeira.
 
 Assunto longo pode ter resposta longa — um plano, uma auditoria, uma migração. O
 que não pode é linha sem informação.
