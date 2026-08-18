@@ -79,6 +79,12 @@ Since 1.4.0 the self-update hook rides on this: it runs `claude plugin
 update`, which compares version numbers, so an unbumped change lands on
 `main` and never reaches a single installed copy.
 
+Since 1.5.0 the rule is executable: `bash scripts/check-bump.sh` compares
+your branch against `origin/main` and fails when a plugin changed without its
+version moving — CI runs it on every PR. Each bump also gets a line in
+[CHANGELOG.md](CHANGELOG.md): the number is what propagates, the entry is
+what tells people what it brought.
+
 Without the bump, an installed copy never updates. `claude plugin update
 concise@claude-skill-concise` compares version numbers, not content, and answers
 `✔ concise is already at the latest version (1.0.0)` while the cached copy under
@@ -98,7 +104,10 @@ cheapest first:
   `examples/before-after.md` through the skill and grades the responses
   against rubrics — see [`evals/README.md`](evals/README.md). Run it before
   and after a `SKILL.md` edit and compare; the judge is a model grading
-  prose, so read a FAIL before believing it.
+  prose, so read a FAIL before believing it. On PRs touching `SKILL.md` the
+  `evals` workflow runs them as an advisory job — it needs the repo secret
+  `ANTHROPIC_API_KEY` and skips cleanly without it, and it never blocks a
+  merge.
 - **Dogfooding**, still the real test: install your edited skill and run a
   week of ordinary work. Keep the responses that got **worse** — a rule that
   makes answers shorter but less useful is a regression, and this is the only
