@@ -109,6 +109,9 @@ Ainda corte:
   de linha no meio.
 - **Inflação de negrito** — negrito em trecho que não é nem a afirmação do bloco
   nem o rótulo do item. Tudo em negrito lê como nada em negrito.
+- **Inflação de code span** — a mesma falha uma linha acima, de crase. Nome,
+  caminho e valor merecem; as palavras comuns em volta não, e linha que é metade
+  crase parou de apontar para qualquer coisa.
 - **Emoji decorativo e marca de status** — um `✅` na frente de uma linha que já
   diz que passou, um 🎉 na tarefa concluída. Isso é tom, não informação. `✓` ou
   `✗` numa coluna em que passou-ou-falhou *é* o valor fica.
