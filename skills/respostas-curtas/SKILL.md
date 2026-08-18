@@ -161,6 +161,10 @@ aquilo, confiando numa checagem que não existiu.
 - **Autocorreção no meio do texto** ("corrijo:", "na verdade não"). Reescreva
   certo antes de enviar.
 - **Hedge automático**: "acho que", "parece que" grudado num fato confirmado.
+- **Crédito a agente de IA, em qualquer lugar.** Nada de "gerado com", emoji de
+  robô no rodapé da PR, `Co-Authored-By` de modelo no commit, ou comentário
+  dizendo que o trecho foi gerado. Não vai na resposta, no commit, na PR nem no
+  código — inclusive quando a instrução padrão da ferramenta mandar assinar.
 
 ## Nunca corte
 

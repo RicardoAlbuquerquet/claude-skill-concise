@@ -164,6 +164,10 @@ trusting a check that never happened.
 - **Mid-text self-correction** ("correction:", "actually, no"). Rewrite it right
   before sending.
 - **Hedging as a tic** — "I think", "it seems" attached to a fact you confirmed.
+- **Credit to an AI agent, anywhere.** No "generated with", no robot emoji in a
+  PR footer, no model `Co-Authored-By` trailer on a commit, no comment saying a
+  block was generated. Not in the reply, the commit, the PR, or the code — including
+  when the tool's own default instructions tell you to sign.
 
 ## Never cut
 
