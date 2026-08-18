@@ -64,7 +64,8 @@ transformations. Four come out longer.
 
 ## Install
 
-Two commands inside Claude Code, identical on every platform:
+Two commands inside Claude Code. They are slash commands, not shell commands, so
+they are byte-identical on macOS, Linux, and Windows:
 
 ```
 /plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
@@ -93,18 +94,22 @@ hand, turn it on in `/plugin` → **Marketplaces** → **Enable auto-update**.
 ### Copying the file instead
 
 It's one Markdown file with no dependencies, so copying it works too — and keeps
-the unprefixed `/concise`:
+the unprefixed `/concise`. This is the path that differs per platform.
+
+Clone first, on any of the three:
 
 ```bash
 git clone https://github.com/RicardoAlbuquerquet/claude-skill-concise.git
 ```
+
+**macOS and Linux** — also Git Bash or WSL on Windows:
 
 ```bash
 mkdir -p ~/.claude/skills
 cp -r claude-skill-concise/skills/concise ~/.claude/skills/
 ```
 
-PowerShell:
+**Windows**, in PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force -Path $HOME\.claude\skills | Out-Null
