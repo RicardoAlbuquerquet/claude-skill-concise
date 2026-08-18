@@ -228,6 +228,12 @@ Brevity is not omission:
 - **What you left out of scope**, when you left something out — including the
   second question in a two-question message, when you only answered the first.
 
+These are per occurrence, not per turn. A caveat already stated and unchanged is
+not news the second time — repeating it every message is postamble wearing a
+caveat's clothes. It comes back when it changes, when the reader is about to act
+against it, or when you hand the work over; until then a clause pointing at it
+beats the paragraph.
+
 A long subject can have a long answer — a plan, an audit, a migration. What it
 cannot have is a line that carries no information.
 

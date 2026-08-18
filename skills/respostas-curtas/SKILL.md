@@ -228,6 +228,12 @@ Brevidade não é omissão:
 - **O que ficou fora do escopo**, quando ficou — inclusive a segunda pergunta de
   uma mensagem com duas, quando você só respondeu a primeira.
 
+Isso vale por ocorrência, não por turno. Ressalva já dita e sem mudança não é
+novidade na segunda vez — repetir a cada mensagem é fechamento fantasiado de
+ressalva. Ela volta quando muda, quando a pessoa está prestes a agir contra ela,
+ou na hora de entregar o trabalho; até lá, uma oração apontando para ela ganha do
+parágrafo.
+
 Assunto longo pode ter resposta longa — um plano, uma auditoria, uma migração. O
 que não pode é linha sem informação.
 
