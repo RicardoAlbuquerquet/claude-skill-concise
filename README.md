@@ -6,8 +6,10 @@
 
 **Português:** [README.pt-BR.md](README.pt-BR.md)
 
-A Claude Code skill that makes Claude answer in the register a terminal actually
-wants: the answer first, nothing padding it, and no sacrifice in correctness.
+A Claude Code plugin that makes Claude answer in the register a terminal
+actually wants — the answer first, nothing padding it, no sacrifice in
+correctness — and that brings the tools to apply the same register to text
+that already exists.
 
 ![The same question answered without and with the skill](docs/before-after.svg)
 
@@ -70,6 +72,21 @@ reader can't act on isn't concise, it's just short.
 See [`examples/before-after.md`](examples/before-after.md) for nine real
 transformations. Four come out longer.
 
+## What ships
+
+| Piece | What it does |
+|---|---|
+| `concise` skill | the full ruleset, invoked when a turn needs it |
+| `SessionStart` hook | injects the ~20-line core every session; self-updates the plugin |
+| `/concise:rewrite` | rewrites a finished text to the rules, losing nothing |
+| `/concise:pr` | drafts the PR description from the real diff, test steps last |
+| `/concise:card` | drafts a task/issue card that stands alone; creates it when a destination is named |
+| `audit` agent | returns only the violations in a draft — quote, rule, fix |
+| [`extras/stop-audit`](extras/stop-audit/README.md) | opt-in per-turn style judge, installed by hand |
+
+The skill is the product; everything else keeps it applied — in every session,
+to text that already exists, and to what leaves the conversation.
+
 ## Install
 
 Two commands, typed inside a running Claude Code session:
@@ -105,8 +122,10 @@ Plugin skills are namespaced by the plugin that ships them, so this registers as
 `/concise:concise`, not `/concise`. Run `/plugin` and open the **Installed** tab
 to see the exact name it took.
 
-Updating later takes two commands, not one — the first refreshes the catalogue,
-the second moves the copy that actually runs:
+### Updating
+
+Two commands, not one — the first refreshes the catalogue, the second moves
+the copy that actually runs:
 
 ```
 /plugin marketplace update claude-skill-concise
@@ -127,6 +146,8 @@ Claude Code afterwards, or run `/reload-plugins`.
 
 Third-party marketplaces ship with auto-update off. To skip the first one by
 hand, turn it on in `/plugin` → **Marketplaces** → **Enable auto-update**.
+
+### Self-updating
 
 **Since 1.4.0 the plugin runs the pair itself.** A second `SessionStart` hook
 fires both commands in the background at each session start, so an installed
@@ -281,6 +302,11 @@ that reads well and changes nothing. Every rule in it has to clear two tests:
 
 `"Be brief"` fails both and is already implicit in every model's instructions.
 That's why it isn't in the skill.
+
+The rules are also measured, not only argued. CI holds the two ports to
+structural parity and refuses a plugin change that doesn't bump its version;
+[`evals/`](evals/README.md) runs six judged cases derived from the examples —
+as of 1.6.0, both ports pass all six.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 

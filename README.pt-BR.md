@@ -6,9 +6,10 @@
 
 **English:** [README.md](README.md)
 
-Uma skill de Claude Code que faz o Claude responder no registro que um terminal
-realmente quer: a resposta primeiro, nada enchendo, e nenhum sacrifício de
-correção.
+Um plugin de Claude Code que faz o Claude responder no registro que um
+terminal realmente quer — a resposta primeiro, nada enchendo, nenhum
+sacrifício de correção — e que traz as ferramentas para aplicar o mesmo
+registro a texto que já existe.
 
 ![A mesma pergunta respondida sem e com a skill](docs/before-after.pt-BR.svg)
 
@@ -70,6 +71,21 @@ não é concisa, é só curta.
 Veja [`examples/before-after.md`](examples/before-after.md): nove transformações
 reais. Quatro saem mais longas.
 
+## O que embarca
+
+| Peça | O que faz |
+|---|---|
+| Skill `respostas-curtas` | as regras completas, invocadas quando o turno pede |
+| Hook `SessionStart` | injeta o núcleo de ~20 linhas em toda sessão; auto-atualiza o plugin |
+| `/respostas-curtas:reescrever` | reescreve um texto pronto pelas regras, sem perder nada |
+| `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
+| `/respostas-curtas:card` | rascunha o card que se sustenta sozinho; cria quando o destino é nomeado |
+| Agente `auditar` | devolve só as violações de um rascunho — citação, regra, correção |
+| [`extras/stop-audit`](extras/stop-audit/README.md) | juiz de estilo por turno, opcional, instalado à mão |
+
+A skill é o produto; o resto a mantém aplicada — em toda sessão, no texto que
+já existe, e no que sai da conversa.
+
 ## Instalação
 
 Dois comandos, digitados dentro de uma sessão aberta do Claude Code:
@@ -104,8 +120,10 @@ Skill de plugin ganha o prefixo do plugin que a embarca, então esta registra
 como `/respostas-curtas:respostas-curtas`. Rode `/plugin` e abra a aba
 **Installed** para ver o nome exato que ela tomou.
 
-Atualizar depois leva dois comandos, não um — o primeiro atualiza o catálogo, o
-segundo move a cópia que de fato roda:
+### Atualizando
+
+Dois comandos, não um — o primeiro atualiza o catálogo, o segundo move a
+cópia que de fato roda:
 
 ```
 /plugin marketplace update claude-skill-concise
@@ -127,6 +145,8 @@ Claude Code depois, ou rode `/reload-plugins`.
 Marketplace de terceiro vem com auto-update desligado. Para dispensar o
 primeiro comando manual, ligue em `/plugin` → **Marketplaces** → **Enable
 auto-update**.
+
+### Auto-atualização
 
 **Desde a 1.4.0 o plugin roda o par sozinho.** Um segundo hook `SessionStart`
 dispara os dois comandos em segundo plano a cada início de sessão, então uma
@@ -283,6 +303,11 @@ conselho que lê bem e não muda nada. Toda regra nela tem que passar dois teste
 
 `"Seja breve"` falha nos dois e já está implícito nas instruções de qualquer
 modelo. Por isso não está na skill.
+
+As regras também são medidas, não só argumentadas. O CI prende os dois ports à
+paridade estrutural e recusa mudança de plugin sem bump de versão;
+[`evals/`](evals/README.md) roda seis casos julgados derivados dos exemplos —
+na 1.6.0, os dois ports passam nos seis.
 
 Veja [CONTRIBUTING.md](CONTRIBUTING.md).
 
