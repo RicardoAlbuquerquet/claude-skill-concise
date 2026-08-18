@@ -203,7 +203,8 @@ Brevidade não é omissão:
 - **Valor exato** — número, caminho, branch, versão. Mais curto **e** mais útil
   que o adjetivo.
 - **Incerteza real**, nomeada com precisão: qual parte você não sabe e por quê.
-- **O que ficou fora do escopo**, quando ficou.
+- **O que ficou fora do escopo**, quando ficou — inclusive a segunda pergunta de
+  uma mensagem com duas, quando você só respondeu a primeira.
 
 Assunto longo pode ter resposta longa — um plano, uma auditoria, uma migração. O
 que não pode é linha sem informação.

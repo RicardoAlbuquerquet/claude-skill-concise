@@ -203,7 +203,8 @@ Brevity is not omission:
 - **Exact values** — number, file path, branch, version. Shorter *and* more
   useful than the adjective.
 - **Real uncertainty**, named precisely: which part you are unsure of and why.
-- **What you left out of scope**, when you left something out.
+- **What you left out of scope**, when you left something out — including the
+  second question in a two-question message, when you only answered the first.
 
 A long subject can have a long answer — a plan, an audit, a migration. What it
 cannot have is a line that carries no information.
