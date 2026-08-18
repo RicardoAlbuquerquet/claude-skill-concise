@@ -113,6 +113,12 @@ Still cut:
   says it passed, a 🎉 on a finished task. Tone, not information. A `✓` or `✗` in
   a column where pass-or-fail *is* the value stays.
 
+Everything in that list removes structure, and the failure it does not name is
+the opposite one. Eight lines of prose covering three things — because a header
+felt like decoration and a list felt like fragmenting a thought — is as hard to
+read as four bold lead-ins and worse to skim. A paragraph that changes subject
+halfway is already two blocks; write it as two.
+
 The test: if you can say what each block is *for*, the structure is real. If the
 blocks are "part one, part two", it's decoration.
 

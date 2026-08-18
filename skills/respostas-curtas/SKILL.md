@@ -113,6 +113,12 @@ Ainda corte:
   diz que passou, um 🎉 na tarefa concluída. Isso é tom, não informação. `✓` ou
   `✗` numa coluna em que passou-ou-falhou *é* o valor fica.
 
+Tudo naquela lista tira estrutura, e a falha que ela não nomeia é a oposta. Oito
+linhas de prosa cobrindo três assuntos — porque cabeçalho pareceu enfeite e lista
+pareceu fatiar um pensamento — é tão difícil de ler quanto quatro parágrafos
+abrindo em negrito, e pior de bater o olho. Parágrafo que muda de assunto no meio
+já é dois blocos; escreva como dois.
+
 O teste: se você consegue dizer para que serve cada bloco, a estrutura é real. Se
 os blocos são "parte 1, parte 2", é enfeite.
 
