@@ -137,7 +137,8 @@ Then **Recommendation: X**, with up to 3 lines for why it wins *against the
 others specifically*: "Redis is fast" is not a comparison, "Redis is the only one
 of the two that survives a deploy" is. Keep it to the options that are actually
 live, usually two or three — an option you would never take is filler, not a
-choice. This is the one place a table earns its keep under six lines.
+choice. Build the table even when the whole answer is four lines: side by side
+is what makes it a choice instead of a pitch.
 
 ## Pull request descriptions
 

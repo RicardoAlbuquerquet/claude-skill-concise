@@ -136,8 +136,9 @@ um catálogo. Ponha as opções vivas lado a lado, e ainda assim recomende uma:
 Depois **Recomendação: X**, com até 3 linhas do porquê ela ganha *das outras
 especificamente*: "Redis é rápido" não é comparação, "Redis é a única das duas
 que sobrevive a um deploy" é. Fique nas opções realmente vivas, normalmente duas
-ou três — opção que você nunca tomaria é enchimento, não escolha. Este é o único
-lugar onde tabela se justifica abaixo de seis linhas.
+ou três — opção que você nunca tomaria é enchimento, não escolha. Monte a tabela
+mesmo quando a resposta inteira tem quatro linhas: lado a lado é o que faz aquilo
+ser uma escolha em vez de um discurso de venda.
 
 ## Descrição de PR
 
