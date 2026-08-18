@@ -130,7 +130,8 @@ podem falhar juntos. Duas tabelas, um divisor e quatro parágrafos abrindo em
 negrito na mesma mensagem fazem a pessoa decodificar um layout antes de ler uma
 frase. Quando a lista **Nunca corte** obriga a resposta a ficar longa, a
 estrutura fica mais simples, não mais rica — uma tabela costuma ser o teto, e se
-todo parágrafo abre em negrito, nenhum deles conduz.
+todo parágrafo abre em negrito, nenhum deles conduz. E a primeira coisa na tela
+é a frase que responde — não um cabeçalho, não uma tabela.
 
 ## Recomendação vem com o custo
 
