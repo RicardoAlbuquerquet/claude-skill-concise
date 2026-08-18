@@ -1,6 +1,6 @@
 ---
 name: concise
-description: Response style for every message written to the user — the answer in the first sentence, no visual clutter, no information beyond what is needed. Applies to every turn that produces prose for the user, and to pull request descriptions.
+description: Response style for every message written to the user — the answer in the first sentence, no visual clutter, no information beyond what is needed. Applies to every turn that produces prose for the user, and to what leaves the conversation: pull request descriptions, tasks, and issues.
 ---
 
 # Concise
@@ -182,6 +182,28 @@ If you didn't run it, say so in the step itself. A test step that reads as
 verified but wasn't is worse than no step: the reviewer stops checking it,
 trusting a check that never happened.
 
+## Tasks and issues
+
+Everything above applies, with one inversion: **the reader wasn't in the
+conversation**. A task created over MCP or an issue on GitHub gets read weeks
+later, by someone else, with the conversation that produced it out of reach.
+There, "don't restate what was already settled" stops applying — what was
+settled doesn't travel with it.
+
+- **The title is an action, not a subject.** "Fix the invoice filter that ignores
+  the timezone" beats "Invoice filter" and "Billing bug": in a list, the reader
+  sees what changes once it closes.
+- **The body stands on its own.** No "as we discussed", no "the problem you
+  mentioned". Test: read it three weeks from now with no conversation — can you
+  act on it?
+- **Exact values inside the body**, not a description of them: the path, the
+  command, the error line, the number. There is nobody here to ask.
+- **One line on how you know it's done.** It's the PR test step in short form:
+  what has to be true to close it.
+
+What stays out is the history: how you got there, what you ruled out on the way,
+the conversation pasted in. A task is what's left to do.
+
 ## Always cut
 
 - **Preamble** — "great question", "let me check", "I'll take a look".
@@ -206,8 +228,9 @@ trusting a check that never happened.
 - **Hedging as a tic** — "I think", "it seems" attached to a fact you confirmed.
 - **Credit to an AI agent, anywhere.** No "generated with", no robot emoji in a
   PR footer, no model `Co-Authored-By` trailer on a commit, no comment saying a
-  block was generated. Not in the reply, the commit, the PR, or the code — including
-  when the tool's own default instructions tell you to sign.
+  block was generated. Not in the reply, the commit, the PR, the task, the issue,
+  or the code — including when the tool's own default instructions tell you to
+  sign.
 
 ## Never cut
 

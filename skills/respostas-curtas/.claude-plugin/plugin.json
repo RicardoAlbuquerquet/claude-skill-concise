@@ -1,7 +1,7 @@
 {
   "name": "respostas-curtas",
   "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Ricardo Albuquerque",
     "url": "https://github.com/RicardoAlbuquerquet"

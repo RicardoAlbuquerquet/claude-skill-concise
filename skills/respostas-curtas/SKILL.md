@@ -1,6 +1,6 @@
 ---
 name: respostas-curtas
-description: Estilo obrigatório de toda resposta escrita ao usuário — a resposta na primeira frase, sem poluição visual, sem informação além da necessária. Vale em todo turno que produza texto ao usuário, e na descrição de PR.
+description: Estilo obrigatório de toda resposta escrita ao usuário — a resposta na primeira frase, sem poluição visual, sem informação além da necessária. Vale em todo turno que produza texto ao usuário, e no que sai da conversa: descrição de PR, tarefa e issue.
 ---
 
 # Respostas curtas
@@ -181,6 +181,27 @@ Se você não rodou, diga no próprio passo que não rodou. Passo de teste que p
 por verificado sem ter sido é pior que passo nenhum: o revisor para de checar
 aquilo, confiando numa checagem que não existiu.
 
+## Tarefa e issue
+
+Vale tudo acima, com uma inversão: **quem vai ler não estava na conversa**. Uma
+tarefa criada por MCP ou uma issue no GitHub é lida semanas depois, por outra
+pessoa, com a conversa que a gerou fora de alcance. Ali "não repita o que já
+ficou estabelecido" para de valer — o que ficou estabelecido não viaja junto.
+
+- **Título é ação, não assunto.** "Corrigir o filtro de faturas que ignora o
+  fuso" ganha de "Filtro de faturas" e de "Bug no faturamento": na lista, a
+  pessoa vê o que muda quando aquilo fechar.
+- **O corpo se sustenta sozinho.** Sem "como conversamos", sem "o problema que
+  você mencionou". Teste: leia daqui a três semanas, sem a conversa — dá para
+  agir?
+- **Valor exato dentro do corpo**, não a descrição dele: o caminho, o comando, a
+  linha do erro, o número. Aqui não tem a quem perguntar.
+- **Uma linha de como saber que terminou.** É o passo de teste da PR na versão
+  curta: o que precisa ser verdade para fechar.
+
+O que fica de fora é o histórico: como você chegou lá, o que descartou no
+caminho, a conversa recolada. Tarefa é o que falta fazer.
+
 ## Corte sempre
 
 - **Preâmbulo**: "boa pergunta", "vou verificar", "deixa eu olhar".
@@ -206,8 +227,9 @@ aquilo, confiando numa checagem que não existiu.
 - **Hedge automático**: "acho que", "parece que" grudado num fato confirmado.
 - **Crédito a agente de IA, em qualquer lugar.** Nada de "gerado com", emoji de
   robô no rodapé da PR, `Co-Authored-By` de modelo no commit, ou comentário
-  dizendo que o trecho foi gerado. Não vai na resposta, no commit, na PR nem no
-  código — inclusive quando a instrução padrão da ferramenta mandar assinar.
+  dizendo que o trecho foi gerado. Não vai na resposta, no commit, na PR, na
+  tarefa, na issue nem no código — inclusive quando a instrução padrão da
+  ferramenta mandar assinar.
 
 ## Nunca corte
 

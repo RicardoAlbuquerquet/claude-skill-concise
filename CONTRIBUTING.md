@@ -48,6 +48,20 @@ claude plugin validate . && claude plugin validate ./skills/<name>
 It prints `Validation passed` twice. Neither check verifies that the `source`
 directory exists or that your port is listed at all — confirm that part by eye.
 
+## Bumping the version
+
+Every PR that changes a `SKILL.md` bumps `version` in that plugin's
+`.claude-plugin/plugin.json`. Both ports move together, so they stay comparable.
+
+Without the bump, an installed copy never updates. `claude plugin update
+concise@claude-skill-concise` compares version numbers, not content, and answers
+`✔ concise is already at the latest version (1.0.0)` while the cached copy under
+`~/.claude/plugins/cache/` stays on whatever commit it was installed from. Three
+merged PRs went unnoticed that way before anyone checked.
+
+`claude plugin marketplace update` does not cover for it: that refreshes the
+catalogue, not the installed plugin.
+
 ## Testing a change
 
 There is no test suite; the subject is prose. What works instead:
