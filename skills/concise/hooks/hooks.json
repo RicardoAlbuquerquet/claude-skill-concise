@@ -17,6 +17,25 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"AI credit found in the text (Co-Authored-By / Generated with). The concise rule bans crediting an AI agent in commits and PRs - rewrite without it.\"}}'; fi",
+            "if": "Bash(git commit*)",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"AI credit found in the text (Co-Authored-By / Generated with). The concise rule bans crediting an AI agent in commits and PRs - rewrite without it.\"}}'; fi",
+            "if": "Bash(gh pr create*)",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   }
 }

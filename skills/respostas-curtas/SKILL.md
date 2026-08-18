@@ -256,6 +256,25 @@ Fica de fora o histórico: como você chegou até ali, o que descartou no caminh
 conversa colada no corpo. Isso engorda o card sem mudar o que a pessoa vai fazer
 — o card descreve o que falta, não o percurso até descobrir.
 
+## Mensagem de commit
+
+A superfície de maior volume que sai da conversa, e a lida na janela mais
+estreita — `git log --oneline` mostra o título e mais nada.
+
+- **O título diz o que muda quando o commit entra**, verbo primeiro, 72
+  caracteres ou menos, sem ponto final. "Corrigir o filtro de faturas que
+  derruba o fuso" — na listagem do log, essa linha é tudo que a pessoa tem.
+- **O corpo diz o porquê, não o quê.** O diff já mostra o que mudou; o corpo
+  carrega o que o diff não carrega: por que agora, que comportamento muda, o
+  que vigiar. Corpo repetindo o diff é prosa repetindo código.
+- **Referência exata sobrevive** — o número da issue, o caminho, o nome da
+  flag.
+- **Um commit, uma mudança.** Mensagem que precisa de "e também" está
+  descrevendo dois commits.
+- **Sem crédito de IA**, nunca — sem `Co-Authored-By` de modelo, sem "gerado
+  com". Desde a 1.7.0 um hook `PreToolUse` barra isso no `git commit` e no
+  `gh pr create`.
+
 ## Corte sempre
 
 - **Preâmbulo**: "boa pergunta", "vou verificar", "deixa eu olhar".

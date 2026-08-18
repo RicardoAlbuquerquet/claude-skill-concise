@@ -18,7 +18,8 @@ Response style, active for the whole session (skill `concise`):
   state.
 - It applies to what leaves the conversation — a PR ends with an exact test
   step; a task or issue has a body that stands alone: current → expected,
-  exact values, done criterion.
+  exact values, done criterion; a commit title says what changes, verb
+  first, and the body says why.
 - Never credit an AI agent: not in a commit, a PR, or code.
 
 Full ruleset in the `concise` skill; invoke it whenever the turn calls for

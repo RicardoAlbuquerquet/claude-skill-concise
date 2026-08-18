@@ -5,6 +5,17 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.7.0 — 2026-08-18
+
+- Credit guard, enabled by default: a `PreToolUse` hook denies `git commit`
+  and `gh pr create` whose text carries AI credit — deterministic string
+  match, no API call. The ruleset's hardest rule becomes a system rule.
+- "Commit messages" section in the skill, and `/concise:commit`
+  (`/respostas-curtas:commit`): drafts the message for what is staged —
+  verb-first title ≤72 chars, body says why, draft only.
+- The `pr` and `card` commands self-audit against their checklists before
+  delivering.
+
 ## 1.6.0 — 2026-08-18
 
 - Four aesthetic rules for what the model outputs, at zero budget cost: a

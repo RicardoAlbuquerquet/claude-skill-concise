@@ -31,6 +31,11 @@ Regras do card:
   responsável e prazo são campos, não corpo — o *motivo* do prazo, esse sim é
   corpo.
 
+Antes de entregar, audite o rascunho contra o checklist do card você mesmo —
+verbo no título, atual → esperado, valores exatos, critério de pronto, sem
+cabeçalho nem tabela, corpo que se sustenta sozinho — e corrija o que
+falhar. Entregue só a versão limpa.
+
 Entrega: título na primeira linha, corpo em bloco de código, pronto para
 colar. Se a invocação nomeia um destino — um board, um repo, um projeto — e
 existe ferramenta para ele (MCP, `gh`), crie o card lá depois do rascunho e

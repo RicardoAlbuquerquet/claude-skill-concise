@@ -81,6 +81,8 @@ transformations. Four come out longer.
 | `/concise:rewrite` | rewrites a finished text to the rules, losing nothing |
 | `/concise:pr` | drafts the PR description from the real diff, test steps last |
 | `/concise:card` | drafts a task/issue card that stands alone; creates it when a destination is named |
+| `/concise:commit` | drafts the commit message for what is staged — verb-first title, body says why |
+| credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
 | `audit` agent | returns only the violations in a draft — quote, rule, fix |
 | [`extras/stop-audit`](extras/stop-audit/README.md) | opt-in per-turn style judge, installed by hand |
 
@@ -259,6 +261,10 @@ the skill governs what Claude writes next; these act on what is written:
   alone — current → expected behaviour, exact values, a done criterion — and
   creates it when you name a destination a tool can reach (an MCP board, a
   `gh` repo). PT: `/respostas-curtas:card`.
+- **`/concise:commit [context]`** drafts the commit message for what is
+  staged — title with the verb first and 72 characters or fewer, body saying
+  why rather than retelling the diff. Draft only; it never runs `git commit`.
+  PT: `/respostas-curtas:commit`.
 - **The `audit` agent** (PT: `auditar`) checks a draft against the checklist
   and returns only the violations — quoted line, rule, one-line fix — plus
   required content that is missing. It never rewrites; ask for it when you
@@ -267,6 +273,13 @@ the skill governs what Claude writes next; these act on what is written:
 
 All of these ship only with the plugin install; the copy-the-file path takes
 the skill alone.
+
+**Since 1.7.0 a credit guard ships enabled.** A `PreToolUse` hook denies any
+`git commit` or `gh pr create` whose text carries credit to an AI agent — a
+model `Co-Authored-By`, a "generated with" footer — by deterministic string
+match, no API call. It turns the ruleset's hardest rule into a system rule:
+the commit is blocked with the reason, and the message gets rewritten
+without the trailer. Opting out means disabling the plugin's hooks.
 
 There is also an **opt-in Stop auditor** in
 [`extras/stop-audit/`](extras/stop-audit/README.md): a hook you install by
