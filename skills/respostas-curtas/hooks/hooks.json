@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"$CLAUDE_PLUGIN_ROOT/hooks/nucleo.md\"",
+            "statusMessage": "Carregando o estilo respostas-curtas",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

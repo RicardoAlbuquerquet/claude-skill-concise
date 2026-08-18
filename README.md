@@ -159,8 +159,23 @@ typing `/concise`, or by the model deciding the `description` matches the task.
 A response-*style* rule wants to apply to all of them, including the turns where
 nothing about the task suggests "now think about brevity".
 
-So pair the skill with a line in `CLAUDE.md`, which is loaded into context every
-session:
+**Installed as a plugin, this is handled for you.** Since 1.3.0 each plugin
+ships a `SessionStart` hook that prints a ~20-line core of the style into
+context at every session start — about 320 tokens, spent whether or not the
+session produces prose. The core is the guarantee; the full ruleset still
+lives in the skill, which the model invokes when a turn needs more than the
+core. To see or prune what gets injected, it's one file:
+[`hooks/core.md`](skills/concise/hooks/core.md)
+([`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md) in the PT port).
+
+One platform edge: the hook runs through Git Bash on Windows. Without Git for
+Windows installed it fails silently and you're back to invocation-only — same
+machines where Claude Code's own Bash tool doesn't run, so in practice the
+hook works wherever the rest does.
+
+**Installed by copy, the hook doesn't come along** — `~/.claude/skills/` takes
+only the skill. Pair it with a line in `CLAUDE.md`, which is loaded into
+context every session:
 
 ```markdown
 ## Writing style
@@ -169,11 +184,8 @@ Every response to me follows the `concise` skill: answer in the first sentence,
 cut preamble and process narration, keep any caveat that would change what I do.
 ```
 
-The skill holds the full ruleset; `CLAUDE.md` holds the pointer that guarantees
-it's in context. Neither one replaces the other.
-
-Installing as a plugin doesn't change this. A plugin can ship skills, agents, and
-hooks, but it can't write to your `CLAUDE.md` — that line stays yours to add.
+The skill holds the full ruleset; the hook or the `CLAUDE.md` line holds the
+pointer that guarantees it's in context. Neither one replaces the other.
 
 ## Languages
 
@@ -185,7 +197,9 @@ hooks, but it can't write to your `CLAUDE.md` — that line stays yours to add.
 Installed by copy rather than as a plugin, they invoke unprefixed: `/concise`
 and `/respostas-curtas`.
 
-Install one, not both — they're the same ruleset and would compete. The rules are
+Install one, not both — they're the same ruleset and would compete, and since
+1.3.0 each ships its own always-on hook, so both together inject the core into
+context twice. The rules are
 about structure, not vocabulary, so a translation is a faithful port rather than
 a rewrite. Ports to other languages are welcome.
 

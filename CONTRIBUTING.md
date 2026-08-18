@@ -48,6 +48,16 @@ claude plugin validate . && claude plugin validate ./skills/<name>
 It prints `Validation passed` twice. Neither check verifies that the `source`
 directory exists or that your port is listed at all — confirm that part by eye.
 
+## Keeping the hook core in sync
+
+Each plugin ships the style twice: the full ruleset in `SKILL.md`, and a
+~20-line core in `hooks/core.md` (`hooks/nucleo.md` in the PT port) that a
+`SessionStart` hook injects into every session. A PR that changes a rule
+checks whether the core states that rule — and moves it too, in both ports.
+The core drifting from the skill is worse than either alone: the model reads
+one in context and the other on invocation, and follows whichever it saw
+last.
+
 ## Bumping the version
 
 Every PR that changes a `SKILL.md` bumps `version` in that plugin's
