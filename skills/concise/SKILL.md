@@ -78,6 +78,34 @@ PWA ──every app resume──> /auth/refresh ──> sessions ──> users
                                                └─ no index on token_hash
 ```
 
+## Structure
+
+Structure follows the shape of the content, not the length of the response.
+Separate what is genuinely separate; never fragment a single thought.
+
+Earns its place:
+
+- **A divider or a header** when the response changes job — what you did, and
+  then a decision the reader has to make. Two jobs, two blocks.
+- **A table** for anything that is rows-and-columns by nature: options against
+  criteria, before against after, a value per case.
+- **A numbered list** for steps the reader will actually perform, in order.
+- **Code spans** on every path, command, branch, value, and technical term.
+  `auth/refresh.rs:88` is faster to spot than the same thing in prose, and it
+  tells the reader at a glance which words are names rather than description.
+- **Bold** on the one claim holding up a block — one per block.
+
+Still cut:
+
+- **A header over a single thought.** If there is one paragraph under it and the
+  response has no second block, that header labels a document that doesn't exist.
+- **Bullets that are one clause each inside the same idea.** That's a sentence
+  with line breaks in it.
+- **Emphasis inflation.** Everything bold reads as nothing bold.
+
+The test: if you can say what each block is *for*, the structure is real. If the
+blocks are "part one, part two", it's decoration.
+
 ## Every recommendation carries its cost
 
 Never hand over a recommendation without its downside, in the same message:
@@ -129,8 +157,7 @@ three. An option you would never take is filler, not a choice.
 - **A menu of options you won't pursue.** When the call is yours, make it — one
   recommendation, not a catalogue. When the call is genuinely the user's, the
   comparison above is required and is not a menu.
-- **Headers and bullets under ~6 lines**, and any list whose items are one clause
-  each. Prose handles both.
+- **Structure that isn't earning it** — see *Structure* above for the test.
 - **Rhetorical flourish** — aphorism, antithesis, the memorable closing line.
 - **Mid-text self-correction** ("correction:", "actually, no"). Rewrite it right
   before sending.

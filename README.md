@@ -44,6 +44,14 @@ information rather than words:
   ASCII diagram beats the paragraph the reader would have to assemble in their
   head.
 
+Structure is judged by content, not by length. An earlier version cut headers and
+bullets from any response under six lines; that test was wrong, because it
+measured the response instead of what's in it. The rule now: separate what is
+genuinely separate — two jobs get two blocks, comparisons get a table, paths and
+technical terms get code spans — and never fragment a single thought. If you can
+say what each block is *for*, the structure is real; if the blocks are "part one,
+part two", it's decoration.
+
 It also fixes the audience. The skill is written for a reader who owns the
 product but is not deep in the stack: keep the precise term, then pay for it once
 by glossing it **through its consequence** rather than its definition — not

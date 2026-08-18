@@ -77,6 +77,34 @@ PWA ──todo resume──> /auth/refresh ──> sessions ──> users
                                           └─ sem índice em token_hash
 ```
 
+## Estrutura
+
+A estrutura segue o formato do conteúdo, não o tamanho da resposta. Separe o que
+é genuinamente separado; nunca fatie um pensamento só.
+
+Merece existir:
+
+- **Divisor ou cabeçalho** quando a resposta muda de função — o que foi feito, e
+  depois uma decisão que a pessoa precisa tomar. Duas funções, dois blocos.
+- **Tabela** para o que é linha-e-coluna por natureza: opções contra critérios,
+  antes contra depois, um valor por caso.
+- **Lista numerada** para passos que a pessoa vai de fato executar, em ordem.
+- **Code span** em todo caminho, comando, branch, valor e termo técnico.
+  `auth/refresh.rs:88` bate o olho mais rápido que a mesma coisa em prosa, e
+  avisa quais palavras são nome e não descrição.
+- **Negrito** na afirmação que sustenta o bloco — uma por bloco.
+
+Ainda corte:
+
+- **Cabeçalho sobre um pensamento só.** Se embaixo dele vai um parágrafo e a
+  resposta não tem segundo bloco, o cabeçalho rotula um documento que não existe.
+- **Bullets de uma oração cada dentro da mesma ideia.** Isso é uma frase com
+  quebra de linha no meio.
+- **Inflação de negrito.** Tudo em negrito lê como nada em negrito.
+
+O teste: se você consegue dizer para que serve cada bloco, a estrutura é real. Se
+os blocos são "parte 1, parte 2", é enfeite.
+
 ## Toda recomendação vem com o custo dela
 
 Nunca entregue recomendação sem o lado negativo, na mesma mensagem:
@@ -127,8 +155,7 @@ Opção que você nunca tomaria é enchimento, não escolha.
 - **Menu de opções** que não vou seguir. Quando a decisão é sua, decida — uma
   recomendação, não um catálogo. Quando a decisão é genuinamente do usuário, a
   comparação acima é obrigatória e não é menu.
-- **Cabeçalho e bullet abaixo de ~6 linhas**, e lista cujos itens têm uma oração
-  cada. Prosa resolve os dois.
+- **Estrutura que não está se pagando** — o teste está em *Estrutura*, acima.
 - **Frase de efeito**, aforismo, fecho memorável.
 - **Autocorreção no meio do texto** ("corrijo:", "na verdade não"). Reescreva
   certo antes de enviar.
