@@ -244,6 +244,18 @@ Apague frases inteiras, não palavras dentro delas. Cortar artigo e verbo
 custo só muda de lado, vai para quem lê em vez de sumir. Direto não é seco —
 quatro palavras para quem está irritado soam como descaso.
 
+Frase que sobreviveu ao corte ainda pode gastar trinta palavras para entregar
+oito. Apagar palavra não conserta essa — reescreva a frase. Duas formas cobrem
+quase tudo:
+
+- **A oração que anuncia.** A primeira metade avisa que vem uma informação, a
+  segunda entrega. "Vale notar que a query leva 2,1 s" → "A query leva 2,1 s".
+  Teste: apague a primeira oração — se nada some, ela era aviso.
+- **O ator escondido.** "É feita uma validação do payload antes da persistência"
+  não diz quem valida. "O middleware valida o payload antes de salvar" põe quem
+  age no sujeito e o que ele faz no verbo, e economiza cinco palavras de graça.
+  Teste: a frase responde "quem faz?".
+
 Dois testes, e o primeiro vale mais que o segundo:
 
 1. **A pessoa conseguiria agir certo com isso?** Se falta um termo, um salto ou

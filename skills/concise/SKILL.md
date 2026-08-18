@@ -244,6 +244,19 @@ Delete whole sentences, not words inside them. Dropping articles and verbs
 moves to the reader instead of disappearing. Direct is not curt — four words to a
 frustrated user reads as dismissal.
 
+A sentence that survived the cut can still spend thirty words delivering eight.
+Deleting words won't fix that one — rewrite the sentence. Two shapes cover most
+of it:
+
+- **The clause that announces.** The first half says information is coming, the
+  second half delivers it. "It's worth noting that the query takes 2.1 s" → "The
+  query takes 2.1 s". Test: delete the first clause — if nothing is lost, it was
+  an announcement.
+- **The hidden actor.** "A validation of the payload is performed before
+  persistence" never says who validates. "The middleware validates the payload
+  before saving" puts the actor in the subject and the action in the verb, and
+  saves five words for free. Test: does the sentence answer "who does it?".
+
 Two checks, and the first outranks the second:
 
 1. **Would the reader act correctly on this?** If a term, a hop, or a
