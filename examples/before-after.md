@@ -1,7 +1,8 @@
 # Before / after
 
-Four transformations. The last one is longer after the edit — that's the point of
-the "never cut" list.
+Six transformations. Two of them come out *longer* after the edit — that's the
+point of the "never cut" list and of the rule that a recommendation ships with
+its cost.
 
 ---
 
@@ -133,3 +134,67 @@ unsure; don't hedge as a verbal tic.
 needs, not against the character count. The four-word version is shorter and
 costs the user their entire logged-in userbase. Everything on the "never cut"
 list looks like padding right up until it doesn't.
+
+---
+
+## 5. A question built on a false premise
+
+> **Prompt:** why is the login endpoint so slow?
+
+### Before — 74 words
+
+> A few things commonly make a login endpoint slow. The password hash is the
+> usual suspect — if bcrypt is configured with a high cost factor, that alone can
+> dominate the request. Beyond that, it's worth checking whether the user lookup
+> is hitting an index, whether the session write is in the same transaction, and
+> whether any of the audit logging is synchronous. I'd start by profiling the
+> hash step.
+
+### After — 3 sentences
+
+> It isn't. `/auth/login` is 84 ms at p95 over the last 24 h; the slow one is
+> `/auth/refresh` at 2.1 s, and the PWA calls it on every app resume, which is
+> almost certainly what you're feeling. Want me to dig into refresh?
+
+**What survived:** the correction, the two numbers that prove it, and the real
+culprit.
+
+**Why it matters:** the "before" answer is competent, plausible, and would have
+sent the reader off to profile a fast endpoint. Accepting the premise is always
+the shorter path — and the one that wastes the afternoon.
+
+---
+
+## 6. A recommendation
+
+> **Prompt:** should we move the rate limiter to Redis?
+
+### Before — 61 words, all upside
+
+> Yes, definitely — Redis is the right call here. It gives you a counter shared
+> across all replicas, it survives restarts, and it's the standard approach for
+> distributed rate limiting at this scale. I'd go with a sliding window rather
+> than a fixed one so you don't get burst clustering at the window boundary. It's
+> a well-trodden path.
+
+### After — recommendation + why + cost
+
+> Yes, move it.
+>
+> **Why:** the in-process counter is per-replica, so three replicas mean three
+> times the intended limit. It also resets on every deploy — precisely when you
+> most want it holding.
+>
+> **Cost:** Redis becomes a hard dependency of the request path. When it's
+> unavailable you have to pick between failing open (no limiting) and failing
+> closed (outage), and you're choosing that now rather than at 3 a.m. Adds ~1 ms
+> per request and one more thing to monitor.
+
+**What's new:** the cost paragraph. Without it the answer is advocacy — and the
+fail-open/fail-closed decision, which the reader now has to make deliberately,
+would otherwise have been discovered in production.
+
+**Note the length:** this answer is *longer* than the padded one it replaced. The
+"before" version spent its words on reassurance ("well-trodden path", "at this
+scale"); the "after" version spends them on the two facts that make this a
+decision instead of a preference, plus the bill.

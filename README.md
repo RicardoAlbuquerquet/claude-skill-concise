@@ -25,12 +25,20 @@ of constructs to always cut, and a shorter list to *never* cut.
 
 That second list is the part that matters. Compression is easy to overdo, and a
 one-line answer that dropped the caveat about production data is worse than the
-bloated version. The skill states outright that a risk, a cost, an exact path or
-version, and an unverified assumption all survive the edit.
+bloated version. The skill states outright that bad news, a risk, an exact path
+or version, a false premise in the question, and an unverified assumption all
+survive the edit.
 
-See [`examples/before-after.md`](examples/before-after.md) for four real
-transformations, including one where the concise answer is deliberately the
-*longer* of the two.
+One rule runs the other way and *adds* text: **a recommendation always ships with
+its cost.** Recommendation, up to three lines of why, up to three lines of what
+it makes worse or what you give up. A recommendation with no stated downside
+either has one nobody looked for or is hiding it, and from the reader's side an
+empty slot is indistinguishable from "examined it, it's cheap" — only one of
+those deserves trust.
+
+See [`examples/before-after.md`](examples/before-after.md) for six real
+transformations. Two of them come out *longer*, which is the honest result when
+what was missing was information rather than words.
 
 ## Install
 
