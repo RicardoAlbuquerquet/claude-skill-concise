@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330" role="img" aria-label="The same question answered without and with the skill">
+  <style>
+    text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+    .dim { fill: #8b949e; }
+    .fg  { fill: #e6edf3; }
+    .hl  { fill: #7ee787; }
+    .val { fill: #79c0ff; }
+    .tag { font-size: 11px; letter-spacing: .5px; }
+  </style>
+  <rect width="760" height="330" rx="10" fill="#0d1117" stroke="#30363d"/>
+  <circle cx="22" cy="20" r="5" fill="#ff5f57"/>
+  <circle cx="40" cy="20" r="5" fill="#febc2e"/>
+  <circle cx="58" cy="20" r="5" fill="#28c840"/>
+
+  <text x="24" y="52" class="fg">&gt; why is the login endpoint so slow?</text>
+
+  <line x1="380" y1="70" x2="380" y2="310" stroke="#30363d"/>
+
+  <text x="24" y="86" class="dim tag">WITHOUT THE SKILL — 74 WORDS</text>
+  <text x="24" y="112" class="dim">A few things commonly make a login</text>
+  <text x="24" y="130" class="dim">endpoint slow. The password hash is</text>
+  <text x="24" y="148" class="dim">the usual suspect — if bcrypt is</text>
+  <text x="24" y="166" class="dim">configured with a high cost factor,</text>
+  <text x="24" y="184" class="dim">that alone can dominate the request.</text>
+  <text x="24" y="202" class="dim">Beyond that, it's worth checking</text>
+  <text x="24" y="220" class="dim">whether the user lookup is hitting</text>
+  <text x="24" y="238" class="dim">an index, whether the session write</text>
+  <text x="24" y="256" class="dim">is in the same transaction, and [...]</text>
+  <text x="24" y="292" class="dim">…the premise was false.</text>
+
+  <text x="404" y="86" class="hl tag">WITH THE SKILL — 3 SENTENCES</text>
+  <text x="404" y="112" class="fg">It isn't. <tspan class="val">/auth/login</tspan> is <tspan class="val">84 ms</tspan> p95</text>
+  <text x="404" y="130" class="fg">over the last 24 h; the slow one is</text>
+  <text x="404" y="148" class="fg"><tspan class="val">/auth/refresh</tspan> at <tspan class="val">2.1 s</tspan>, and the PWA</text>
+  <text x="404" y="166" class="fg">calls it on every app resume, which</text>
+  <text x="404" y="184" class="fg">is almost certainly what you're</text>
+  <text x="404" y="202" class="fg">feeling.</text>
+  <text x="404" y="238" class="fg">Want me to dig into refresh?</text>
+  <text x="404" y="292" class="hl">…the answer, in the first sentence.</text>
+</svg>

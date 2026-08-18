@@ -1,7 +1,15 @@
 # concise
 
+[![parity](https://github.com/RicardoAlbuquerquet/claude-skill-concise/actions/workflows/parity.yml/badge.svg)](https://github.com/RicardoAlbuquerquet/claude-skill-concise/actions/workflows/parity.yml)
+[![version](https://img.shields.io/badge/dynamic/json?label=version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRicardoAlbuquerquet%2Fclaude-skill-concise%2Fmain%2Fskills%2Fconcise%2F.claude-plugin%2Fplugin.json)](CHANGELOG.md)
+[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
+**Português:** [README.pt-BR.md](README.pt-BR.md)
+
 A Claude Code skill that makes Claude answer in the register a terminal actually
 wants: the answer first, nothing padding it, and no sacrifice in correctness.
+
+![The same question answered without and with the skill](docs/before-after.svg)
 
 ## The problem
 
@@ -180,9 +188,17 @@ ships a `SessionStart` hook that prints a ~20-line core of the style into
 context at every session start — about 320 tokens, spent whether or not the
 session produces prose. The core is the guarantee; the full ruleset still
 lives in the skill, which the model invokes when a turn needs more than the
-core. To see or prune what gets injected, it's one file:
+core. What gets injected is one file:
 [`hooks/core.md`](skills/concise/hooks/core.md)
 ([`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md) in the PT port).
+
+To prune or rewrite it on your machine, don't edit the cached copy — since
+1.4.0 the self-update overwrites it on the next release. Write
+`~/.claude/concise-core-override.md` instead
+(`~/.claude/respostas-curtas-nucleo-override.md` for the PT port): when that
+file exists the hook injects it in place of the shipped core, and it survives
+every update. It replaces the core wholesale — start from a copy of the
+shipped file and cut.
 
 One platform edge: the hook runs through Git Bash on Windows. Without Git for
 Windows installed it fails silently and you're back to invocation-only — same
@@ -214,14 +230,28 @@ the skill governs what Claude writes next; these act on what is written:
   missing cost, a missing test step) is either filled from the original or
   reported as a hole, never invented. Empty arguments target Claude's own
   previous reply. PT: `/respostas-curtas:reescrever`.
+- **`/concise:pr [base]`** drafts the pull request description for the
+  current branch from the real diff against `origin/main` (or the base you
+  name), first line saying what the PR does and the exact test steps at the
+  end. PT: `/respostas-curtas:pr`.
+- **`/concise:card <subject>`** drafts a task/issue card whose body stands
+  alone — current → expected behaviour, exact values, a done criterion — and
+  creates it when you name a destination a tool can reach (an MCP board, a
+  `gh` repo). PT: `/respostas-curtas:card`.
 - **The `audit` agent** (PT: `auditar`) checks a draft against the checklist
   and returns only the violations — quoted line, rule, one-line fix — plus
   required content that is missing. It never rewrites; ask for it when you
   want the diagnosis without the surgery: *"run the audit agent on this
   draft"*.
 
-Both ship only with the plugin install; the copy-the-file path takes the
-skill alone.
+All of these ship only with the plugin install; the copy-the-file path takes
+the skill alone.
+
+There is also an **opt-in Stop auditor** in
+[`extras/stop-audit/`](extras/stop-audit/README.md): a hook you install by
+hand that judges each turn's final response against the core and warns on
+clear violations. It costs one API call per turn, which is why it does not
+ship enabled.
 
 ## Languages
 

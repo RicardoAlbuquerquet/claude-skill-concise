@@ -11,3 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: bash scripts/check-parity.sh
+
+  bump:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: git fetch origin main
+      - run: bash scripts/check-bump.sh origin/main

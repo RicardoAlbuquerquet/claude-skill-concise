@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat \"$CLAUDE_PLUGIN_ROOT/hooks/nucleo.md\"",
+            "command": "cat \"$HOME/.claude/respostas-curtas-nucleo-override.md\" 2>/dev/null || cat \"$CLAUDE_PLUGIN_ROOT/hooks/nucleo.md\"",
             "statusMessage": "Carregando o estilo respostas-curtas",
             "timeout": 10
           },

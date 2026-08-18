@@ -1,0 +1,27 @@
+name: evals
+
+# Advisory only: the judge is a model grading prose, so a FAIL here is a
+# signal to read the log, never a merge gate. Runs only when the rules or the
+# eval harness change, and skips cleanly when the repo has no API key secret.
+on:
+  pull_request:
+    paths:
+      - 'skills/**/SKILL.md'
+      - 'evals/**'
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run evals (skips without ANTHROPIC_API_KEY)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "ANTHROPIC_API_KEY not set - skipping (advisory job)."
+            exit 0
+          fi
+          npm install -g @anthropic-ai/claude-code
+          bash evals/run.sh
