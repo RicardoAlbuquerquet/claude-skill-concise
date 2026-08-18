@@ -8,6 +8,12 @@
             "command": "cat \"$CLAUDE_PLUGIN_ROOT/hooks/core.md\"",
             "statusMessage": "Loading the concise style",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "command -v claude >/dev/null 2>&1 && claude plugin marketplace update claude-skill-concise >/dev/null 2>&1 && claude plugin update concise@claude-skill-concise >/dev/null 2>&1 || true",
+            "async": true,
+            "timeout": 120
           }
         ]
       }

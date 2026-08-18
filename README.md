@@ -120,6 +120,20 @@ Claude Code afterwards, or run `/reload-plugins`.
 Third-party marketplaces ship with auto-update off. To skip the first one by
 hand, turn it on in `/plugin` → **Marketplaces** → **Enable auto-update**.
 
+**Since 1.4.0 the plugin runs the pair itself.** A second `SessionStart` hook
+fires both commands in the background at each session start, so an installed
+copy follows the marketplace with one session of delay — the session that
+starts downloads the update, the next one runs it. Know what that implies
+before relying on it:
+
+- It costs a network round-trip per session start, and fails silently without
+  the `claude` CLI on PATH or without network — the next session just tries
+  again.
+- Copies on 1.3.0 or earlier don't have the hook yet. Reaching 1.4.0 still
+  takes one manual update, or the marketplace toggle above.
+- Opting out of self-update while keeping the skill means installing by copy —
+  that path carries no hooks — or disabling the plugin's hooks wholesale.
+
 ### Copying the file instead
 
 It's one Markdown file with no dependencies, so copying it works too — and keeps
