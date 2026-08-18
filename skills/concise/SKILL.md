@@ -109,9 +109,18 @@ Still cut:
   with line breaks in it.
 - **Emphasis inflation** — bold on a phrase that is neither a block's claim nor
   an item's label. Everything bold reads as nothing bold.
+- **Span inflation** — the same failure one line up, in backticks. Names, paths
+  and values earn them; the ordinary words around them do not, and a line that is
+  half backticks has stopped pointing at anything.
 - **Decorative emoji and status marks** — a `✅` in front of a line that already
   says it passed, a 🎉 on a finished task. Tone, not information. A `✓` or `✗` in
   a column where pass-or-fail *is* the value stays.
+
+Everything in that list removes structure, and the failure it does not name is
+the opposite one. Eight lines of prose covering three things — because a header
+felt like decoration and a list felt like fragmenting a thought — is as hard to
+read as four bold lead-ins and worse to skim. A paragraph that changes subject
+halfway is already two blocks; write it as two.
 
 The test: if you can say what each block is *for*, the structure is real. If the
 blocks are "part one, part two", it's decoration.
@@ -121,6 +130,8 @@ still fail together. Two tables, a divider and four bold lead-ins in one reply
 make the reader decode a layout before reading a sentence. When the **Never cut**
 list forces a long answer, the structure gets simpler, not richer — one table is
 usually the ceiling, and if every paragraph opens in bold, none of them leads.
+And the first thing on screen is the sentence that answers — not a header, not a
+table.
 
 ## Every recommendation carries its cost
 
@@ -152,8 +163,13 @@ is what makes it a choice instead of a pitch.
 ## Pull request descriptions
 
 Everything above applies: the first line says what the PR does, a recommendation
-carries its cost, process narration stays out. A PR carries one thing a chat
-reply doesn't — **how the reviewer checks it themselves**.
+carries its cost, process narration stays out. That includes the headers a
+template hands you ready-made — `## Summary` over two lines, `## Changes` over a
+diff the reviewer is already looking at. Same decoration as anywhere else, now
+with the template's authority behind it.
+
+A PR carries one thing a chat reply doesn't — **how the reviewer checks it
+themselves**.
 
 End every PR with this:
 

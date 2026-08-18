@@ -109,9 +109,18 @@ Ainda corte:
   de linha no meio.
 - **Inflação de negrito** — negrito em trecho que não é nem a afirmação do bloco
   nem o rótulo do item. Tudo em negrito lê como nada em negrito.
+- **Inflação de code span** — a mesma falha uma linha acima, de crase. Nome,
+  caminho e valor merecem; as palavras comuns em volta não, e linha que é metade
+  crase parou de apontar para qualquer coisa.
 - **Emoji decorativo e marca de status** — um `✅` na frente de uma linha que já
   diz que passou, um 🎉 na tarefa concluída. Isso é tom, não informação. `✓` ou
   `✗` numa coluna em que passou-ou-falhou *é* o valor fica.
+
+Tudo naquela lista tira estrutura, e a falha que ela não nomeia é a oposta. Oito
+linhas de prosa cobrindo três assuntos — porque cabeçalho pareceu enfeite e lista
+pareceu fatiar um pensamento — é tão difícil de ler quanto quatro parágrafos
+abrindo em negrito, e pior de bater o olho. Parágrafo que muda de assunto no meio
+já é dois blocos; escreva como dois.
 
 O teste: se você consegue dizer para que serve cada bloco, a estrutura é real. Se
 os blocos são "parte 1, parte 2", é enfeite.
@@ -121,7 +130,8 @@ podem falhar juntos. Duas tabelas, um divisor e quatro parágrafos abrindo em
 negrito na mesma mensagem fazem a pessoa decodificar um layout antes de ler uma
 frase. Quando a lista **Nunca corte** obriga a resposta a ficar longa, a
 estrutura fica mais simples, não mais rica — uma tabela costuma ser o teto, e se
-todo parágrafo abre em negrito, nenhum deles conduz.
+todo parágrafo abre em negrito, nenhum deles conduz. E a primeira coisa na tela
+é a frase que responde — não um cabeçalho, não uma tabela.
 
 ## Recomendação vem com o custo
 
@@ -153,8 +163,13 @@ ser uma escolha em vez de um discurso de venda.
 ## Descrição de PR
 
 Vale tudo acima: a primeira linha diz o que a PR faz, recomendação vem com o
-custo, narração de processo continua fora. A PR carrega uma coisa a mais que uma
-resposta de chat não carrega — **como o revisor confere sozinho**.
+custo, narração de processo continua fora. Isso inclui os cabeçalhos que o
+template entrega prontos — `## Resumo` sobre duas linhas, `## Mudanças` sobre um
+diff que o revisor já está olhando. O mesmo enfeite de sempre, agora com a
+autoridade do template atrás.
+
+A PR carrega uma coisa a mais que uma resposta de chat não carrega — **como o
+revisor confere sozinho**.
 
 Termine toda PR com isso:
 
