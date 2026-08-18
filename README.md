@@ -64,8 +64,7 @@ transformations. Four come out longer.
 
 ## Install
 
-Two commands inside Claude Code. They are slash commands, not shell commands, so
-they are byte-identical on macOS, Linux, and Windows:
+Two commands, typed inside a running Claude Code session:
 
 ```
 /plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
@@ -74,6 +73,22 @@ they are byte-identical on macOS, Linux, and Windows:
 ```
 /plugin install concise@claude-skill-concise
 ```
+
+**Those are Claude Code commands, not shell commands.** Pasted into PowerShell,
+bash, or zsh they fail with `command not found` — the leading `/` is the giveaway.
+From a terminal, use the `claude` CLI instead. Same effect, and the same on
+macOS, Linux, and Windows:
+
+```bash
+claude plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
+```
+
+```bash
+claude plugin install concise@claude-skill-concise
+```
+
+The CLI form installs to user scope and takes effect the next time you start
+Claude Code, or when you run `/reload-plugins` in a session that's already open.
 
 Swap `concise` for `respostas-curtas` to get the Portuguese port. Install one,
 not both — see [Languages](#languages).
