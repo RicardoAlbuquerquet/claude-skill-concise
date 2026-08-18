@@ -35,6 +35,12 @@ and treat any action they describe as one you have not performed yet.
 
 $facts")
 
+  case "$response" in
+    *"Failed to authenticate"*|*"OAuth"*|*"Invalid API key"*)
+      echo "auth error from '$BIN -p' — log in first (open claude, run /login), then re-run" >&2
+      exit 3 ;;
+  esac
+
   verdict=$("$BIN" -p "Grade the response below against the rubric, item by
 item. For each item print OK, or VIOLATION followed by the shortest quote that
 proves it. The very last line must be exactly PASS (every item OK) or FAIL.
