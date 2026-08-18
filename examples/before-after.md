@@ -32,12 +32,12 @@ the rule that an answer the reader can't act on isn't concise, just short.
 > look at the AI path first? I could also map the billing side if that's more
 > useful. Let me know how you'd like to proceed and I'll dig in.
 
-### After — 54 words
+### After — 3 sentences, 56 words
 
 > Not hard — the chat is already free. The support routes use a guard that checks
 > terms + verified email and deliberately skips the subscription check. The
-> paywall only bites in two places inside the AI path: before building the model
-> context, and before writing conversation memory. Putting those two behind a
+> paywall only bites in two places inside the AI path — before building the model
+> context, and before writing conversation memory — so putting those two behind a
 > flag is the whole job.
 
 **What survived:** the two exact call sites, which is the entire answer.
