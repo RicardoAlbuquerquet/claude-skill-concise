@@ -10,7 +10,7 @@ Uma skill de Claude Code que faz o Claude responder no registro que um terminal
 realmente quer: a resposta primeiro, nada enchendo, e nenhum sacrifício de
 correção.
 
-![A mesma pergunta respondida sem e com a skill](docs/before-after.svg)
+![A mesma pergunta respondida sem e com a skill](docs/before-after.pt-BR.svg)
 
 ## O problema
 
