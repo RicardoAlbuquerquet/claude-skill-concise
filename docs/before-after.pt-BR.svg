@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330" role="img" aria-label="A mesma pergunta respondida sem e com a skill">
+  <style>
+    text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+    .dim { fill: #8b949e; }
+    .fg  { fill: #e6edf3; }
+    .hl  { fill: #7ee787; }
+    .val { fill: #79c0ff; }
+    .tag { font-size: 11px; letter-spacing: .5px; }
+  </style>
+  <rect width="760" height="330" rx="10" fill="#0d1117" stroke="#30363d"/>
+  <circle cx="22" cy="20" r="5" fill="#ff5f57"/>
+  <circle cx="40" cy="20" r="5" fill="#febc2e"/>
+  <circle cx="58" cy="20" r="5" fill="#28c840"/>
+
+  <text x="24" y="52" class="fg">&gt; por que o endpoint de login está tão lento?</text>
+
+  <line x1="380" y1="70" x2="380" y2="310" stroke="#30363d"/>
+
+  <text x="24" y="86" class="dim tag">SEM A SKILL — 8 LINHAS</text>
+  <text x="24" y="112" class="dim">Algumas coisas costumam deixar um</text>
+  <text x="24" y="130" class="dim">endpoint de login lento. O hash de</text>
+  <text x="24" y="148" class="dim">senha é o suspeito usual — se o</text>
+  <text x="24" y="166" class="dim">bcrypt está com fator de custo alto,</text>
+  <text x="24" y="184" class="dim">só ele pode dominar a request. Além</text>
+  <text x="24" y="202" class="dim">disso, vale conferir se a busca de</text>
+  <text x="24" y="220" class="dim">usuário bate índice, se a escrita de</text>
+  <text x="24" y="238" class="dim">sessão está na mesma transação, e [...]</text>
+  <text x="24" y="292" class="dim">…a premissa era falsa.</text>
+
+  <text x="404" y="86" class="hl tag">COM A SKILL — 3 FRASES</text>
+  <text x="404" y="112" class="fg">Não está. O <tspan class="val">/auth/login</tspan> está em</text>
+  <text x="404" y="130" class="fg"><tspan class="val">84 ms</tspan> p95 nas últimas 24 h; o lento</text>
+  <text x="404" y="148" class="fg">é o <tspan class="val">/auth/refresh</tspan>, a <tspan class="val">2,1 s</tspan>, e o PWA</text>
+  <text x="404" y="166" class="fg">chama ele a cada retomada do app —</text>
+  <text x="404" y="184" class="fg">é quase certamente isso que você</text>
+  <text x="404" y="202" class="fg">está sentindo.</text>
+  <text x="404" y="238" class="fg">Quer que eu investigue o refresh?</text>
+  <text x="404" y="292" class="hl">…a resposta, na primeira frase.</text>
+</svg>
