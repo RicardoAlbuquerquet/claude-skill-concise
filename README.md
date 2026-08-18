@@ -122,7 +122,7 @@ This skill is a style guide, which makes it unusually easy to fill with advice
 that reads well and changes nothing. Every rule in it has to clear two tests:
 
 1. **Checkable.** A rule you can't verify against a finished response is
-   decoration. `"cut headers under ~6 lines"` is checkable; `"be clear"` is not.
+   decoration. `"one bold claim per block"` is checkable; `"be clear"` is not.
 2. **Names a real failure.** The rule should exist because a specific bad output
    happens without it — ideally one you can quote.
 

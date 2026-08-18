@@ -8,8 +8,8 @@ well, contradicts nothing, and changes no output. Please help keep it small.
 A rule gets in if it clears both tests:
 
 1. **Checkable.** You can hold a finished response next to the rule and say
-   whether it complied. "Cut headers under ~6 lines" passes. "Write clearly"
-   does not.
+   whether it complied. "One bold claim per block" passes. "Write clearly" does
+   not.
 2. **Names a real failure.** It exists because something specific goes wrong
    without it. Quote the bad output in your PR description — a real one you saw,
    not a hypothetical.
