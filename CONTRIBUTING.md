@@ -96,8 +96,11 @@ catalogue, not the installed plugin.
 
 ## Testing a change
 
-The subject is prose, so the test suite is partial by nature. Three layers,
-cheapest first:
+The subject is prose, so the test suite is partial by nature. On Windows, run
+every `bash …` command below from **Git Bash** — typed into PowerShell,
+`bash` is the WSL stub, which fails asking for a distribution; the long form
+`& "C:\Program Files\Git\bin\bash.exe" <script>` works from PowerShell too.
+Three layers, cheapest first:
 
 - **Parity**, free: `bash scripts/check-parity.sh` — CI runs it on every PR.
 - **Evals**, ~12 API calls: `bash evals/run.sh` sends six prompts from

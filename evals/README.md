@@ -11,6 +11,14 @@ word".
 bash evals/run.sh
 ```
 
+On Windows, run it from **Git Bash** — typed into PowerShell, `bash` is the
+WSL stub, which answers that no distribution is installed. From PowerShell
+the long form works:
+
+```powershell
+& "C:\Program Files\Git\bin\bash.exe" evals/run.sh
+```
+
 `SKILL=respostas-curtas` runs the PT port (the rubrics check structure, not
 language, so they grade either). `ONLY=03` runs a single case by filename
 fragment. `CLAUDE_BIN` swaps the CLI binary, which is how the harness itself
