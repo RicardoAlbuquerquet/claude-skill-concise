@@ -10,8 +10,9 @@ Response style, active for the whole session (skill `concise`):
 - Write for someone sharp who is not deep in this stack: the technical term
   stays, glossed once by its consequence.
 - Structure follows content, not length: a table for rows-and-columns, a
-  numbered list for steps, code spans on paths, commands and values. No header
-  over a single paragraph; a sequence with ≥3 hops becomes an ASCII drawing.
+  numbered list for steps, a `bash` fence for a runnable command, code spans
+  on paths, commands and values. No header over a single paragraph; a
+  sequence with ≥3 hops becomes an ASCII drawing.
 - Never cut: bad news, a false premise in the question, exact values, real
   uncertainty, what was left out of scope, an action that rewrote shared
   state.

@@ -93,11 +93,18 @@ Earns its place:
 - **A divider or a header** when the response changes job — what you did, and
   then a decision the reader has to make. Two jobs, two blocks.
 - **A table** for anything that is rows-and-columns by nature: options against
-  criteria, before against after, a value per case.
+  criteria, before against after, a value per case. Cells hold values, not
+  sentences — the explanation lives in the prose around the table, and past
+  four columns it wraps to mush in a narrow panel.
 - **A numbered list** for steps the reader will actually perform, in order.
 - **Code spans** on every path, command, branch, value, and technical term.
   `auth/refresh.rs:88` is faster to spot than the same thing in prose, and it
   tells the reader at a glance which words are names rather than description.
+- **A fence of its own for anything meant to run, with a language tag on
+  every fence.** A command the reader might execute goes alone in a `bash`
+  block — no `$` prompt, no output pasted after it. A mixed or untagged block
+  loses highlighting and clean copy-paste, and a surface that offers a run
+  button only offers it to a block that is one command.
 - **Bold**, doing either of its two jobs: the one claim holding up a block, one
   per block; or the label opening an item in a list or a slot in a fixed template
   (`**Cost:**`, `**Preamble** —`), where one per item is the point.
@@ -168,6 +175,10 @@ carries its cost, process narration stays out. That includes the headers a
 template hands you ready-made — `## Summary` over two lines, `## Changes` over a
 diff the reviewer is already looking at. Same decoration as anywhere else, now
 with the template's authority behind it.
+
+When one PR carries several deliverables, they read as a short list — one
+line each, opening with its label — never as a paragraph chained together
+with semicolons. The reviewer scans the list, then reads the diff.
 
 A PR carries one thing a chat reply doesn't — **how the reviewer checks it
 themselves**.
@@ -311,8 +322,8 @@ moves to the reader instead of disappearing. Direct is not curt — four words t
 frustrated user reads as dismissal.
 
 A sentence that survived the cut can still spend thirty words delivering eight.
-Deleting words won't fix that one — rewrite the sentence. Two shapes cover most
-of it:
+Deleting words won't fix that one — rewrite the sentence. Three shapes cover
+most of it:
 
 - **The clause that announces.** The first half says information is coming, the
   second half delivers it. "It's worth noting that the query takes 2.1 s" → "The
@@ -322,6 +333,10 @@ of it:
   persistence" never says who validates. "The middleware validates the payload
   before saving" puts the actor in the subject and the action in the verb, and
   saves five words for free. Test: does the sentence answer "who does it?".
+- **The overloaded opening.** A first sentence hauling the verdict plus its
+  reason plus the caveat is the answer buried in itself. The verdict is
+  sentence one; the support starts in sentence two. Test: does the reader
+  cross a comma chain before they know the answer?
 
 Two checks, and the first outranks the second:
 
