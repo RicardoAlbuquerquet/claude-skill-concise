@@ -15,7 +15,8 @@ BIN="${CLAUDE_BIN:-claude}"
 SKILL_FILE="$ROOT/skills/$SKILL/SKILL.md"
 [ -f "$SKILL_FILE" ] || { echo "no such skill: $SKILL_FILE" >&2; exit 2; }
 
-section () { awk -v s="## $1" '$0==s{f=1;next} /^## /{f=0} f' "$2"; }
+# sub(/\r$/,"") tolerates CRLF working copies (Windows checkout read from WSL)
+section () { awk -v s="## $1" '{sub(/\r$/,"")} $0==s{f=1;next} /^## /{f=0} f' "$2"; }
 
 pass=0 failn=0
 for case_file in "$ROOT"/evals/cases/*.md; do
@@ -55,4 +56,5 @@ done
 
 echo "----"
 echo "$pass passed, $failn failed"
+[ $((pass + failn)) -gt 0 ] || { echo "no case matched ONLY=${ONLY:-}" >&2; exit 2; }
 [ "$failn" -eq 0 ]

@@ -13,7 +13,7 @@
             "type": "command",
             "command": "command -v claude >/dev/null 2>&1 && claude plugin marketplace update claude-skill-concise >/dev/null 2>&1 && claude plugin update respostas-curtas@claude-skill-concise >/dev/null 2>&1 || true",
             "async": true,
-            "timeout": 120
+            "timeout": 30
           }
         ]
       }

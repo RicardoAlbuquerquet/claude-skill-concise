@@ -126,6 +126,8 @@ copy follows the marketplace with one session of delay — the session that
 starts downloads the update, the next one runs it. Know what that implies
 before relying on it:
 
+- It moves only when the release bumped `version`, same as the manual pair —
+  an unbumped change on `main` never propagates.
 - It costs a network round-trip per session start, and fails silently without
   the `claude` CLI on PATH or without network — the next session just tries
   again.

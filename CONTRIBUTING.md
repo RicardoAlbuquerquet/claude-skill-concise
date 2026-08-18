@@ -70,8 +70,14 @@ drops the rule still gets through, so the by-eye check above stays.
 
 ## Bumping the version
 
-Every PR that changes a `SKILL.md` bumps `version` in that plugin's
-`.claude-plugin/plugin.json`. Both ports move together, so they stay comparable.
+Every PR that changes anything inside a plugin — `SKILL.md`, the hook core,
+`hooks.json`, a command, an agent — bumps `version` in that plugin's
+`.claude-plugin/plugin.json`. Both ports move together, so they stay
+comparable.
+
+Since 1.4.0 the self-update hook rides on this: it runs `claude plugin
+update`, which compares version numbers, so an unbumped change lands on
+`main` and never reaches a single installed copy.
 
 Without the bump, an installed copy never updates. `claude plugin update
 concise@claude-skill-concise` compares version numbers, not content, and answers
