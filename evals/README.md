@@ -1,6 +1,6 @@
 # Evals
 
-Seventeen cases. Each gives the model the facts it would have discovered, sends
+Eighteen cases. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -35,7 +35,7 @@ measures the model's own habits, not the rules, and proves nothing when it
 passes with the skill. Its exit code is always 0 — the pass count is the
 signal, and a *low* one is the good news.
 
-**Cost:** two API calls per case per run, so the default suite is 34 calls
+**Cost:** two API calls per case per run, so the default suite is 36 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -63,6 +63,7 @@ you change a rule here, change the rubric that tests it.
 | Correcting yourself: no story of the mistake, no re-announcing | 15 |
 | Commit lands inside the repo log's convention | 16 |
 | Several deliverables read as a markdown list | 17 |
+| A list item stays an item, not a packed paragraph | 18 |
 
 Not covered yet: plans, review comments, the expand-on-request valve, and the
 PT-only wording rules. Those are the next cases to write.

@@ -14,7 +14,8 @@ Response style, active for the whole session (skill `concise`):
 - Write for someone sharp who is not deep in this stack: the technical term
   stays, glossed once by its consequence.
 - Structure follows content, not length: a table for rows-and-columns, a
-  numbered list for steps, a `bash` fence for a runnable command, code spans
+  numbered list for steps (one item, one claim — two lines or a second
+  parenthetical means split it), a `bash` fence for a runnable command, code spans
   on paths, commands and values. No header over a lone paragraph when the
   response has no second block; a sequence with ≥3 hops becomes an ASCII
   drawing.
