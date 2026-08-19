@@ -5,6 +5,19 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.19.0 — 2026-08-19
+
+- **A PR description opens with two sentences: what it does, and what was
+  wrong without it.** The ruleset asked for the change and never for the
+  symptom, so a reviewer got "fixes the fence handling" where they needed
+  "the export truncated its own output whenever the description contained a
+  code block". Knowing the symptom is what lets someone judge whether the
+  fix is the right one. The second sentence goes when the first already
+  carries the problem.
+- `/concise:pr` takes the problem from the commits, the linked card or the
+  branch name — never invented — and the audit agent checks the opening.
+- Cases 10 and 17 check it, so the rule regresses instead of drifting.
+
 ## 1.18.1 — 2026-08-19
 
 - **The log decides the shape of a title, never its substance.** Adding the
