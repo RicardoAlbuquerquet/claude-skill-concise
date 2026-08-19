@@ -245,6 +245,13 @@ id dele. A referência vem da conversa ou de um tracker que uma ferramenta
 alcança, e de nenhum outro lugar: PR sem card conhecido não carrega
 referência, e não carrega uma inventada.
 
+**Duas frases abrem: o que a PR faz, e depois o que estava errado sem ela.**
+O problema nos termos de quem lê, não nos do diff — "a exportação truncava a
+própria saída sempre que a descrição tinha bloco de código" ganha de "corrige
+o tratamento de cerca". Quem conhece o sintoma julga se a correção é a certa;
+quem só conhece a mudança consegue no máximo conferir se compila. Pule a
+segunda frase só quando a primeira já carrega o problema dentro dela.
+
 A PR carrega uma coisa a mais que uma resposta de chat não carrega — **como o
 revisor confere sozinho**.
 

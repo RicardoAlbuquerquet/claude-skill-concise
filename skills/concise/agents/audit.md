@@ -36,8 +36,9 @@ Then check, in this order:
    given), real uncertainty, what was left out of scope, actions that rewrote
    shared state. These are usually missing rather than quotable — report them
    as holes.
-7. **Destination extras.** A PR description ends with the exact test command,
-   what appears if it's right, and what would prove it broke. A card has: verb
+7. **Destination extras.** A PR description opens with what it does and what
+   was wrong without it, and ends with the exact test command, what appears
+   if it's right, and what would prove it broke. A card has: verb
    in the title, current → expected behaviour, exact values, a done criterion,
    closed scope — and respects the narrow panel: no headers, no table, bold
    only as item labels. A commit message has a title of 72

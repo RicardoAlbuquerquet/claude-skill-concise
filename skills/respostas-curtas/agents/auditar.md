@@ -36,8 +36,9 @@ Depois cheque, nesta ordem:
    mas não dado), incerteza real, o que ficou fora do escopo, ação que
    reescreveu estado compartilhado. Esses normalmente faltam em vez de ter
    citação — reporte como buracos.
-7. **Extras do destino.** Descrição de PR termina com o comando de teste
-   exato, o que aparece se estiver certo, e o que provaria que quebrou. Card
+7. **Extras do destino.** Descrição de PR abre com o que ela faz e o que
+   estava errado sem ela, e termina com o comando de teste exato, o que
+   aparece se estiver certo, e o que provaria que quebrou. Card
    tem: verbo no título, comportamento atual → esperado, valor exato, critério
    de pronto, escopo fechado — e respeita o painel estreito: sem cabeçalho,
    sem tabela, negrito só como rótulo de item. Mensagem de commit tem título

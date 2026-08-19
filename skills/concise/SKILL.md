@@ -240,6 +240,14 @@ or id. The reference comes from the conversation or from a tracker a tool
 can reach, and from nowhere else: a PR with no known card carries no
 reference, not an invented one.
 
+**Two sentences open it: what the PR does, then what was wrong without it.**
+The problem in the reader's terms, not the diff's — "the export truncated its
+own output whenever the description contained a code block" beats "fixes the
+fence handling". A reviewer who knows the symptom can judge whether this is
+the right fix; one who only knows the change can only check that it compiles.
+Skip the second sentence only when the first already carries the problem
+inside it.
+
 A PR carries one thing a chat reply doesn't — **how the reviewer checks it
 themselves**.
 

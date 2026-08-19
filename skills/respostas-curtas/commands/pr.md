@@ -33,18 +33,21 @@ Como:
    descrição como referência com link: `Closes #N` no GitHub quando a PR o
    resolve, o link ou id do card nos demais. Não achado, sem referência —
    nunca invente uma, e não trave perguntando por ela.
-4. Primeira linha: o que a PR faz. Depois dela, só o que o revisor não tira
-   mais rápido do próprio diff: o que muda para quem usa, decisões tomadas
-   com seus custos, o que ficou fora do escopo, e qualquer coisa não
-   verificada — nomeada como não verificada. Quando o diff atravessa muitos
-   arquivos, uma linha diz por onde começar a ler — o arquivo onde o
-   mecanismo vive.
-5. Sem cabeçalho seu de template sobre conteúdo curto, sem prosa repetindo o
+4. Abra com duas frases: o que a PR faz, e depois o que estava errado sem
+   ela — o problema nos termos de quem lê, tirado dos commits, do card
+   linkado ou do nome da branch, nunca inventado. Quando a primeira frase já
+   carrega o problema, a segunda é redundante e sai.
+5. Depois disso, só o que o revisor não tira mais rápido do próprio diff: o
+   que muda para quem usa, decisões tomadas com seus custos, o que ficou
+   fora do escopo, e qualquer coisa não verificada — nomeada como não
+   verificada. Quando o diff atravessa muitos arquivos, uma linha diz por
+   onde começar a ler — o arquivo onde o mecanismo vive.
+6. Sem cabeçalho seu de template sobre conteúdo curto, sem prosa repetindo o
    diff, sem narração de processo, sem crédito a agente de IA em lugar
    nenhum. Várias entregas viram lista curta — uma linha cada, rótulo
    primeiro, `- ` no começo da linha — nunca parágrafo emendado com
    ponto-e-vírgula ou travessão.
-6. Termine com os passos de teste: o comando exato copiável, o que aparece se
+7. Termine com os passos de teste: o comando exato copiável, o que aparece se
    estiver certo, e o que provaria que quebrou quando o comando não cobre o
    caso. Quando você não rodou um passo, diga isso dentro do próprio passo.
    Feature ainda sem tela não é desculpa — o passo é a própria chamada
