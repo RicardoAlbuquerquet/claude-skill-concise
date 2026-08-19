@@ -1,11 +1,12 @@
 # Evals
 
-Six cases, each derived from a pair in
-[`examples/before-after.md`](../examples/before-after.md). A case gives the
-model the facts it would have discovered, sends the prompt, and grades the
-response against a rubric of checkable style properties — answer in the first
-sentence, exact values kept, cost stated, caveat surviving a "confirm in one
-word".
+Nine cases. Six derive from pairs in
+[`examples/before-after.md`](../examples/before-after.md); three cover rules
+the examples predate — the `bash` fence for runnable commands, the overloaded
+opening, and commit messages. A case gives the model the facts it would have
+discovered, sends the prompt, and grades the response against a rubric of
+checkable style properties — answer in the first sentence, exact values kept,
+cost stated, caveat surviving a "confirm in one word".
 
 ```bash
 bash evals/run.sh
@@ -25,7 +26,7 @@ fragment. `CLAUDE_BIN` swaps the CLI binary, which is how the harness itself
 is tested without spending API calls.
 
 **Cost and noise, before you run it:** each case is two `claude -p` calls —
-one to answer, one to judge — so the full suite is 12 calls and a few minutes.
+one to answer, one to judge — so the full suite is 18 calls and a few minutes.
 The judge is a model grading prose: a FAIL is a signal to read the printed
 verdict, not a verdict by itself, and a run is not perfectly reproducible. Use
 it to compare a SKILL.md edit against `main`, not as a gate that must be
