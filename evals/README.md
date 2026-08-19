@@ -44,26 +44,40 @@ a FAIL is a signal to read the printed verdict, not a verdict by itself.
 The map is what makes an edited rule regress instead of silently drifting: if
 you change a rule here, change the rubric that tests it.
 
-| Rule (SKILL.md) | Case |
-|---|---|
-| Answer in the first sentence; no preamble | 01, and every other rubric |
-| Completed work ≤5 lines, gate result | 02 |
-| Investigation: finding + consequence | 03 |
-| Never cut: caveat that changes what the user does | 04 |
-| Recommendation carries its cost | 05 |
-| The user's choice: options side by side + a recommendation | 06 |
-| A runnable command gets its own `bash` fence | 07 |
-| Overloaded opening: verdict first, support second | 08 |
-| Commit message: verb-first title ≤72, body says why | 09 |
-| PR description: test steps, unverified named | 10 |
-| Card: stands alone, narrow-panel structure | 11 |
-| Status update: only the delta | 12 |
-| Bad news; the second question in a two-question message | 13 |
-| Draw the shape; gloss by consequence | 14 |
-| Correcting yourself: no story of the mistake, no re-announcing | 15 |
-| Commit lands inside the repo log's convention | 16 |
-| Several deliverables read as a markdown list | 17 |
-| A list item stays an item, not a packed paragraph | 18 |
+| Rule (SKILL.md) | Case | Discriminates |
+|---|---|---|
+| Answer in the first sentence; no preamble | 01, and every other rubric | no |
+| Completed work ≤5 lines, gate result | 02 | no |
+| Investigation: finding + consequence | 03 | no |
+| Never cut: caveat that changes what the user does | 04 | no |
+| Recommendation carries its cost | 05 | no |
+| The user's choice: options side by side + a recommendation | 06 | **yes** |
+| A runnable command gets its own `bash` fence | 07 | **yes** |
+| Overloaded opening: verdict first, support second | 08 | no |
+| Commit message: title says what changes, body says why | 09 | **yes** |
+| PR description: test steps, unverified named | 10 | no |
+| Card: stands alone, narrow-panel structure | 11 | **yes** |
+| Status update: only the delta | 12 | no |
+| Bad news; the second question in a two-question message | 13 | no |
+| Draw the shape; gloss by consequence | 14 | **yes** |
+| Correcting yourself: no story of the mistake, no re-announcing | 15 | no |
+| Commit lands inside the repo log's convention | 16 | no |
+| Several deliverables read as a markdown list | 17 | **yes** |
+| A list item stays an item, not a packed paragraph | 18 | **yes** |
+
+**Measured 2026-08-19, on `claude-opus-5`: 18/18 with the skill, 11/18 at
+baseline.** So seven cases measure what the plugin adds; the other eleven
+describe behaviour Claude Code already has by default, and would keep passing
+if the rule vanished. They are not worthless — a default can regress, and a
+rule that matches the default still documents it — but the suite's real
+discriminating power is those seven, and a new case should aim to fail at
+baseline.
+
+The baseline run needs an isolated config, or it grades the skill against
+itself: a global `CLAUDE.md` carrying the style, and the plugin's own hook,
+both reach `claude -p`. Copy `~/.claude/.credentials.json` and a
+plugin-less `settings.json` into a scratch directory and point
+`CLAUDE_CONFIG_DIR` at it — an empty directory alone loses the login.
 
 Not covered yet: plans, review comments, the expand-on-request valve, and the
 PT-only wording rules. Those are the next cases to write.

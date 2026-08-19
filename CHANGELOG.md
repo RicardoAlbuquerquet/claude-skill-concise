@@ -12,6 +12,11 @@ without an entry tells nobody what it brought.
   items, not one line holding four parentheses. The failure hid in plain
   sight because it looks like a list — the rule the semicolon ban already
   covered in prose, escaping through the format that promised a scan.
+- **First baseline run, in an isolated config: 11 of the 18 cases pass with
+  no style at all.** Seven measure what the plugin adds; the rest describe
+  what Claude Code already does. The suite says 18/18 with the skill, and
+  that number was hiding how much of it the skill is responsible for — the
+  rule → case map now carries the answer per case.
 - Where the rule sits turned out to matter more than how it was worded.
   Stated only as a prohibition, it held in 1 of 3 runs; moved to where a
   list is decided — the definition of what a list is for — it held in 3 of
