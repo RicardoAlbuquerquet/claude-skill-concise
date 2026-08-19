@@ -1,6 +1,6 @@
 ---
 name: respostas-curtas
-description: Estilo obrigatório de toda resposta escrita ao usuário — a resposta na primeira frase, sem poluição visual, sem informação além da necessária. Vale em todo turno que produza texto ao usuário, e no que sai da conversa: descrição de PR, tarefa e issue.
+description: Estilo obrigatório de toda resposta escrita ao usuário — a resposta na primeira frase, sem poluição visual, sem informação além da necessária. Vale em todo turno que produza texto ao usuário, inclusive atualização de status, e no que sai da conversa: mensagem de commit, descrição de PR, tarefa e issue.
 ---
 
 # Respostas curtas
@@ -20,7 +20,7 @@ A **resposta vem na primeira frase**. Depois dela, só o que muda uma decisão.
 
 | Situação | Tamanho |
 |---|---|
-| Pergunta de fato | 1–3 frases; sim/não começa com sim ou não |
+| Pergunta de fato | 1–3 frases; sim/não começa com sim ou não — salvo premissa falsa ou incerteza real, e aí a correção é que abre |
 | Recomendação (decisão sua) | recomendação + ≤3 linhas de motivo + ≤3 linhas de custo |
 | Escolha que é do usuário | opções lado a lado + recomendação + ≤3 linhas do porquê ela ganha |
 | Trabalho concluído | o que mudou, onde, e se o gate está verde — ≤5 linhas |
@@ -138,8 +138,8 @@ Depois, um teste sobre a resposta inteira, porque blocos que passam um a um aind
 podem falhar juntos. Duas tabelas, um divisor e quatro parágrafos abrindo em
 negrito na mesma mensagem fazem a pessoa decodificar um layout antes de ler uma
 frase. Quando a lista **Nunca corte** obriga a resposta a ficar longa, a
-estrutura fica mais simples, não mais rica — uma tabela costuma ser o teto, e se
-todo parágrafo abre em negrito, nenhum deles conduz. E a primeira coisa na tela
+estrutura fica mais simples, não mais rica — uma tabela é o teto, e se todo
+parágrafo abre em negrito, nenhum deles conduz. E a primeira coisa na tela
 é a frase que responde — não um cabeçalho, não uma tabela.
 
 ## Recomendação vem com o custo
@@ -323,7 +323,8 @@ estreita — `git log --oneline` mostra o título e mais nada.
 - **Justificativa não pedida.** O "por que" entra quando perguntarem por quê,
   quando a razão *é* o achado, ou como as ≤3 linhas que a recomendação deve.
 - **Menu de opções** que você não vai seguir. Quando a decisão é sua, decida.
-- **Frase de efeito**, aforismo, fecho memorável.
+- **Floreio retórico** — aforismo, antítese ("não é só X — é Y"), fecho
+  memorável.
 - **Autocorreção no meio do texto** ("corrijo:", "na verdade não"). Reescreva
   certo antes de enviar. Quando o que você corrige é uma *resposta* anterior,
   vale o mesmo para o turno inteiro: sem pedido de desculpa, sem relato de como
@@ -361,8 +362,7 @@ ressalva. Ela volta quando muda, quando a pessoa está prestes a agir contra ela
 ou na hora de entregar o trabalho; até lá, uma oração apontando para ela ganha do
 parágrafo.
 
-Assunto longo pode ter resposta longa — um plano, uma auditoria, uma migração. O
-que não pode é linha sem informação.
+Assunto longo pode ter resposta longa — um plano, uma auditoria, uma migração.
 
 ## Antes de enviar
 

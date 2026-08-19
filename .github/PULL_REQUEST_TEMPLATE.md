@@ -16,6 +16,6 @@ If a plugin changed, the version bumped and CHANGELOG.md gained a line
 3. What would prove it broke, when step 1 doesn't cover it.
 Say inside the step when you did not run it. -->
 
-Como testar:
+How to test:
 
 1.

@@ -5,19 +5,19 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat \"$HOME/.claude/respostas-curtas-nucleo-override.md\" 2>/dev/null || cat \"$CLAUDE_PLUGIN_ROOT/hooks/nucleo.md\"",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/inject-core.sh\" respostas-curtas-nucleo-override.md nucleo.md",
             "statusMessage": "Carregando o estilo respostas-curtas",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "today=$(date +%Y%m%d); [ \"$(cat \"$HOME/.claude/.respostas-curtas-update-stamp\" 2>/dev/null)\" = \"$today\" ] && exit 0; command -v claude >/dev/null 2>&1 && claude plugin marketplace update claude-skill-concise >/dev/null 2>&1 && claude plugin update respostas-curtas@claude-skill-concise >/dev/null 2>&1 && printf '%s' \"$today\" > \"$HOME/.claude/.respostas-curtas-update-stamp\" || true",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/self-update.sh\" respostas-curtas",
             "async": true,
             "timeout": 30
           },
           {
             "type": "command",
-            "command": "[ -f \"$HOME/.claude/.respostas-curtas-boasvindas\" ] || { printf 'respostas-curtas instalado: /respostas-curtas:reescrever (refaz um texto), :pr (descricao de PR pelo diff), :card (tarefa que se sustenta sozinha), :commit (mensagem do diff staged), mais o agente auditar. Este aviso aparece uma vez.\\n'; touch \"$HOME/.claude/.respostas-curtas-boasvindas\"; }",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/notices.sh\" respostas-curtas \"respostas-curtas ativo. Comandos: /respostas-curtas:reescrever refaz um texto pronto, :pr escreve a descricao da PR pelo diff, :card escreve a tarefa que se sustenta sozinha, :commit escreve a mensagem do que esta staged. O agente auditar reporta violacoes sem reescrever. Este aviso aparece uma vez.\" \"respostas-curtas: o auto-update falha ha mais de uma semana. Rode %s para ver o erro.\"",
             "timeout": 10
           }
         ]
@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qE 'git commit|gh pr create' && printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Credito de IA no texto (Co-Authored-By / Generated with). A regra de respostas-curtas proibe creditar agente de IA em commit e PR - reescreva sem isso.\"}}'; fi",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"Credito de IA no texto. A regra de respostas-curtas proibe creditar agente de IA em commit, PR, issue e release - reescreva sem isso.\" .respostas-curtas-no-credit-guard",
             "timeout": 10
           }
         ]
@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qE 'git commit|gh pr create' && printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Credito de IA no texto (Co-Authored-By / Generated with). A regra de respostas-curtas proibe creditar agente de IA em commit e PR - reescreva sem isso.\"}}'; fi",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"Credito de IA no texto. A regra de respostas-curtas proibe creditar agente de IA em commit, PR, issue e release - reescreva sem isso.\" .respostas-curtas-no-credit-guard",
             "timeout": 10
           }
         ]

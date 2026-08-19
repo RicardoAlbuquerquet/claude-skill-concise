@@ -6,8 +6,10 @@ argument-hint: [text to rewrite — empty targets your previous reply]
 Rewrite one finished text so it complies with the `concise` ruleset. If the
 full ruleset is not already in context, invoke the `concise` skill first.
 
-The target is the text below. If it is empty, the target is your own previous
-response in this conversation.
+The target is the text below. When the whole argument is a path to a file
+that exists, read that file and rewrite its contents; when it is empty, the
+target is your own previous response in this conversation; otherwise the
+argument itself is the text.
 
 $ARGUMENTS
 
@@ -27,7 +29,9 @@ Rules of the rewrite:
 
 Deliver the rewritten text first. Put it in a fenced block when it is destined
 for another surface — PR, issue, commit message, e-mail — so it can be copied
-whole; leave it as prose when it is a chat reply. After it, only if the
-original was missing something the ruleset requires, add one line per hole,
-each opening with **Missing:**. Nothing else: no before/after word counts, no
-commentary on what was cut.
+whole, with four backticks when the text carries a fence of its own; leave it
+as prose when it is a chat reply. A file target is delivered the same way —
+never edit the file unless the user asks. After it, only if the original was
+missing something the ruleset requires, add one line per hole, each opening
+with **Missing:**. Nothing else: no before/after word counts, no commentary
+on what was cut.

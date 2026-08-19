@@ -37,7 +37,8 @@ cabeçalho nem tabela, corpo que se sustenta sozinho — e corrija o que
 falhar. Entregue só a versão limpa.
 
 Entrega: título na primeira linha, corpo em bloco de código, pronto para
-colar.
+colar. Cerque com quatro crases quando o corpo carregar uma cerca própria —
+comando de reprodução carrega — para o invólucro não terminar na de dentro.
 
 Quando a invocação nomeia um destino — um board, um repo, um projeto — e
 existe ferramenta para ele (MCP, `gh`), crie lá depois do rascunho, nesta

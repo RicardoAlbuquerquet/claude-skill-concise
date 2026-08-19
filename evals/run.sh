@@ -27,6 +27,12 @@ for case_file in "$ROOT"/evals/cases/*.md; do
   prompt=$(section Prompt "$case_file")
   rubric=$(section Rubric "$case_file")
 
+  # A missing or misnamed section produces an empty rubric, and an empty
+  # rubric has nothing to violate — a permanent false PASS in the only
+  # safety net the rules have. (Facts may legitimately be empty.)
+  [ -n "$prompt" ] && [ -n "$rubric" ] || {
+    echo "$name: no '## Prompt' or '## Rubric' section" >&2; exit 2; }
+
   response=$("$BIN" -p "$prompt" --append-system-prompt "$(cat "$SKILL_FILE")
 
 You are replying in a terminal. Do not use tools. The facts below are things
@@ -34,12 +40,23 @@ you already verified yourself this session — treat them as your own findings,
 and treat any action they describe as one you have not performed yet.
 
 $facts")
+  rc=$?
 
+  # A dead CLI must abort the suite, not spread across every case as a FAIL
+  # the rules did not earn. Auth is matched at the start of the output, so a
+  # response that merely discusses OAuth doesn't trip it.
   case "$response" in
-    *"Failed to authenticate"*|*"OAuth"*|*"Invalid API key"*)
+    "Failed to authenticate"*|"Invalid API key"*|*"OAuth session expired"*)
       echo "auth error from '$BIN -p' — log in first (open claude, run /login), then re-run" >&2
       exit 3 ;;
   esac
+  # An empty response or a non-zero exit is the CLI failing, not the rules —
+  # scoring it would blame the skill for a network error. No length floor
+  # beyond that: this style produces legitimately short answers.
+  if [ "$rc" -ne 0 ] || [ -z "$(printf '%s' "$response" | tr -d '[:space:]')" ]; then
+    echo "$name: '$BIN -p' returned nothing (exit $rc) — aborting instead of scoring it" >&2
+    exit 3
+  fi
 
   verdict=$("$BIN" -p "Grade the response below against the rubric, item by
 item. For each item print OK, or VIOLATION followed by the shortest quote that
@@ -51,7 +68,10 @@ $response
 ## Rubric
 $rubric")
 
-  last=$(printf '%s\n' "$verdict" | awk 'NF{l=$0} END{print l}' | tr -d '[:space:]')
+  # The judge sometimes decorates its verdict (**PASS**, "PASS." ) — strip
+  # punctuation and emphasis before comparing, or a passing case reads as a
+  # failure.
+  last=$(printf '%s\n' "$verdict" | awk 'NF{l=$0} END{print l}' | tr -d '[:space:]*_`.:!')
   if [ "$last" = "PASS" ]; then
     echo "PASS  $name"; pass=$((pass+1))
   else

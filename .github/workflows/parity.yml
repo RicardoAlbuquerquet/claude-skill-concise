@@ -12,6 +12,24 @@ jobs:
       - uses: actions/checkout@v4
       - run: bash scripts/check-parity.sh
 
+  json:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # A syntax error here reaches every installed copy through self-update.
+      - run: |
+          for f in .claude-plugin/marketplace.json \
+                   skills/*/.claude-plugin/plugin.json \
+                   skills/*/hooks/hooks.json; do
+            jq empty "$f" && echo "ok  $f"
+          done
+
+  hooks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/test-hooks.sh
+
   bump:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest

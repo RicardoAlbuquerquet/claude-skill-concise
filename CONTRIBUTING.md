@@ -25,10 +25,27 @@ or fires so constantly it has become noise, open a PR that deletes it.
 
 ## Ports to other languages
 
-Copy the whole `skills/concise/` directory to `skills/<name>/` — `SKILL.md` and
-`.claude-plugin/plugin.json` both — translate the body, and set `name:` to match
-the new directory in both files. A port that ships only `SKILL.md` installs as
-nothing: a plugin directory with no `.claude-plugin/plugin.json` is rejected.
+Copy the whole `skills/concise/` directory to `skills/<name>/` — every
+subdirectory, not just `SKILL.md` — translate the prose, and set `name:` to
+match the new directory in `SKILL.md` and `.claude-plugin/plugin.json`. A port
+that ships only `SKILL.md` installs as nothing: a plugin directory with no
+`.claude-plugin/plugin.json` is rejected.
+
+What has to change beyond the prose, or the port silently drives the wrong
+plugin:
+
+| File | What to change |
+|---|---|
+| `.claude-plugin/plugin.json` | `name`, `description` |
+| `SKILL.md` | frontmatter `name` and `description` |
+| `hooks/core.md` | rename to your language's core, translate |
+| `hooks/hooks.json` | the plugin name in all five commands, the override filename, the opt-out flag names, and the two human strings (welcome, deny reason) |
+| `hooks/*.sh` | **nothing** — the four scripts are byte-identical across ports and take everything as arguments; `check-parity.sh` enforces that |
+| `commands/` | four files: translate, and rename them if the command name changes |
+| `agents/` | one file: `name`, `description`, body |
+
+Then add your port to `scripts/check-parity.sh` (it only knows EN and PT
+today) and to the language table in both READMEs.
 
 Keep the structure identical — the rules describe the shape of a response, not
 its vocabulary, so a port should be recognisably the same document.
@@ -103,9 +120,13 @@ every `bash …` command below from **Git Bash** — typed into PowerShell,
 Three layers, cheapest first:
 
 - **Parity**, free: `bash scripts/check-parity.sh` — CI runs it on every PR.
-- **Evals**, ~12 API calls: `bash evals/run.sh` sends six prompts from
-  `examples/before-after.md` through the skill and grades the responses
-  against rubrics — see [`evals/README.md`](evals/README.md). Run it before
+- **Hooks**, free and offline: `bash scripts/test-hooks.sh` runs every hook
+  script against a fake `$HOME` and a fake `claude` — the credit guard's
+  allow and deny cases, the daily throttle, the notices. CI runs it too.
+- **Evals**, two API calls per case: `bash evals/run.sh` sends each case in
+  `evals/cases/` through the skill and grades the response against its
+  rubric — see [`evals/README.md`](evals/README.md) for the count and cost.
+  Run it before
   and after a `SKILL.md` edit and compare; the judge is a model grading
   prose, so read a FAIL before believing it. On PRs touching `SKILL.md` the
   `evals` workflow runs them as an advisory job — it needs the repo secret

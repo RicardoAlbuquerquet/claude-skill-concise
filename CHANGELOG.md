@@ -5,6 +5,49 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.13.0 — 2026-08-19
+
+Correctness pass over the whole plugin, from an audit of every surface.
+
+- **`/concise:pr` stopped truncating its own output.** The delivery block is
+  fenced with four backticks now: a PR description carries a `bash` block by
+  rule, and the old three-backtick wrapper ended at that inner fence — on
+  nearly every invocation. Same fix in `card` and `rewrite`.
+- **The credit guard grew from two commands to eight**, reads the message
+  when it comes from a file (`-F`, `--body-file`), and names Copilot, Gemini,
+  Cursor and Codex besides Claude. It also gained two escapes, because a
+  deterministic guard has false positives: `CONCISE_ALLOW_CREDIT=1` and
+  `~/.claude/.concise-no-credit-guard`.
+- **The hook logic moved into four versioned scripts** — `credit-guard.sh`,
+  `inject-core.sh`, `self-update.sh`, `notices.sh` — byte-identical across
+  ports, with the language passed in from `hooks.json`. The guard regex
+  existed in four copies that could drift with CI green; now it exists once.
+- **Self-update stamps before it runs**, so a permanent failure retries
+  tomorrow instead of at every session start forever; takes a lock, so two
+  sessions don't update the same clone at once; and announces the version it
+  moved to. Opt out with `~/.claude/.concise-no-self-update`.
+- **The welcome note is a `systemMessage`** — it reaches the user's screen
+  instead of the model's context, which the style itself tells the model to
+  cut.
+- `/concise:pr` takes extra context besides a base ref, and states it never
+  runs `gh pr create`. `/concise:rewrite` reads a file when the argument is a
+  path.
+- Rules: the `yes/no` opening yields to a false premise or real uncertainty;
+  the hook core stopped banning headers the skill allows; two rules that
+  failed the repo's own bar were removed. PT gained "antítese" in the
+  rhetorical-flourish cut and the sharp reader in its core; EN gained
+  "Required" in the description, which is what makes the model reach for the
+  skill.
+- The audit agent now knows commit messages and the stands-alone test.
+- Tooling: `scripts/test-hooks.sh` (26 offline cases, in CI), CI validates
+  every plugin JSON, `check-bump` rejects a version that goes backwards,
+  `check-parity` compares hook behaviour instead of counting lines, and the
+  eval runner aborts on an empty response, a missing rubric or a dead CLI
+  instead of scoring them.
+- Docs: install says the style starts next session, a quick-start sits at the
+  top, uninstall is documented with its state files, the port guide lists
+  what a third port must rename, and the stale "six evals" claim is gone.
+
 ## 1.12.0 — 2026-08-19
 
 - Status updates carry only the delta: a new budget row and an always-cut
@@ -23,7 +66,7 @@ without an entry tells nobody what it brought.
 - Self-update checks once per day instead of every session start — a stamp
   in `~/.claude`, written only when the update pair succeeds, so an offline
   day retries next session.
-- The first session after install prints a three-line map of the commands
+- The first session after install prints a one-line map of the commands
   and the agent, once.
 - Repo side, no plugin change: the repo now practises the templates the
   skill preaches (`.github/PULL_REQUEST_TEMPLATE.md` and two issue forms,

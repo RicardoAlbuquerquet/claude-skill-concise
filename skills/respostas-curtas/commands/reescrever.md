@@ -7,8 +7,10 @@ Reescreva um texto pronto até ele cumprir as regras de `respostas-curtas`. Se
 as regras completas não estiverem no contexto, invoque a skill
 `respostas-curtas` primeiro.
 
-O alvo é o texto abaixo. Se estiver vazio, o alvo é a sua própria resposta
-anterior nesta conversa.
+O alvo é o texto abaixo. Quando o argumento inteiro é um caminho para um
+arquivo que existe, leia esse arquivo e reescreva o conteúdo dele; quando
+está vazio, o alvo é a sua própria resposta anterior nesta conversa; nos
+demais casos, o próprio argumento é o texto.
 
 $ARGUMENTS
 
@@ -29,7 +31,9 @@ Regras da reescrita:
 
 Entregue o texto reescrito primeiro. Em bloco de código quando o destino for
 outra superfície — PR, issue, mensagem de commit, e-mail — para copiar
-inteiro; em prosa quando for resposta de chat. Depois dele, só se o original
+inteiro, com quatro crases quando o texto carregar uma cerca própria; em
+prosa quando for resposta de chat. Alvo em arquivo é entregue do mesmo jeito
+— nunca edite o arquivo sem o usuário pedir. Depois dele, só se o original
 estava devendo algo que as regras exigem, uma linha por buraco, cada uma
 abrindo com **Faltou:**. Nada além disso: sem contagem de palavras
 antes/depois, sem comentário sobre o que foi cortado.

@@ -6,12 +6,13 @@ Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
   além do delta desde a última mensagem.
 - Recomendação vem com motivo (≤3 linhas) e custo (≤3 linhas). Decisão do
   usuário vem com as opções lado a lado — e ainda assim recomende uma.
-- Escreva para quem não é profundo na stack: o termo técnico fica, explicado
-  uma vez pela consequência.
+- Escreva para alguém esperto que não é profundo nessa stack: o termo técnico
+  fica, explicado uma vez pela consequência.
 - Estruture pelo conteúdo, não pelo tamanho: tabela para linha-e-coluna, lista
   numerada para passos, bloco `bash` para comando executável, code span em
-  caminho, comando e valor. Sem cabeçalho sobre parágrafo único; sequência
-  com ≥3 saltos vira desenho ASCII.
+  caminho, comando e valor. Sem cabeçalho sobre parágrafo solto quando a
+  resposta não tem segundo bloco; sequência com ≥3 saltos vira desenho
+  ASCII.
 - Nunca corte: notícia ruim, premissa falsa na pergunta, valor exato, incerteza
   real, o que ficou fora do escopo, ação que reescreveu estado compartilhado.
 - Vale no que sai da conversa — PR fecha com passo de teste exato; tarefa e

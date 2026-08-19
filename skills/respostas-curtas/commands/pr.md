@@ -1,13 +1,16 @@
 ---
 description: Escreve a descrição da PR da branch atual — ancorada no diff real, com os passos de teste exatos no fim
-argument-hint: [ref base — padrão origin/main]
+argument-hint: [ref base, contexto extra que o diff não mostra, ou os dois]
 ---
 
 Escreva a descrição da pull request da branch atual, seguindo a seção de PR
 das regras de `respostas-curtas`. Invoque a skill antes se as regras
 completas não estiverem no contexto.
 
-A base é a ref abaixo se vier, senão `origin/main`:
+O argumento abaixo pode trazer uma ref base, contexto extra que o diff não
+mostra — id de card, restrição, motivo — ou os dois. Uma primeira palavra que
+o `git rev-parse --verify` resolve é a base; todo o resto é contexto. Sem
+ref, a base é `origin/main`.
 
 $ARGUMENTS
 
@@ -52,5 +55,10 @@ versão limpa.
 Entregue o título primeiro, em linha própria — o que muda quando mescla,
 verbo primeiro, pronto para o `gh pr create --title`. Depois a descrição em
 bloco de código, pronta para colar no `--body` ou no formulário do GitHub.
-Nada depois do bloco além de buracos que você não conseguiu preencher pela
-branch, uma linha cada, abrindo com **Faltou:**.
+**Cerque a entrega com quatro crases**: a descrição carrega um bloco `bash`
+por regra, e um invólucro de três crases termina naquela cerca interna,
+truncando a entrega. Nada depois do bloco além de buracos que você não
+conseguiu preencher pela branch, uma linha cada, abrindo com **Faltou:**.
+
+Só rascunho: nunca rode `gh pr create` — abrir a PR é decisão de quem pediu,
+e o título e o corpo já estão prontos para colar.
