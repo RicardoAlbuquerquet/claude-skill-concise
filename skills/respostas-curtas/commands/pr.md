@@ -24,17 +24,23 @@ Como:
    `.github/PULL_REQUEST_TEMPLATE/`. Quando existe, é contrato: mantenha os
    cabeçalhos dele e preencha neste registro — seção sem nada a dizer ganha
    um "nenhum", e caixa de checklist só é marcada quando é verdade.
-3. Primeira linha: o que a PR faz. Depois dela, só o que o revisor não tira
+3. Procure o card ou a issue que motivou a branch: primeiro na conversa,
+   depois — quando uma ferramenta de tracker está ao alcance (`gh`, um board
+   por MCP) — buscando nele o assunto da branch. Achado, ele entra na
+   descrição como referência com link: `Closes #N` no GitHub quando a PR o
+   resolve, o link ou id do card nos demais. Não achado, sem referência —
+   nunca invente uma, e não trave perguntando por ela.
+4. Primeira linha: o que a PR faz. Depois dela, só o que o revisor não tira
    mais rápido do próprio diff: o que muda para quem usa, decisões tomadas
    com seus custos, o que ficou fora do escopo, e qualquer coisa não
    verificada — nomeada como não verificada. Quando o diff atravessa muitos
    arquivos, uma linha diz por onde começar a ler — o arquivo onde o
    mecanismo vive.
-4. Sem cabeçalho seu de template sobre conteúdo curto, sem prosa repetindo o
+5. Sem cabeçalho seu de template sobre conteúdo curto, sem prosa repetindo o
    diff, sem narração de processo, sem crédito a agente de IA em lugar
    nenhum. Várias entregas viram lista curta — uma linha cada, rótulo
    primeiro — nunca parágrafo emendado com ponto-e-vírgula.
-5. Termine com os passos de teste: o comando exato copiável, o que aparece se
+6. Termine com os passos de teste: o comando exato copiável, o que aparece se
    estiver certo, e o que provaria que quebrou quando o comando não cobre o
    caso. Quando você não rodou um passo, diga isso dentro do próprio passo.
 

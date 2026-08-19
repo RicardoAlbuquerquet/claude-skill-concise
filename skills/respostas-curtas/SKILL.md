@@ -191,6 +191,12 @@ O título segue a regra do título de commit — o que muda quando mescla, verbo
 primeiro. E a regra de escopo dos cards vale inteira: descrição que precisa
 de "e também" está descrevendo duas PRs.
 
+O card que motivou o trabalho viaja na descrição — quando existe.
+`Closes #52` no GitHub liga a automação; card de board entra como o link ou
+id dele. A referência vem da conversa ou de um tracker que uma ferramenta
+alcança, e de nenhum outro lugar: PR sem card conhecido não carrega
+referência, e não carrega uma inventada.
+
 A PR carrega uma coisa a mais que uma resposta de chat não carrega — **como o
 revisor confere sozinho**.
 

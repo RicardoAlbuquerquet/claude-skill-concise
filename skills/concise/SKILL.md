@@ -191,6 +191,12 @@ The title follows the commit-title rule — what changes when it merges, verb
 first. And the scope rule from cards applies whole: a description that needs
 "and also" is describing two PRs.
 
+The card that motivated the work rides in the description — when it exists.
+`Closes #52` on GitHub wires the automation; a board card enters as its link
+or id. The reference comes from the conversation or from a tracker a tool
+can reach, and from nowhere else: a PR with no known card carries no
+reference, not an invented one.
+
 A PR carries one thing a chat reply doesn't — **how the reviewer checks it
 themselves**.
 
