@@ -24,14 +24,17 @@
         "hooks": [
           {
             "type": "command",
-            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"AI credit found in the text (Co-Authored-By / Generated with). The concise rule bans crediting an AI agent in commits and PRs - rewrite without it.\"}}'; fi",
-            "if": "Bash(git commit*)",
+            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qE 'git commit|gh pr create' && printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"AI credit found in the text (Co-Authored-By / Generated with). The concise rule bans crediting an AI agent in commits and PRs - rewrite without it.\"}}'; fi",
             "timeout": 10
-          },
+          }
+        ]
+      },
+      {
+        "matcher": "PowerShell",
+        "hooks": [
           {
             "type": "command",
-            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"AI credit found in the text (Co-Authored-By / Generated with). The concise rule bans crediting an AI agent in commits and PRs - rewrite without it.\"}}'; fi",
-            "if": "Bash(gh pr create*)",
+            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qE 'git commit|gh pr create' && printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"AI credit found in the text (Co-Authored-By / Generated with). The concise rule bans crediting an AI agent in commits and PRs - rewrite without it.\"}}'; fi",
             "timeout": 10
           }
         ]
