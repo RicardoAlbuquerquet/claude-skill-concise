@@ -5,7 +5,7 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
-## 1.8.0 — 2026-08-18
+## 1.8.0 — 2026-08-19
 
 - PR descriptions grow four rules: the repo's `PULL_REQUEST_TEMPLATE` is a
   contract to fill in the register — no boilerplate sections, no checkbox
