@@ -11,9 +11,14 @@
           },
           {
             "type": "command",
-            "command": "command -v claude >/dev/null 2>&1 && claude plugin marketplace update claude-skill-concise >/dev/null 2>&1 && claude plugin update respostas-curtas@claude-skill-concise >/dev/null 2>&1 || true",
+            "command": "today=$(date +%Y%m%d); [ \"$(cat \"$HOME/.claude/.respostas-curtas-update-stamp\" 2>/dev/null)\" = \"$today\" ] && exit 0; command -v claude >/dev/null 2>&1 && claude plugin marketplace update claude-skill-concise >/dev/null 2>&1 && claude plugin update respostas-curtas@claude-skill-concise >/dev/null 2>&1 && printf '%s' \"$today\" > \"$HOME/.claude/.respostas-curtas-update-stamp\" || true",
             "async": true,
             "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "[ -f \"$HOME/.claude/.respostas-curtas-boasvindas\" ] || { printf 'respostas-curtas instalado: /respostas-curtas:reescrever (refaz um texto), :pr (descricao de PR pelo diff), :card (tarefa que se sustenta sozinha), :commit (mensagem do diff staged), mais o agente auditar. Este aviso aparece uma vez.\\n'; touch \"$HOME/.claude/.respostas-curtas-boasvindas\"; }",
+            "timeout": 10
           }
         ]
       }

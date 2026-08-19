@@ -11,9 +11,14 @@
           },
           {
             "type": "command",
-            "command": "command -v claude >/dev/null 2>&1 && claude plugin marketplace update claude-skill-concise >/dev/null 2>&1 && claude plugin update concise@claude-skill-concise >/dev/null 2>&1 || true",
+            "command": "today=$(date +%Y%m%d); [ \"$(cat \"$HOME/.claude/.concise-update-stamp\" 2>/dev/null)\" = \"$today\" ] && exit 0; command -v claude >/dev/null 2>&1 && claude plugin marketplace update claude-skill-concise >/dev/null 2>&1 && claude plugin update concise@claude-skill-concise >/dev/null 2>&1 && printf '%s' \"$today\" > \"$HOME/.claude/.concise-update-stamp\" || true",
             "async": true,
             "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "[ -f \"$HOME/.claude/.concise-welcomed\" ] || { printf 'concise installed: /concise:rewrite (retrofit a text), /concise:pr (PR description from the diff), /concise:card (task that stands alone), /concise:commit (message for the staged diff), plus the audit agent. This note shows once.\\n'; touch \"$HOME/.claude/.concise-welcomed\"; }",
+            "timeout": 10
           }
         ]
       }
