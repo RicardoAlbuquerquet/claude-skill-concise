@@ -91,6 +91,7 @@ reais. Quatro saem mais longas.
 |---|---|
 | Skill `respostas-curtas` | as regras completas, invocadas quando o turno pede |
 | Hook `SessionStart` | injeta o núcleo de ~20 linhas em toda sessão; auto-atualiza o plugin |
+| Output style `respostas-curtas` | o mesmo núcleo no system prompt — sem shell, escolhido no `/config` |
 | `/respostas-curtas:reescrever` | reescreve um texto pronto pelas regras, sem perder nada |
 | `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
 | `/respostas-curtas:card` | rascunha o card que se sustenta sozinho; cria quando o destino é nomeado |
@@ -211,6 +212,17 @@ Copy-Item -Recurse claude-skill-concise\skills\respostas-curtas $HOME\.claude\sk
 Em nível de projeto, versionado com o repositório para o time compartilhar:
 crie `.claude/skills/` na raiz do projeto e copie para dentro.
 
+**Em outro agente** — Cursor, Copilot, Codex, Windsurf e os demais que leem
+arquivos `SKILL.md` — as regras viajam pelo [skills.sh](https://skills.sh):
+
+```bash
+npx skills add RicardoAlbuquerquet/claude-skill-concise
+```
+
+Só as regras viajam. O núcleo sempre-ligado, o auto-update, a guarda de
+crédito, os quatro comandos e o agente de auditoria são maquinaria de plugin
+do Claude Code; em outro agente você fica com o documento e invoca à mão.
+
 Confira que registrou digitando `/respostas-curtas` no Claude Code. Se não
 aparecer, cheque o caminho: copiar para um `skills/` que ainda não existe
 deixa o `SKILL.md` direto nele, um nível acima do certo, sem erro nenhum.
@@ -249,6 +261,13 @@ de resposta está ativo agora?"* — a resposta nomeia as regras do núcleo
 (resposta na primeira frase, corte preâmbulo, nunca corte notícia ruim)
 quando o hook rodou, e não nomeia quando não rodou. É essa a diferença entre
 a garantia e a esperança.
+
+**O caminho sem shell: o output style.** O mesmo núcleo também vem como
+output style do Claude Code, que vive no system prompt em vez de ser impresso
+por um hook — sem shell, sem Git Bash, e cacheado em vez de reenviado a cada
+sessão. Escolha em `/config` → **Output style** → `respostas-curtas`. É a
+resposta para quando o hook não roda, e custa uma seleção manual; o plugin
+não força, porque forçar sobrescreveria o output style que você escolheu.
 
 **Instalada por cópia, o hook não vem junto** — `~/.claude/skills/` leva só a
 skill. Emparelhe com uma linha no `CLAUDE.md`, que é carregado no contexto a

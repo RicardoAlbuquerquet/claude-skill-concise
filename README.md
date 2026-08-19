@@ -92,6 +92,7 @@ transformations. Four come out longer.
 |---|---|
 | `concise` skill | the full ruleset, invoked when a turn needs it |
 | `SessionStart` hook | injects the ~20-line core every session; self-updates the plugin |
+| `concise` output style | the same core in the system prompt — no shell needed, pick it in `/config` |
 | `/concise:rewrite` | rewrites a finished text to the rules, losing nothing |
 | `/concise:pr` | drafts the PR description from the real diff, test steps last |
 | `/concise:card` | drafts a task/issue card that stands alone; creates it when a destination is named |
@@ -213,6 +214,17 @@ Copy-Item -Recurse claude-skill-concise\skills\concise $HOME\.claude\skills\
 Project-level instead, committed with the repo so your team shares it: create
 `.claude/skills/` at the project root and copy into that.
 
+**In another agent** — Cursor, Copilot, Codex, Windsurf and the rest that read
+`SKILL.md` files — the ruleset travels through [skills.sh](https://skills.sh):
+
+```bash
+npx skills add RicardoAlbuquerquet/claude-skill-concise
+```
+
+Only the ruleset travels. The always-on core, the self-update, the credit
+guard, the four commands and the audit agent are Claude Code plugin
+machinery; in another agent you get the document and invoke it yourself.
+
 Verify it registered by typing `/concise` in Claude Code. If it doesn't appear,
 check the path: copying into a `skills/` directory that doesn't exist yet lands
 `SKILL.md` directly in it, one level too high, and reports no error.
@@ -251,6 +263,14 @@ style is active right now?"* — the answer names the core's rules (answer in
 the first sentence, cut preamble, never cut bad news) when the hook ran, and
 doesn't when it didn't. That is the whole difference between the guarantee
 and a hope.
+
+**The shell-free path: the output style.** The same core also ships as a
+Claude Code output style, which lives in the system prompt instead of being
+printed by a hook — no shell, no Git Bash, and it is cached rather than
+re-sent every session. Pick it in `/config` → **Output style** →
+`concise`. It is the answer when the hook can't run, and it costs one manual
+selection; the plugin does not force it, because that would override the
+output style you chose yourself.
 
 **Installed by copy, the hook doesn't come along** — `~/.claude/skills/` takes
 only the skill. Pair it with a line in `CLAUDE.md`, which is loaded into

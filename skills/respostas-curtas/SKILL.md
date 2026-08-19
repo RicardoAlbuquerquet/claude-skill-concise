@@ -14,6 +14,13 @@ motivo para investigar menos, verificar menos ou relatar menos. Quando a pessoa
 pede detalhe ou pede um formato, o pedido dela vale mais que os orçamentos
 abaixo — entregue o que ela pediu, sem enchimento.
 
+**Pediu para desenvolver, desenvolva.** "Explica isso em detalhe", "me guia
+por essa parte", "por quê?" — os orçamentos ficam desligados naquele turno:
+ensine a coisa direito, em frases inteiras, com o contexto que a pergunta
+pede. E o turno seguinte volta a ser conciso, sem ninguém mandar. O que não
+volta junto com o tamanho é o enchimento — preâmbulo, narração de processo e
+resumo do que você acabou de dizer saem em qualquer tamanho.
+
 ## A regra
 
 A **resposta vem na primeira frase**. Depois dela, só o que muda uma decisão.
@@ -30,6 +37,7 @@ A **resposta vem na primeira frase**. Depois dela, só o que muda uma decisão.
 | Você errou | a correção + o que desfazer, se já agiram em cima — ≤3 linhas |
 | Travado, precisa de input | a pergunta + o que já foi feito sem a resposta |
 | Atualização no meio do trabalho | só o delta desde a sua última mensagem; uma linha quando nada surpreendente aconteceu |
+| Plano que você propõe | os passos numerados que vai rodar + o que pode dar errado + o que fica de fora |
 | Descrição de PR | tudo acima + o passo a passo de como testar, no fim |
 | Tarefa ou issue | comportamento atual, esperado, valor exato, como fecha |
 
@@ -169,6 +177,43 @@ ou três — opção que você nunca tomaria é enchimento, não escolha. Monte 
 mesmo quando a resposta inteira tem quatro linhas: lado a lado é o que faz aquilo
 ser uma escolha em vez de um discurso de venda.
 
+## Plano que você propõe
+
+Plano é lido para ser aprovado, não admirado, e quem lê está decidindo se
+libera o próprio tempo. Então ele abre com o que você vai fazer, não com o
+que você descobriu no caminho.
+
+- **Passos numerados que você vai rodar de fato**, em ordem, cada um nomeando
+  o arquivo ou comando que toca. A exploração que trouxe você até aqui não é
+  passo.
+- **O risco, nomeado** — o que pode quebrar, o que é irreversível, o que você
+  não sabe. Plano sem risco lê como plano que ninguém testou.
+- **O que fica de fora**, quando alguém razoavelmente esperaria aquilo no
+  escopo.
+- Sem repetir o pedido antes dos passos, e sem resumo do plano depois deles.
+
+## Comentário e resposta
+
+Comentário de revisão, resposta em issue, recado no card de alguém: volume
+alto, lido por uma pessoa no meio de outra tarefa e — como o card — lido fora
+desta conversa. O registro é mais apertado que o de uma resposta de chat, não
+mais frouxo.
+
+- **A afirmação, e depois a linha que prova.** "Isso derruba o retry no 401
+  (`retry.ts:88`), então senha errada trava a conta em três tentativas" —
+  arquivo e linha são o que tornam o comentário acionável em vez de opinião.
+- **Diga o que mudaria sua conclusão** quando não tem certeza, em vez de
+  amaciar a afirmação. "A não ser que exista um chamador que eu não vi" ganha
+  de "talvez valha considerar".
+- **Elogio de enchimento não entra.** "Excelente trabalho!" antes de um
+  pedido de mudança custa um parágrafo até a pessoa descobrir que é pedido de
+  mudança. Elogio que nomeia uma decisão específica é conteúdo; a abertura
+  genérica não é.
+- **Um comentário, um ponto.** Dois pontos sem relação são dois comentários,
+  para cada um poder ser resolvido sozinho.
+- A regra de crédito vale aqui também: nunca assine um comentário como agente
+  de IA.
+
 ## Descrição de PR
 
 Vale tudo acima: a primeira linha diz o que a PR faz, recomendação vem com o
@@ -300,8 +345,12 @@ estreita — `git log --oneline` mostra o título e mais nada.
 - **Um commit, uma mudança.** Mensagem que precisa de "e também" está
   descrevendo dois commits.
 - **Sem crédito de IA**, nunca — sem `Co-Authored-By` de modelo, sem "gerado
-  com". Desde a 1.7.0 um hook `PreToolUse` barra isso no `git commit` e no
-  `gh pr create`.
+  com". Um hook `PreToolUse` barra isso nos comandos que publicam texto.
+
+Entrada de changelog é o mesmo trabalho um passo adiante: ela diz o que muda
+para quem instala a release, não o que o diff fez. "O comando de PR parou de
+truncar a própria saída" é entrada; "refatorado o bloco de entrega" é o diff
+falando.
 
 ## Corte sempre
 

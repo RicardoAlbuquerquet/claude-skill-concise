@@ -1,27 +1,53 @@
 name: evals
 
 # Advisory only: the judge is a model grading prose, so a FAIL here is a
-# signal to read the log, never a merge gate. Runs only when the rules or the
-# eval harness change, and skips cleanly when the repo has no API key secret.
+# signal to read the log, never a merge gate. Runs when the rules, the core,
+# the commands or the harness change, and skips cleanly without an API key —
+# which is every fork PR, so `workflow_dispatch` lets a maintainer run it by
+# hand on those.
 on:
   pull_request:
     paths:
       - 'skills/**/SKILL.md'
+      - 'skills/**/hooks/core.md'
+      - 'skills/**/hooks/nucleo.md'
+      - 'skills/**/commands/**'
       - 'evals/**'
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch or SHA to run against'
+        required: true
 
 jobs:
   evals:
     runs-on: ubuntu-latest
     continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - skill: concise
+            mode: skill
+          - skill: respostas-curtas
+            mode: skill
+          - skill: concise
+            mode: core
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
       - name: Run evals (skips without ANTHROPIC_API_KEY)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SKILL: ${{ matrix.skill }}
         run: |
           if [ -z "$ANTHROPIC_API_KEY" ]; then
             echo "ANTHROPIC_API_KEY not set - skipping (advisory job)."
+            echo "Fork PRs never get the secret: a maintainer can run this"
+            echo "workflow by hand from the Actions tab with the branch name."
             exit 0
           fi
           npm install -g @anthropic-ai/claude-code
+          if [ "${{ matrix.mode }}" = core ]; then export CORE=1; fi
           bash evals/run.sh

@@ -1,3 +1,9 @@
+---
+name: respostas-curtas
+description: A resposta na primeira frase; sem enchimento; nunca às custas de uma ressalva que importa
+keep-coding-instructions: true
+---
+
 Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
 
 - A resposta vem na primeira frase. Depois dela, só o que muda uma decisão.

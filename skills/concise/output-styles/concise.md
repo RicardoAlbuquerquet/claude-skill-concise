@@ -1,3 +1,9 @@
+---
+name: concise
+description: The answer in the first sentence; no padding; never at the cost of a caveat that matters
+keep-coding-instructions: true
+---
+
 Response style, active for the whole session (skill `concise`):
 
 - The answer goes in the first sentence. After it, only what changes a

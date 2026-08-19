@@ -37,6 +37,17 @@ shape () {
   sed -n 's/.*"\(SessionStart\|PreToolUse\)".*/\1/p; s/.*"matcher": *"\([^"]*\)".*/matcher=\1/p; s/.*hooks\/\([a-z-]*\.sh\).*/script=\1/p' "$1" | tr '\n' ' '
 }
 
+# The output style and the hook core carry the same text through two delivery
+# mechanisms — system prompt and session context. Drift means the session is
+# governed by one and audited against the other.
+# CRLF on a Windows checkout is not a drift, so both sides are normalized.
+style_matches_core () { # $1 = plugin dir, $2 = style file, $3 = core file
+  awk 'BEGIN{n=0} /^---$/{n++; next} n>=2' "$1/output-styles/$2" |
+    sed '/./,$!d' | tr -d '\r' |
+    diff -q - <(tr -d '\r' < "$1/hooks/$3") >/dev/null 2>&1 &&
+    printf 'same' || printf 'differs'
+}
+
 printf '%-38s %8s %8s\n' '' concise resp-cur
 
 check 'SKILL.md: ## sections'     "$(count '^## ' $EN/SKILL.md)"        "$(count '^## ' $PT/SKILL.md)"
@@ -48,6 +59,8 @@ check 'hook core: bullets'        "$(count '^- ' $EN/hooks/core.md)"    "$(count
 check 'hooks.json: hook count'    "$(count '"type"' $EN/hooks/hooks.json)" "$(count '"type"' $PT/hooks/hooks.json)"
 check 'hooks/*.sh: byte-identical' "$(identical)"                        'identical'
 check 'hooks.json: shape'          "$(shape $EN/hooks/hooks.json)"       "$(shape $PT/hooks/hooks.json)"
+check 'output style == core (EN)'  "$(style_matches_core $EN concise.md core.md)"                 'same'
+check 'output style == core (PT)'  "$(style_matches_core $PT respostas-curtas.md nucleo.md)"      'same'
 check 'plugin.json: version'      "$(version $EN/.claude-plugin/plugin.json)" "$(version $PT/.claude-plugin/plugin.json)"
 check 'commands/: files'          "$(files $EN/commands)"               "$(files $PT/commands)"
 check 'agents/: files'            "$(files $EN/agents)"                 "$(files $PT/agents)"
