@@ -30,7 +30,7 @@ A **resposta vem na primeira frase**. Depois dela, só o que muda uma decisão.
 | Pergunta de fato | 1–3 frases; sim/não começa com sim ou não — salvo premissa falsa ou incerteza real, e aí a correção é que abre |
 | Recomendação (decisão sua) | recomendação + ≤3 linhas de motivo + ≤3 linhas de custo |
 | Escolha que é do usuário | opções lado a lado + recomendação + ≤3 linhas do porquê ela ganha |
-| Trabalho concluído | o que mudou, onde, e se o gate está verde — ≤5 linhas |
+| Trabalho concluído | o que mudou, onde, e se o gate está verde — ≤5 linhas; o que ainda depende de quem lê ganha bloco próprio |
 | Investigação | o achado + a consequência prática |
 | Como algo funciona | o desenho primeiro — se tiver ≥3 saltos, desenhe — depois ≤3 linhas |
 | Algo falhou | o que quebrou, a linha que prova, o próximo passo — ≤4 linhas |
@@ -100,7 +100,11 @@ A estrutura segue o formato do conteúdo, não o tamanho da resposta. Separe o q
 Merece existir:
 
 - **Divisor ou cabeçalho** quando a resposta muda de função — o que foi feito, e
-  depois uma decisão que a pessoa precisa tomar. Duas funções, dois blocos.
+  depois uma decisão que a pessoa precisa tomar. Duas funções, dois blocos. **O
+  que depende da pessoa nunca divide bloco com o que só informa**: misturar faz
+  ela garimpar qual parte precisa de resposta. Cabeçalho que junta as duas com
+  "ou" — "três coisas para decidir ou saber" — é a mistura assumida em vez de
+  resolvida; separe em o que você decide e o que já foi decidido.
 - **Tabela** para o que é linha-e-coluna por natureza: opções contra critérios,
   antes contra depois, um valor por caso. Célula guarda valor, não frase — a
   explicação vive na prosa em volta da tabela, e passando de quatro colunas

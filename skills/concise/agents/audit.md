@@ -27,7 +27,8 @@ Then check, in this order:
    with detail stacked in parentheses, bold that is neither a block's one
    claim nor an item's label, backticks on ordinary words, decorative emoji.
    And compression: one unbroken block covering several subjects, a comparison
-   in prose that is rows-and-columns by nature.
+   in prose that is rows-and-columns by nature, a block that mixes what the
+   reader must decide with what merely informs them.
 4. **Recommendations.** Each one carries a reason (≤3 lines) and a cost (≤3
    lines). An empty cost slot is a violation even when the text reads well.
 5. **Choices that belong to the reader** — money, risk, irreversible: options

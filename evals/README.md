@@ -1,6 +1,6 @@
 # Evals
 
-Eighteen cases. Each gives the model the facts it would have discovered, sends
+Nineteen cases. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -35,7 +35,7 @@ measures the model's own habits, not the rules, and proves nothing when it
 passes with the skill. Its exit code is always 0 — the pass count is the
 signal, and a *low* one is the good news.
 
-**Cost:** two API calls per case per run, so the default suite is 36 calls
+**Cost:** two API calls per case per run, so the default suite is 38 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -64,9 +64,10 @@ you change a rule here, change the rubric that tests it.
 | Commit lands inside the repo log's convention | 16 | no |
 | Several deliverables read as a markdown list | 17 | **yes** |
 | A list item stays an item, not a packed paragraph | 18 | **yes** |
+| What waits on the reader sits apart from what informs them | 19 | **yes** |
 
 **Measured 2026-08-19, on `claude-opus-5`: 18/18 with the skill, 11/18 at
-baseline.** So seven cases measure what the plugin adds; the other eleven
+baseline** (case 19 measured separately: 3/3 with the skill, 1/3 without). So seven cases measure what the plugin adds; the other eleven
 describe behaviour Claude Code already has by default, and would keep passing
 if the rule vanished. They are not worthless — a default can regress, and a
 rule that matches the default still documents it — but the suite's real
@@ -92,5 +93,7 @@ violation before assuming the skill moved.
 A new case earns its place the same way a rule does: it encodes a real
 failure the skill exists to prevent, and its rubric items are checkable
 against a finished response. A rubric line the judge can't verify by quoting
-the response is decoration. Run `BASELINE=1 ONLY=<your case>` before
-committing it — if it passes without the skill, it isn't testing the skill.
+the response is decoration. Run `BASELINE=1 RUNS=3 ONLY=<your case>` before
+committing it — if it passes without the skill, it isn't testing the skill,
+and one attempt is not enough to tell: case 19 passed its first baseline run
+and then failed two of the next three.

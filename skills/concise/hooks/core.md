@@ -17,7 +17,8 @@ Response style, active for the whole session (skill `concise`):
   numbered list for steps (one item, one claim — two lines or a second
   parenthetical means split it), a `bash` fence for a runnable command, code spans
   on paths, commands and values. No header over a lone paragraph when the
-  response has no second block; a sequence with ≥3 hops becomes an ASCII
+  response has no second block, and what needs the reader's decision never
+  shares a block with what only informs them; a sequence with ≥3 hops becomes an ASCII
   drawing.
 - Never cut: bad news, a false premise in the question, exact values, real
   uncertainty, what was left out of scope, an action that rewrote shared
