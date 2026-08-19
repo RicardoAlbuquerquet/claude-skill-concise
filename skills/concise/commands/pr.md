@@ -23,16 +23,22 @@ How:
    directory. When one exists it is a contract: keep its headers and fill
    them in this register — a section with nothing to say gets a "none", and
    a checklist box is ticked only when it's true.
-3. First line: what the PR does. After it, only what the reviewer can't get
+3. Look for the card or issue that motivated the branch: first in the
+   conversation, then — when a tracker tool is reachable (`gh`, an MCP
+   board) — by searching it for the branch's subject. Found, it enters the
+   description as a reference with its link: `Closes #N` on GitHub when the
+   PR resolves it, the card's link or id otherwise. Not found, no reference —
+   never invent one, and don't block asking for it.
+4. First line: what the PR does. After it, only what the reviewer can't get
    faster from the diff: what changes for whoever uses this, decisions taken
    with their costs, what was left out of scope, and anything unverified —
    named as unverified. When the diff spans many files, one line says where
    to start reading — the file where the mechanism lives.
-4. No template headers of your own over short content, no prose restating
+5. No template headers of your own over short content, no prose restating
    the diff, no process narration, no credit to an AI agent anywhere.
    Several deliverables read as a short list — one line each, label first —
    never a paragraph chained with semicolons.
-5. End with the test steps: the exact copy-pasteable command, what appears if
+6. End with the test steps: the exact copy-pasteable command, what appears if
    it's right, and what would prove it broke when the command doesn't cover
    the case. When you did not run a step, say so inside the step itself.
 

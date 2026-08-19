@@ -5,6 +5,13 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.11.0 — 2026-08-19
+
+- The PR description carries the card or issue that motivated the work, as
+  a link — `Closes #N` on GitHub, the card's link or id on a board — when
+  it exists in the conversation or a tracker tool can find it, and never
+  otherwise. `/concise:pr` (`/respostas-curtas:pr`) gained the lookup step.
+
 ## 1.10.0 — 2026-08-19
 
 - Self-update checks once per day instead of every session start — a stamp
