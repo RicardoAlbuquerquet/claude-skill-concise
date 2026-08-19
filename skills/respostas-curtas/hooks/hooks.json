@@ -24,14 +24,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Credito de IA no texto (Co-Authored-By / Generated with). A regra de respostas-curtas proibe creditar agente de IA em commit e PR - reescreva sem isso.\"}}'; fi",
-            "if": "Bash(git commit*)",
-            "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Credito de IA no texto (Co-Authored-By / Generated with). A regra de respostas-curtas proibe creditar agente de IA em commit e PR - reescreva sem isso.\"}}'; fi",
-            "if": "Bash(gh pr create*)",
+            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qE 'git commit|gh pr create' && printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Credito de IA no texto (Co-Authored-By / Generated with). A regra de respostas-curtas proibe creditar agente de IA em commit e PR - reescreva sem isso.\"}}'; fi",
             "timeout": 10
           }
         ]
@@ -41,14 +34,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Credito de IA no texto (Co-Authored-By / Generated with). A regra de respostas-curtas proibe creditar agente de IA em commit e PR - reescreva sem isso.\"}}'; fi",
-            "if": "PowerShell(git commit*)",
-            "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Credito de IA no texto (Co-Authored-By / Generated with). A regra de respostas-curtas proibe creditar agente de IA em commit e PR - reescreva sem isso.\"}}'; fi",
-            "if": "PowerShell(gh pr create*)",
+            "command": "in=$(cat); if printf '%s' \"$in\" | grep -qE 'git commit|gh pr create' && printf '%s' \"$in\" | grep -qiE 'co-authored-by:.{0,60}claude|generated with.{0,60}claude'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Credito de IA no texto (Co-Authored-By / Generated with). A regra de respostas-curtas proibe creditar agente de IA em commit e PR - reescreva sem isso.\"}}'; fi",
             "timeout": 10
           }
         ]

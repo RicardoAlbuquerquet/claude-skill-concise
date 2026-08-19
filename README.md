@@ -280,9 +280,11 @@ model `Co-Authored-By`, a "generated with" footer — by deterministic string
 match, no API call. It turns the ruleset's hardest rule into a system rule:
 the commit is blocked with the reason, and the message gets rewritten
 without the trailer. Since 1.7.1 it covers both the `Bash` and the
-`PowerShell` tool. Known limit: a message passed as a file
-(`git commit -F notes.txt`) is outside the command string's reach. Opting
-out means disabling the plugin's hooks.
+`PowerShell` tool, and catches the command anywhere in a chain
+(`git add … && git commit …`) — the check is a grep that runs on every
+shell call, a few milliseconds each. Known limit: a message passed as a
+file (`git commit -F notes.txt`) is outside the command string's reach.
+Opting out means disabling the plugin's hooks.
 
 There is also an **opt-in Stop auditor** in
 [`extras/stop-audit/`](extras/stop-audit/README.md): a hook you install by

@@ -8,8 +8,12 @@ without an entry tells nobody what it brought.
 ## 1.7.1 — 2026-08-18
 
 - The credit guard also covers the `PowerShell` tool — on Windows, a commit
-  made through it used to walk past the 1.7.0 guard. Known limit documented:
-  a message passed via `git commit -F <file>` stays out of reach.
+  made through it used to walk past the 1.7.0 guard.
+- The guard now catches compound commands. The 1.7.0 filter matched by
+  prefix, so `git add -A && git commit …` — the most common real shape —
+  never triggered it; detection moved into the guard itself, which runs as a
+  tiny grep on every shell call. Known limit documented: a message passed
+  via `git commit -F <file>` stays out of reach.
 
 ## 1.7.0 — 2026-08-18
 

@@ -281,9 +281,11 @@ de IA — `Co-Authored-By` de modelo, rodapé "generated with" — por comparaç
 determinística de string, sem chamada de API. Ela transforma a regra mais
 dura da skill em regra de sistema: o commit é barrado com o motivo, e a
 mensagem sai reescrita sem o rodapé. Desde a 1.7.1 cobre as ferramentas
-`Bash` e `PowerShell`. Limite conhecido: mensagem passada como arquivo
-(`git commit -F notas.txt`) fica fora do alcance da string do comando. Sair
-dela significa desligar os hooks do plugin.
+`Bash` e `PowerShell`, e pega o comando em qualquer ponto de uma corrente
+(`git add … && git commit …`) — a checagem é um grep que roda a cada chamada
+de shell, poucos milissegundos cada. Limite conhecido: mensagem passada como
+arquivo (`git commit -F notas.txt`) fica fora do alcance da string do
+comando. Sair dela significa desligar os hooks do plugin.
 
 Há também um **auditor de Stop opcional** em
 [`extras/stop-audit/`](extras/stop-audit/README.md): um hook que você instala
