@@ -34,8 +34,25 @@ verb in the title, current → expected, exact values, done criterion, no
 headers or tables, body standing alone — and fix what fails. Deliver only
 the clean version.
 
-Delivery: title on the first line, body in a fenced block, ready to paste. If
-the invocation names a destination — a board, a repo, a project — and a tool
-for it is available (MCP, `gh`), create the card there after drafting and
-report the id or link; otherwise deliver the draft alone and say where it can
-go. Never create anywhere that wasn't named.
+Delivery: title on the first line, body in a fenced block, ready to paste.
+
+When the invocation names a destination — a board, a repo, a project — and a
+tool for it is available (MCP, `gh`), create it there after drafting, in this
+order:
+
+1. **Look for the card that already exists** — search the destination for the
+   symptom or subject. A likely match gets linked and reported instead of a
+   duplicate created beside it.
+2. **On GitHub, honour the issue template**: pick the matching form under
+   `.github/ISSUE_TEMPLATE/`, keep its headers, fill them in this register —
+   "none" where there is nothing to say.
+3. **Fields, not text**: discover what the destination offers — labels,
+   members, statuses, priority — and put what the conversation settled into
+   the fields. What nobody settled stays at the default, and you say so.
+4. **Wire what's connected**: a named blocker or parent gets the real link —
+   a relation or subtask on a board, a `#number` reference on GitHub.
+5. Create, then report the id or link — plus the fields you set and the ones
+   left at default.
+
+Without a destination, deliver the draft alone and say where it can go.
+Never create anywhere that wasn't named.
