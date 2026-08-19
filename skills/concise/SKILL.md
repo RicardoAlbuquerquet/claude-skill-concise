@@ -31,7 +31,7 @@ decision.
 | Factual question | 1–3 sentences; a yes/no question starts with yes or no — unless the premise is false or the answer is genuinely uncertain, and the correction opens instead |
 | Recommendation (your call) | recommendation + ≤3 lines of reason + ≤3 lines of cost |
 | Choice that is the user's | options side by side + recommendation + ≤3 lines why it wins |
-| Completed work | what changed, where, whether the gate is green — ≤5 lines |
+| Completed work | what changed, where, whether the gate is green — ≤5 lines; anything still waiting on the reader gets its own block |
 | Investigation | the finding + its practical consequence |
 | How something works | the shape first — draw it if it has ≥3 hops — then ≤3 lines |
 | Something failed | what broke, the line that proves it, the next move — ≤4 lines |
@@ -100,7 +100,12 @@ Separate what is genuinely separate; never fragment a single thought.
 Earns its place:
 
 - **A divider or a header** when the response changes job — what you did, and
-  then a decision the reader has to make. Two jobs, two blocks.
+  then a decision the reader has to make. Two jobs, two blocks. **What waits
+  on the reader never shares a block with what merely informs them**: mixing
+  the two makes them hunt for the part that needs an answer. A heading that
+  joins the jobs with "or" — "three things to decide or know" — is the mix
+  admitted rather than resolved; split it into what you decide and what was
+  decided already.
 - **A table** for anything that is rows-and-columns by nature: options against
   criteria, before against after, a value per case. Cells hold values, not
   sentences — the explanation lives in the prose around the table, and past

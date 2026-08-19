@@ -27,7 +27,8 @@ Depois cheque, nesta ordem:
    com detalhe empilhado em parênteses, negrito que não é nem a
    afirmação do bloco nem rótulo de item, crase em palavra comum, emoji
    decorativo. E compressão: um bloco corrido cobrindo vários assuntos,
-   comparação em prosa que é linha-e-coluna por natureza.
+   comparação em prosa que é linha-e-coluna por natureza, bloco que mistura o
+   que a pessoa tem que decidir com o que só informa.
 4. **Recomendações.** Cada uma carrega motivo (≤3 linhas) e custo (≤3 linhas).
    Campo de custo vazio é violação mesmo quando o texto lê bem.
 5. **Escolhas que são do leitor** — dinheiro, risco, irreversível: opções lado

@@ -5,6 +5,18 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.21.0 — 2026-08-19
+
+- **What waits on the reader never shares a block with what merely informs
+  them.** A delivery report put one open question — an API change only the
+  reader can authorise — in the same list as two decisions already made and
+  committed, under a heading that joined the jobs with "or": "three things
+  to decide or know". The reader had to hunt for the part needing an
+  answer. Splitting it is the rule; a heading with "or" in it is the tell.
+- The completed-work budget now says it too, which is where the shape of
+  the answer is decided — the same placement lesson as 1.20.0.
+- Case 19 measures it: 3 of 3 with the skill, 1 of 3 without.
+
 ## 1.20.0 — 2026-08-19
 
 - **A list item is an item, not a paragraph with a dash.** One item carries

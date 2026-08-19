@@ -20,7 +20,8 @@ Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
   numerada para passos (um item, uma afirmação — duas linhas ou um segundo
   parêntese pedem separar), bloco `bash` para comando executável, code span em
   caminho, comando e valor. Sem cabeçalho sobre parágrafo solto quando a
-  resposta não tem segundo bloco; sequência com ≥3 saltos vira desenho
+  resposta não tem segundo bloco, e o que depende da decisão de quem lê nunca
+  divide bloco com o que só informa; sequência com ≥3 saltos vira desenho
   ASCII.
 - Nunca corte: notícia ruim, premissa falsa na pergunta, valor exato, incerteza
   real, o que ficou fora do escopo, ação que reescreveu estado compartilhado.
