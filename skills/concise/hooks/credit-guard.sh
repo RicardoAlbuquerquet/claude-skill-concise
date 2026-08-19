@@ -16,7 +16,7 @@ in=$(cat)
 # Only calls that publish text: a commit, a PR/issue body or comment, a
 # release note, a raw API write.
 printf '%s' "$in" |
-  grep -qE 'git( -C [^ ]+)? commit|gh (pr|issue) (create|edit|comment)|gh release (create|edit)|gh api' ||
+  grep -qE 'git( -C [^ ]+)? commit|gh (pr|issue) (create|edit|comment|review)|gh release (create|edit)|gh api' ||
   exit 0
 
 # A message passed as a file is invisible in the command string — read it.

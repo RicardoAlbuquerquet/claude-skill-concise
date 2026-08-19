@@ -5,6 +5,27 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.14.0 — 2026-08-19
+
+The surfaces the ruleset didn't reach, and the escape it never had.
+
+- **Plans you propose** get a budget row and a section: the numbered steps
+  you will run, the risk named, what it leaves out — and no retelling of the
+  exploration that got you there. It is the text a user reads before
+  authorising work.
+- **Comments and replies** — review comments, issue replies, notes on a card
+  — get a section: the claim then the line that proves it, what would change
+  your mind instead of a hedged claim, no praise as filler, one point per
+  comment. The credit guard now covers `gh pr review` too.
+- **Asked to expand, expand.** "Explain in detail" turns the budgets off for
+  that turn and the next turn is concise again, unasked — the padding never
+  comes back with the length. It is the objection every always-on terse style
+  has to answer.
+- **Changelog entries** get two lines of rule: what changes for whoever
+  installs, not the diff retold.
+- Both descriptions now name every surface the ruleset governs, which is what
+  the model reads when deciding to load it.
+
 ## 1.13.0 — 2026-08-19
 
 Correctness pass over the whole plugin, from an audit of every surface.

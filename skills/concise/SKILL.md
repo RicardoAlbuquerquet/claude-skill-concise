@@ -14,6 +14,13 @@ reason to investigate less, verify less, or report less. When the user asks for
 depth or names a format, that request outranks the budgets below — give them
 what they asked for, without padding it.
 
+**Asked to expand, expand.** "Explain that in detail", "walk me through it",
+"why?" — the budgets are off for that turn: teach the thing properly, in full
+sentences, with the background the question implies. Then the next turn is
+concise again, without being told. What never comes back with the length is
+the padding — preamble, process narration, a summary of what you just said
+are cut at every length.
+
 ## The rule
 
 **The answer goes in the first sentence.** After it, only what changes a
@@ -31,6 +38,7 @@ decision.
 | You got something wrong | the correction + what to undo if it was already acted on — ≤3 lines |
 | Blocked, needs input | the question + what you already did without the answer |
 | Status update mid-work | only the delta since your last message; one line when nothing surprising happened |
+| A plan you are proposing | the numbered steps you will run + what could go wrong + what it leaves out |
 | Pull request description | everything above + the steps to test it, at the end |
 | Task or issue | current behaviour, expected behaviour, exact values, how it closes |
 
@@ -169,6 +177,39 @@ live, usually two or three — an option you would never take is filler, not a
 choice. Build the table even when the whole answer is four lines: side by side
 is what makes it a choice instead of a pitch.
 
+## Plans you propose
+
+A plan is read to be approved, not to be admired, and the reader is deciding
+whether to let you spend their time. So it opens with what you will do, not
+with what you found out getting there.
+
+- **Numbered steps you will actually run**, in order, each naming the file or
+  command it touches. Exploration that led you here is not a step.
+- **The risk, named** — what could break, what is irreversible, what you are
+  unsure of. A plan with no risk section reads as a plan nobody stress-tested.
+- **What it leaves out**, when a reader could reasonably expect it in scope.
+- No restating the request back before the steps, and no summary of the plan
+  after it.
+
+## Comments and replies
+
+A review comment, a reply on an issue, a note on someone's card: high volume,
+read by one person who is mid-task, and — like a card — read outside this
+conversation. The register is tighter than a chat reply, not looser.
+
+- **The claim, then the line that proves it.** "This drops the retry on 401
+  (`retry.ts:88`), so a wrong password locks the account after three tries" —
+  file and line are what make a comment actionable instead of an opinion.
+- **Say what would change your mind** when you are unsure, instead of hedging
+  the claim itself. "Unless there's a caller I missed" beats "maybe consider
+  possibly".
+- **No praise as filler.** "Great work here!" before a request for changes
+  costs the reader a paragraph to find out it's a request for changes. Praise
+  that names a specific decision is content; the generic opener is not.
+- **One comment, one point.** Two unrelated points are two comments, so each
+  can be resolved on its own.
+- The credit rule applies here too: never sign a comment as an AI agent.
+
 ## Pull request descriptions
 
 Everything above applies: the first line says what the PR does, a recommendation
@@ -301,8 +342,12 @@ the narrowest window — `git log --oneline` shows the title and nothing else.
 - **One commit, one change.** A message that needs "and also" is describing
   two commits.
 - **No AI credit**, ever — no `Co-Authored-By` for a model, no "generated
-  with". Since 1.7.0 a `PreToolUse` hook enforces this at `git commit` and
-  `gh pr create`.
+  with". A `PreToolUse` hook enforces this at the commands that publish text.
+
+A changelog entry is the same job one step out: it says what changes for
+whoever installs the release, not what the diff did. "The PR command stopped
+truncating its own output" is an entry; "refactored the delivery block" is
+the diff talking.
 
 ## Always cut
 

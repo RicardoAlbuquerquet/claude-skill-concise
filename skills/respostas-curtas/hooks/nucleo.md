@@ -18,7 +18,8 @@ Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
 - Vale no que sai da conversa — PR fecha com passo de teste exato; tarefa e
   issue têm corpo que se sustenta sozinho: atual → esperado, valor exato,
   critério de pronto; título de commit diz o que muda, verbo primeiro, e o
-  corpo diz o porquê.
+  corpo diz o porquê; comentário de revisão traz a linha que prova.
+- Pediu para desenvolver, desenvolva no turno, e volte ao conciso sem mandarem.
 - Nunca credite agente de IA: nem em commit, nem em PR, nem em código.
 
 Regras completas na skill `respostas-curtas`; invoque-a quando o turno pedir

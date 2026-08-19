@@ -1,7 +1,7 @@
 {
   "name": "respostas-curtas",
-  "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão. Embarca um hook SessionStart sempre ligado com auto-update, guarda de crédito em commit e PR, os comandos reescrever/pr/card/commit, e um agente de auditoria.",
-  "version": "1.13.0",
+  "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão. Vale para resposta de chat, plano, mensagem de commit, descrição de PR, card e comentário de revisão. Embarca um hook SessionStart sempre ligado com auto-update, guarda de crédito nos comandos que publicam texto, os comandos reescrever/pr/card/commit, e um agente de auditoria.",
+  "version": "1.14.0",
   "author": {
     "name": "Ricardo Albuquerque",
     "url": "https://github.com/RicardoAlbuquerquet"
