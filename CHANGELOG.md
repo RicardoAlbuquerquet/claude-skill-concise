@@ -5,6 +5,16 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.8.0 — 2026-08-18
+
+- PR descriptions grow four rules: the repo's `PULL_REQUEST_TEMPLATE` is a
+  contract to fill in the register — no boilerplate sections, no checkbox
+  ticked that isn't true; a many-file diff says where to start reading; the
+  title follows the commit-title rule; and "and also" means two PRs.
+- `/concise:pr` (`/respostas-curtas:pr`) reads the branch's commits for the
+  why, fills the repo template when one exists, and delivers the title
+  ready for `gh pr create --title` alongside the body.
+
 ## 1.7.1 — 2026-08-18
 
 - The credit guard also covers the `PowerShell` tool — on Windows, a commit

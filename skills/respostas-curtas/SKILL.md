@@ -178,7 +178,18 @@ autoridade do template atrás.
 
 Quando uma PR carrega várias entregas, elas viram uma lista curta — uma linha
 cada, abrindo com o rótulo — nunca um parágrafo emendado com ponto-e-vírgula.
-O revisor bate o olho na lista, depois lê o diff.
+E quando o diff atravessa muitos arquivos, diga em uma linha por onde começar
+a ler — o arquivo onde o mecanismo vive. O revisor bate o olho na lista, abre
+esse arquivo, passa o olho no resto.
+
+O `PULL_REQUEST_TEMPLATE` do próprio repo é contrato, não enfeite: mantenha
+os cabeçalhos dele e preencha neste registro. O que ele não desculpa é
+enchimento — seção sem nada a dizer ganha um "nenhum", e caixa de checklist
+só é marcada quando é verdade.
+
+O título segue a regra do título de commit — o que muda quando mescla, verbo
+primeiro. E a regra de escopo dos cards vale inteira: descrição que precisa
+de "e também" está descrevendo duas PRs.
 
 A PR carrega uma coisa a mais que uma resposta de chat não carrega — **como o
 revisor confere sozinho**.

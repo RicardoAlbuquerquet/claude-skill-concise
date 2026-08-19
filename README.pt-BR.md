@@ -257,7 +257,9 @@ escrito:
 - **`/respostas-curtas:pr [base]`** escreve a descrição da PR da branch atual
   a partir do diff real contra `origin/main` (ou a base que você nomear), com
   a primeira linha dizendo o que a PR faz e os passos de teste exatos no fim.
-  EN: `/concise:pr`.
+  Lê os commits da branch atrás do porquê, preenche o
+  `PULL_REQUEST_TEMPLATE` do repo quando existe, e entrega o título junto do
+  corpo. EN: `/concise:pr`.
 - **`/respostas-curtas:card <assunto>`** rascunha um card de tarefa/issue com
   corpo que se sustenta sozinho — comportamento atual → esperado, valores
   exatos, critério de pronto — e cria quando você nomeia um destino que uma
