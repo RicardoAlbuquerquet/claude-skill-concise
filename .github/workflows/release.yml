@@ -1,0 +1,54 @@
+name: release
+
+# A version bump on main is a release: tag it and publish the CHANGELOG
+# section, so watchers get notified and every version has a pinnable ref.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/concise/.claude-plugin/plugin.json'
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: version
+        run: |
+          v=$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' skills/concise/.claude-plugin/plugin.json)
+          echo "value=$v" >> "$GITHUB_OUTPUT"
+          if git rev-parse "v$v" >/dev/null 2>&1; then
+            echo "v$v already tagged — nothing to release"
+            echo "fresh=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "fresh=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.version.outputs.fresh == 'yes'
+        name: Extract this version's changelog section
+        run: |
+          v='${{ steps.version.outputs.value }}'
+          awk -v v="$v" '
+            $0 ~ "^## " v " " {f=1; next}
+            f && /^## / {exit}
+            f
+          ' CHANGELOG.md > notes.md
+          # An entry is required: a release with no notes tells nobody what it
+          # brought, which is the rule the repo enforces on itself.
+          [ -s notes.md ] || { echo "no CHANGELOG section for $v" >&2; exit 1; }
+          cat notes.md
+
+      - if: steps.version.outputs.fresh == 'yes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          v='${{ steps.version.outputs.value }}'
+          git tag "v$v"
+          git push origin "v$v"
+          gh release create "v$v" --title "v$v" --notes-file notes.md
