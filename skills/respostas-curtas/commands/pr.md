@@ -42,10 +42,13 @@ Como:
 5. Sem cabeçalho seu de template sobre conteúdo curto, sem prosa repetindo o
    diff, sem narração de processo, sem crédito a agente de IA em lugar
    nenhum. Várias entregas viram lista curta — uma linha cada, rótulo
-   primeiro — nunca parágrafo emendado com ponto-e-vírgula.
+   primeiro, `- ` no começo da linha — nunca parágrafo emendado com
+   ponto-e-vírgula ou travessão.
 6. Termine com os passos de teste: o comando exato copiável, o que aparece se
    estiver certo, e o que provaria que quebrou quando o comando não cobre o
    caso. Quando você não rodou um passo, diga isso dentro do próprio passo.
+   Feature ainda sem tela não é desculpa — o passo é a própria chamada
+   direta, com rota e corpo, não uma nota de que a chamada direta existe.
 
 Antes de entregar, audite o rascunho contra o checklist você mesmo — primeira
 linha diz o que a PR faz, valores exatos em span, entregas em lista, passos

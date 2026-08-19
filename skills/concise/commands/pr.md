@@ -39,11 +39,14 @@ How:
    to start reading — the file where the mechanism lives.
 5. No template headers of your own over short content, no prose restating
    the diff, no process narration, no credit to an AI agent anywhere.
-   Several deliverables read as a short list — one line each, label first —
-   never a paragraph chained with semicolons.
+   Several deliverables read as a short list — one line each, label first,
+   `- ` at the start of the line — never a paragraph chained with semicolons
+   or dashes.
 6. End with the test steps: the exact copy-pasteable command, what appears if
    it's right, and what would prove it broke when the command doesn't cover
-   the case. When you did not run a step, say so inside the step itself.
+   the case. When you did not run a step, say so inside the step itself. A
+   feature with no screen yet is not an excuse — the step is the direct call
+   itself, route and body included, not a note that a direct call exists.
 
 Before delivering, audit the draft against the checklist yourself — first
 line says what the PR does, exact values in spans, deliverables as a list,

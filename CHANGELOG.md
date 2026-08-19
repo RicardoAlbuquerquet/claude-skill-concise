@@ -5,6 +5,30 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.18.0 — 2026-08-19
+
+Commit messages learn the repo they land in, and two PR fixes from a
+real screenshot.
+
+- **The repo's log is the commit convention.** A `fix(scope):` prefix, a
+  ticket code, another language — whatever the recent titles do
+  consistently, the new message does too, and a commitlint config makes
+  the prefix mandatory. `/concise:commit` reads `git log --oneline -15`
+  and the commitlint config before writing, and carries the ticket from
+  the branch name the way the log does — never invented.
+- `/concise:commit` also gives the exact `git restore --staged <paths>`
+  when the staged diff is two unrelated changes, and wraps the body near
+  72 columns.
+- **PR deliverables must be a real markdown list** — `- ` at the start of
+  the line. A real PR came out with the changes chained by dashes inside
+  one paragraph: the same wall of text the semicolon rule banned, with
+  different punctuation.
+- **A feature with no screen is not excused from the test step.** The same
+  PR said the route was "reachable by direct call" without giving the
+  call; the step is the call itself, route and body included.
+- Cases 16 (commit convention) and a new rubric line in case 10 (list
+  shape) keep both from regressing.
+
 ## 1.17.0 — 2026-08-19
 
 Shorter corrections, from a real reply that ran three times its budget.
