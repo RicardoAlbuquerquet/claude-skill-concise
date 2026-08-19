@@ -5,6 +5,19 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.10.0 — 2026-08-19
+
+- Self-update checks once per day instead of every session start — a stamp
+  in `~/.claude`, written only when the update pair succeeds, so an offline
+  day retries next session.
+- The first session after install prints a three-line map of the commands
+  and the agent, once.
+- Repo side, no plugin change: the repo now practises the templates the
+  skill preaches (`.github/PULL_REQUEST_TEMPLATE.md` and two issue forms,
+  comment-guided so nothing renders as boilerplate), and the eval suite
+  grows to nine cases — the `bash` fence, the overloaded opening, and
+  commit messages join the six from the examples.
+
 ## 1.9.0 — 2026-08-19
 
 - Cards grow three rules: what the conversation settled goes into the

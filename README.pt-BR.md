@@ -158,8 +158,11 @@ antes de confiar:
 
 - Só move quando a release subiu a `version`, igual ao par manual — mudança sem
   bump na `main` nunca propaga.
-- Custa uma ida à rede por início de sessão, e falha em silêncio sem o CLI
-  `claude` no PATH ou sem rede — a próxima sessão simplesmente tenta de novo.
+- Desde a 1.10.0 ele checa uma vez por dia, não por sessão — um carimbo em
+  `~/.claude` segura o resto, e o carimbo só é gravado no sucesso: um dia
+  offline tenta de novo na sessão seguinte. Falha continua silenciosa.
+- A primeira sessão depois de instalar imprime um mapa de três linhas dos
+  comandos e do agente, uma vez, e nunca mais.
 - Cópias na 1.3.0 ou antes ainda não têm o hook. Alcançar a 1.4.0 leva um
   update manual, ou o toggle do marketplace acima.
 - Sair do auto-update mantendo a skill significa instalar por cópia — esse

@@ -159,9 +159,11 @@ before relying on it:
 
 - It moves only when the release bumped `version`, same as the manual pair —
   an unbumped change on `main` never propagates.
-- It costs a network round-trip per session start, and fails silently without
-  the `claude` CLI on PATH or without network — the next session just tries
-  again.
+- Since 1.10.0 it checks once per day, not per session — a stamp in
+  `~/.claude` throttles it, and the stamp is only written on success, so an
+  offline day retries next session. Failures stay silent either way.
+- The first session after install prints a three-line map of the commands
+  and the agent, once, and never again.
 - Copies on 1.3.0 or earlier don't have the hook yet. Reaching 1.4.0 still
   takes one manual update, or the marketplace toggle above.
 - Opting out of self-update while keeping the skill means installing by copy —
