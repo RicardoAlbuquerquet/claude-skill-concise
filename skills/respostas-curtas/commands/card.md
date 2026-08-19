@@ -37,7 +37,25 @@ cabeçalho nem tabela, corpo que se sustenta sozinho — e corrija o que
 falhar. Entregue só a versão limpa.
 
 Entrega: título na primeira linha, corpo em bloco de código, pronto para
-colar. Se a invocação nomeia um destino — um board, um repo, um projeto — e
-existe ferramenta para ele (MCP, `gh`), crie o card lá depois do rascunho e
-reporte o id ou link; senão, entregue só o rascunho e diga onde ele pode ir.
-Nunca crie em lugar que não foi nomeado.
+colar.
+
+Quando a invocação nomeia um destino — um board, um repo, um projeto — e
+existe ferramenta para ele (MCP, `gh`), crie lá depois do rascunho, nesta
+ordem:
+
+1. **Procure o card que já existe** — busque no destino pelo sintoma ou
+   assunto. Candidato provável é linkado e reportado, em vez de duplicata
+   criada do lado.
+2. **No GitHub, honre o template de issue**: escolha o formulário que casa em
+   `.github/ISSUE_TEMPLATE/`, mantenha os cabeçalhos, preencha neste
+   registro — "nenhum" onde não há o que dizer.
+3. **Campo, não texto**: descubra o que o destino oferece — etiquetas,
+   membros, status, prioridade — e ponha nos campos o que a conversa definiu.
+   O que ninguém definiu fica no default, e você diz isso.
+4. **Ligue o que é ligado**: bloqueador ou pai nomeado ganha o link real —
+   relação ou subtarefa no board, referência `#numero` no GitHub.
+5. Crie, e reporte o id ou link — mais os campos que você preencheu e os que
+   ficaram no default.
+
+Sem destino, entregue só o rascunho e diga onde ele pode ir. Nunca crie em
+lugar que não foi nomeado.

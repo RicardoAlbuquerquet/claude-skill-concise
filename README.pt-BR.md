@@ -263,8 +263,10 @@ escrito:
 - **`/respostas-curtas:card <assunto>`** rascunha um card de tarefa/issue com
   corpo que se sustenta sozinho — comportamento atual → esperado, valores
   exatos, critério de pronto — e cria quando você nomeia um destino que uma
-  ferramenta alcança (um board por MCP, um repo via `gh`). EN:
-  `/concise:card`.
+  ferramenta alcança (um board por MCP, um repo via `gh`). Na criação,
+  procura duplicata antes, honra o template de issue do tracker, preenche os
+  campos do destino em vez de repeti-los no corpo, e linka bloqueadores
+  nomeados. EN: `/concise:card`.
 - **`/respostas-curtas:commit [contexto]`** rascunha a mensagem de commit do
   que está staged — título com o verbo primeiro e 72 caracteres ou menos,
   corpo dizendo o porquê em vez de recontar o diff. Só rascunho; nunca roda

@@ -5,6 +5,17 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.9.0 — 2026-08-19
+
+- Cards grow three rules: what the conversation settled goes into the
+  destination's fields, not the body and not silently the default; the
+  tracker's issue template is a contract to fill; and creation starts by
+  looking for the card that already exists.
+- `/concise:card` (`/respostas-curtas:card`) creating at a destination now
+  searches for duplicates first, honours GitHub issue templates, discovers
+  and sets fields, links named blockers or parents, and reports what it set
+  and what stayed at default.
+
 ## 1.8.0 — 2026-08-19
 
 - PR descriptions grow four rules: the repo's `PULL_REQUEST_TEMPLATE` is a

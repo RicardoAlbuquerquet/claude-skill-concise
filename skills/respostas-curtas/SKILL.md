@@ -261,7 +261,17 @@ não mais:
 status e etiqueta são campos do card; repetir no texto cria uma cópia que
 envelhece assim que alguém mexe no campo. O motivo, esse sim, é conteúdo: "o
 prazo é dia 28 porque o faturamento roda no 29" é um fato que campo de data
-nenhum guarda.
+nenhum guarda. Criando por ferramenta, a mesma regra corre para frente: o que
+a conversa definiu — prioridade, responsável, etiqueta — entra *no* campo, não
+no texto, e não fica em silêncio no default.
+
+O template de issue do próprio tracker é contrato, igual ao de PR: escolha o
+formulário que casa — bug, feature — mantenha os cabeçalhos dele, e preencha
+neste registro; seção sem nada a dizer ganha um "nenhum".
+
+E antes de criar, procure o card que já existe. Duplicata custa triagem duas
+vezes e divide a discussão; quando aparece um candidato provável, aponte para
+ele — linke, comente nele — em vez de criar do lado.
 
 Fica de fora o histórico: como você chegou até ali, o que descartou no caminho, a
 conversa colada no corpo. Isso engorda o card sem mudar o que a pessoa vai fazer

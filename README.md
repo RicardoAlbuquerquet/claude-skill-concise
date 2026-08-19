@@ -262,7 +262,10 @@ the skill governs what Claude writes next; these act on what is written:
 - **`/concise:card <subject>`** drafts a task/issue card whose body stands
   alone — current → expected behaviour, exact values, a done criterion — and
   creates it when you name a destination a tool can reach (an MCP board, a
-  `gh` repo). PT: `/respostas-curtas:card`.
+  `gh` repo). Creating, it checks for an existing duplicate first, honours
+  the tracker's issue template, sets the destination's fields instead of
+  restating them in the body, and links named blockers. PT:
+  `/respostas-curtas:card`.
 - **`/concise:commit [context]`** drafts the commit message for what is
   staged — title with the verb first and 72 characters or fewer, body saying
   why rather than retelling the diff. Draft only; it never runs `git commit`.

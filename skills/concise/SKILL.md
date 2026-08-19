@@ -263,7 +263,17 @@ cards. It holds *less* structure than a chat reply, not more:
 status and labels are fields on the card; restating them in the text creates a
 copy that goes stale the moment someone edits the field. The reason, on the other
 hand, is content: "the deadline is the 28th because the invoice run is on the
-29th" is a fact no date field can hold.
+29th" is a fact no date field can hold. Creating through a tool, the same rule
+runs forward: what the conversation settled — priority, assignee, label — goes
+*into* the field, not into the text, and not silently into the default.
+
+A tracker's own issue template is a contract, the same as a PR template: pick
+the form that matches — bug, feature — keep its headers, and fill them in this
+register; a section with nothing to say gets a "none".
+
+And before creating, look for the card that already exists. A duplicate costs
+triage twice and splits the discussion; when a likely match turns up, point at
+it — link it, comment on it — instead of creating beside it.
 
 What stays out is the history: how you got there, what you ruled out on the way,
 the conversation pasted into the body. It fattens the card without changing what
