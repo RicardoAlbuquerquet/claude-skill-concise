@@ -41,7 +41,7 @@ Depois cheque, nesta ordem:
    tem: verbo no título, comportamento atual → esperado, valor exato, critério
    de pronto, escopo fechado — e respeita o painel estreito: sem cabeçalho,
    sem tabela, negrito só como rótulo de item. Mensagem de commit tem título
-   com verbo primeiro, 72 caracteres ou menos, sem ponto final, e corpo que
+   de 72 caracteres ou menos, sem ponto final, que nomeia o que muda, e corpo que
    diz o porquê em vez de recontar o diff. Em card e em commit vale também o
    teste do corpo autônomo: qualquer "como conversamos", "aquele problema que
    você mencionou" ou referência a esta conversa é violação, porque quem lê

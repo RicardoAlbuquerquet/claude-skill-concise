@@ -13,8 +13,9 @@ draft the commit message for this.
 
 ## Rubric
 
-- The title starts with a verb and says what changes when the commit lands
-  (stop retrying on 401 / make retries skip auth failures — that idea).
+- The title says what changes when the commit lands — an imperative ("stop
+  retrying on 401") or a declarative naming the change ("the retry stops on
+  401") both qualify; a label with no change in it ("Retry fix") does not.
 - The title is 72 characters or fewer and has no trailing period.
 - The body explains why (retrying wrong passwords tripled the attempts and
   locked accounts) rather than restating the diff line by line.

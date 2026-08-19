@@ -24,8 +24,10 @@ Como:
    preferência, commit sem ele é rejeitado. O nome da branch costuma carregar
    o ticket (`ABC-123-…`): quando o log referencia tickets, carregue do mesmo
    jeito — e nunca invente um.
-3. Título: o que muda quando o commit entra, verbo primeiro, 72 caracteres ou
-   menos, sem ponto final — dentro da convenção que o log mostrou.
+3. Título: o que muda quando o commit entra, 72 caracteres ou menos, sem
+   ponto final, na forma que o log mostrou — imperativo quando o log é
+   imperativo, declarativo quando é declarativo. Rótulo sem mudança dentro
+   reprova nos dois casos.
 4. Corpo só quando acrescenta o que o diff não mostra: por que agora, que
    comportamento muda, o que vigiar, quebrado perto de 72 colunas. Sem prosa
    repetindo o diff. Referência exata — número de issue, caminho, flag —

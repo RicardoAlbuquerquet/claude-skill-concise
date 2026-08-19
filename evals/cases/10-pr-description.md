@@ -20,8 +20,6 @@ write the PR description for this branch.
   any header) above it.
 - The exact path `src/lib/retry.ts` appears.
 - Issue #52 is referenced.
-- The changes appear as a markdown list — lines starting with `- ` — not as
-  one paragraph chained with dashes or semicolons.
 - The description ends with a test step containing the exact command
   `npm test -- retry`.
 - The unverified part is named as unverified — that the staging lockout

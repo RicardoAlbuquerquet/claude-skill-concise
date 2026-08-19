@@ -40,8 +40,8 @@ Then check, in this order:
    what appears if it's right, and what would prove it broke. A card has: verb
    in the title, current → expected behaviour, exact values, a done criterion,
    closed scope — and respects the narrow panel: no headers, no table, bold
-   only as item labels. A commit message has a verb-first title of 72
-   characters or fewer with no trailing period, and a body that says why
+   only as item labels. A commit message has a title of 72
+   characters or fewer, no trailing period, that names what changes, and a body that says why
    rather than retelling the diff. For a card or a commit, also apply the
    stands-alone test: any "as discussed", "the problem you mentioned", or
    reference to this conversation is a violation, because the reader will

@@ -333,13 +333,18 @@ the reader will do — a card describes what is left, not the route to finding i
 The highest-volume surface that leaves the conversation, and the one read in
 the narrowest window — `git log --oneline` shows the title and nothing else.
 
-- **The title says what changes when the commit lands**, verb first, 72
-  characters or fewer, no trailing period. "Fix the invoice filter dropping
-  the timezone" — in a log listing, that line is all anyone gets.
+- **The title says what changes when the commit lands**, 72 characters or
+  fewer, no trailing period. "Fix the invoice filter dropping the timezone"
+  — in a log listing, that line is all anyone gets. An imperative is the
+  shape that gets there most reliably, and a declarative that names the
+  change ("The invoice filter stops dropping the timezone") does the job
+  too; what never passes is a label with no change in it ("Invoice filter",
+  "Fixes").
 - **The repo's log is the convention, and the message lands inside it.** A
-  `fix(scope):` prefix, a ticket code, another language — whatever the recent
-  titles do consistently, the new one does too, with these rules applying
-  inside that shape. A perfect title in the wrong convention still reads as a
+  `fix(scope):` prefix, a ticket code, another language, imperative or
+  declarative — whatever the recent titles do consistently, the new one does
+  too. The log decides the shape; it never buys out the substance, which is
+  a title that says what changes, inside 72 characters, with no AI credit. A perfect title in the wrong convention still reads as a
   misfit in `git log --oneline`; a commitlint config turns the mismatch into
   a rejected commit.
 - **The body says why, not what.** The diff already shows what changed; the

@@ -1,6 +1,6 @@
 # Evals
 
-Sixteen cases. Each gives the model the facts it would have discovered, sends
+Seventeen cases. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -35,7 +35,7 @@ measures the model's own habits, not the rules, and proves nothing when it
 passes with the skill. Its exit code is always 0 — the pass count is the
 signal, and a *low* one is the good news.
 
-**Cost:** two API calls per case per run, so the default suite is 32 calls
+**Cost:** two API calls per case per run, so the default suite is 34 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -62,9 +62,15 @@ you change a rule here, change the rubric that tests it.
 | Draw the shape; gloss by consequence | 14 |
 | Correcting yourself: no story of the mistake, no re-announcing | 15 |
 | Commit lands inside the repo log's convention | 16 |
+| Several deliverables read as a markdown list | 17 |
 
 Not covered yet: plans, review comments, the expand-on-request valve, and the
 PT-only wording rules. Those are the next cases to write.
+
+A rubric can be miscalibrated as easily as a rule can drift. Case 10 asked a
+single-change PR for a list of deliverables it did not have — the response
+was right and the rubric was wrong. When a case fails, read the quoted
+violation before assuming the skill moved.
 
 ## Adding one
 

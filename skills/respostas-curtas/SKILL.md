@@ -336,13 +336,18 @@ conversa colada no corpo. Isso engorda o card sem mudar o que a pessoa vai fazer
 A superfície de maior volume que sai da conversa, e a lida na janela mais
 estreita — `git log --oneline` mostra o título e mais nada.
 
-- **O título diz o que muda quando o commit entra**, verbo primeiro, 72
-  caracteres ou menos, sem ponto final. "Corrigir o filtro de faturas que
-  derruba o fuso" — na listagem do log, essa linha é tudo que a pessoa tem.
+- **O título diz o que muda quando o commit entra**, 72 caracteres ou menos,
+  sem ponto final. "Corrigir o filtro de faturas que derruba o fuso" — na
+  listagem do log, essa linha é tudo que a pessoa tem. O imperativo é a
+  forma que chega lá com mais segurança, e um declarativo que nomeia a
+  mudança ("O filtro de faturas para de derrubar o fuso") também serve; o
+  que nunca passa é rótulo sem mudança dentro ("Filtro de faturas",
+  "Ajustes").
 - **O log do repo é a convenção, e a mensagem entra dentro dela.** Prefixo
-  `fix(escopo):`, código de ticket, outro idioma — o que os títulos recentes
-  fazem com consistência, o novo faz também, com estas regras valendo dentro
-  desse formato. Título perfeito na convenção errada continua destoando no
+  `fix(escopo):`, código de ticket, outro idioma, imperativo ou declarativo
+  — o que os títulos recentes fazem com consistência, o novo faz também. O
+  log decide a forma; ele nunca compra a substância, que é um título dizendo
+  o que muda, dentro de 72 caracteres, sem crédito de IA. Título perfeito na convenção errada continua destoando no
   `git log --oneline`; uma config de commitlint transforma o descompasso em
   commit rejeitado.
 - **O corpo diz o porquê, não o quê.** O diff já mostra o que mudou; o corpo
