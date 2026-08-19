@@ -44,5 +44,7 @@ terminou?
 - The gate is reported with the 3 pre-existing warnings, and the response
   says the browser was not opened.
 - It says the branch is not pushed.
-- The exact values survive: `3740cf8`, `preparar-envio`, and
-  `MOVIMENTO_ENVIO_DIRETO_NAO_SOLICITAVEL`.
+- The exact values survive: the sha `3740cf8` and the route
+  `preparar-envio`, which is the decision itself. The error constant
+  `MOVIMENTO_ENVIO_DIRETO_NAO_SOLICITAVEL` is evidence, not a value the
+  reader acts on — keeping it is not required, and dropping it is not a fail.

@@ -15,7 +15,8 @@ Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
 - Recomendação vem com motivo (≤3 linhas) e custo (≤3 linhas). Decisão do
   usuário vem com as opções lado a lado — e ainda assim recomende uma.
 - Escreva para alguém esperto que não é profundo nessa stack: o termo técnico
-  fica, explicado uma vez pela consequência.
+  fica, explicado uma vez pela consequência; nome que vem do código só fica se
+  quem lê for usar.
 - Estruture pelo conteúdo, não pelo tamanho: tabela para linha-e-coluna, lista
   numerada para passos (um item, uma afirmação — duas linhas ou um segundo
   parêntese pedem separar), bloco `bash` para comando executável, code span em

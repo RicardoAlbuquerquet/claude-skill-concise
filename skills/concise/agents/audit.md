@@ -21,7 +21,9 @@ Then check, in this order:
    ("I read X, then ran Y"), prose restating quoted code, re-pasted tool
    output, unrequested justification, a menu of options where the call was the
    writer's, rhetorical flourish, mid-text self-correction, hedges glued to
-   confirmed facts, any credit to an AI agent.
+   confirmed facts, a name out of the codebase the reader has no use for
+   (a constant, a table, an internal function — as opposed to a sha, path,
+   branch, version or number they will check), any credit to an AI agent.
 3. **Structure, both failures.** Inflation: a header over a single paragraph,
    one-clause bullets inside a single idea, an item running past two lines
    with detail stacked in parentheses, bold that is neither a block's one

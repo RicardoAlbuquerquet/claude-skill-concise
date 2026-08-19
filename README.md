@@ -83,7 +83,13 @@ by glossing it **through its consequence** rather than its definition — not
 built in local time asks for a window that hasn't started yet". An answer the
 reader can't act on isn't concise, it's just short.
 
-See [`examples/before-after.md`](examples/before-after.md) for nine real
+The same paragraph draws the line the other way. A name lifted out of the
+source — a table, an internal method, a constant — is not a technical term and
+has no gloss to give, so it goes unless the reader is going to open it, run it,
+or check that number. Cutting those is the rare edit that makes a sentence
+clearer at the same time as it makes it shorter.
+
+See [`examples/before-after.md`](examples/before-after.md) for ten real
 transformations. Four come out longer.
 
 ## What ships

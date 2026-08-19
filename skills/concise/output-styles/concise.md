@@ -18,7 +18,8 @@ Response style, active for the whole session (skill `concise`):
   choice that is the user's gets the options side by side — and still a
   recommendation.
 - Write for someone sharp who is not deep in this stack: the technical term
-  stays, glossed once by its consequence.
+  stays, glossed once by its consequence; a name out of the codebase stays only
+  if they will use it.
 - Structure follows content, not length: a table for rows-and-columns, a
   numbered list for steps (one item, one claim — two lines or a second
   parenthetical means split it), a `bash` fence for a runnable command, code spans

@@ -82,7 +82,13 @@ fuso" e sim "a coluna guarda em UTC, então filtro montado no horário local ped
 uma janela que ainda não começou". Resposta em que a pessoa não consegue agir
 não é concisa, é só curta.
 
-Veja [`examples/before-after.md`](examples/before-after.md): nove transformações
+O mesmo parágrafo traça a linha para o outro lado. Nome tirado do fonte — uma
+tabela, um método interno, uma constante — não é termo técnico e não tem glosa
+para dar, então sai, a menos que quem lê vá abrir, rodar ou conferir aquele
+número. Cortar esses é a edição rara que deixa a frase mais clara ao mesmo
+tempo que a deixa mais curta.
+
+Veja [`examples/before-after.md`](examples/before-after.md): dez transformações
 reais. Quatro saem mais longas.
 
 ## O que embarca
