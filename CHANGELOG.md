@@ -5,6 +5,19 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.17.0 — 2026-08-19
+
+Shorter corrections, from a real reply that ran three times its budget.
+
+- **The correction rule moved into the always-on core.** It was in the full
+  ruleset and being skipped, because most turns run on the core alone — so a
+  reply that found its own mistake spent a headed section explaining what it
+  had misread, which is the account of the error the rule already banned.
+- **Re-announcing after a check is now cut explicitly.** Saying the answer,
+  going to verify, then opening the next message with the same sentence is a
+  shape the ruleset had no name for.
+- Case 15 tests both, so the rules regress instead of drifting.
+
 ## 1.16.0 — 2026-08-19
 
 Reach: the same rules, in places they could not go before.
