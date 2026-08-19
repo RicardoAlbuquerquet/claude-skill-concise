@@ -13,19 +13,26 @@ $ARGUMENTS
 
 How:
 
-1. Run `git fetch`, then diff `<base>...HEAD` — file names first, the diff
-   itself where names aren't enough. Read enough of the changed files to
-   describe **behaviour**, not lines. If the branch has no commits over the
-   base, say so and stop; never invent a description.
-2. First line: what the PR does. After it, only what the reviewer can't get
+1. Run `git fetch`, then `git log <base>..HEAD --oneline` — the commit
+   titles carry the why — then diff `<base>...HEAD`: file names first, the
+   diff itself where names aren't enough. Read enough of the changed files
+   to describe **behaviour**, not lines. If the branch has no commits over
+   the base, say so and stop; never invent a description.
+2. Check for the repo's template: `.github/PULL_REQUEST_TEMPLATE.md`,
+   `PULL_REQUEST_TEMPLATE.md`, `docs/`, or a `.github/PULL_REQUEST_TEMPLATE/`
+   directory. When one exists it is a contract: keep its headers and fill
+   them in this register — a section with nothing to say gets a "none", and
+   a checklist box is ticked only when it's true.
+3. First line: what the PR does. After it, only what the reviewer can't get
    faster from the diff: what changes for whoever uses this, decisions taken
    with their costs, what was left out of scope, and anything unverified —
-   named as unverified.
-3. No template headers over short content, no prose restating the diff, no
-   process narration, no credit to an AI agent anywhere. Several deliverables
-   read as a short list — one line each, label first — never a paragraph
-   chained with semicolons.
-4. End with the test steps: the exact copy-pasteable command, what appears if
+   named as unverified. When the diff spans many files, one line says where
+   to start reading — the file where the mechanism lives.
+4. No template headers of your own over short content, no prose restating
+   the diff, no process narration, no credit to an AI agent anywhere.
+   Several deliverables read as a short list — one line each, label first —
+   never a paragraph chained with semicolons.
+5. End with the test steps: the exact copy-pasteable command, what appears if
    it's right, and what would prove it broke when the command doesn't cover
    the case. When you did not run a step, say so inside the step itself.
 
@@ -34,7 +41,8 @@ line says what the PR does, exact values in spans, deliverables as a list,
 test steps with the unrun ones marked — and fix what fails. Deliver only the
 clean version.
 
-Deliver the description in a fenced block, ready to paste into
-`gh pr create --body` or the GitHub form. Nothing after the block except
-holes you could not fill from the branch, one line each, opening with
-**Missing:**.
+Deliver the title first, on its own line — what changes when it merges, verb
+first, ready for `gh pr create --title`. Then the description in a fenced
+block, ready to paste into `--body` or the GitHub form. Nothing after the
+block except holes you could not fill from the branch, one line each,
+opening with **Missing:**.

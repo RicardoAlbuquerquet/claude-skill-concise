@@ -256,7 +256,9 @@ the skill governs what Claude writes next; these act on what is written:
 - **`/concise:pr [base]`** drafts the pull request description for the
   current branch from the real diff against `origin/main` (or the base you
   name), first line saying what the PR does and the exact test steps at the
-  end. PT: `/respostas-curtas:pr`.
+  end. It reads the branch's commits for the why, fills the repo's
+  `PULL_REQUEST_TEMPLATE` when one exists, and delivers the title alongside
+  the body. PT: `/respostas-curtas:pr`.
 - **`/concise:card <subject>`** drafts a task/issue card whose body stands
   alone — current → expected behaviour, exact values, a done criterion — and
   creates it when you name a destination a tool can reach (an MCP board, a

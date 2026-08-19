@@ -178,7 +178,18 @@ with the template's authority behind it.
 
 When one PR carries several deliverables, they read as a short list — one
 line each, opening with its label — never as a paragraph chained together
-with semicolons. The reviewer scans the list, then reads the diff.
+with semicolons. And when the diff spans many files, say in one line where
+to start reading — the file where the mechanism lives. The reviewer scans
+the list, opens that file, skims the rest.
+
+A repo's own `PULL_REQUEST_TEMPLATE` is a contract, not decoration: keep its
+headers and fill them in this register. What it doesn't excuse is
+boilerplate — a section with nothing to say gets a "none", and a checklist
+box gets ticked only when it's true.
+
+The title follows the commit-title rule — what changes when it merges, verb
+first. And the scope rule from cards applies whole: a description that needs
+"and also" is describing two PRs.
 
 A PR carries one thing a chat reply doesn't — **how the reviewer checks it
 themselves**.
