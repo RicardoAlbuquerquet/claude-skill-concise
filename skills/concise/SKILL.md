@@ -1,6 +1,6 @@
 ---
 name: concise
-description: Response style for every message written to the user — the answer in the first sentence, no visual clutter, no information beyond what is needed. Applies to every turn that produces prose for the user, and to what leaves the conversation: pull request descriptions, tasks, and issues.
+description: Required response style for every message written to the user — the answer in the first sentence, no visual clutter, no information beyond what is needed. Applies to every turn that produces prose for the user, including status updates, and to what leaves the conversation: commit messages, pull request descriptions, tasks, and issues.
 ---
 
 # Concise
@@ -21,7 +21,7 @@ decision.
 
 | Situation | Budget |
 |---|---|
-| Factual question | 1–3 sentences; a yes/no question starts with yes or no |
+| Factual question | 1–3 sentences; a yes/no question starts with yes or no — unless the premise is false or the answer is genuinely uncertain, and the correction opens instead |
 | Recommendation (your call) | recommendation + ≤3 lines of reason + ≤3 lines of cost |
 | Choice that is the user's | options side by side + recommendation + ≤3 lines why it wins |
 | Completed work | what changed, where, whether the gate is green — ≤5 lines |
@@ -138,7 +138,7 @@ Then one test on the whole response, because blocks that each pass alone can
 still fail together. Two tables, a divider and four bold lead-ins in one reply
 make the reader decode a layout before reading a sentence. When the **Never cut**
 list forces a long answer, the structure gets simpler, not richer — one table is
-usually the ceiling, and if every paragraph opens in bold, none of them leads.
+the ceiling, and if every paragraph opens in bold, none of them leads.
 And the first thing on screen is the sentence that answers — not a header, not a
 table.
 
@@ -361,8 +361,7 @@ caveat's clothes. It comes back when it changes, when the reader is about to act
 against it, or when you hand the work over; until then a clause pointing at it
 beats the paragraph.
 
-A long subject can have a long answer — a plan, an audit, a migration. What it
-cannot have is a line that carries no information.
+A long subject can have a long answer — a plan, an audit, a migration.
 
 ## Before sending
 

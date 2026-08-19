@@ -35,6 +35,8 @@ headers or tables, body standing alone — and fix what fails. Deliver only
 the clean version.
 
 Delivery: title on the first line, body in a fenced block, ready to paste.
+Fence it with four backticks when the body carries a fence of its own —
+repro commands do — so the wrapper doesn't end at the inner one.
 
 When the invocation names a destination — a board, a repo, a project — and a
 tool for it is available (MCP, `gh`), create it there after drafting, in this

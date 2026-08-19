@@ -13,6 +13,20 @@ registro a texto que já existe.
 
 ![A mesma pergunta respondida sem e com a skill](docs/before-after.pt-BR.svg)
 
+Dois comandos dentro de uma sessão do Claude Code, e vale a partir da sua
+próxima sessão:
+
+```
+/plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
+```
+
+```
+/plugin install respostas-curtas@claude-skill-concise
+```
+
+A [instalação](#instalação) completa — com a forma de terminal e o caminho da
+cópia — está mais abaixo.
+
 ## O problema
 
 O registro padrão de escrita do Claude é expansivo. É um bom padrão numa janela
@@ -112,8 +126,10 @@ claude plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
 claude plugin install respostas-curtas@claude-skill-concise
 ```
 
-A forma por CLI instala no escopo de usuário e vale a partir do próximo início
-do Claude Code, ou quando você rodar `/reload-plugins` numa sessão já aberta.
+**As duas formas valem na próxima sessão, não nesta.** O estilo carrega no
+início da sessão, evento que já passou naquela em que você digitou o install
+— então refaça a pergunta depois de reiniciar o Claude Code, ou rode
+`/reload-plugins` antes. "Instalei e não mudou nada" é quase sempre isso.
 
 Troque `respostas-curtas` por `concise` para o original em inglês. Instale um,
 não os dois — veja [Idiomas](#idiomas).
@@ -150,23 +166,22 @@ auto-update**.
 
 ### Auto-atualização
 
-**Desde a 1.4.0 o plugin roda o par sozinho.** Um segundo hook `SessionStart`
-dispara os dois comandos em segundo plano a cada início de sessão, então uma
-cópia instalada segue o marketplace com uma sessão de atraso — a sessão que
-abre baixa a atualização, a seguinte roda com ela. Saiba o que isso implica
-antes de confiar:
+**O plugin roda esse par sozinho.** Um hook `SessionStart` checa uma vez por
+dia, em segundo plano, então uma cópia instalada segue o marketplace com uma
+sessão de atraso: a sessão que checa baixa a atualização, a seguinte roda com
+ela. O que isso implica:
 
-- Só move quando a release subiu a `version`, igual ao par manual — mudança sem
-  bump na `main` nunca propaga.
-- Desde a 1.10.0 ele checa uma vez por dia, não por sessão — um carimbo em
-  `~/.claude` segura o resto, e o carimbo só é gravado no sucesso: um dia
-  offline tenta de novo na sessão seguinte. Falha continua silenciosa.
-- A primeira sessão depois de instalar imprime um mapa de três linhas dos
-  comandos e do agente, uma vez, e nunca mais.
-- Cópias na 1.3.0 ou antes ainda não têm o hook. Alcançar a 1.4.0 leva um
-  update manual, ou o toggle do marketplace acima.
-- Sair do auto-update mantendo a skill significa instalar por cópia — esse
-  caminho não carrega hooks — ou desligar os hooks do plugin por inteiro.
+- Só move quando a release subiu a `version`, igual ao par manual — mudança
+  sem bump na `main` nunca propaga.
+- A checagem é carimbada em `~/.claude` antes de rodar, então uma falha tenta
+  de novo amanhã em vez de a cada início de sessão para sempre. Depois de uma
+  semana falhando, o plugin avisa na tela com o comando que mostra o erro;
+  até lá fica quieto.
+- Quando uma atualização entra, a sessão seguinte diz para qual versão foi.
+- Cópias na 1.3.0 ou antes não têm hook nenhum: alcançar uma versão que se
+  auto-atualiza leva um update manual, ou o toggle do marketplace acima.
+- Para parar só isso: `touch ~/.claude/.respostas-curtas-no-self-update`. O
+  estilo, os comandos e a guarda de crédito continuam.
 
 ### Copiando o arquivo
 
@@ -216,8 +231,8 @@ um arquivo só:
 [`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md)
 ([`hooks/core.md`](skills/concise/hooks/core.md) no port em inglês).
 
-Para podar ou reescrever na sua máquina, não edite a cópia do cache — desde a
-1.4.0 o auto-update sobrescreve na release seguinte. Escreva
+Para podar ou reescrever na sua máquina, não edite a cópia do cache — o
+auto-update sobrescreve na release seguinte. Escreva
 `~/.claude/respostas-curtas-nucleo-override.md`
 (`~/.claude/concise-core-override.md` no port em inglês): quando esse arquivo
 existe, o hook injeta ele no lugar do núcleo embarcado, e ele sobrevive a toda
@@ -228,6 +243,12 @@ Uma aresta de plataforma: no Windows o hook roda pelo Git Bash. Sem o Git for
 Windows instalado ele falha em silêncio e você volta ao só-por-invocação — as
 mesmas máquinas onde a própria ferramenta Bash do Claude Code não roda, então
 na prática o hook funciona onde o resto funciona.
+
+**Para conferir que carregou mesmo**, pergunte numa sessão nova: *"que estilo
+de resposta está ativo agora?"* — a resposta nomeia as regras do núcleo
+(resposta na primeira frase, corte preâmbulo, nunca corte notícia ruim)
+quando o hook rodou, e não nomeia quando não rodou. É essa a diferença entre
+a garantia e a esperança.
 
 **Instalada por cópia, o hook não vem junto** — `~/.claude/skills/` leva só a
 skill. Emparelhe com uma linha no `CLAUDE.md`, que é carregado no contexto a
@@ -283,17 +304,26 @@ escrito:
 Tudo isso vem só com a instalação por plugin; o caminho da cópia leva a skill
 sozinha.
 
-**Desde a 1.7.0 uma guarda de crédito vem ligada.** Um hook `PreToolUse` nega
-qualquer `git commit` ou `gh pr create` cujo texto carregue crédito a agente
-de IA — `Co-Authored-By` de modelo, rodapé "generated with" — por comparação
-determinística de string, sem chamada de API. Ela transforma a regra mais
-dura da skill em regra de sistema: o commit é barrado com o motivo, e a
-mensagem sai reescrita sem o rodapé. Desde a 1.7.1 cobre as ferramentas
-`Bash` e `PowerShell`, e pega o comando em qualquer ponto de uma corrente
-(`git add … && git commit …`) — a checagem é um grep que roda a cada chamada
-de shell, poucos milissegundos cada. Limite conhecido: mensagem passada como
-arquivo (`git commit -F notas.txt`) fica fora do alcance da string do
-comando. Sair dela significa desligar os hooks do plugin.
+**Uma guarda de crédito vem ligada.** Um hook `PreToolUse` nega a chamada de
+shell que publicaria crédito a agente de IA — `Co-Authored-By` de modelo,
+rodapé "generated with" — por comparação determinística de string, sem
+chamada de API. Ela transforma a regra mais dura da skill em regra de
+sistema: a chamada é barrada com o motivo, e o texto sai reescrito sem o
+rodapé.
+
+O que ela cobre: `git commit` (inclusive `git -C`), `gh pr create|edit`,
+`gh issue create|comment`, `gh release create|edit` e `gh api`, pelas
+ferramentas `Bash` e `PowerShell`, em qualquer ponto de uma corrente, e
+dentro do arquivo quando a mensagem vem por `-F` / `--body-file`. Ela nomeia
+Claude, Copilot, Gemini, Cursor, Codex e o endereço de trailer
+`anthropic.com`.
+
+Duas saídas, porque guarda determinística tem falso positivo — escrever
+*sobre* a regra dispara ela, como este repo descobriu:
+
+- `export CONCISE_ALLOW_CREDIT=1` para um shell ou uma sessão.
+- `touch ~/.claude/.respostas-curtas-no-credit-guard` para desligar de vez,
+  sem mexer no estilo, nos comandos nem no auto-update.
 
 Há também um **auditor de Stop opcional** em
 [`extras/stop-audit/`](extras/stop-audit/README.md): um hook que você instala
@@ -316,6 +346,23 @@ no contexto duas vezes. As regras são sobre estrutura, não vocabulário, entã
 uma tradução é um port fiel e não uma reescrita. Ports para outros idiomas são
 bem-vindos.
 
+## Desinstalando
+
+```
+/plugin uninstall respostas-curtas@claude-skill-concise
+```
+
+Isso tira a skill, os comandos, o agente e os hooks. Quatro arquivos de
+estado ficam em `~/.claude` — inofensivos, e vale apagar se você quiser a
+boas-vindas de novo numa reinstalação:
+
+```bash
+rm -f ~/.claude/.respostas-curtas-welcomed ~/.claude/.respostas-curtas-update-stamp ~/.claude/.respostas-curtas-update-failed ~/.claude/.respostas-curtas-update-note
+```
+
+O seu override do núcleo (`~/.claude/respostas-curtas-nucleo-override.md`) e
+as flags de opt-out são suas; a desinstalação não mexe nelas.
+
 ## O critério para uma regra
 
 Esta skill é um guia de estilo, o que a torna fácil demais de encher com
@@ -332,8 +379,9 @@ modelo. Por isso não está na skill.
 
 As regras também são medidas, não só argumentadas. O CI prende os dois ports à
 paridade estrutural e recusa mudança de plugin sem bump de versão;
-[`evals/`](evals/README.md) roda seis casos julgados derivados dos exemplos —
-na 1.6.0, os dois ports passam nos seis.
+[`evals/`](evals/README.md) roda casos julgados contra as regras e
+[`scripts/test-hooks.sh`](scripts/test-hooks.sh) exercita todos os hooks sem
+tocar na rede. Os dois ports passam na suíte.
 
 Veja [CONTRIBUTING.md](CONTRIBUTING.md).
 

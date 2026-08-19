@@ -1,13 +1,16 @@
 ---
 description: Draft the pull request description for the current branch — grounded in the real diff, exact test steps at the end
-argument-hint: [base ref — defaults to origin/main]
+argument-hint: [base ref, extra context the diff can't show, or both]
 ---
 
 Write the pull request description for the current branch, following the PR
 section of the `concise` ruleset. Invoke the skill first if the full ruleset
 is not already in context.
 
-The base is the ref below if given, otherwise `origin/main`:
+The argument below may carry a base ref, extra context the diff can't show —
+a card id, a constraint, a reason — or both. A leading word that
+`git rev-parse --verify` resolves is the base; everything else is context.
+No ref, base is `origin/main`.
 
 $ARGUMENTS
 
@@ -49,6 +52,11 @@ clean version.
 
 Deliver the title first, on its own line — what changes when it merges, verb
 first, ready for `gh pr create --title`. Then the description in a fenced
-block, ready to paste into `--body` or the GitHub form. Nothing after the
-block except holes you could not fill from the branch, one line each,
-opening with **Missing:**.
+block, ready to paste into `--body` or the GitHub form. **Fence the delivery
+with four backticks**: the description carries a `bash` block by rule, and a
+three-backtick wrapper ends at that inner fence, truncating the delivery.
+Nothing after the block except holes you could not fill from the branch, one
+line each, opening with **Missing:**.
+
+Draft only: never run `gh pr create` — opening a PR is the user's call, and
+they have the title and body ready to paste.

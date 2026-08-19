@@ -1,7 +1,11 @@
 # Stop auditor (opt-in)
 
-A `Stop` hook that judges each turn's final response against the concise core
-and shows a one-line warning when it clearly violates it. It is the
+A `Stop` hook that judges each turn's final response against four rules —
+answer in the first sentence, no preamble or process narration, a
+recommendation carries its cost, exact values and caveats kept — and shows a
+one-line warning when it clearly violates one. It judges that fixed list,
+not the shipped core and not your `~/.claude/concise-core-override.md`: a
+per-turn judge has to stay cheap, so the prompt is short by design. It is the
 enforcement layer the plugin deliberately doesn't ship enabled: **it costs
 one API call and a few seconds per turn**, and a style judge is a model
 grading prose — expect occasional false positives. Install it only if that

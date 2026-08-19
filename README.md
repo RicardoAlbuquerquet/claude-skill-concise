@@ -13,6 +13,20 @@ that already exists.
 
 ![The same question answered without and with the skill](docs/before-after.svg)
 
+Two commands inside a Claude Code session, and it applies from your next
+session on:
+
+```
+/plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
+```
+
+```
+/plugin install concise@claude-skill-concise
+```
+
+Full [install](#install) — including the terminal form and the copy-a-file
+path — is further down.
+
 ## The problem
 
 Claude's default writing register is expansive. It's a good default for a chat
@@ -114,8 +128,11 @@ claude plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
 claude plugin install concise@claude-skill-concise
 ```
 
-The CLI form installs to user scope and takes effect the next time you start
-Claude Code, or when you run `/reload-plugins` in a session that's already open.
+**Either form takes effect in your next session, not this one.** The style
+loads at session start, an event that already happened in the session where
+you typed the install — so ask the same question again after restarting
+Claude Code, or run `/reload-plugins` first. "I installed it and nothing
+changed" is almost always this.
 
 Swap `concise` for `respostas-curtas` to get the Portuguese port. Install one,
 not both — see [Languages](#languages).
@@ -151,23 +168,22 @@ hand, turn it on in `/plugin` → **Marketplaces** → **Enable auto-update**.
 
 ### Self-updating
 
-**Since 1.4.0 the plugin runs the pair itself.** A second `SessionStart` hook
-fires both commands in the background at each session start, so an installed
-copy follows the marketplace with one session of delay — the session that
-starts downloads the update, the next one runs it. Know what that implies
-before relying on it:
+**The plugin runs that pair itself.** A `SessionStart` hook checks once a day,
+in the background, so an installed copy follows the marketplace with one
+session of delay: the session that checks downloads the update, the next one
+runs it. What that implies:
 
 - It moves only when the release bumped `version`, same as the manual pair —
   an unbumped change on `main` never propagates.
-- Since 1.10.0 it checks once per day, not per session — a stamp in
-  `~/.claude` throttles it, and the stamp is only written on success, so an
-  offline day retries next session. Failures stay silent either way.
-- The first session after install prints a three-line map of the commands
-  and the agent, once, and never again.
-- Copies on 1.3.0 or earlier don't have the hook yet. Reaching 1.4.0 still
-  takes one manual update, or the marketplace toggle above.
-- Opting out of self-update while keeping the skill means installing by copy —
-  that path carries no hooks — or disabling the plugin's hooks wholesale.
+- The check is stamped in `~/.claude` before it runs, so a failure retries
+  tomorrow rather than at every session start forever. After a week of
+  failures the plugin says so on screen, with the command that shows the
+  error; until then it stays quiet.
+- When an update lands, the next session names the version it moved to.
+- Copies on 1.3.0 or earlier have no hook at all: reaching a version that
+  self-updates takes one manual update, or the marketplace toggle above.
+- To stop just this: `touch ~/.claude/.concise-no-self-update`. The style,
+  the commands and the credit guard keep working.
 
 ### Copying the file instead
 
@@ -217,8 +233,8 @@ core. What gets injected is one file:
 [`hooks/core.md`](skills/concise/hooks/core.md)
 ([`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md) in the PT port).
 
-To prune or rewrite it on your machine, don't edit the cached copy — since
-1.4.0 the self-update overwrites it on the next release. Write
+To prune or rewrite it on your machine, don't edit the cached copy — the
+self-update overwrites it on the next release. Write
 `~/.claude/concise-core-override.md` instead
 (`~/.claude/respostas-curtas-nucleo-override.md` for the PT port): when that
 file exists the hook injects it in place of the shipped core, and it survives
@@ -229,6 +245,12 @@ One platform edge: the hook runs through Git Bash on Windows. Without Git for
 Windows installed it fails silently and you're back to invocation-only — same
 machines where Claude Code's own Bash tool doesn't run, so in practice the
 hook works wherever the rest does.
+
+**To check it actually loaded**, ask in a fresh session: *"what response
+style is active right now?"* — the answer names the core's rules (answer in
+the first sentence, cut preamble, never cut bad news) when the hook ran, and
+doesn't when it didn't. That is the whole difference between the guarantee
+and a hope.
 
 **Installed by copy, the hook doesn't come along** — `~/.claude/skills/` takes
 only the skill. Pair it with a line in `CLAUDE.md`, which is loaded into
@@ -282,17 +304,24 @@ the skill governs what Claude writes next; these act on what is written:
 All of these ship only with the plugin install; the copy-the-file path takes
 the skill alone.
 
-**Since 1.7.0 a credit guard ships enabled.** A `PreToolUse` hook denies any
-`git commit` or `gh pr create` whose text carries credit to an AI agent — a
-model `Co-Authored-By`, a "generated with" footer — by deterministic string
-match, no API call. It turns the ruleset's hardest rule into a system rule:
-the commit is blocked with the reason, and the message gets rewritten
-without the trailer. Since 1.7.1 it covers both the `Bash` and the
-`PowerShell` tool, and catches the command anywhere in a chain
-(`git add … && git commit …`) — the check is a grep that runs on every
-shell call, a few milliseconds each. Known limit: a message passed as a
-file (`git commit -F notes.txt`) is outside the command string's reach.
-Opting out means disabling the plugin's hooks.
+**A credit guard ships enabled.** A `PreToolUse` hook denies a shell call that
+would publish credit to an AI agent — a model `Co-Authored-By`, a "generated
+with" footer — by deterministic string match, no API call. It turns the
+ruleset's hardest rule into a system rule: the call is blocked with the
+reason, and the text gets rewritten without the trailer.
+
+What it covers: `git commit` (including `git -C`), `gh pr create|edit`,
+`gh issue create|comment`, `gh release create|edit` and `gh api`, through the
+`Bash` and `PowerShell` tools, anywhere in a command chain, and inside the
+file when the message is passed with `-F` / `--body-file`. It names Claude,
+Copilot, Gemini, Cursor, Codex and the `anthropic.com` trailer address.
+
+Two escapes, because a deterministic guard has false positives — writing
+*about* the rule trips it, as this repo found out:
+
+- `export CONCISE_ALLOW_CREDIT=1` for one shell or one session.
+- `touch ~/.claude/.concise-no-credit-guard` to switch it off for good, with
+  the style, the commands and the self-update untouched.
 
 There is also an **opt-in Stop auditor** in
 [`extras/stop-audit/`](extras/stop-audit/README.md): a hook you install by
@@ -316,6 +345,23 @@ context twice. The rules are
 about structure, not vocabulary, so a translation is a faithful port rather than
 a rewrite. Ports to other languages are welcome.
 
+## Uninstall
+
+```
+/plugin uninstall concise@claude-skill-concise
+```
+
+That removes the skill, the commands, the agent and the hooks. Four state
+files stay behind in `~/.claude` — harmless, and worth deleting if you want
+the welcome note again on a reinstall:
+
+```bash
+rm -f ~/.claude/.concise-welcomed ~/.claude/.concise-update-stamp ~/.claude/.concise-update-failed ~/.claude/.concise-update-note
+```
+
+Your core override (`~/.claude/concise-core-override.md`) and any opt-out
+flags are yours; the uninstall leaves them alone.
+
 ## The bar for a rule
 
 This skill is a style guide, which makes it unusually easy to fill with advice
@@ -331,8 +377,9 @@ That's why it isn't in the skill.
 
 The rules are also measured, not only argued. CI holds the two ports to
 structural parity and refuses a plugin change that doesn't bump its version;
-[`evals/`](evals/README.md) runs six judged cases derived from the examples —
-as of 1.6.0, both ports pass all six.
+[`evals/`](evals/README.md) runs judged cases against the ruleset and
+[`scripts/test-hooks.sh`](scripts/test-hooks.sh) exercises every hook without
+touching the network. Both ports pass the suite.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
