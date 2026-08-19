@@ -23,7 +23,8 @@ Then check, in this order:
    writer's, rhetorical flourish, mid-text self-correction, hedges glued to
    confirmed facts, any credit to an AI agent.
 3. **Structure, both failures.** Inflation: a header over a single paragraph,
-   one-clause bullets inside a single idea, bold that is neither a block's one
+   one-clause bullets inside a single idea, an item running past two lines
+   with detail stacked in parentheses, bold that is neither a block's one
    claim nor an item's label, backticks on ordinary words, decorative emoji.
    And compression: one unbroken block covering several subjects, a comparison
    in prose that is rows-and-columns by nature.

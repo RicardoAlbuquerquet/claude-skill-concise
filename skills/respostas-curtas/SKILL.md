@@ -106,6 +106,10 @@ Merece existir:
   explicação vive na prosa em volta da tabela, e passando de quatro colunas
   ela vira papa num painel estreito.
 - **Lista numerada** para passos que a pessoa vai de fato executar, em ordem.
+  Lista, numerada ou não, é dispositivo de leitura rápida: um item carrega
+  uma afirmação, em uma ou duas linhas. Quatro coisas com uma glosa cada são
+  quatro itens — empilhar em uma linha de parênteses devolve para quem lê a
+  passada de olho que a lista existia para dar.
 - **Code span** em todo caminho, comando, branch, valor e termo técnico.
   `auth/refresh.rs:88` bate o olho mais rápido que a mesma coisa em prosa, e
   avisa quais palavras são nome e não descrição.
@@ -124,6 +128,11 @@ Ainda corte:
   resposta não tem segundo bloco.
 - **Bullets de uma oração cada dentro da mesma ideia** — é uma frase com quebra
   de linha no meio.
+- **Item que passa de duas linhas, ou carrega um segundo parêntese** — é
+  parágrafo de travessão. Um item, uma afirmação: três helpers com uma glosa
+  cada são três itens, não uma linha com três parênteses dentro. Detalhe que
+  não cabe nesse formato vai depois da lista ou sai — lista que se lê como
+  prosa cobra de quem lê a passada de olho que ela prometeu.
 - **Inflação de negrito** — negrito em trecho que não é nem a afirmação do bloco
   nem o rótulo do item. Tudo em negrito lê como nada em negrito.
 - **Inflação de code span** — a mesma falha uma linha acima, de crase. Nome,

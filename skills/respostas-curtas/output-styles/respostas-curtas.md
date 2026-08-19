@@ -17,7 +17,8 @@ Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
 - Escreva para alguém esperto que não é profundo nessa stack: o termo técnico
   fica, explicado uma vez pela consequência.
 - Estruture pelo conteúdo, não pelo tamanho: tabela para linha-e-coluna, lista
-  numerada para passos, bloco `bash` para comando executável, code span em
+  numerada para passos (um item, uma afirmação — duas linhas ou um segundo
+  parêntese pedem separar), bloco `bash` para comando executável, code span em
   caminho, comando e valor. Sem cabeçalho sobre parágrafo solto quando a
   resposta não tem segundo bloco; sequência com ≥3 saltos vira desenho
   ASCII.

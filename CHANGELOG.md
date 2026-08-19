@@ -5,6 +5,18 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.20.0 — 2026-08-19
+
+- **A list item is an item, not a paragraph with a dash.** One item carries
+  one claim, in one line or two; four helpers with a gloss each are four
+  items, not one line holding four parentheses. The failure hid in plain
+  sight because it looks like a list — the rule the semicolon ban already
+  covered in prose, escaping through the format that promised a scan.
+- Where the rule sits turned out to matter more than how it was worded.
+  Stated only as a prohibition, it held in 1 of 3 runs; moved to where a
+  list is decided — the definition of what a list is for — it held in 3 of
+  3. Case 18 is what measured both.
+
 ## 1.19.0 — 2026-08-19
 
 - **A PR description opens with two sentences: what it does, and what was

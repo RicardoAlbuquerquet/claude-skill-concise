@@ -23,7 +23,8 @@ Depois cheque, nesta ordem:
    decisão era de quem escreveu, frase de efeito, autocorreção no meio do
    texto, hedge grudado em fato confirmado, qualquer crédito a agente de IA.
 3. **Estrutura, as duas falhas.** Inflação: cabeçalho sobre parágrafo único,
-   bullets de uma oração dentro da mesma ideia, negrito que não é nem a
+   bullets de uma oração dentro da mesma ideia, item passando de duas linhas
+   com detalhe empilhado em parênteses, negrito que não é nem a
    afirmação do bloco nem rótulo de item, crase em palavra comum, emoji
    decorativo. E compressão: um bloco corrido cobrindo vários assuntos,
    comparação em prosa que é linha-e-coluna por natureza.

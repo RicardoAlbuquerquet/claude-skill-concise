@@ -106,6 +106,10 @@ Earns its place:
   sentences — the explanation lives in the prose around the table, and past
   four columns it wraps to mush in a narrow panel.
 - **A numbered list** for steps the reader will actually perform, in order.
+  Any list, numbered or not, is a scanning device: one item carries one
+  claim, in one line or two. Four things with a gloss each are four items —
+  packing them into one line with parentheses hands back the scan the list
+  was for.
 - **Code spans** on every path, command, branch, value, and technical term.
   `auth/refresh.rs:88` is faster to spot than the same thing in prose, and it
   tells the reader at a glance which words are names rather than description.
@@ -124,6 +128,11 @@ Still cut:
   the response has no second block.
 - **Bullets that are one clause each inside the same idea** — that's a sentence
   with line breaks in it.
+- **An item that runs past two lines, or carries a second parenthetical** —
+  that's a paragraph wearing a dash. One item, one claim: three helpers with
+  a gloss each are three items, not one line with three parentheses in it.
+  Detail that doesn't fit that shape goes after the list or out — a list
+  that reads as prose costs the reader the scan it promised.
 - **Emphasis inflation** — bold on a phrase that is neither a block's claim nor
   an item's label. Everything bold reads as nothing bold.
 - **Span inflation** — the same failure one line up, in backticks. Names, paths
