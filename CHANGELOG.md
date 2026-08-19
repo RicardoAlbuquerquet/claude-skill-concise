@@ -5,6 +5,20 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.18.1 — 2026-08-19
+
+- **The log decides the shape of a title, never its substance.** Adding the
+  convention rule created a contradiction with "verb first", and the first
+  real eval run found it: this repo's own titles are declarative ("A
+  correção entra no núcleo"), so the two rules could not both hold. What a
+  title must do — name what changes, inside 72 characters, no AI credit —
+  stands; imperative or declarative is the log's call. A bare label
+  ("Invoice filter") still fails.
+- First real run of the suite, judge and all. It found two things, both
+  ours: a miscalibrated rubric (case 10 demanded a deliverables list from a
+  single-change PR — the list check moved to case 17) and the title
+  contradiction above.
+
 ## 1.18.0 — 2026-08-19
 
 Commit messages learn the repo they land in, and two PR fixes from a
@@ -26,8 +40,8 @@ real screenshot.
 - **A feature with no screen is not excused from the test step.** The same
   PR said the route was "reachable by direct call" without giving the
   call; the step is the call itself, route and body included.
-- Cases 16 (commit convention) and a new rubric line in case 10 (list
-  shape) keep both from regressing.
+- Case 16 (commit convention) and case 17 (a PR with five deliverables)
+  keep both from regressing.
 
 ## 1.17.0 — 2026-08-19
 

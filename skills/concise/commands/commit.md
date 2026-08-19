@@ -24,8 +24,10 @@ How:
    an unprefixed commit gets rejected. The branch name often carries the
    ticket (`ABC-123-…`): when the log references tickets, carry it the same
    way — and never invent one.
-3. Title: what changes when the commit lands, verb first, 72 characters or
-   fewer, no trailing period — inside the convention the log showed.
+3. Title: what changes when the commit lands, 72 characters or fewer, no
+   trailing period, in the shape the log showed — imperative when the log is
+   imperative, declarative when it is declarative. A label with no change in
+   it fails either way.
 4. Body only when it adds what the diff can't show: why now, what behaviour
    changes, what to watch, wrapped near 72 columns. No prose restating the
    diff. Exact references — issue number, path, flag — survive; never invent

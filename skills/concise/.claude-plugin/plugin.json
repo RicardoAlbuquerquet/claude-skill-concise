@@ -1,7 +1,7 @@
 {
   "name": "concise",
   "description": "English. The answer goes in the first sentence; cut preamble and process narration; keep every caveat that changes what the reader does. Governs chat replies, plans, commit messages, PR descriptions, cards and review comments. Ships an always-on SessionStart hook with self-update, a credit guard on the commands that publish text, the rewrite/pr/card/commit commands, and an audit agent.",
-  "version": "1.18.0",
+  "version": "1.18.1",
   "author": {
     "name": "Ricardo Albuquerque",
     "url": "https://github.com/RicardoAlbuquerquet"

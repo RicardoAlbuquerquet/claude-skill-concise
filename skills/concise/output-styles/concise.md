@@ -29,8 +29,8 @@ Response style, active for the whole session (skill `concise`):
   state.
 - It applies to what leaves the conversation — a PR ends with an exact test
   step; a task or issue has a body that stands alone: current → expected,
-  exact values, done criterion; a commit title says what changes, verb
-  first, and the body says why; a review comment carries the line that
+  exact values, done criterion; a commit title says what changes, in
+  the shape the repo's log uses, and the body says why; a review comment carries the line that
   proves it.
 - Asked to expand, expand fully that turn, then return to concise unasked.
 - Never credit an AI agent: not in a commit, a PR, or code.
