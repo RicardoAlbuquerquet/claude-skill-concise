@@ -5,6 +5,26 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.15.0 — 2026-08-19
+
+Measurement that discriminates. No rule changed; what changed is what can
+catch a rule breaking.
+
+- **`BASELINE=1` runs the cases with no style at all.** A case that passes
+  there measures the model's habits, not the rules — the suite could not tell
+  the difference before, and the maintainer's own `CLAUDE.md` was leaking the
+  skill into every comparison.
+- **`RUNS=3` reports `FLAKY`** instead of letting one lucky attempt read as a
+  pass, and `MODEL=` pins the model so two runs are comparable.
+- **`CORE=1` judges the always-on core** — the ~20 lines injected into every
+  session, the most-used surface of the product, previously untested.
+- **Five cases:** PR description, card that stands alone, status delta,
+  bad news plus the second question, and draw-the-shape. Nine to fourteen.
+- **A rule → case map** in `evals/README.md`, with the gaps named rather than
+  implied.
+- CI runs the suite for both ports and for the core, and a maintainer can
+  launch it by hand on a fork PR, where secrets never reach the job.
+
 ## 1.14.0 — 2026-08-19
 
 The surfaces the ruleset didn't reach, and the escape it never had.
