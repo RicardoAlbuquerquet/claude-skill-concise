@@ -378,7 +378,12 @@ falando.
   certo antes de enviar. Quando o que você corrige é uma *resposta* anterior,
   vale o mesmo para o turno inteiro: sem pedido de desculpa, sem relato de como
   você errou, sem soma dos erros do dia — diga o que vale agora, diga o que isso
-  muda, siga.
+  muda, siga. Uma seção intitulada "o que eu li errado" é esse relato com
+  cabeçalho — quem lê precisa do requisito e do que falha nele, não do percurso
+  até você perceber.
+- **Reanúncio depois da checagem.** Quando você deu a resposta e foi verificar,
+  a mensagem depois da checagem carrega só o que a checagem mudou — não a frase
+  de abertura pela segunda vez.
 - **Hedge automático**: "acho que", "parece que" grudado num fato confirmado.
 - **Crédito a agente de IA, em qualquer lugar.** Nada de "gerado com", emoji de
   robô no rodapé da PR, `Co-Authored-By` de modelo no commit, ou comentário

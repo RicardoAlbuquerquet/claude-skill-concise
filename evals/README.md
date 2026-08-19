@@ -1,6 +1,6 @@
 # Evals
 
-Fourteen cases. Each gives the model the facts it would have discovered, sends
+Fifteen cases. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -35,7 +35,7 @@ measures the model's own habits, not the rules, and proves nothing when it
 passes with the skill. Its exit code is always 0 — the pass count is the
 signal, and a *low* one is the good news.
 
-**Cost:** two API calls per case per run, so the default suite is 28 calls
+**Cost:** two API calls per case per run, so the default suite is 30 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -60,6 +60,7 @@ you change a rule here, change the rubric that tests it.
 | Status update: only the delta | 12 |
 | Bad news; the second question in a two-question message | 13 |
 | Draw the shape; gloss by consequence | 14 |
+| Correcting yourself: no story of the mistake, no re-announcing | 15 |
 
 Not covered yet: plans, review comments, the expand-on-request valve, and the
 PT-only wording rules. Those are the next cases to write.
