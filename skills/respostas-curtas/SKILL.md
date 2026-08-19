@@ -223,7 +223,9 @@ diff que o revisor já está olhando. O mesmo enfeite de sempre, agora com a
 autoridade do template atrás.
 
 Quando uma PR carrega várias entregas, elas viram uma lista curta — uma linha
-cada, abrindo com o rótulo — nunca um parágrafo emendado com ponto-e-vírgula.
+cada, abrindo com o rótulo, como lista markdown de verdade (`- ` no começo
+da linha). Emendar dentro de um parágrafo com ponto-e-vírgula ou travessão é
+a mesma parede de texto com outra pontuação.
 E quando o diff atravessa muitos arquivos, diga em uma linha por onde começar
 a ler — o arquivo onde o mecanismo vive. O revisor bate o olho na lista, abre
 esse arquivo, passa o olho no resto.
@@ -337,9 +339,17 @@ estreita — `git log --oneline` mostra o título e mais nada.
 - **O título diz o que muda quando o commit entra**, verbo primeiro, 72
   caracteres ou menos, sem ponto final. "Corrigir o filtro de faturas que
   derruba o fuso" — na listagem do log, essa linha é tudo que a pessoa tem.
+- **O log do repo é a convenção, e a mensagem entra dentro dela.** Prefixo
+  `fix(escopo):`, código de ticket, outro idioma — o que os títulos recentes
+  fazem com consistência, o novo faz também, com estas regras valendo dentro
+  desse formato. Título perfeito na convenção errada continua destoando no
+  `git log --oneline`; uma config de commitlint transforma o descompasso em
+  commit rejeitado.
 - **O corpo diz o porquê, não o quê.** O diff já mostra o que mudou; o corpo
   carrega o que o diff não carrega: por que agora, que comportamento muda, o
-  que vigiar. Corpo repetindo o diff é prosa repetindo código.
+  que vigiar. Corpo repetindo o diff é prosa repetindo código. Quebre perto
+  de 72 colunas — o `git log` mostra indentado, e linha sem quebra vaza do
+  painel.
 - **Referência exata sobrevive** — o número da issue, o caminho, o nome da
   flag.
 - **Um commit, uma mudança.** Mensagem que precisa de "e também" está

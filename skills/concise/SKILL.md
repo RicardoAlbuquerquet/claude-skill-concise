@@ -219,8 +219,9 @@ diff the reviewer is already looking at. Same decoration as anywhere else, now
 with the template's authority behind it.
 
 When one PR carries several deliverables, they read as a short list — one
-line each, opening with its label — never as a paragraph chained together
-with semicolons. And when the diff spans many files, say in one line where
+line each, opening with its label, as a real markdown list (`- ` at the
+start of the line). Chaining them inside a paragraph with semicolons or
+dashes is the same wall of text with different punctuation. And when the diff spans many files, say in one line where
 to start reading — the file where the mechanism lives. The reviewer scans
 the list, opens that file, skims the rest.
 
@@ -335,9 +336,17 @@ the narrowest window — `git log --oneline` shows the title and nothing else.
 - **The title says what changes when the commit lands**, verb first, 72
   characters or fewer, no trailing period. "Fix the invoice filter dropping
   the timezone" — in a log listing, that line is all anyone gets.
+- **The repo's log is the convention, and the message lands inside it.** A
+  `fix(scope):` prefix, a ticket code, another language — whatever the recent
+  titles do consistently, the new one does too, with these rules applying
+  inside that shape. A perfect title in the wrong convention still reads as a
+  misfit in `git log --oneline`; a commitlint config turns the mismatch into
+  a rejected commit.
 - **The body says why, not what.** The diff already shows what changed; the
   body carries what the diff can't: why now, what behaviour changes, what to
-  watch. A body restating the diff is prose restating code.
+  watch. A body restating the diff is prose restating code. Wrap it near 72
+  columns — `git log` shows it indented, and unwrapped lines run off the
+  pane.
 - **Exact references survive** — the issue number, the path, the flag name.
 - **One commit, one change.** A message that needs "and also" is describing
   two commits.
