@@ -5,6 +5,43 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.16.0 — 2026-08-19
+
+Reach: the same rules, in places they could not go before.
+
+- **The core also ships as an output style.** It lives in the system prompt
+  instead of being printed by a shell hook — so it works on Windows without
+  Git Bash, where the hook fails silently, and it is cached rather than
+  re-sent every session. Pick it in `/config` → Output style. The plugin
+  does not force it: forcing would override the output style you chose.
+  `check-parity` fails if the style and the hook core ever drift apart.
+- **A version bump on `main` now tags and publishes a release**, with that
+  version's CHANGELOG section as the notes — twelve versions had shipped
+  with no tag to pin, roll back to, or watch.
+- **The ruleset installs into other agents** — Cursor, Copilot, Codex,
+  Windsurf — via `npx skills add`. Only the document travels; the README says
+  plainly what stays behind.
+
+## 1.15.0 — 2026-08-19
+
+Measurement that discriminates. No rule changed; what changed is what can
+catch a rule breaking.
+
+- **`BASELINE=1` runs the cases with no style at all.** A case that passes
+  there measures the model's habits, not the rules — the suite could not tell
+  the difference before, and the maintainer's own `CLAUDE.md` was leaking the
+  skill into every comparison.
+- **`RUNS=3` reports `FLAKY`** instead of letting one lucky attempt read as a
+  pass, and `MODEL=` pins the model so two runs are comparable.
+- **`CORE=1` judges the always-on core** — the ~20 lines injected into every
+  session, the most-used surface of the product, previously untested.
+- **Five cases:** PR description, card that stands alone, status delta,
+  bad news plus the second question, and draw-the-shape. Nine to fourteen.
+- **A rule → case map** in `evals/README.md`, with the gaps named rather than
+  implied.
+- CI runs the suite for both ports and for the core, and a maintainer can
+  launch it by hand on a fork PR, where secrets never reach the job.
+
 ## 1.14.0 — 2026-08-19
 
 The surfaces the ruleset didn't reach, and the escape it never had.
