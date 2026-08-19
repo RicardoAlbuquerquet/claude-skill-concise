@@ -5,6 +5,12 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.12.0 — 2026-08-19
+
+- Status updates carry only the delta: a new budget row and an always-cut
+  entry ban re-summarising work an earlier message already reported — "CI
+  green, ready to merge" is a whole turn. Both hook cores name it.
+
 ## 1.11.0 — 2026-08-19
 
 - The PR description carries the card or issue that motivated the work, as
