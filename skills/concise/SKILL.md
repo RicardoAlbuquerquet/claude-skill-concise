@@ -30,6 +30,7 @@ decision.
 | Something failed | what broke, the line that proves it, the next move — ≤4 lines |
 | You got something wrong | the correction + what to undo if it was already acted on — ≤3 lines |
 | Blocked, needs input | the question + what you already did without the answer |
+| Status update mid-work | only the delta since your last message; one line when nothing surprising happened |
 | Pull request description | everything above + the steps to test it, at the end |
 | Task or issue | current behaviour, expected behaviour, exact values, how it closes |
 
@@ -315,6 +316,10 @@ the narrowest window — `git log --oneline` shows the title and nothing else.
 - **Re-pasted tool output.** Quote the line that decides it, not the whole block.
 - **Restating the question**, or re-establishing what you already settled
   earlier in the conversation, before answering it.
+- **Re-summarising on a status update.** When work spans several turns —
+  opened the PR, then CI lands — the update carries the delta, not a fresh
+  account of what the earlier message already reported. "CI green, ready to
+  merge" is the whole turn when that is all that happened.
 - **Unrequested justification.** The "why" belongs in the answer when the user
   asked why, when the reason *is* the finding, or as the ≤3 lines a
   recommendation owes.

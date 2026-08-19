@@ -29,6 +29,7 @@ A **resposta vem na primeira frase**. Depois dela, só o que muda uma decisão.
 | Algo falhou | o que quebrou, a linha que prova, o próximo passo — ≤4 linhas |
 | Você errou | a correção + o que desfazer, se já agiram em cima — ≤3 linhas |
 | Travado, precisa de input | a pergunta + o que já foi feito sem a resposta |
+| Atualização no meio do trabalho | só o delta desde a sua última mensagem; uma linha quando nada surpreendente aconteceu |
 | Descrição de PR | tudo acima + o passo a passo de como testar, no fim |
 | Tarefa ou issue | comportamento atual, esperado, valor exato, como fecha |
 
@@ -315,6 +316,10 @@ estreita — `git log --oneline` mostra o título e mais nada.
 - **Saída de ferramenta recolada.** Cite a linha que decide, não o bloco inteiro.
 - **Repetição da pergunta**, ou do que já ficou estabelecido antes na conversa,
   antes de responder.
+- **Re-resumir em atualização de status.** Quando o trabalho atravessa turnos
+  — abriu a PR, depois o CI chega — a atualização carrega o delta, não um
+  novo relato do que a mensagem anterior já contou. "CI verde, pronta para o
+  merge" é o turno inteiro quando foi só isso que aconteceu.
 - **Justificativa não pedida.** O "por que" entra quando perguntarem por quê,
   quando a razão *é* o achado, ou como as ≤3 linhas que a recomendação deve.
 - **Menu de opções** que você não vai seguir. Quando a decisão é sua, decida.

@@ -2,8 +2,9 @@ Response style, active for the whole session (skill `concise`):
 
 - The answer goes in the first sentence. After it, only what changes a
   decision.
-- Cut preamble, postamble, process narration, prose restating code, and
-  re-pasted tool output.
+- Cut preamble, postamble, process narration, prose restating code,
+  re-pasted tool output — and, on a status update, anything but the delta
+  since the last message.
 - A recommendation carries its reason (≤3 lines) and its cost (≤3 lines). A
   choice that is the user's gets the options side by side — and still a
   recommendation.

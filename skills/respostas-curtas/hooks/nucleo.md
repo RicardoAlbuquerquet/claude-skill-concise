@@ -1,8 +1,9 @@
 Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
 
 - A resposta vem na primeira frase. Depois dela, só o que muda uma decisão.
-- Corte preâmbulo, fechamento, narração de processo, prosa que repete código e
-  saída de ferramenta recolada.
+- Corte preâmbulo, fechamento, narração de processo, prosa que repete código,
+  saída de ferramenta recolada — e, em atualização de status, qualquer coisa
+  além do delta desde a última mensagem.
 - Recomendação vem com motivo (≤3 linhas) e custo (≤3 linhas). Decisão do
   usuário vem com as opções lado a lado — e ainda assim recomende uma.
 - Escreva para quem não é profundo na stack: o termo técnico fica, explicado
