@@ -103,6 +103,7 @@ transformations. Four come out longer.
 | `/concise:pr` | drafts the PR description from the real diff, test steps last |
 | `/concise:card` | drafts a task/issue card that stands alone; creates it when a destination is named |
 | `/concise:commit` | drafts the commit message for what is staged — title in the shape the repo log uses, body says why |
+| `/concise:comment` | drafts a review comment, a thread reply or a note on a card — the claim, then the line that proves it |
 | credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
 | `audit` agent | returns only the violations in a draft — quote, rule, fix |
 | [`extras/stop-audit`](extras/stop-audit/README.md) | opt-in per-turn style judge, installed by hand |
@@ -228,7 +229,7 @@ npx skills add RicardoAlbuquerquet/claude-skill-concise
 ```
 
 Only the ruleset travels. The always-on core, the self-update, the credit
-guard, the four commands and the audit agent are Claude Code plugin
+guard, the five commands and the audit agent are Claude Code plugin
 machinery; in another agent you get the document and invoke it yourself.
 
 Verify it registered by typing `/concise` in Claude Code. If it doesn't appear,
@@ -294,8 +295,9 @@ pointer that guarantees it's in context. Neither one replaces the other.
 
 ## The commands and the agent
 
-Since 1.4.0 each plugin also ships two tools for text that already exists —
-the skill governs what Claude writes next; these act on what is written:
+Since 1.4.0 each plugin also ships tools for text with a destination — the
+skill governs what Claude writes next; these produce what leaves the
+conversation, or act on what is already written:
 
 - **`/concise:rewrite <text>`** rewrites a finished text — a PR description,
   an issue body, an e-mail — to the ruleset without losing information: every
@@ -321,6 +323,13 @@ the skill governs what Claude writes next; these act on what is written:
   staged — a title of 72 characters or fewer, in whatever shape the repo log
   already uses, and a body saying why rather than retelling the diff. Draft only; it never runs `git commit`.
   PT: `/respostas-curtas:commit`.
+- **`/concise:comment [subject]`** drafts a review comment, a reply in a
+  thread, a note on someone's card, or a message to a person: the claim
+  first, then the `path:line` that proves it, whether it blocks stated inside
+  the comment, and one point per comment — several points come back as
+  several blocks. It reads the line or the thread before writing, and stops
+  rather than guess when it can't. Draft only unless you name a destination
+  *and* say to post. PT: `/respostas-curtas:comentario`.
 - **The `audit` agent** (PT: `auditar`) checks a draft against the checklist
   and returns only the violations — quoted line, rule, one-line fix — plus
   required content that is missing. It never rewrites; ask for it when you
