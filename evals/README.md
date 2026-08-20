@@ -68,14 +68,15 @@ you change a rule here, change the rubric that tests it.
 | A name out of the code stays only if the reader will use it | 20 | **yes** |
 | A fence is tagged for the shell the reader will paste into | 21 | **yes** |
 
-**Measured 2026-08-19, on `claude-opus-5`: 18/18 with the skill, 11/18 at
-baseline** (cases 19, 20 and 21 measured separately: 3/3 with the skill
-against 1/3, 0/3 and 1/3 without). So ten cases measure what the plugin adds; the other eleven
-describe behaviour Claude Code already has by default, and would keep passing
-if the rule vanished. They are not worthless — a default can regress, and a
-rule that matches the default still documents it — but the suite's real
-discriminating power is those seven, and a new case should aim to fail at
-baseline.
+**Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
+with the skill.** The baseline figure is older and narrower: 11 of the first 18
+passed with no style at all, on 2026-08-19, and cases 19, 20 and 21 were
+measured against baseline one at a time, at 1/3, 0/3 and 1/3. So ten cases
+measure what the plugin adds; the other eleven describe behaviour Claude Code
+already has by default, and would keep passing if the rule vanished. They are
+not worthless — a default can regress, and a rule that matches the default
+still documents it — but the suite's discriminating power is those ten, and a
+new case should aim to fail at baseline.
 
 The baseline run needs an isolated config, or it grades the skill against
 itself: a global `CLAUDE.md` carrying the style, and the plugin's own hook,

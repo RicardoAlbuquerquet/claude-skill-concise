@@ -33,6 +33,18 @@ without an entry tells nobody what it brought.
   sits in the exact-values entry, where what counts as the value is decided,
   and says the basename is a different and weaker one. Later mentions may
   still be short.
+- **Three green eval checks on every PR were measuring nothing.** Without
+  `ANTHROPIC_API_KEY` the job ran its skip branch and reported `pass`, which
+  reads as "the rules were checked" on a run that never called the model — a
+  green check that proves nothing is worse than no check. A gate job now turns
+  the secret into an output, so the eval jobs report `skipped` instead, and
+  say why in the run summary.
+- The audit agent had not kept up with two rules it can check: a fence tagged
+  for the wrong shell or chaining two commands, and a path shortened to its
+  basename on first mention.
+- `evals/README.md` claimed 18/18 against a suite of 21, and said the
+  discriminating power was "those seven" two lines under a sentence counting
+  ten.
 - **The first full `RUNS=3` sweep is what surfaced both**, and it is the
   headline of this release: all 21 cases now hold three times each, in place
   of a 21/21 line that meant each case drew well once. Cases 10 and 14 looked

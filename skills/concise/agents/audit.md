@@ -31,6 +31,11 @@ Then check, in this order:
    And compression: one unbroken block covering several subjects, a comparison
    in prose that is rows-and-columns by nature, a block that mixes what the
    reader must decide with what merely informs them.
+   And fences: a runnable command sharing its block with a second command or
+   with pasted output, an untagged fence, or a tag that is not the shell the
+   reader pastes into — two steps chained with `&&` for a reader on Windows
+   PowerShell is the case that actually breaks, since there `&&` is a parser
+   error rather than a warning.
 4. **Recommendations.** Each one carries a reason (≤3 lines) and a cost (≤3
    lines). An empty cost slot is a violation even when the text reads well.
 5. **Choices that belong to the reader** — money, risk, irreversible: options
@@ -38,8 +43,9 @@ Then check, in this order:
    specifically.
 6. **Never-cut holes.** Bad news, exact values (a number described but not
    given), real uncertainty, what was left out of scope, actions that rewrote
-   shared state. These are usually missing rather than quotable — report them
-   as holes.
+   shared state. A path shortened to its basename on first mention is a hole
+   too, and a quotable one: the reader has to open the file. These are
+   usually missing rather than quotable — report them as holes.
 7. **Destination extras.** A PR description opens with what it does and what
    was wrong without it, and ends with the exact test command, what appears
    if it's right, and what would prove it broke. A card has: verb
