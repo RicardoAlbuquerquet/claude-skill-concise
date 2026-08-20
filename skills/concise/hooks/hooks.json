@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/inject-core.sh\" concise-core-override.md core.md",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/inject-core.sh\" concise-core-override.md core.md 'This session runs on Windows: a command the user may paste goes in a `powershell` fence, one command per fence — `&&` is a parse error in Windows PowerShell 5.1, and `bash` typed there is the WSL stub, not Git Bash. Give the Git Bash long form when the tool is POSIX-only.' 'This session runs on macOS: a command the user may paste goes in a `bash` fence, one per fence. BSD `sed`, `date` and `readlink` take different flags from the GNU ones — prefer the portable form.' 'This session runs on Linux: a command the user may paste goes in a `bash` fence, one command per fence.'",
             "statusMessage": "Loading the concise style",
             "timeout": 10
           },
