@@ -5,6 +5,66 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.26.0 — 2026-08-20
+
+- **A path is the whole path the first time it appears.** The name rule from
+  1.22.0 was still leaking into paths at about one run in three, shortening
+  `web/src/modules/estoque/movimento/movimento-pdf.ts` to the bare filename.
+  Saying "a file path is a value" in the cut list was not enough; the rule now
+  sits in the exact-values entry, where what counts as the value is decided,
+  and says the basename is a different and weaker one. Later mentions may
+  still be short.
+- **Three green eval checks on every PR were measuring nothing.** Without
+  `ANTHROPIC_API_KEY` the job ran its skip branch and reported `pass`, which
+  reads as "the rules were checked" on a run that never called the model — a
+  green check that proves nothing is worse than no check. A gate job now turns
+  the secret into an output, so the eval jobs report `skipped` instead, and
+  say why in the run summary.
+- The audit agent had not kept up with two rules it can check: a fence tagged
+  for the wrong shell or chaining two commands, and a path shortened to its
+  basename on first mention.
+- **The opt-in `stop-audit` extra was grading responses against a copy of the
+  rules, not the rules.** Four lines written by hand inside the script, frozen
+  wherever they were when it shipped — an auditor holding last month's
+  checklist is worse than none. It reads `hooks/core.md` now, with
+  `CONCISE_CORE` for installs where the plugin root is not in the hook's
+  environment and the user's own override winning over both. Four tests cover
+  the wiring, which had none: the core reaching the prompt, a violation
+  becoming a warning, `OK` staying silent, and a missing core falling back
+  instead of dying.
+- **A name that is the decision stays, and the first full PT run since 1.21.0
+  is what found that.** The Portuguese port dropped the route it had called —
+  reporting "it calls a different route depending on the type", which leaves
+  the reader unable to say which decision was taken, let alone whether it was
+  right. The rule already spared the knob you ask someone to turn; it now
+  spares the name that *is* the decision you are reporting.
+- **Writing a case's own vocabulary into a rule contaminates the case.** The
+  first draft of that clause used the route names from case 19. Portuguese
+  went to 3 of 3 and English fell to 1 of 3 — the model optimised for that one
+  rubric item and compressed the false premise and the gate warnings out of
+  the answer. Replaced with a neutral example, both ports hold. Case 19 in
+  Portuguese is still the closest to the edge in the suite: one failure in
+  nine attempts.
+- **The eval harness had grown a ceiling it was about to hit everywhere.** It
+  handed the whole skill to the CLI on the command line, which Windows caps at
+  32767 characters; the PT skill reached 31 KB and the full PT run died at
+  case 17 with "Argument list too long" — the first run of that suite since
+  1.21.0. It uses `--append-system-prompt-file` now, so the limit is gone
+  rather than postponed, with a warning and the old path for a CLI too old to
+  have the flag.
+- `CONTRIBUTING.md` told contributors to run the evals and compare, without
+  saying that one run per case is not evidence. It now says to use `RUNS=3`,
+  and why: the suite read 21/21 for weeks while two cases were failing about
+  one run in three.
+- `evals/README.md` claimed 18/18 against a suite of 21, and said the
+  discriminating power was "those seven" two lines under a sentence counting
+  ten.
+- **The first full `RUNS=3` sweep is what surfaced both**, and it is the
+  headline of this release: all 21 cases now hold three times each, in place
+  of a 21/21 line that meant each case drew well once. Cases 10 and 14 looked
+  unstable in that sweep and were not — 14 had hit the session limit, and 10
+  passed 3 of 3 on re-measurement.
+
 ## 1.25.0 — 2026-08-20
 
 - **The commit command still promised a verb-first title**, in its own

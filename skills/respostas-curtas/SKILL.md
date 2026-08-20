@@ -421,8 +421,10 @@ falando.
   é motivo para repassar: a régua é ela ir procurar por ele, rodar, ou conferir
   aquele número — e na dúvida, corta. Duas coisas ficam do outro lado dessa
   linha e não são atingidas: caminho de arquivo, que é valor e fica inteiro,
-  diretório e tudo; e o botão que você está pedindo para girar, que a pessoa
-  precisa ver para aprovar. Desenho não é isenção: caixa rotulada com o nome
+  diretório e tudo; o botão que você está pedindo para girar, que a pessoa
+  precisa ver para aprovar; e nome que **é** a decisão que você está
+  reportando, porque "chama `/orders/:id/hold` em vez de `/cancel`" é a
+  decisão e "chama outra rota" deixa quem lê sem saber qual delas você tomou. Desenho não é isenção: caixa rotulada com o nome
   da tabela não ensina nada, e a mesma caixa escrita "cópia diária" é o
   desenho fazendo o que veio fazer.
 - **Saída de ferramenta recolada.** Cite a linha que decide, não o bloco inteiro.
@@ -471,7 +473,10 @@ Brevidade não é omissão:
   que o adjetivo, e este não dobra: a versão de uma biblioteca fica mesmo
   quando você está cortando o nome do lado. O que não é valor é o nome da coisa
   que guarda um — "tenta 5 vezes" é o valor, `MAX_RETRY_ATTEMPTS` é só onde
-  você achou.
+  você achou. Caminho é o caminho inteiro na primeira vez que aparece:
+  `web/src/modules/movimento/movimento-pdf.ts`, nunca `movimento-pdf.ts`,
+  porque quem lê vai abrir o arquivo e um repo com três daquele nome entrega o
+  errado. Nas menções seguintes pode encurtar.
 - **Incerteza real**, nomeada com precisão: qual parte você não sabe e por quê.
 - **O que ficou fora do escopo**, quando ficou — inclusive a segunda pergunta de
   uma mensagem com duas, quando você só respondeu a primeira.

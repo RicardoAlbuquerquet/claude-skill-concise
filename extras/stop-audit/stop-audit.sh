@@ -36,10 +36,26 @@ transcript=$(get_path) || exit 0
 last=$(get_last "$transcript")
 [ -n "$last" ] || exit 0
 
-verdict=$("$BIN" -p "Audit the response below against these rules: the answer
-in the first sentence; no preamble, postamble, or process narration; a
-recommendation carries its cost; exact values and caveats are kept. Reply
-with exactly OK, or with one line naming the single clearest violation.
+# Judge against the shipped core rather than a copy of it. A hand-written
+# summary here drifts every time a rule lands, and an auditor grading against
+# last month's rules is worse than none. CONCISE_CORE points at the file when
+# the plugin root is not in the environment; the four-line fallback is only
+# for an install that has neither.
+core=""
+for c in "${CONCISE_CORE:-}" "$HOME/.claude/concise-core-override.md" \
+         "${CLAUDE_PLUGIN_ROOT:-}/hooks/core.md"; do
+  [ -n "$c" ] && [ -f "$c" ] && { core=$(cat "$c"); break; }
+done
+[ -n "$core" ] || core="The answer goes in the first sentence; no preamble,
+postamble, or process narration; a recommendation carries its cost; exact
+values and caveats are kept."
+
+verdict=$("$BIN" -p "Audit the response below against these rules. Reply with
+exactly OK, or with one line naming the single clearest violation.
+
+$core
+
+--- the response ---
 
 $last" 2>/dev/null) || exit 0
 

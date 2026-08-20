@@ -35,6 +35,12 @@ measures the model's own habits, not the rules, and proves nothing when it
 passes with the skill. Its exit code is always 0 — the pass count is the
 signal, and a *low* one is the good news.
 
+The style and the facts reach the CLI through `--append-system-prompt-file`,
+  not the command line. That is not a detail: Windows caps a command line at
+32767 characters, the PT skill is already past 31 KB, and the full PT run died
+at case 17 with "Argument list too long" before the switch. A CLI old enough
+to lack the flag still works and says so.
+
 **Cost:** two API calls per case per run, so the default suite is 42 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
@@ -68,14 +74,15 @@ you change a rule here, change the rubric that tests it.
 | A name out of the code stays only if the reader will use it | 20 | **yes** |
 | A fence is tagged for the shell the reader will paste into | 21 | **yes** |
 
-**Measured 2026-08-19, on `claude-opus-5`: 18/18 with the skill, 11/18 at
-baseline** (cases 19, 20 and 21 measured separately: 3/3 with the skill
-against 1/3, 0/3 and 1/3 without). So ten cases measure what the plugin adds; the other eleven
-describe behaviour Claude Code already has by default, and would keep passing
-if the rule vanished. They are not worthless — a default can regress, and a
-rule that matches the default still documents it — but the suite's real
-discriminating power is those seven, and a new case should aim to fail at
-baseline.
+**Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
+with the skill.** The baseline figure is older and narrower: 11 of the first 18
+passed with no style at all, on 2026-08-19, and cases 19, 20 and 21 were
+measured against baseline one at a time, at 1/3, 0/3 and 1/3. So ten cases
+measure what the plugin adds; the other eleven describe behaviour Claude Code
+already has by default, and would keep passing if the rule vanished. They are
+not worthless — a default can regress, and a rule that matches the default
+still documents it — but the suite's discriminating power is those ten, and a
+new case should aim to fail at baseline.
 
 The baseline run needs an isolated config, or it grades the skill against
 itself: a global `CLAUDE.md` carrying the style, and the plugin's own hook,
@@ -96,13 +103,17 @@ three times; fixing the budget row fixed the case. When a case fails
 of them.
 
 A single-run suite line of 21/21 also means each case drew well once, not that
-each rule holds. `RUNS=3` is what tells them apart, and the first full sweep
-with it — 2026-08-20 — reached case 14 before the session limit stopped it.
-**Cases 01 to 14 hold three times each; 15 to 21 have not been swept.** Case 07
-failed that sweep for a reason worth repeating: its rubric hard-coded a `bash`
-fence while its facts named no platform, so it was grading the machine the
-suite ran on. A case that depends on the reader's platform has to say what the
-platform is.
+each rule holds. `RUNS=3` is what tells them apart. **The first full sweep with
+it — 2026-08-20, on `claude-opus-5` — has all 21 cases holding three times
+each**, but only after it found two real defects that single runs had hidden
+for releases: case 07's rubric hard-coded a `bash` fence while its facts named
+no platform, so it was grading the machine the suite ran on; and case 18 kept
+shortening a path to its basename, one run in three.
+
+Two lessons from that sweep, both cheaper to read than to rediscover. A case
+that depends on the reader's platform has to state the platform in its facts.
+And a case that fails while the session limit is being hit is not a finding —
+case 14 reported 2 of 3 for that reason alone, and passes on re-measurement.
 
 **Case 08 was unstable for a different reason: its rubric graded punctuation.**
 It failed any opening that put an em dash after "yes" and let the support
