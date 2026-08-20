@@ -131,6 +131,12 @@ Three layers, cheapest first:
   and after a `SKILL.md` edit and compare; the judge is a model grading
   prose, so read a FAIL before believing it.
 
+  **Never illustrate a rule with a case's own vocabulary.** A clause written
+  with the route names from case 19 took that case to 3 of 3 in one port and
+  down to 1 of 3 in the other, because the model optimised for the item the
+  example named and compressed the rest of the answer away. Examples in
+  `SKILL.md` should come from outside the suite.
+
   **One run per case is not evidence.** Use `RUNS=3`, which passes a case only
   when all three attempts pass. The suite reported 21/21 for weeks while two
   cases were failing about one run in three, and both turned out to be real

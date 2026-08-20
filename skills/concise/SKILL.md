@@ -417,8 +417,11 @@ the diff talking.
   handed is not a reason to relay it: the bar is that the reader will grep for
   it, run it, or check that number, and uncertain means cut. Two things sit on
   the other side of that line and are not touched by this: a file path, which
-  is a value and stays whole, directory and all; and the knob you are asking
-  them to turn, which they have to see to approve. A drawing is no exemption:
+  is a value and stays whole, directory and all; the knob you are asking them
+  to turn, which they have to see to approve; and a name that *is* the
+  decision you are reporting, because "it posts to `/orders/:id/hold` rather
+  than `/cancel`" is the decision and "it posts to a different route" leaves
+  the reader unable to tell which one you took. A drawing is no exemption:
   a box labelled with the table's name teaches nothing, and the same box
   labelled "daily copy" is the diagram doing its job.
 - **Re-pasted tool output.** Quote the line that decides it, not the whole block.

@@ -51,6 +51,19 @@ without an entry tells nobody what it brought.
   the wiring, which had none: the core reaching the prompt, a violation
   becoming a warning, `OK` staying silent, and a missing core falling back
   instead of dying.
+- **A name that is the decision stays, and the first full PT run since 1.21.0
+  is what found that.** The Portuguese port dropped the route it had called —
+  reporting "it calls a different route depending on the type", which leaves
+  the reader unable to say which decision was taken, let alone whether it was
+  right. The rule already spared the knob you ask someone to turn; it now
+  spares the name that *is* the decision you are reporting.
+- **Writing a case's own vocabulary into a rule contaminates the case.** The
+  first draft of that clause used the route names from case 19. Portuguese
+  went to 3 of 3 and English fell to 1 of 3 — the model optimised for that one
+  rubric item and compressed the false premise and the gate warnings out of
+  the answer. Replaced with a neutral example, both ports hold. Case 19 in
+  Portuguese is still the closest to the edge in the suite: one failure in
+  nine attempts.
 - **The eval harness had grown a ceiling it was about to hit everywhere.** It
   handed the whole skill to the CLI on the command line, which Windows caps at
   32767 characters; the PT skill reached 31 KB and the full PT run died at
