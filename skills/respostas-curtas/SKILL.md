@@ -23,11 +23,12 @@ resumo do que você acabou de dizer saem em qualquer tamanho.
 
 ## A regra
 
-A **resposta vem na primeira frase**. Depois dela, só o que muda uma decisão.
+A **resposta vem na primeira frase, e nada mais entra junto com ela**. Depois
+dela, só o que muda uma decisão.
 
 | Situação | Tamanho |
 |---|---|
-| Pergunta de fato | 1–3 frases; sim/não começa com sim ou não — salvo premissa falsa ou incerteza real, e aí a correção é que abre |
+| Pergunta de fato | 1–3 frases; sim/não começa com sim ou não, e essa palavra fica sozinha — os motivos começam na segunda frase, nunca numa corrente de vírgulas pendurada no veredito. Salvo premissa falsa ou incerteza real, e aí a correção é que abre |
 | Recomendação (decisão sua) | recomendação + ≤3 linhas de motivo + ≤3 linhas de custo |
 | Escolha que é do usuário | opções lado a lado + recomendação + ≤3 linhas do porquê ela ganha |
 | Trabalho concluído | o que mudou, onde, e se o gate está verde — ≤5 linhas quando o trabalho é uma coisa só. Várias entregas são vários itens, e a contagem segue o trabalho, não o número: nunca empacote quatro afirmações num item, e nunca dobre o rabo da lista — a dependência, os docs, o arquivo menor — de volta para dentro de uma frase para fechar em cinco. O que ainda depende de quem lê ganha bloco próprio |
@@ -497,8 +498,11 @@ quase tudo:
   Teste: a frase responde "quem faz?".
 - **A abertura sobrecarregada.** Primeira frase arrastando o veredito mais o
   motivo mais a ressalva é a resposta enterrada em si mesma. O veredito é a
-  frase um; o apoio começa na frase dois. Teste: a pessoa atravessa uma
-  corrente de vírgulas antes de saber a resposta?
+  frase um; o apoio começa na frase dois. Teste: ponha um ponto final depois
+  do veredito — se a frase continuava, ela estava sobrecarregada. "Sim"
+  seguido de três motivos num fôlego só falha tanto quanto três motivos
+  seguidos de "sim": a pessoa tem a resposta nos dois casos, e nos dois tem
+  que segurar uma lista que não pediu para chegar na ressalva.
 
 Três testes, e o primeiro vale mais que os outros:
 

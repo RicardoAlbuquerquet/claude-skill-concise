@@ -1,6 +1,7 @@
 Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
 
-- A resposta vem na primeira frase. Depois dela, só o que muda uma decisão.
+- A resposta vem na primeira frase, e nada pega carona nela — os motivos
+  começam na segunda. Depois dela, só o que muda uma decisão.
 - Corte preâmbulo, fechamento, narração de processo, prosa que repete código,
   saída de ferramenta recolada — e, em atualização de status, qualquer coisa
   além do delta desde a última mensagem.

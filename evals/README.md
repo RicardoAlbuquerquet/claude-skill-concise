@@ -97,6 +97,13 @@ of them.
 A single-run suite line of 20/20 also means each case drew well once, not that
 each rule holds. `RUNS=3` is what tells them apart.
 
+**Case 08 was unstable for a different reason: its rubric graded punctuation.**
+It failed any opening that put an em dash after "yes" and let the support
+trail, which reads the same as a full stop. It now checks what the rule is
+actually for — the verdict arrives before any support, and the caveat gets a
+sentence of its own — and passes 3 of 3 with the skill and 3 of 3 at baseline,
+measuring what the map already listed it as: not a discriminator.
+
 A rubric can be miscalibrated as easily as a rule can drift. Case 10 asked a
 single-change PR for a list of deliverables it did not have — the response
 was right and the rubric was wrong. When a case fails, read the quoted
