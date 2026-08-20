@@ -20,7 +20,33 @@ on:
         required: true
 
 jobs:
+  # Without the key the eval jobs used to run the skip branch and report a
+  # green check, which reads as "the rules were measured" on every PR that
+  # never measured anything. This gate makes them report `skipped` instead —
+  # the secret is unreachable from a job-level `if`, so it is turned into an
+  # output here first.
+  key:
+    runs-on: ubuntu-latest
+    outputs:
+      present: ${{ steps.check.outputs.present }}
+    steps:
+      - id: check
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "No ANTHROPIC_API_KEY, so the eval jobs are skipped rather" >> "$GITHUB_STEP_SUMMARY"
+            echo "than reported green. Fork PRs never get the secret; a" >> "$GITHUB_STEP_SUMMARY"
+            echo "maintainer can run this workflow by hand from the Actions" >> "$GITHUB_STEP_SUMMARY"
+            echo "tab with the branch name." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
   evals:
+    needs: key
+    if: needs.key.outputs.present == 'true'
     runs-on: ubuntu-latest
     continue-on-error: true
     strategy:
@@ -37,17 +63,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.ref || github.ref }}
-      - name: Run evals (skips without ANTHROPIC_API_KEY)
+      - name: Run evals
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           SKILL: ${{ matrix.skill }}
         run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then
-            echo "ANTHROPIC_API_KEY not set - skipping (advisory job)."
-            echo "Fork PRs never get the secret: a maintainer can run this"
-            echo "workflow by hand from the Actions tab with the branch name."
-            exit 0
-          fi
           npm install -g @anthropic-ai/claude-code
           if [ "${{ matrix.mode }}" = core ]; then export CORE=1; fi
           bash evals/run.sh

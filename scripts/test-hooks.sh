@@ -112,5 +112,31 @@ rm -f "$FH/.claude/.concise-update-stamp" "$FH/calls.log"; touch "$FH/.claude/.c
 HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise
 [ ! -s "$FH/calls.log" ] && { pass=$((pass+1)); echo "ok    opt-out do self-update"; } || { fail=$((fail+1)); echo "FALHA opt-out self-update"; }
 
+echo "--- stop-audit (extra, opt-in)"
+SA="$REPO/extras/stop-audit/stop-audit.sh"
+SAD="$FH/sa"; mkdir -p "$SAD/bin"
+{ echo "#!/usr/bin/env bash"
+  echo 'shift; printf "%s" "$1" > "$CAPTURE"; echo "$FAKE_VERDICT"'; } > "$SAD/bin/claude"
+chmod +x "$SAD/bin/claude"
+printf '{"type":"assistant","message":{"content":[{"type":"text","text":"resposta de teste"}]}}
+' > "$SAD/tr.jsonl"
+sa () { echo "{\"transcript_path\":\"$SAD/tr.jsonl\"}" | CAPTURE="$SAD/prompt.txt" FAKE_VERDICT="$1" CONCISE_CORE="$2" PATH="$SAD/bin:$PATH" HOME="$FH" bash "$SA"; }
+
+# o auditor julga contra o nucleo embarcado, nao contra uma copia que envelhece
+rm -f "$SAD/prompt.txt"
+out=$(sa "linha ruim" "$REPO/skills/concise/hooks/core.md")
+case "$out" in *systemMessage*linha*) pass=$((pass+1)); echo "ok    stop-audit avisa a violacao";;
+                                   *) fail=$((fail+1)); echo "FALHA stop-audit aviso: $out";; esac
+grep -q "first sentence" "$SAD/prompt.txt" 2>/dev/null && { pass=$((pass+1)); echo "ok    stop-audit julga contra o nucleo"; } || { fail=$((fail+1)); echo "FALHA stop-audit nao passou o nucleo"; }
+
+# veredito OK nao interrompe ninguem
+out=$(sa OK "$REPO/skills/concise/hooks/core.md")
+[ -z "$out" ] && { pass=$((pass+1)); echo "ok    stop-audit cala quando esta OK"; } || { fail=$((fail+1)); echo "FALHA stop-audit falou com OK: $out"; }
+
+# nucleo ausente: cai no resumo embutido em vez de morrer
+rm -f "$SAD/prompt.txt"
+out=$(sa "linha ruim" "$SAD/nao-existe.md")
+grep -q "first sentence" "$SAD/prompt.txt" 2>/dev/null && { pass=$((pass+1)); echo "ok    stop-audit tem fallback sem o nucleo"; } || { fail=$((fail+1)); echo "FALHA stop-audit fallback"; }
+
 echo "===== $pass ok, $fail falhas"
 [ "$fail" -eq 0 ]

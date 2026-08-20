@@ -417,8 +417,11 @@ the diff talking.
   handed is not a reason to relay it: the bar is that the reader will grep for
   it, run it, or check that number, and uncertain means cut. Two things sit on
   the other side of that line and are not touched by this: a file path, which
-  is a value and stays whole, directory and all; and the knob you are asking
-  them to turn, which they have to see to approve. A drawing is no exemption:
+  is a value and stays whole, directory and all; the knob you are asking them
+  to turn, which they have to see to approve; and a name that *is* the
+  decision you are reporting, because "it posts to `/orders/:id/hold` rather
+  than `/cancel`" is the decision and "it posts to a different route" leaves
+  the reader unable to tell which one you took. A drawing is no exemption:
   a box labelled with the table's name teaches nothing, and the same box
   labelled "daily copy" is the diagram doing its job.
 - **Re-pasted tool output.** Quote the line that decides it, not the whole block.
@@ -466,7 +469,10 @@ Brevity is not omission:
   useful than the adjective, and this one does not bend: a library version
   stays even when you are cutting the name sitting next to it. What is not a
   value is the name of the thing holding one — "retries 5 times" is the value,
-  `MAX_RETRY_ATTEMPTS` is only where you found it.
+  `MAX_RETRY_ATTEMPTS` is only where you found it. A path is the whole path the
+  first time it appears: `web/src/modules/movimento/movimento-pdf.ts`, never
+  `movimento-pdf.ts`, because the reader has to open the file and a repo with
+  three of that basename hands them the wrong one. Later mentions can be short.
 - **Real uncertainty**, named precisely: which part you are unsure of and why.
 - **What you left out of scope**, when you left something out — including the
   second question in a two-question message, when you only answered the first.

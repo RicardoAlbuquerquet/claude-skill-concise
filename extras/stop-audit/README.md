@@ -38,13 +38,29 @@ if you have one):
 }
 ```
 
+It judges against the same core the `SessionStart` hook injects, read from
+`$CLAUDE_PLUGIN_ROOT/hooks/core.md`. When the plugin root is not in the hook's
+environment, point `CONCISE_CORE` at the file:
+
+```bash
+CONCISE_CORE=~/.claude/plugins/concise/hooks/core.md bash ~/.claude/hooks/stop-audit.sh
+```
+
+Your own `~/.claude/concise-core-override.md` wins over both, so the auditor
+grades against whatever governs your sessions. With none of the three
+readable it falls back to a four-line summary, which is enough to keep
+working and not enough to be current.
+
 Limits, before you rely on it:
 
 - **Experimental.** It reads the last assistant message out of the session
   transcript, whose format is not a public contract; on any parse failure it
   exits silently instead of blocking your session. Needs the `claude` CLI on
   PATH, plus `jq` or `node` for the JSON handling.
-- The judge call was not exercised end-to-end in CI — there is no API key
-  there. Test it once after installing: ask something trivial and check
-  whether a deliberately bloated answer draws the warning.
+- The judge call is not exercised against the real model in CI — there is no
+  API key there. `scripts/test-hooks.sh` covers the wiring with a fake
+  `claude`: that the core reaches the prompt, that a violation becomes a
+  warning, that `OK` stays silent, and that a missing core falls back instead
+  of dying. Test the judgement itself once after installing: ask something
+  trivial and check whether a deliberately bloated answer draws the warning.
 - Remove it by deleting the `Stop` entry from your `settings.json`.

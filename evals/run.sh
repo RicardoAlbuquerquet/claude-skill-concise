@@ -34,6 +34,19 @@ else
 fi
 MODEL_ARG=""
 [ -n "${MODEL:-}" ] && MODEL_ARG="--model ${MODEL}"
+
+# Where the style and the facts are handed to the CLI. `--append-system-prompt-file`
+# is what keeps this working as the skill grows; an older CLI without it falls
+# back to the command line, which is the arrangement that broke on Windows.
+SYS_FILE="${TMPDIR:-/tmp}/concise-eval-sys.$$"
+trap 'rm -f "$SYS_FILE"' EXIT INT TERM
+SYS_MODE=file
+"$BIN" --help 2>&1 | grep -q 'append-system-prompt\[-file\]\|append-system-prompt-file' || {
+  SYS_MODE=arg
+  echo "note: this '$BIN' has no --append-system-prompt-file; falling back to the" >&2
+  echo "      command line, which Windows caps at 32767 characters. Update the CLI" >&2
+  echo "      if the suite dies with 'Argument list too long'." >&2
+}
 echo "mode=$MODE skill=$SKILL runs=$RUNS${MODEL:+ model=$MODEL}"
 
 # sub(/\r$/,"") tolerates CRLF working copies (Windows checkout read from WSL)
@@ -58,14 +71,22 @@ for case_file in "$ROOT"/evals/cases/*.md; do
   attempt=1
   while [ "$attempt" -le "$RUNS" ]; do
 
-  # shellcheck disable=SC2086
-  response=$("$BIN" -p "$prompt" $MODEL_ARG --append-system-prompt "$STYLE
-
-You are replying in a terminal. Do not use tools. The facts below are things
+  # The style and the facts used to travel on the command line, which Windows
+  # caps at 32767 characters. The PT skill reached 31 KB and the suite began
+  # dying with "Argument list too long" partway through — a ceiling that moves
+  # closer every time a rule lands. A file has no such limit.
+  printf '%s\n\n%s\n\n%s\n' "$STYLE" \
+"You are replying in a terminal. Do not use tools. The facts below are things
 you already verified yourself this session — treat them as your own findings,
-and treat any action they describe as one you have not performed yet.
+and treat any action they describe as one you have not performed yet." \
+    "$facts" > "$SYS_FILE"
 
-$facts")
+  # shellcheck disable=SC2086
+  if [ "$SYS_MODE" = file ]; then
+    response=$("$BIN" -p "$prompt" $MODEL_ARG --append-system-prompt-file "$SYS_FILE")
+  else
+    response=$("$BIN" -p "$prompt" $MODEL_ARG --append-system-prompt "$(cat "$SYS_FILE")")
+  fi
   rc=$?
 
   # A dead CLI must abort the suite, not spread across every case as a FAIL
