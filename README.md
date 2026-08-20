@@ -97,7 +97,7 @@ transformations. Four come out longer.
 | Piece | What it does |
 |---|---|
 | `concise` skill | the full ruleset, invoked when a turn needs it |
-| `SessionStart` hook | injects the ~35-line core every session, plus the line naming this machine's shell; self-updates the plugin |
+| `SessionStart` hook | injects the ~40-line core every session, plus the line naming this machine's shell; self-updates the plugin |
 | `concise` output style | the same core in the system prompt — no shell needed, pick it in `/config` |
 | `/concise:rewrite` | rewrites a finished text to the rules, losing nothing |
 | `/concise:pr` | drafts the PR description from the real diff, test steps last |
@@ -250,8 +250,8 @@ A response-*style* rule wants to apply to all of them, including the turns where
 nothing about the task suggests "now think about brevity".
 
 **Installed as a plugin, this is handled for you.** Since 1.3.0 each plugin
-ships a `SessionStart` hook that prints a ~35-line core of the style into
-context at every session start — about 320 tokens, spent whether or not the
+ships a `SessionStart` hook that prints a ~40-line core of the style into
+context at every session start — about 360 tokens, spent whether or not the
 session produces prose. The core is the guarantee; the full ruleset still
 lives in the skill, which the model invokes when a turn needs more than the
 core. What gets injected is one file:
@@ -304,6 +304,11 @@ pointer that guarantees it's in context. Neither one replaces the other.
 Since 1.4.0 each plugin also ships commands — the skill governs what Claude
 writes next; these produce one specific piece of writing on demand, whether it
 leaves the conversation or stays in it, or act on what is already written:
+
+Since 1.31.0 the injected core names the five that leave the conversation, so
+Claude reaches for one without being told to. It is a nudge, not a hook: it
+competes for attention with everything else in context, and a command you type
+yourself is still the only guarantee.
 
 - **`/concise:rewrite <text>`** rewrites a finished text — a PR description,
   an issue body, an e-mail — to the ruleset without losing information: every

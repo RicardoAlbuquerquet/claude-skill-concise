@@ -5,6 +5,32 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.31.0 — 2026-08-20
+
+- **The injected core now points at the commands.** Eleven commands shipped
+  and nothing told the model to reach for one, so it wrote from what it
+  remembered instead of from the diff. The session that cut 1.30.0 is the
+  quotable case: the commit message and the PR body for it were written
+  without invoking `/concise:commit` or `/concise:pr`, and they only landed in
+  the right register because the whole ruleset happened to be open in that
+  conversation. In a session that isn't editing this repo, that coincidence
+  does not exist.
+- **Only the five that leave the conversation are named** — `pr`, `commit`,
+  `card`, `comment`, `release`. They are the ones where the command adds a
+  fact-gathering step the rules cannot describe: reading the log for the
+  title's convention, the diff for what the PR does, the thread before
+  replying to it. `plan`, `decide`, `draw`, `status` and `audit` stay out
+  because the core is the most contested space in the plugin and their gain is
+  register, not grounding.
+- **It is a nudge, not a system rule**, and the difference matters: a hook
+  denies, a line in the core competes. The deterministic version — extending
+  the `PreToolUse` guard to reject a `gh pr create` whose body carries no test
+  step, the way it already rejects AI credit — is not in this release, and
+  would need the same escape hatches the credit guard ships with.
+- The line lands in `hooks/core.md`, `hooks/nucleo.md` and both output styles,
+  which `check-parity.sh` holds byte-identical to their cores. Core bullets go
+  from ten to eleven in both ports.
+
 ## 1.30.0 — 2026-08-20
 
 - **Six commands, closing the gap between what the ruleset governs and what

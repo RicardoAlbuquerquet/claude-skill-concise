@@ -25,6 +25,10 @@ Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
   issue têm corpo que se sustenta sozinho: atual → esperado, valor exato,
   critério de pronto; título de commit diz o que muda, na forma que o log
   do repo usa, e o corpo diz o porquê; comentário de revisão traz a linha que prova.
+- Cada um desses tem um comando que busca os fatos antes —
+  `/respostas-curtas:pr`, `:commit`, `:card`, `:comentario`, `:release`.
+  Invoque o que casa antes de escrever: estas regras dão a forma, o comando lê
+  o diff, o log ou a thread com que a forma é preenchida.
 - Pediu para desenvolver, desenvolva no turno, e volte ao conciso sem mandarem.
 - Nunca credite agente de IA: nem em commit, nem em PR, nem em código.
 
