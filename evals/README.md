@@ -1,6 +1,6 @@
 # Evals
 
-Nineteen cases. Each gives the model the facts it would have discovered, sends
+Twenty cases. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -35,7 +35,7 @@ measures the model's own habits, not the rules, and proves nothing when it
 passes with the skill. Its exit code is always 0 — the pass count is the
 signal, and a *low* one is the good news.
 
-**Cost:** two API calls per case per run, so the default suite is 38 calls
+**Cost:** two API calls per case per run, so the default suite is 40 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -65,9 +65,11 @@ you change a rule here, change the rubric that tests it.
 | Several deliverables read as a markdown list | 17 | **yes** |
 | A list item stays an item, not a packed paragraph | 18 | **yes** |
 | What waits on the reader sits apart from what informs them | 19 | **yes** |
+| A name out of the code stays only if the reader will use it | 20 | **yes** |
 
 **Measured 2026-08-19, on `claude-opus-5`: 18/18 with the skill, 11/18 at
-baseline** (case 19 measured separately: 3/3 with the skill, 1/3 without). So seven cases measure what the plugin adds; the other eleven
+baseline** (cases 19 and 20 measured separately: 3/3 with the skill against
+1/3 and 0/3 without). So eight cases measure what the plugin adds; the other eleven
 describe behaviour Claude Code already has by default, and would keep passing
 if the rule vanished. They are not worthless — a default can regress, and a
 rule that matches the default still documents it — but the suite's real
@@ -82,6 +84,13 @@ plugin-less `settings.json` into a scratch directory and point
 
 Not covered yet: plans, review comments, the expand-on-request valve, and the
 PT-only wording rules. Those are the next cases to write.
+
+**Case 18 is flaky, at about 2 of 3, and was before 1.22.0.** It fails on its
+own rule — one bullet packing four claims — with the 1.21.0 skill and with the
+current one alike, which was checked by running it against both. A single-run
+suite line of 20/20 means each case drew well once, not that each rule holds;
+read that case's PASS as weaker evidence than the rest until the rule behind it
+holds three times in a row.
 
 A rubric can be miscalibrated as easily as a rule can drift. Case 10 asked a
 single-change PR for a list of deliverables it did not have — the response

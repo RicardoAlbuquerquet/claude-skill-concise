@@ -310,3 +310,35 @@ until a deploy to change their mind.
 running tally of the day's mistakes, and the promise to do better. None of it
 changes what the reader does next, and all of it sits in front of the sentence
 that does.
+
+## 10. An explanation carrying the names you read to find it
+
+> **Prompt:** why do some invoices export a PDF with no line items?
+
+### Before — 81 words, five of them names from the source
+
+> The item rows are rendered by `InvoicePdfRenderer.appendLineItems`, which pulls
+> from `InvoiceLineItemProjection` rather than the invoice aggregate. That
+> projection is rebuilt by `ProjectionSyncWorker` on the
+> `invoice.line_items.changed` topic, and when the worker's consumer group lags,
+> `findProjectedItems` returns an empty list. The renderer treats empty as valid
+> and emits the document anyway — there is no guard, because `PDF_REQUIRE_ITEMS`
+> defaults to `false`. Affected invoices are the ones edited within the lag
+> window, currently peaking around 40 seconds.
+
+### After — 73 words
+
+> Invoices edited in the last ~40 seconds export with no items: the PDF reads a
+> copy of the line items that lags behind the invoice, and an empty copy ships as
+> an empty document instead of failing.
+>
+> `PDF_REQUIRE_ITEMS` is `false` — flipping it turns a silent wrong document into
+> a visible error today. Making the export read the invoice directly closes the
+> window for good: a day's work, and the export path needs retesting.
+
+**What survived:** the ~40-second window, the edge of the symptom, the flag the
+reader is being asked to flip, and the cost of each fix.
+
+**What died:** four names — a renderer, a projection, a worker, a topic — that
+proved the trail had been followed and gave the reader nothing to do with them.
+The flag stayed, because switching it on is the decision being put to them.

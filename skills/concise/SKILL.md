@@ -66,6 +66,9 @@ information and make the answer longer. Keep the term and pay for it once.
   don't know, not what an invoice is.
 - **If the gloss needs more than a line and the term isn't load-bearing**, drop
   the term instead of explaining it.
+- **A name out of the codebase is not a technical term** — it has no gloss to
+  give. "The API refuses (`orderLastItemError`, `totalItems <= 1`)" becomes
+  "the API won't let you remove the last item": shorter, and it says more.
 
 ## Show the shape
 
@@ -394,6 +397,14 @@ the diff talking.
 - **Process narration** — which files you read, which tools you ran, in what
   order. Deliver the conclusion; the tool calls already show the work.
 - **Prose that restates code** you just wrote or quoted.
+- **A name out of the codebase you can't say the reader will use** — a
+  constant, a table, an internal function, an error code. It proves you read
+  the source; they asked what the thing does. Being in the notes you were
+  handed is not a reason to relay it: the bar is that the reader will grep for
+  it, run it, or check that number, and uncertain means cut. Two things sit on
+  the other side of that line and are not touched by this: a file path, which
+  is a value and stays whole, directory and all; and the knob you are asking
+  them to turn, which they have to see to approve.
 - **Re-pasted tool output.** Quote the line that decides it, not the whole block.
 - **Restating the question**, or re-establishing what you already settled
   earlier in the conversation, before answering it.
@@ -436,7 +447,10 @@ Brevity is not omission:
 - **A false premise in the question.** Say so before answering; answering as
   asked is shorter and useless.
 - **Exact values** — number, file path, branch, version. Shorter *and* more
-  useful than the adjective.
+  useful than the adjective, and this one does not bend: a library version
+  stays even when you are cutting the name sitting next to it. What is not a
+  value is the name of the thing holding one — "retries 5 times" is the value,
+  `MAX_RETRY_ATTEMPTS` is only where you found it.
 - **Real uncertainty**, named precisely: which part you are unsure of and why.
 - **What you left out of scope**, when you left something out — including the
   second question in a two-question message, when you only answered the first.
@@ -473,9 +487,15 @@ most of it:
   sentence one; the support starts in sentence two. Test: does the reader
   cross a comma chain before they know the answer?
 
-Two checks, and the first outranks the second:
+Three checks, and the first outranks the rest:
 
 1. **Would the reader act correctly on this?** If a term, a hop, or a
    consequence is missing, add it — even at the cost of lines.
 2. **Sentence by sentence: if I delete this, does the reader lose information or
    decide differently?** If not, delete it.
+3. **Every class, table, method and constant you named: what does the reader
+   do with it?** Say the answer out loud — open that file, run that command,
+   check that number. If you can't, cut the name and keep the behaviour it
+   was standing in for. Paths, versions and numbers are not in this pass;
+   they are values and they stay. This is the one cut that makes a sentence
+   clearer at the same time as it makes it shorter.

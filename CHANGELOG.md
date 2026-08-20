@@ -5,6 +5,33 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.22.0 — 2026-08-19
+
+- **A name lifted out of the code stays only if you can say what the reader
+  does with it.** An investigation came back carrying the job class, the
+  table, the repository method and the constant, one per sentence — and the
+  person who asked why a total was wrong will open none of them. Replaced by
+  the behaviour they stood for, those sentences got shorter and clearer at the
+  same time, which is why this cut is worth a pass of its own.
+- It lands in three places because it collides with two existing rules.
+  **Never cut** now says the exact value is the value, not the name of the
+  constant holding it; **Always cut** carries the item; and the final
+  checklist has a third step for it. Written once, in the audience section,
+  the rule lost every run — the same placement lesson as 1.20.0 and 1.21.0.
+- The setting you are asking the reader to approve changing is the exception:
+  name it, because approving the change means approving that specific thing.
+  Shas, paths, branches, versions and numbers they will check are untouched.
+- Case 20 measures it: 3 of 3 with the skill, 0 of 3 without — the cleanest
+  discriminator in the suite. Case 19's rubric used to demand the error
+  constant in the response; it no longer does.
+- Two boundaries were added because the first draft over-cut in measurement: a
+  file path stays whole, directory and all, and a library version stays even
+  while the name beside it goes. Both were caught by case 18 dropping them.
+- **Case 18 is flaky at about 2 of 3, and was before this release** — on its
+  own rule, the packed list item. Checked against the 1.21.0 skill to be sure
+  this change was not the cause. The rule behind it is not fixed here; the
+  finding is recorded in `evals/README.md`.
+
 ## 1.21.0 — 2026-08-19
 
 - **What waits on the reader never shares a block with what merely informs
