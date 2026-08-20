@@ -466,7 +466,10 @@ Brevity is not omission:
   useful than the adjective, and this one does not bend: a library version
   stays even when you are cutting the name sitting next to it. What is not a
   value is the name of the thing holding one — "retries 5 times" is the value,
-  `MAX_RETRY_ATTEMPTS` is only where you found it.
+  `MAX_RETRY_ATTEMPTS` is only where you found it. A path is the whole path the
+  first time it appears: `web/src/modules/movimento/movimento-pdf.ts`, never
+  `movimento-pdf.ts`, because the reader has to open the file and a repo with
+  three of that basename hands them the wrong one. Later mentions can be short.
 - **Real uncertainty**, named precisely: which part you are unsure of and why.
 - **What you left out of scope**, when you left something out — including the
   second question in a two-question message, when you only answered the first.

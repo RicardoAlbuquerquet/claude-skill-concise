@@ -96,13 +96,17 @@ three times; fixing the budget row fixed the case. When a case fails
 of them.
 
 A single-run suite line of 21/21 also means each case drew well once, not that
-each rule holds. `RUNS=3` is what tells them apart, and the first full sweep
-with it — 2026-08-20 — reached case 14 before the session limit stopped it.
-**Cases 01 to 14 hold three times each; 15 to 21 have not been swept.** Case 07
-failed that sweep for a reason worth repeating: its rubric hard-coded a `bash`
-fence while its facts named no platform, so it was grading the machine the
-suite ran on. A case that depends on the reader's platform has to say what the
-platform is.
+each rule holds. `RUNS=3` is what tells them apart. **The first full sweep with
+it — 2026-08-20, on `claude-opus-5` — has all 21 cases holding three times
+each**, but only after it found two real defects that single runs had hidden
+for releases: case 07's rubric hard-coded a `bash` fence while its facts named
+no platform, so it was grading the machine the suite ran on; and case 18 kept
+shortening a path to its basename, one run in three.
+
+Two lessons from that sweep, both cheaper to read than to rediscover. A case
+that depends on the reader's platform has to state the platform in its facts.
+And a case that fails while the session limit is being hit is not a finding —
+case 14 reported 2 of 3 for that reason alone, and passes on re-measurement.
 
 **Case 08 was unstable for a different reason: its rubric graded punctuation.**
 It failed any opening that put an em dash after "yes" and let the support

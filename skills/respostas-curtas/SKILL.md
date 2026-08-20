@@ -471,7 +471,10 @@ Brevidade não é omissão:
   que o adjetivo, e este não dobra: a versão de uma biblioteca fica mesmo
   quando você está cortando o nome do lado. O que não é valor é o nome da coisa
   que guarda um — "tenta 5 vezes" é o valor, `MAX_RETRY_ATTEMPTS` é só onde
-  você achou.
+  você achou. Caminho é o caminho inteiro na primeira vez que aparece:
+  `web/src/modules/movimento/movimento-pdf.ts`, nunca `movimento-pdf.ts`,
+  porque quem lê vai abrir o arquivo e um repo com três daquele nome entrega o
+  errado. Nas menções seguintes pode encurtar.
 - **Incerteza real**, nomeada com precisão: qual parte você não sabe e por quê.
 - **O que ficou fora do escopo**, quando ficou — inclusive a segunda pergunta de
   uma mensagem com duas, quando você só respondeu a primeira.

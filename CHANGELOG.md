@@ -26,10 +26,18 @@ without an entry tells nobody what it brought.
   environment says otherwise, because guessing `powershell` at a reader who
   turns out to be on Linux costs more than the reverse; and cases 07 and 17
   state the platform in their facts, the way case 21 already did.
-- Running the suite with `RUNS=3` for the first time is what surfaced that.
-  Cases 01 through 14 hold three times each; 15 through 21 have not been swept
-  yet, and `evals/README.md` says so rather than implying the whole suite has
-  been.
+- **A path is the whole path the first time it appears.** The name rule from
+  1.22.0 was still leaking into paths at about one run in three, shortening
+  `web/src/modules/estoque/movimento/movimento-pdf.ts` to the bare filename.
+  Saying "a file path is a value" in the cut list was not enough; the rule now
+  sits in the exact-values entry, where what counts as the value is decided,
+  and says the basename is a different and weaker one. Later mentions may
+  still be short.
+- **The first full `RUNS=3` sweep is what surfaced both**, and it is the
+  headline of this release: all 21 cases now hold three times each, in place
+  of a 21/21 line that meant each case drew well once. Cases 10 and 14 looked
+  unstable in that sweep and were not — 14 had hit the session limit, and 10
+  passed 3 of 3 on re-measurement.
 
 ## 1.24.0 — 2026-08-20
 
