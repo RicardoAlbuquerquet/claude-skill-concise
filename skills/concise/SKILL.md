@@ -110,7 +110,10 @@ Earns its place:
   the two makes them hunt for the part that needs an answer. A heading that
   joins the jobs with "or" — "three things to decide or know" — is the mix
   admitted rather than resolved; split it into what you decide and what was
-  decided already.
+  decided already. That block carries your recommendation too. A decision block
+  ending in "your call" or "tell me which" is the right shape with the advice
+  taken out, and it leaves the reader exactly where they were before you split
+  it — holding a choice whose costs only you have measured.
 - **A table** for anything that is rows-and-columns by nature: options against
   criteria, before against after, a value per case. Cells hold values, not
   sentences — the explanation lives in the prose around the table, and past
