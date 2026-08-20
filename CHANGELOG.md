@@ -51,6 +51,13 @@ without an entry tells nobody what it brought.
   the wiring, which had none: the core reaching the prompt, a violation
   becoming a warning, `OK` staying silent, and a missing core falling back
   instead of dying.
+- **The eval harness had grown a ceiling it was about to hit everywhere.** It
+  handed the whole skill to the CLI on the command line, which Windows caps at
+  32767 characters; the PT skill reached 31 KB and the full PT run died at
+  case 17 with "Argument list too long" — the first run of that suite since
+  1.21.0. It uses `--append-system-prompt-file` now, so the limit is gone
+  rather than postponed, with a warning and the old path for a CLI too old to
+  have the flag.
 - `CONTRIBUTING.md` told contributors to run the evals and compare, without
   saying that one run per case is not evidence. It now says to use `RUNS=3`,
   and why: the suite read 21/21 for weeks while two cases were failing about

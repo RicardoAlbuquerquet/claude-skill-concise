@@ -35,6 +35,12 @@ measures the model's own habits, not the rules, and proves nothing when it
 passes with the skill. Its exit code is always 0 — the pass count is the
 signal, and a *low* one is the good news.
 
+The style and the facts reach the CLI through `--append-system-prompt-file`,
+  not the command line. That is not a detail: Windows caps a command line at
+32767 characters, the PT skill is already past 31 KB, and the full PT run died
+at case 17 with "Argument list too long" before the switch. A CLI old enough
+to lack the flag still works and says so.
+
 **Cost:** two API calls per case per run, so the default suite is 42 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
