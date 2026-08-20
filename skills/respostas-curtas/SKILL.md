@@ -110,7 +110,11 @@ Merece existir:
   que depende da pessoa nunca divide bloco com o que só informa**: misturar faz
   ela garimpar qual parte precisa de resposta. Cabeçalho que junta as duas com
   "ou" — "três coisas para decidir ou saber" — é a mistura assumida em vez de
-  resolvida; separe em o que você decide e o que já foi decidido.
+  resolvida; separe em o que você decide e o que já foi decidido. Esse bloco
+  carrega a sua recomendação junto. Bloco de decisão que termina em "decisão
+  sua" ou "me diga qual" é a forma certa com o conselho tirado de dentro, e
+  deixa quem lê exatamente onde estava antes de você separar — com uma escolha
+  cujos custos só você mediu.
 - **Tabela** para o que é linha-e-coluna por natureza: opções contra critérios,
   antes contra depois, um valor por caso. Célula guarda valor, não frase — a
   explicação vive na prosa em volta da tabela, e passando de quatro colunas

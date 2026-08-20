@@ -5,6 +5,26 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.28.0 — 2026-08-20
+
+- **The block holding the reader's decision holds the recommendation too.** A
+  long delivery ended with two genuinely different ways to verify the work and
+  closed on "tell me which one" — the right shape with the advice taken out of
+  it, leaving the reader holding a choice whose costs only the writer had
+  measured. The rule that gives a decision its own block now says the block
+  carries the recommendation with it.
+- Case 06 already tested "does not stop at your call", and it holds. What it
+  could not see is the same failure at the end of a five-section report, where
+  the choice arrives after the writing feels finished. Case 24 is that shape.
+- **Case 24 discriminates weakly** — 3 of 3 with the skill in both ports
+  against 2 of 3 at baseline — and the map says so. Two cases in a row now sit
+  there, and the reason is the same: the failures worth catching happen across
+  a long session with tools, and the harness runs one turn without any.
+- Writing case 24 turned up a fault in the case rather than in a rule: the
+  facts said the second route left "nothing to clean up" while also saying the
+  fixture rows were already written. The model followed the contradiction and
+  the rubric blamed it.
+
 ## 1.27.0 — 2026-08-20
 
 - **The style covers every line the turn puts on the screen, not only the last
