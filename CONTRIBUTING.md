@@ -122,16 +122,28 @@ Three layers, cheapest first:
 - **Parity**, free: `bash scripts/check-parity.sh` — CI runs it on every PR.
 - **Hooks**, free and offline: `bash scripts/test-hooks.sh` runs every hook
   script against a fake `$HOME` and a fake `claude` — the credit guard's
-  allow and deny cases, the daily throttle, the notices. CI runs it too.
+  allow and deny cases, the daily throttle, the notices, the platform line,
+  and the opt-in `stop-audit` extra. CI runs it too.
 - **Evals**, two API calls per case: `bash evals/run.sh` sends each case in
   `evals/cases/` through the skill and grades the response against its
   rubric — see [`evals/README.md`](evals/README.md) for the count and cost.
   Run it before
   and after a `SKILL.md` edit and compare; the judge is a model grading
-  prose, so read a FAIL before believing it. On PRs touching `SKILL.md` the
-  `evals` workflow runs them as an advisory job — it needs the repo secret
-  `ANTHROPIC_API_KEY` and skips cleanly without it, and it never blocks a
-  merge.
+  prose, so read a FAIL before believing it.
+
+  **One run per case is not evidence.** Use `RUNS=3`, which passes a case only
+  when all three attempts pass. The suite reported 21/21 for weeks while two
+  cases were failing about one run in three, and both turned out to be real
+  defects. A case that fails *differently* on each attempt is usually two
+  rules colliding rather than one rule worded badly; a case that fails while
+  the session limit is being hit is not a finding at all.
+
+  On PRs touching `SKILL.md` the `evals` workflow runs them as an advisory
+  job that never blocks a merge. It needs the repo secret
+  `ANTHROPIC_API_KEY`, and without it the jobs report `skipped` rather than
+  green — a passing check that measured nothing reads as coverage that does
+  not exist. Fork PRs never get the secret; run the workflow by hand from the
+  Actions tab with the branch name.
 - **Dogfooding**, still the real test: install your edited skill and run a
   week of ordinary work. Keep the responses that got **worse** — a rule that
   makes answers shorter but less useful is a regression, and this is the only

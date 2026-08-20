@@ -42,6 +42,19 @@ without an entry tells nobody what it brought.
 - The audit agent had not kept up with two rules it can check: a fence tagged
   for the wrong shell or chaining two commands, and a path shortened to its
   basename on first mention.
+- **The opt-in `stop-audit` extra was grading responses against a copy of the
+  rules, not the rules.** Four lines written by hand inside the script, frozen
+  wherever they were when it shipped — an auditor holding last month's
+  checklist is worse than none. It reads `hooks/core.md` now, with
+  `CONCISE_CORE` for installs where the plugin root is not in the hook's
+  environment and the user's own override winning over both. Four tests cover
+  the wiring, which had none: the core reaching the prompt, a violation
+  becoming a warning, `OK` staying silent, and a missing core falling back
+  instead of dying.
+- `CONTRIBUTING.md` told contributors to run the evals and compare, without
+  saying that one run per case is not evidence. It now says to use `RUNS=3`,
+  and why: the suite read 21/21 for weeks while two cases were failing about
+  one run in three.
 - `evals/README.md` claimed 18/18 against a suite of 21, and said the
   discriminating power was "those seven" two lines under a sentence counting
   ten.
