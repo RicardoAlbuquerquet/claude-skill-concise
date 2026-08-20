@@ -5,6 +5,29 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.29.0 — 2026-08-20
+
+- **`/concise:comment` (PT: `/respostas-curtas:comentario`)** drafts the fifth
+  destination the ruleset already governs and no command produced: a review
+  comment, a reply in a thread, a note on someone's card, or a message to a
+  person. The "Comments and replies" section has existed for as long as the
+  ruleset has had destinations; until now it only applied when Claude happened
+  to be writing one, never when you asked for one.
+- The command carries three things the section states and a draft usually
+  misses: it **reads the line or the thread before writing** — a comment
+  anchored to a `path:line` nobody opened is a guess wearing an anchor — it
+  **says whether the comment blocks**, because the reader's first question is
+  whether they have to act before merging, and it splits two points into two
+  blocks instead of one comment with a list inside.
+- **It does not post by default, and a named destination is not permission
+  to.** Naming a PR or a card tells the command where the comment would go;
+  posting notifies a person, so it waits for you to say so. `/concise:card`
+  creates when a destination is named — opening an issue and replying inside
+  someone's thread are not the same act.
+- No rule changed, so no eval case moved. The command is graded by the section
+  it follows; the harness measures chat replies, and a slash command is not
+  one.
+
 ## 1.28.0 — 2026-08-20
 
 - **The block holding the reader's decision holds the recommendation too.** A

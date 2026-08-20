@@ -102,6 +102,7 @@ reais. Quatro saem mais longas.
 | `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
 | `/respostas-curtas:card` | rascunha o card que se sustenta sozinho; cria quando o destino é nomeado |
 | `/respostas-curtas:commit` | rascunha a mensagem de commit do staged — título na forma que o log do repo usa, corpo com o porquê |
+| `/respostas-curtas:comentario` | rascunha comentário de revisão, resposta em thread ou recado em card — a afirmação, e a linha que prova |
 | Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
 | Agente `auditar` | devolve só as violações de um rascunho — citação, regra, correção |
 | [`extras/stop-audit`](extras/stop-audit/README.md) | juiz de estilo por turno, opcional, instalado à mão |
@@ -226,7 +227,7 @@ npx skills add RicardoAlbuquerquet/claude-skill-concise
 ```
 
 Só as regras viajam. O núcleo sempre-ligado, o auto-update, a guarda de
-crédito, os quatro comandos e o agente de auditoria são maquinaria de plugin
+crédito, os cinco comandos e o agente de auditoria são maquinaria de plugin
 do Claude Code; em outro agente você fica com o documento e invoca à mão.
 
 Confira que registrou digitando `/respostas-curtas` no Claude Code. Se não
@@ -292,9 +293,9 @@ ponteiro que garante que elas estão no contexto. Um não substitui o outro.
 
 ## Os comandos e o agente
 
-Desde a 1.4.0 cada plugin também embarca ferramentas para texto que já existe —
-a skill governa o que o Claude escreve a seguir; estas agem sobre o que está
-escrito:
+Desde a 1.4.0 cada plugin também embarca ferramentas para texto que tem
+destino — a skill governa o que o Claude escreve a seguir; estas produzem o
+que sai da conversa, ou agem sobre o que já está escrito:
 
 - **`/respostas-curtas:reescrever <texto>`** reescreve um texto pronto — uma
   descrição de PR, um corpo de issue, um e-mail — pelas regras, sem perder
@@ -321,6 +322,13 @@ escrito:
   que está staged — título de 72 caracteres ou menos, na forma que o log do
   repo já usa, e corpo dizendo o porquê em vez de recontar o diff. Só rascunho; nunca roda
   `git commit`. EN: `/concise:commit`.
+- **`/respostas-curtas:comentario [assunto]`** rascunha comentário de revisão,
+  resposta em thread, recado no card de alguém ou mensagem para uma pessoa: a
+  afirmação primeiro, depois o `caminho:linha` que prova, se trava ou não dito
+  dentro do comentário, e um ponto por comentário — vários pontos voltam como
+  vários blocos. Lê a linha ou a thread antes de escrever, e para em vez de
+  chutar quando não alcança. Só rascunho, a não ser que você nomeie o destino
+  *e* mande publicar. EN: `/concise:comment`.
 - **O agente `auditar`** (EN: `audit`) confere um rascunho contra o checklist
   e devolve só as violações — linha citada, regra, correção em uma linha —
   mais o conteúdo obrigatório que falta. Nunca reescreve; peça quando quiser o
