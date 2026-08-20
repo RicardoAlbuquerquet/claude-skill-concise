@@ -41,7 +41,7 @@ plugin:
 | `hooks/core.md` | rename to your language's core, translate |
 | `hooks/hooks.json` | the plugin name in all five commands, the override filename, the opt-out flag names, and the two human strings (welcome, deny reason) |
 | `hooks/*.sh` | **nothing** — the four scripts are byte-identical across ports and take everything as arguments; `check-parity.sh` enforces that |
-| `commands/` | five files: translate, and rename them if the command name changes |
+| `commands/` | eleven files: translate, and rename them if the command name changes |
 | `agents/` | one file: `name`, `description`, body |
 
 Then add your port to `scripts/check-parity.sh` (it only knows EN and PT
