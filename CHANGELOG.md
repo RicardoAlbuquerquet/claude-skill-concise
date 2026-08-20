@@ -5,6 +5,43 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.23.0 — 2026-08-20
+
+- **A completed-work report stops buying its ≤5 lines by packing.** The budget
+  row now says the item count follows the work rather than the number, and
+  names the shortcut it was licensing: folding the tail of the list — the
+  dependency, the docs, the smaller file — back into a sentence to land on
+  five.
+- That was the real cause of case 18 being unstable at about 2 of 3 since the
+  day it was written, which 1.22.0 recorded as unfixed. The rule it tests was
+  never the problem: a dozen claims against a ≤5-line budget left no layout
+  that satisfied both, so each run broke somewhere different — four claims in
+  one item, then three parentheticals stacked, then prose. Rewording the list
+  rule three times only moved the failure. The case now holds 3 of 3 in both
+  ports and still fails at baseline.
+- **Grouping by file is what forces the packing**, so the list rule says the
+  grouping is what gives: one subject with four claims hanging off it is four
+  items, or a table with the subject in the first column.
+- A drawing is no exemption from the name rule shipped in 1.22.0. A box
+  labelled with a table's name teaches nothing; the same box labelled "daily
+  copy" is the diagram doing its job.
+- Case 18's rubric demanded a list where the skill offers a list *or* a table
+  for that content. It accepts either now, and only prose fails — the same
+  miscalibration case 10 had.
+- **The overloaded-opening test described a failure it could not detect.** It
+  asked whether the reader crosses a comma chain before reaching the answer;
+  the failure that actually happens is "Yes" followed by three reasons in one
+  breath, where the answer comes first and the chain comes after. The test is
+  now mechanical: put a full stop after the verdict, and if the sentence was
+  still going it was overloaded. The headline rule says it too — the answer
+  goes in the first sentence, and nothing else goes in there with it.
+- Case 08 was grading punctuation. An em dash after "yes" with the support
+  trailing reads the same as a full stop; what the rule protects is the caveat
+  getting a sentence of its own. Recalibrated to that, it passes 3 of 3 — and
+  3 of 3 at baseline as well, which confirms in measurement what the rule→case
+  map already claimed: case 08 documents what Claude Code does by default
+  rather than what the plugin adds.
+
 ## 1.22.0 — 2026-08-19
 
 - **A name lifted out of the code stays only if you can say what the reader

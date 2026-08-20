@@ -85,12 +85,24 @@ plugin-less `settings.json` into a scratch directory and point
 Not covered yet: plans, review comments, the expand-on-request valve, and the
 PT-only wording rules. Those are the next cases to write.
 
-**Case 18 is flaky, at about 2 of 3, and was before 1.22.0.** It fails on its
-own rule — one bullet packing four claims — with the 1.21.0 skill and with the
-current one alike, which was checked by running it against both. A single-run
-suite line of 20/20 means each case drew well once, not that each rule holds;
-read that case's PASS as weaker evidence than the rest until the rule behind it
-holds three times in a row.
+**Case 18 was unstable at about 2 of 3 from the day it was written until
+1.23.0, and the cause was not the rule it tests.** A dozen claims against a
+≤5-line budget left no layout that satisfied both, so each run broke somewhere
+different — a packed item, then stacked parentheticals, then the tail of the
+list folded back into prose. Rewording the list rule moved the failure around
+three times; fixing the budget row fixed the case. When a case fails
+*differently* every run, look for two rules colliding before rewording either
+of them.
+
+A single-run suite line of 20/20 also means each case drew well once, not that
+each rule holds. `RUNS=3` is what tells them apart.
+
+**Case 08 was unstable for a different reason: its rubric graded punctuation.**
+It failed any opening that put an em dash after "yes" and let the support
+trail, which reads the same as a full stop. It now checks what the rule is
+actually for — the verdict arrives before any support, and the caveat gets a
+sentence of its own — and passes 3 of 3 with the skill and 3 of 3 at baseline,
+measuring what the map already listed it as: not a discriminator.
 
 A rubric can be miscalibrated as easily as a rule can drift. Case 10 asked a
 single-change PR for a list of deliverables it did not have — the response

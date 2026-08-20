@@ -23,15 +23,15 @@ are cut at every length.
 
 ## The rule
 
-**The answer goes in the first sentence.** After it, only what changes a
-decision.
+**The answer goes in the first sentence, and nothing else goes in there with
+it.** After it, only what changes a decision.
 
 | Situation | Budget |
 |---|---|
-| Factual question | 1–3 sentences; a yes/no question starts with yes or no — unless the premise is false or the answer is genuinely uncertain, and the correction opens instead |
+| Factual question | 1–3 sentences; a yes/no question starts with yes or no, and that word stands alone — the reasons start in sentence two, never as a comma chain hanging off the verdict. Unless the premise is false or the answer is genuinely uncertain, and the correction opens instead |
 | Recommendation (your call) | recommendation + ≤3 lines of reason + ≤3 lines of cost |
 | Choice that is the user's | options side by side + recommendation + ≤3 lines why it wins |
-| Completed work | what changed, where, whether the gate is green — ≤5 lines; anything still waiting on the reader gets its own block |
+| Completed work | what changed, where, whether the gate is green — ≤5 lines when the work is one thing. Several deliverables are several items, and the count follows the work rather than the number: never pack four claims into one item, and never fold the tail of the list — the dependency, the docs, the smaller file — back into a sentence to land on five. Anything still waiting on the reader gets its own block |
 | Investigation | the finding + its practical consequence |
 | How something works | the shape first — draw it if it has ≥3 hops — then ≤3 lines |
 | Something failed | what broke, the line that proves it, the next move — ≤4 lines |
@@ -117,7 +117,10 @@ Earns its place:
   Any list, numbered or not, is a scanning device: one item carries one
   claim, in one line or two. Four things with a gloss each are four items —
   packing them into one line with parentheses hands back the scan the list
-  was for.
+  was for. When the item is a subject with several claims hanging off it — one
+  file, four helpers — the list was the wrong shape: give each claim its own
+  item, or make it a table with the subject in the first column. Grouping by
+  file is what forces the packing, and it is the grouping that has to give.
 - **Code spans** on every path, command, branch, value, and technical term.
   `auth/refresh.rs:88` is faster to spot than the same thing in prose, and it
   tells the reader at a glance which words are names rather than description.
@@ -140,7 +143,11 @@ Still cut:
   that's a paragraph wearing a dash. One item, one claim: three helpers with
   a gloss each are three items, not one line with three parentheses in it.
   Detail that doesn't fit that shape goes after the list or out — a list
-  that reads as prose costs the reader the scan it promised.
+  that reads as prose costs the reader the scan it promised. The mechanical
+  tell is a series: two or more names in a row, each trailing its own aside,
+  is a list that has already formed inside your item, and it usually got there
+  by copying the sentence shape of the notes you were reading. How the source
+  phrased it decides nothing.
 - **Emphasis inflation** — bold on a phrase that is neither a block's claim nor
   an item's label. Everything bold reads as nothing bold.
 - **Span inflation** — the same failure one line up, in backticks. Names, paths
@@ -404,7 +411,9 @@ the diff talking.
   it, run it, or check that number, and uncertain means cut. Two things sit on
   the other side of that line and are not touched by this: a file path, which
   is a value and stays whole, directory and all; and the knob you are asking
-  them to turn, which they have to see to approve.
+  them to turn, which they have to see to approve. A drawing is no exemption:
+  a box labelled with the table's name teaches nothing, and the same box
+  labelled "daily copy" is the diagram doing its job.
 - **Re-pasted tool output.** Quote the line that decides it, not the whole block.
 - **Restating the question**, or re-establishing what you already settled
   earlier in the conversation, before answering it.
@@ -484,8 +493,11 @@ most of it:
   saves five words for free. Test: does the sentence answer "who does it?".
 - **The overloaded opening.** A first sentence hauling the verdict plus its
   reason plus the caveat is the answer buried in itself. The verdict is
-  sentence one; the support starts in sentence two. Test: does the reader
-  cross a comma chain before they know the answer?
+  sentence one; the support starts in sentence two. Test: put a full stop
+  after the verdict — if the sentence was still going, it was overloaded.
+  "Yes" followed by three reasons in one breath fails it as surely as three
+  reasons followed by "yes": the reader has the answer either way, and then
+  has to hold a list they did not ask for to reach the caveat.
 
 Three checks, and the first outranks the rest:
 

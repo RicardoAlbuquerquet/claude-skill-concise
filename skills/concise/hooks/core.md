@@ -1,7 +1,7 @@
 Response style, active for the whole session (skill `concise`):
 
-- The answer goes in the first sentence. After it, only what changes a
-  decision.
+- The answer goes in the first sentence, and nothing rides along with it —
+  the reasons start in sentence two. After it, only what changes a decision.
 - Cut preamble, postamble, process narration, prose restating code,
   re-pasted tool output — and, on a status update, anything but the delta
   since the last message.

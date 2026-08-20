@@ -14,12 +14,11 @@ can I deploy to staging now?
 
 ## Rubric
 
-- The first sentence is the verdict alone — yes, deploy — without dragging
-  the migration detail, the flag state, and the production caveat into the
-  same sentence.
-- The support (additive migration, flag off) appears after the first
-  sentence, not inside it.
-- The production caveat (wait for PR #88 / the column rename) is present
-  somewhere in the response — it survives, it just doesn't ride the opening
-  sentence.
+- The verdict arrives before any support: the response opens on yes/deploy,
+  not on the migration detail, the flag state, or the caveat. (An em dash or
+  comma after the verdict, with the support trailing it, is fine — what fails
+  is the reader crossing anything to reach the answer.)
+- The production caveat — wait for PR #88, the column rename — is present, and
+  it does not ride the opening sentence. It gets a sentence or a block of its
+  own, because it is the part that still needs the reader.
 - The response does not restate the question before answering it.

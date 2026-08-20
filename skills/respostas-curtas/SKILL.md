@@ -23,14 +23,15 @@ resumo do que você acabou de dizer saem em qualquer tamanho.
 
 ## A regra
 
-A **resposta vem na primeira frase**. Depois dela, só o que muda uma decisão.
+A **resposta vem na primeira frase, e nada mais entra junto com ela**. Depois
+dela, só o que muda uma decisão.
 
 | Situação | Tamanho |
 |---|---|
-| Pergunta de fato | 1–3 frases; sim/não começa com sim ou não — salvo premissa falsa ou incerteza real, e aí a correção é que abre |
+| Pergunta de fato | 1–3 frases; sim/não começa com sim ou não, e essa palavra fica sozinha — os motivos começam na segunda frase, nunca numa corrente de vírgulas pendurada no veredito. Salvo premissa falsa ou incerteza real, e aí a correção é que abre |
 | Recomendação (decisão sua) | recomendação + ≤3 linhas de motivo + ≤3 linhas de custo |
 | Escolha que é do usuário | opções lado a lado + recomendação + ≤3 linhas do porquê ela ganha |
-| Trabalho concluído | o que mudou, onde, e se o gate está verde — ≤5 linhas; o que ainda depende de quem lê ganha bloco próprio |
+| Trabalho concluído | o que mudou, onde, e se o gate está verde — ≤5 linhas quando o trabalho é uma coisa só. Várias entregas são vários itens, e a contagem segue o trabalho, não o número: nunca empacote quatro afirmações num item, e nunca dobre o rabo da lista — a dependência, os docs, o arquivo menor — de volta para dentro de uma frase para fechar em cinco. O que ainda depende de quem lê ganha bloco próprio |
 | Investigação | o achado + a consequência prática |
 | Como algo funciona | o desenho primeiro — se tiver ≥3 saltos, desenhe — depois ≤3 linhas |
 | Algo falhou | o que quebrou, a linha que prova, o próximo passo — ≤4 linhas |
@@ -116,7 +117,11 @@ Merece existir:
   Lista, numerada ou não, é dispositivo de leitura rápida: um item carrega
   uma afirmação, em uma ou duas linhas. Quatro coisas com uma glosa cada são
   quatro itens — empilhar em uma linha de parênteses devolve para quem lê a
-  passada de olho que a lista existia para dar.
+  passada de olho que a lista existia para dar. Quando o item é um assunto com
+  várias afirmações penduradas nele — um arquivo, quatro helpers — a lista era
+  a forma errada: dê um item a cada afirmação, ou faça uma tabela com o
+  assunto na primeira coluna. Agrupar por arquivo é o que força o empacotamento,
+  e é o agrupamento que tem que ceder.
 - **Code span** em todo caminho, comando, branch, valor e termo técnico.
   `auth/refresh.rs:88` bate o olho mais rápido que a mesma coisa em prosa, e
   avisa quais palavras são nome e não descrição.
@@ -139,7 +144,11 @@ Ainda corte:
   parágrafo de travessão. Um item, uma afirmação: três helpers com uma glosa
   cada são três itens, não uma linha com três parênteses dentro. Detalhe que
   não cabe nesse formato vai depois da lista ou sai — lista que se lê como
-  prosa cobra de quem lê a passada de olho que ela prometeu.
+  prosa cobra de quem lê a passada de olho que ela prometeu. O sinal mecânico
+  é a série: dois ou mais nomes seguidos, cada um arrastando o próprio aparte,
+  é uma lista que já se formou dentro do seu item, e em geral chegou ali por
+  cópia da forma da frase das anotações que você estava lendo. Como a fonte
+  escreveu não decide nada.
 - **Inflação de negrito** — negrito em trecho que não é nem a afirmação do bloco
   nem o rótulo do item. Tudo em negrito lê como nada em negrito.
 - **Inflação de code span** — a mesma falha uma linha acima, de crase. Nome,
@@ -407,7 +416,9 @@ falando.
   aquele número — e na dúvida, corta. Duas coisas ficam do outro lado dessa
   linha e não são atingidas: caminho de arquivo, que é valor e fica inteiro,
   diretório e tudo; e o botão que você está pedindo para girar, que a pessoa
-  precisa ver para aprovar.
+  precisa ver para aprovar. Desenho não é isenção: caixa rotulada com o nome
+  da tabela não ensina nada, e a mesma caixa escrita "cópia diária" é o
+  desenho fazendo o que veio fazer.
 - **Saída de ferramenta recolada.** Cite a linha que decide, não o bloco inteiro.
 - **Repetição da pergunta**, ou do que já ficou estabelecido antes na conversa,
   antes de responder.
@@ -487,8 +498,11 @@ quase tudo:
   Teste: a frase responde "quem faz?".
 - **A abertura sobrecarregada.** Primeira frase arrastando o veredito mais o
   motivo mais a ressalva é a resposta enterrada em si mesma. O veredito é a
-  frase um; o apoio começa na frase dois. Teste: a pessoa atravessa uma
-  corrente de vírgulas antes de saber a resposta?
+  frase um; o apoio começa na frase dois. Teste: ponha um ponto final depois
+  do veredito — se a frase continuava, ela estava sobrecarregada. "Sim"
+  seguido de três motivos num fôlego só falha tanto quanto três motivos
+  seguidos de "sim": a pessoa tem a resposta nos dois casos, e nos dois tem
+  que segurar uma lista que não pediu para chegar na ressalva.
 
 Três testes, e o primeiro vale mais que os outros:
 
