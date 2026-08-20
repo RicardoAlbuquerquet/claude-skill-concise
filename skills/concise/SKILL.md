@@ -133,7 +133,9 @@ Earns its place:
   Windows that is `powershell`: `&&` is a parse error in 5.1, and `bash` typed
   there is the WSL stub rather than Git Bash — so two steps are two fences,
   never a chain. The session hook states the platform; when it has not, your
-  environment context carries it.
+  environment context carries it; and when neither does, the tag is `bash` —
+  guessing `powershell` at a reader who turns out to be on Linux costs more
+  than the reverse.
 - **Bold**, doing either of its two jobs: the one claim holding up a block, one
   per block; or the label opening an item in a list or a slot in a fixed template
   (`**Cost:**`, `**Preamble** —`), where one per item is the point.

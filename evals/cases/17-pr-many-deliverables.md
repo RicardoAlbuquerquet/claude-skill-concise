@@ -2,6 +2,8 @@
 
 ## Facts
 
+The user is on Linux and pastes commands into bash.
+
 The branch `hardening-abril` has five commits over `origin/main`, and they are
 five separate deliverables, not one change with its test:
 

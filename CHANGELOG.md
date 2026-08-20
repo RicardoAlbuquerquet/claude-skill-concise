@@ -18,6 +18,18 @@ without an entry tells nobody what it brought.
   reading `plugin.json` and nobody browsing the marketplace. Fixed, and
   `check-parity.sh` now compares the two, so it cannot drift again quietly.
 - The READMEs said the injected core is ~20 lines. It is 36.
+- **The fence rule shipped in 1.24.0 had no answer for "platform unknown", and
+  case 07 caught it** — the suite scored a `powershell` fence as a violation
+  because its rubric hard-coded `bash` while its facts named no platform, so
+  the case was really grading the machine the suite happened to run on. Two
+  fixes: the rule now defaults to `bash` when neither the hook nor the
+  environment says otherwise, because guessing `powershell` at a reader who
+  turns out to be on Linux costs more than the reverse; and cases 07 and 17
+  state the platform in their facts, the way case 21 already did.
+- Running the suite with `RUNS=3` for the first time is what surfaced that.
+  Cases 01 through 14 hold three times each; 15 through 21 have not been swept
+  yet, and `evals/README.md` says so rather than implying the whole suite has
+  been.
 
 ## 1.24.0 — 2026-08-20
 
