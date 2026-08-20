@@ -96,12 +96,12 @@ reais. Quatro saem mais longas.
 | Peça | O que faz |
 |---|---|
 | Skill `respostas-curtas` | as regras completas, invocadas quando o turno pede |
-| Hook `SessionStart` | injeta o núcleo de ~20 linhas em toda sessão; auto-atualiza o plugin |
+| Hook `SessionStart` | injeta o núcleo de ~35 linhas em toda sessão, mais a linha que diz o shell desta máquina; auto-atualiza o plugin |
 | Output style `respostas-curtas` | o mesmo núcleo no system prompt — sem shell, escolhido no `/config` |
 | `/respostas-curtas:reescrever` | reescreve um texto pronto pelas regras, sem perder nada |
 | `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
 | `/respostas-curtas:card` | rascunha o card que se sustenta sozinho; cria quando o destino é nomeado |
-| `/respostas-curtas:commit` | rascunha a mensagem de commit do staged — título com verbo, corpo com o porquê |
+| `/respostas-curtas:commit` | rascunha a mensagem de commit do staged — título na forma que o log do repo usa, corpo com o porquê |
 | Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
 | Agente `auditar` | devolve só as violações de um rascunho — citação, regra, correção |
 | [`extras/stop-audit`](extras/stop-audit/README.md) | juiz de estilo por turno, opcional, instalado à mão |
@@ -241,7 +241,7 @@ combina com a tarefa. Uma regra de *estilo* de resposta quer valer em todos,
 inclusive nos turnos em que nada na tarefa sugere "agora pense em brevidade".
 
 **Instalada como plugin, isso já vem resolvido.** Desde a 1.3.0 cada plugin
-embarca um hook `SessionStart` que imprime um núcleo de ~20 linhas do estilo no
+embarca um hook `SessionStart` que imprime um núcleo de ~35 linhas do estilo no
 contexto a cada início de sessão — uns 320 tokens, gastos produza a sessão
 prosa ou não. O núcleo é a garantia; as regras completas continuam na skill,
 que o modelo invoca quando o turno pede mais que o núcleo. O que é injetado é
@@ -318,8 +318,8 @@ escrito:
   campos do destino em vez de repeti-los no corpo, e linka bloqueadores
   nomeados. EN: `/concise:card`.
 - **`/respostas-curtas:commit [contexto]`** rascunha a mensagem de commit do
-  que está staged — título com o verbo primeiro e 72 caracteres ou menos,
-  corpo dizendo o porquê em vez de recontar o diff. Só rascunho; nunca roda
+  que está staged — título de 72 caracteres ou menos, na forma que o log do
+  repo já usa, e corpo dizendo o porquê em vez de recontar o diff. Só rascunho; nunca roda
   `git commit`. EN: `/concise:commit`.
 - **O agente `auditar`** (EN: `audit`) confere um rascunho contra o checklist
   e devolve só as violações — linha citada, regra, correção em uma linha —

@@ -1,5 +1,5 @@
 ---
-description: Draft the commit message for what is staged — verb-first title ≤72 chars, body says why, never the diff retold
+description: Draft the commit message for what is staged — title ≤72 chars in the shape the repo log uses, body says why, never the diff retold
 argument-hint: [extra context the diff can't show — optional]
 ---
 

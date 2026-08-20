@@ -37,6 +37,16 @@ shape () {
   sed -n 's/.*"\(SessionStart\|PreToolUse\)".*/\1/p; s/.*"matcher": *"\([^"]*\)".*/matcher=\1/p; s/.*hooks\/\([a-z-]*\.sh\).*/script=\1/p' "$1" | tr '\n' ' '
 }
 
+# The marketplace card is what someone reads before installing. It drifted
+# behind the plugin's own description once and nothing caught it, so the two
+# are compared here instead of trusted to stay in step.
+mkt_matches_plugin () { # $1 = name in marketplace.json, $2 = plugin dir
+  a=$(sed -n "/\"name\": \"$1\"/,/}/p" .claude-plugin/marketplace.json |
+        sed -n 's/.*"description": *"\(.*\)".*/\1/p')
+  b=$(sed -n 's/.*"description": *"\(.*\)".*/\1/p' "$2/.claude-plugin/plugin.json")
+  [ -n "$a" ] && [ "$a" = "$b" ] && printf 'same' || printf 'differs'
+}
+
 # The output style and the hook core carry the same text through two delivery
 # mechanisms — system prompt and session context. Drift means the session is
 # governed by one and audited against the other.
@@ -61,6 +71,8 @@ check 'hooks/*.sh: byte-identical' "$(identical)"                        'identi
 check 'hooks.json: shape'          "$(shape $EN/hooks/hooks.json)"       "$(shape $PT/hooks/hooks.json)"
 check 'output style == core (EN)'  "$(style_matches_core $EN concise.md core.md)"                 'same'
 check 'output style == core (PT)'  "$(style_matches_core $PT respostas-curtas.md nucleo.md)"      'same'
+check 'marketplace desc == plugin (EN)' "$(mkt_matches_plugin concise $EN)"          'same'
+check 'marketplace desc == plugin (PT)' "$(mkt_matches_plugin respostas-curtas $PT)" 'same'
 check 'plugin.json: version'      "$(version $EN/.claude-plugin/plugin.json)" "$(version $PT/.claude-plugin/plugin.json)"
 check 'commands/: files'          "$(files $EN/commands)"               "$(files $PT/commands)"
 check 'agents/: files'            "$(files $EN/agents)"                 "$(files $PT/agents)"
