@@ -7,6 +7,23 @@ without an entry tells nobody what it brought.
 
 ## 1.23.0 — 2026-08-20
 
+- **The session hook now says which machine this is, and the fence tag follows
+  it.** A command block tagged for the wrong shell does not run: `&&` is a
+  parser error in Windows PowerShell 5.1 rather than a warning, and `bash`
+  typed there reaches the WSL stub instead of Git Bash. `inject-core.sh`
+  detects the platform through `uname` and appends one line naming it —
+  `powershell` fences on Windows, `bash` on macOS and Linux, with a note on
+  macOS that BSD `sed`, `date` and `readlink` take different flags from GNU.
+- The rule sits in the fence bullet too, for the output-style path that has no
+  hook: the tag names the shell the reader will paste into, not the one you
+  ran the command in, and two steps are two fences rather than a chain.
+- `CONCISE_OS=windows|macos|linux` overrides detection, for a Windows machine
+  whose terminal is Git Bash or WSL. Seven new hook tests cover the branches,
+  including a `hooks.json` with no platform strings, which prints nothing and
+  still exits 0.
+- Case 21 measures it: 3 of 3 with the skill in both ports, 1 of 3 without.
+- The rule→case map said eight discriminating cases where the column had nine.
+
 - **A completed-work report stops buying its ≤5 lines by packing.** The budget
   row now says the item count follows the work rather than the number, and
   names the shortcut it was licensing: folding the tail of the list — the
