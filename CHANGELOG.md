@@ -5,6 +5,41 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.30.0 — 2026-08-20
+
+- **Six commands, closing the gap between what the ruleset governs and what
+  you can ask for.** `/concise:release` drafts the changelog entry and the
+  release body; `/concise:plan` the plan you are proposing; `/concise:decide`
+  a call that is yours, options side by side; `/concise:draw` the ASCII of a
+  shape; `/concise:status` the delta-only update; `/concise:audit` runs the
+  audit agent from a slash instead of a sentence. PT: `release`, `plano`,
+  `decidir`, `desenhar`, `status`, `auditar`.
+- **Changelog and release notes get a section of their own.** The rule was one
+  sentence at the end of "Commit messages", which is why no command could
+  point at it. It now says that what breaks goes first with the migration in
+  the same entry, that an internal refactor earns no entry at all, and that
+  the file's own shape is the convention the way the log is for a commit
+  title.
+- **The three that could have been prompts instead read the source first.**
+  `/concise:draw` opens the files for every hop and marks the ones it could
+  not follow — and refuses outright when the subject doesn't earn a drawing,
+  which is the failure a diagram command otherwise ships by default.
+  `/concise:status` finds the previous update and the CI run instead of
+  recalling them. `/concise:decide` marks a cost it could not verify rather
+  than rounding it off.
+- **Nothing publishes and nothing executes.** `release` never runs
+  `gh release create` and never pushes a tag, `plan` never starts step 1,
+  `status` never posts to a channel you named, `audit` never edits the file it
+  read. Naming a destination still says where the text would go, not that it
+  may go there.
+- **The welcome note listed four commands, and there are eleven.**
+  `/concise:comment` shipped in 1.29.0 and never reached that string — a
+  command nobody is told about is a command nobody runs. It now groups by
+  destination instead of spending a clause per command.
+- No rule for chat replies changed, so no eval case moved. The commands are
+  graded by the sections they follow; the harness measures chat replies, and a
+  slash command is not one.
+
 ## 1.29.0 — 2026-08-20
 
 - **`/concise:comment` (PT: `/respostas-curtas:comentario`)** drafts the fifth

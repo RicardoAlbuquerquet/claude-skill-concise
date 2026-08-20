@@ -103,6 +103,12 @@ reais. Quatro saem mais longas.
 | `/respostas-curtas:card` | rascunha o card que se sustenta sozinho; cria quando o destino é nomeado |
 | `/respostas-curtas:commit` | rascunha a mensagem de commit do staged — título na forma que o log do repo usa, corpo com o porquê |
 | `/respostas-curtas:comentario` | rascunha comentário de revisão, resposta em thread ou recado em card — a afirmação, e a linha que prova |
+| `/respostas-curtas:release` | rascunha a entrada de changelog e o corpo da release dos commits desde a última tag — o que quebra primeiro |
+| `/respostas-curtas:plano` | rascunha o plano para aprovação — passos que nomeiam arquivo ou comando, o risco, o que fica de fora |
+| `/respostas-curtas:decidir` | opções vivas lado a lado com os custos, e ainda uma recomendação |
+| `/respostas-curtas:desenhar` | desenha a forma em ASCII, setas rotuladas; recusa quando o assunto não merece |
+| `/respostas-curtas:status` | escreve o update como delta desde o último, notícia ruim no topo |
+| `/respostas-curtas:auditar` | roda o agente de auditoria num rascunho, arquivo ou corpo de PR e repassa o relatório |
 | Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
 | Agente `auditar` | devolve só as violações de um rascunho — citação, regra, correção |
 | [`extras/stop-audit`](extras/stop-audit/README.md) | juiz de estilo por turno, opcional, instalado à mão |
@@ -293,9 +299,9 @@ ponteiro que garante que elas estão no contexto. Um não substitui o outro.
 
 ## Os comandos e o agente
 
-Desde a 1.4.0 cada plugin também embarca ferramentas para texto que tem
-destino — a skill governa o que o Claude escreve a seguir; estas produzem o
-que sai da conversa, ou agem sobre o que já está escrito:
+Desde a 1.4.0 cada plugin também embarca comandos — a skill governa o que o
+Claude escreve a seguir; estes produzem um texto específico sob demanda, saia
+ele da conversa ou fique nela, ou agem sobre o que já está escrito:
 
 - **`/respostas-curtas:reescrever <texto>`** reescreve um texto pronto — uma
   descrição de PR, um corpo de issue, um e-mail — pelas regras, sem perder
@@ -329,6 +335,42 @@ que sai da conversa, ou agem sobre o que já está escrito:
   vários blocos. Lê a linha ou a thread antes de escrever, e para em vez de
   chutar quando não alcança. Só rascunho, a não ser que você nomeie o destino
   *e* mande publicar. EN: `/concise:comment`.
+- **`/respostas-curtas:release [versão]`** rascunha a entrada de changelog — e
+  o corpo da release quando você está cortando uma — dos commits desde a
+  última tag: o que muda para quem instala, o que quebra primeiro com a
+  migração na mesma entrada, e o número da versão junto da única mudança que
+  força ele. Lê o changelog existente atrás da forma que aquele arquivo já
+  usa, e nunca roda `gh release create` nem empurra tag. EN:
+  `/concise:release`.
+- **`/respostas-curtas:plano [assunto]`** rascunha o plano que você propõe:
+  passos numerados que nomeiam o arquivo que tocam ou o comando que rodam, o
+  risco nomeado, o que fica de fora, e o que ele precisa de você antes do
+  passo 1 em bloco próprio. Lê os arquivos que os passos apontam e marca os
+  que não conseguiu verificar. Só texto — não entra em plan mode e não começa
+  o passo 1. EN: `/concise:plan`.
+- **`/respostas-curtas:decidir [decisão]`** monta uma decisão que é sua —
+  dinheiro, risco, qualquer coisa irreversível — com as opções vivas lado a
+  lado e o que cada uma custa, e ainda recomenda uma, argumentada contra as
+  alternativas especificamente, mais a condição que viraria a recomendação.
+  Custo que ela não conseguiu verificar volta marcado como não verificado em
+  vez de arredondado. EN: `/concise:decide`.
+- **`/respostas-curtas:desenhar [assunto]`** desenha a forma em ASCII — setas
+  rotuladas com o que passa e o que custa, caixas rotuladas pelo que fazem em
+  vez do nome interno — depois de ler a fonte de cada salto. Recusa quando o
+  assunto não merece desenho (uma função, uma lista de três itens, a figura de
+  uma frase que já está na tela) e diz isso em vez de desenhar assim mesmo.
+  EN: `/concise:draw`.
+- **`/respostas-curtas:status [onde]`** escreve o update: só o delta desde o
+  último, notícia ruim no topo, o que depende de você em bloco próprio, e
+  quando sai o próximo. Acha o update anterior e confere o que andou de
+  verdade — `git log`, a execução de CI — em vez de lembrar. Só rascunho;
+  nomear um canal não é permissão para publicar. EN: `/concise:status`.
+- **`/respostas-curtas:auditar [alvo]`** roda o agente de auditoria num
+  rascunho, num caminho de arquivo, ou no corpo de PR ou issue que ele busca,
+  e repassa o relatório como ele voltou — linha de veredito, violações
+  numeradas, buracos — seguido de uma linha com a chamada de
+  `/respostas-curtas:reescrever` que corrigiria tudo. Nunca reescreve, nunca
+  edita o arquivo, e nunca publica correção. EN: `/concise:audit`.
 - **O agente `auditar`** (EN: `audit`) confere um rascunho contra o checklist
   e devolve só as violações — linha citada, regra, correção em uma linha —
   mais o conteúdo obrigatório que falta. Nunca reescreve; peça quando quiser o

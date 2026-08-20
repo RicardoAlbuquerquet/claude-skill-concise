@@ -1,6 +1,6 @@
 ---
 name: respostas-curtas
-description: Estilo obrigatório de toda resposta escrita ao usuário — a resposta na primeira frase, sem poluição visual, sem informação além da necessária. Vale em todo turno que produza texto ao usuário, inclusive atualização de status, e no que sai da conversa: mensagem de commit, descrição de PR, tarefa e issue.
+description: Estilo obrigatório de toda resposta escrita ao usuário — a resposta na primeira frase, sem poluição visual, sem informação além da necessária. Vale em todo turno que produza texto ao usuário, inclusive atualização de status, e no que sai da conversa: mensagem de commit, descrição de PR, tarefa, issue e nota de release.
 ---
 
 # Respostas curtas
@@ -411,10 +411,29 @@ estreita — `git log --oneline` mostra o título e mais nada.
 - **Sem crédito de IA**, nunca — sem `Co-Authored-By` de modelo, sem "gerado
   com". Um hook `PreToolUse` barra isso nos comandos que publicam texto.
 
-Entrada de changelog é o mesmo trabalho um passo adiante: ela diz o que muda
-para quem instala a release, não o que o diff fez. "O comando de PR parou de
-truncar a própria saída" é entrada; "refatorado o bloco de entrega" é o diff
-falando.
+## Changelog e notas de release
+
+O mesmo trabalho um passo adiante do commit: a entrada é lida por quem está
+decidindo se instala, e depois por quem instalou e agora está depurando.
+Nenhum dos dois está lendo o diff.
+
+- **A entrada diz o que muda para quem instala a release**, não o que o diff
+  fez. "O comando de PR parou de truncar a própria saída" é entrada;
+  "refatorado o bloco de entrega" é o diff falando.
+- **O que quebra vem primeiro, com o que fazer na mesma entrada.** Notícia
+  ruim antes das novidades, igual numa resposta — quem atualiza e encontra a
+  quebra três seções abaixo já quebrou alguma coisa.
+- **Uma entrada por comportamento que mudou.** Refatoração interna não ganha
+  nenhuma, e release sem nada visível diz isso em uma linha em vez de fabricar
+  três. Engordar a release com o encanamento dela é como um changelog deixa de
+  ser lido.
+- **A forma do próprio arquivo é a convenção**, como o log é para o título de
+  commit: os cabeçalhos dele, o formato de data, o agrupamento. Entrada
+  perfeita na forma errada é um diff para alguém arrumar depois.
+- **Referência exata sobrevive, e a versão nomeia a mudança que forçou ela** —
+  a flag, a configuração que mudou de lugar, o nome antigo que a pessoa vai
+  procurar. "Quebra: `--fence` virou `--fence-style`" é a entrada fazendo o
+  trabalho dela.
 
 ## Corte sempre
 

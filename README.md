@@ -104,6 +104,12 @@ transformations. Four come out longer.
 | `/concise:card` | drafts a task/issue card that stands alone; creates it when a destination is named |
 | `/concise:commit` | drafts the commit message for what is staged — title in the shape the repo log uses, body says why |
 | `/concise:comment` | drafts a review comment, a thread reply or a note on a card — the claim, then the line that proves it |
+| `/concise:release` | drafts the changelog entry and the release body from the commits since the last tag — what breaks first |
+| `/concise:plan` | drafts the plan for approval — steps that name a file or a command, the risk, what it leaves out |
+| `/concise:decide` | live options side by side with their costs, and still a recommendation |
+| `/concise:draw` | draws the shape in ASCII, arrows labelled; refuses when the subject doesn't earn one |
+| `/concise:status` | writes the update as the delta since the last one, bad news on top |
+| `/concise:audit` | runs the audit agent on a draft, a file, or a PR body and relays the report |
 | credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
 | `audit` agent | returns only the violations in a draft — quote, rule, fix |
 | [`extras/stop-audit`](extras/stop-audit/README.md) | opt-in per-turn style judge, installed by hand |
@@ -295,9 +301,9 @@ pointer that guarantees it's in context. Neither one replaces the other.
 
 ## The commands and the agent
 
-Since 1.4.0 each plugin also ships tools for text with a destination — the
-skill governs what Claude writes next; these produce what leaves the
-conversation, or act on what is already written:
+Since 1.4.0 each plugin also ships commands — the skill governs what Claude
+writes next; these produce one specific piece of writing on demand, whether it
+leaves the conversation or stays in it, or act on what is already written:
 
 - **`/concise:rewrite <text>`** rewrites a finished text — a PR description,
   an issue body, an e-mail — to the ruleset without losing information: every
@@ -330,6 +336,42 @@ conversation, or act on what is already written:
   several blocks. It reads the line or the thread before writing, and stops
   rather than guess when it can't. Draft only unless you name a destination
   *and* say to post. PT: `/respostas-curtas:comentario`.
+- **`/concise:release [version]`** drafts the changelog entry — and the
+  release body when you're cutting one — for the commits since the last tag:
+  what changes for whoever installs it, what breaks first with the migration
+  in the same entry, and the version number alongside the single change that
+  forces it. It reads the existing changelog for the shape that file already
+  uses, and never runs `gh release create` or pushes a tag. PT:
+  `/respostas-curtas:release`.
+- **`/concise:plan [subject]`** drafts the plan you are proposing: numbered
+  steps that each name the file they touch or the command they run, the risk
+  named, what it leaves out, and what it needs from you before step 1 in a
+  block of its own. It reads the files the steps point at and marks the ones
+  it could not verify. Text only — it does not enter plan mode and does not
+  start step 1. PT: `/respostas-curtas:plano`.
+- **`/concise:decide [decision]`** lays out a call that is yours — money,
+  risk, anything irreversible — as the live options side by side with what
+  each one costs, then still recommends one, argued against the alternatives
+  specifically, plus the condition that would flip the recommendation. A cost
+  it could not verify comes back marked as unverified rather than rounded off.
+  PT: `/respostas-curtas:decidir`.
+- **`/concise:draw [subject]`** draws the shape in ASCII — arrows labelled
+  with what flows and what it costs, boxes labelled by what they do rather
+  than by their internal name — after reading the source for every hop. It
+  refuses when the subject does not earn a drawing (one function, a three-item
+  list, a picture of a sentence already on screen) and says so instead of
+  drawing it anyway. PT: `/respostas-curtas:desenhar`.
+- **`/concise:status [where]`** writes the update: only the delta since the
+  last one, bad news on top, whatever is waiting on you in its own block, and
+  when the next update lands. It finds the previous update and checks what
+  actually moved — `git log`, the CI run — instead of recalling it. Draft
+  only; naming a channel is not permission to post. PT:
+  `/respostas-curtas:status`.
+- **`/concise:audit [target]`** runs the audit agent on a draft, a file path,
+  or a PR or issue body it fetches, and relays the report as it comes back —
+  verdict line, numbered violations, holes — followed by one line with the
+  `/concise:rewrite` call that would fix them. It never rewrites, never edits
+  the file, and never posts a correction. PT: `/respostas-curtas:auditar`.
 - **The `audit` agent** (PT: `auditar`) checks a draft against the checklist
   and returns only the violations — quoted line, rule, one-line fix — plus
   required content that is missing. It never rewrites; ask for it when you

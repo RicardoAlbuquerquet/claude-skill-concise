@@ -1,6 +1,6 @@
 ---
 name: concise
-description: Required response style for every message written to the user — the answer in the first sentence, no visual clutter, no information beyond what is needed. Applies to every turn that produces prose for the user, including status updates, and to what leaves the conversation: commit messages, pull request descriptions, tasks, and issues.
+description: Required response style for every message written to the user — the answer in the first sentence, no visual clutter, no information beyond what is needed. Applies to every turn that produces prose for the user, including status updates, and to what leaves the conversation: commit messages, pull request descriptions, tasks, issues, and release notes.
 ---
 
 # Concise
@@ -409,10 +409,28 @@ the narrowest window — `git log --oneline` shows the title and nothing else.
 - **No AI credit**, ever — no `Co-Authored-By` for a model, no "generated
   with". A `PreToolUse` hook enforces this at the commands that publish text.
 
-A changelog entry is the same job one step out: it says what changes for
-whoever installs the release, not what the diff did. "The PR command stopped
-truncating its own output" is an entry; "refactored the delivery block" is
-the diff talking.
+## Changelog and release notes
+
+The same job one step out from a commit: an entry is read by someone deciding
+whether to install, and later by the person who did and is now debugging.
+Neither of them is reading the diff.
+
+- **An entry says what changes for whoever installs the release**, not what
+  the diff did. "The PR command stopped truncating its own output" is an
+  entry; "refactored the delivery block" is the diff talking.
+- **What breaks goes first, with what to do in the same entry.** Bad news
+  ahead of the features, exactly as in a reply — a reader who upgrades and
+  meets the breaking change three sections down has already broken something.
+- **One entry per behaviour that changed.** An internal refactor gets none,
+  and a release with nothing user-visible says so in one line rather than
+  manufacturing three. Padding a release with its own plumbing is how a
+  changelog stops being read.
+- **The file's own shape is the convention**, the way the log is for a commit
+  title: its headings, its date format, its grouping. A perfect entry in the
+  wrong shape is a diff for someone to fix later.
+- **Exact references survive, and the version names the change that forced
+  it** — the flag, the setting that moved, the old name the reader will grep
+  for. "Breaking: `--fence` is now `--fence-style`" is the entry doing its job.
 
 ## Always cut
 

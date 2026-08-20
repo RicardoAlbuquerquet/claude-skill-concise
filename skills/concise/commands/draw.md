@@ -1,0 +1,53 @@
+---
+description: Draw the shape — ASCII for a sequence, a branch, or a before/after, arrows labelled with what flows. Refuses when the subject doesn't earn a drawing
+argument-hint: [what to draw — empty uses what was just explained]
+---
+
+Draw one diagram, following the "Show the shape" section of the `concise`
+ruleset. Invoke the skill first if the full ruleset is not already in context.
+
+The subject is the text below. If it is empty, the subject is the mechanism
+most recently explained in this conversation.
+
+$ARGUMENTS
+
+First, decide whether it earns a drawing, and say no when it doesn't:
+
+- **Worth drawing:** a path with three or more hops, anything with a branch, a
+  retry or a failure route, the before and after of a structure you changed,
+  or who calls whom when the finding is that the wrong thing calls the other
+  thing.
+- **Not worth drawing:** one function's behaviour, a three-item list, or a
+  picture of a sentence that is already on the screen. A diagram repeating the
+  line above it is padding with extra steps. When the subject is one of these,
+  say so in one line and stop — do not draw it anyway.
+
+Rules of the drawing:
+
+- **Ground every hop in the source.** Open the files, follow the call. A
+  diagram of hops you inferred is fiction the reader will act on, and it is
+  believed more than a sentence would be. A hop you could not verify is
+  labelled as unverified inside the drawing, or left out and named under it.
+- **Label the arrows with what flows and what it costs** — `every app resume`,
+  `2.1 s p95`, `retry ×3` — not with `calls` or a bare arrowhead. An unlabelled
+  arrow only says two boxes are related, which the reader already assumed.
+- **Label the boxes by what they do**, not by their internal name. A box
+  reading `daily copy` teaches; the same box carrying the table's name teaches
+  nothing to a reader who will never query it. The exception is a name the
+  reader will actually use — a path, a route, a service they will open.
+- **Under fifteen lines.** Past that it stops being a shape and becomes a
+  second document. Cut to the hops that carry the finding.
+- **ASCII in a fenced block** always works. Use `mermaid` only where you know
+  the surface renders it — a GitHub comment or issue does, a terminal reply
+  does not.
+- **One line under it, only if the drawing doesn't already say it** — the
+  finding it points at, the box where the problem lives.
+
+Before delivering, audit the draft yourself — every arrow labelled, every hop
+verified or marked, no box named after something the reader will never touch,
+under fifteen lines, and no line under it that repeats the picture — and fix
+what fails. Deliver only the clean version.
+
+Delivery: the drawing in a fenced block, tagged for what it is. Nothing
+before it except the one sentence it illustrates, when that sentence isn't
+already in the conversation.
