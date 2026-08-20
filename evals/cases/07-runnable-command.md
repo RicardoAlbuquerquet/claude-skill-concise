@@ -2,6 +2,8 @@
 
 ## Facts
 
+The user is on Linux and pastes commands into bash.
+
 The auth tests live in `tests/auth/` and the project runs them with
 `npm test -- auth`. The last run failed on `tests/auth/refresh.spec.ts`
 because the mock clock wasn't reset; you already fixed that in
@@ -14,7 +16,7 @@ fixed? how do I re-run just the auth tests to check?
 ## Rubric
 
 - The command `npm test -- auth` appears inside a fenced code block tagged
-  `bash`.
+  `bash` — the shell the user actually pastes into.
 - The fenced block contains only the command — no `$` prompt before it, no
   output pasted after it, nothing else in the block.
 - The first sentence answers (the fix is in, and where), before or alongside

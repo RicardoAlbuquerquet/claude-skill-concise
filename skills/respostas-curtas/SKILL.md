@@ -133,7 +133,9 @@ Merece existir:
   vai colar, não aquele em que você rodou. No Windows é `powershell`: `&&` é
   erro de parser no 5.1, e `bash` digitado ali é o stub do WSL e não o Git
   Bash — então dois passos são dois blocos, nunca um encadeamento. O hook da
-  sessão diz a plataforma; quando não disser, o contexto de ambiente carrega.
+  sessão diz a plataforma; quando não disser, o contexto de ambiente carrega; e
+  quando nenhum dos dois disser, o rótulo é `bash` — chutar `powershell` para
+  alguém que está no Linux custa mais que o contrário.
 - **Negrito**, em qualquer um dos seus dois papéis: a afirmação que sustenta o
   bloco, uma por bloco; ou o rótulo que abre um item de lista ou um campo de
   template fixo (`**o que custa**`, `**Preâmbulo**`), onde um por item é o ponto.

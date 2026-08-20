@@ -95,8 +95,14 @@ three times; fixing the budget row fixed the case. When a case fails
 *differently* every run, look for two rules colliding before rewording either
 of them.
 
-A single-run suite line of 20/20 also means each case drew well once, not that
-each rule holds. `RUNS=3` is what tells them apart.
+A single-run suite line of 21/21 also means each case drew well once, not that
+each rule holds. `RUNS=3` is what tells them apart, and the first full sweep
+with it — 2026-08-20 — reached case 14 before the session limit stopped it.
+**Cases 01 to 14 hold three times each; 15 to 21 have not been swept.** Case 07
+failed that sweep for a reason worth repeating: its rubric hard-coded a `bash`
+fence while its facts named no platform, so it was grading the machine the
+suite ran on. A case that depends on the reader's platform has to say what the
+platform is.
 
 **Case 08 was unstable for a different reason: its rubric graded punctuation.**
 It failed any opening that put an em dash after "yes" and let the support

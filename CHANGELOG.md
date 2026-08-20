@@ -5,6 +5,32 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.25.0 — 2026-08-20
+
+- **The commit command still promised a verb-first title**, in its own
+  description and in four places across the two READMEs — the rule 1.18.1
+  replaced with "the log decides the shape, never the substance". The command
+  body had been right since then; the shop window had not, and this repo's own
+  log is declarative, so the promise contradicted the product.
+- **The marketplace card had fallen behind the plugin's own description** and
+  nothing was checking it: the sentence naming what the style governs — chat
+  replies, plans, commits, PRs, cards, review comments — reached anyone
+  reading `plugin.json` and nobody browsing the marketplace. Fixed, and
+  `check-parity.sh` now compares the two, so it cannot drift again quietly.
+- The READMEs said the injected core is ~20 lines. It is 36.
+- **The fence rule shipped in 1.24.0 had no answer for "platform unknown", and
+  case 07 caught it** — the suite scored a `powershell` fence as a violation
+  because its rubric hard-coded `bash` while its facts named no platform, so
+  the case was really grading the machine the suite happened to run on. Two
+  fixes: the rule now defaults to `bash` when neither the hook nor the
+  environment says otherwise, because guessing `powershell` at a reader who
+  turns out to be on Linux costs more than the reverse; and cases 07 and 17
+  state the platform in their facts, the way case 21 already did.
+- Running the suite with `RUNS=3` for the first time is what surfaced that.
+  Cases 01 through 14 hold three times each; 15 through 21 have not been swept
+  yet, and `evals/README.md` says so rather than implying the whole suite has
+  been.
+
 ## 1.24.0 — 2026-08-20
 
 - **The session hook now says which machine this is, and the fence tag follows

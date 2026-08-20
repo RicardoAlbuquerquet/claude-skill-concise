@@ -97,12 +97,12 @@ transformations. Four come out longer.
 | Piece | What it does |
 |---|---|
 | `concise` skill | the full ruleset, invoked when a turn needs it |
-| `SessionStart` hook | injects the ~20-line core every session; self-updates the plugin |
+| `SessionStart` hook | injects the ~35-line core every session, plus the line naming this machine's shell; self-updates the plugin |
 | `concise` output style | the same core in the system prompt — no shell needed, pick it in `/config` |
 | `/concise:rewrite` | rewrites a finished text to the rules, losing nothing |
 | `/concise:pr` | drafts the PR description from the real diff, test steps last |
 | `/concise:card` | drafts a task/issue card that stands alone; creates it when a destination is named |
-| `/concise:commit` | drafts the commit message for what is staged — verb-first title, body says why |
+| `/concise:commit` | drafts the commit message for what is staged — title in the shape the repo log uses, body says why |
 | credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
 | `audit` agent | returns only the violations in a draft — quote, rule, fix |
 | [`extras/stop-audit`](extras/stop-audit/README.md) | opt-in per-turn style judge, installed by hand |
@@ -243,7 +243,7 @@ A response-*style* rule wants to apply to all of them, including the turns where
 nothing about the task suggests "now think about brevity".
 
 **Installed as a plugin, this is handled for you.** Since 1.3.0 each plugin
-ships a `SessionStart` hook that prints a ~20-line core of the style into
+ships a `SessionStart` hook that prints a ~35-line core of the style into
 context at every session start — about 320 tokens, spent whether or not the
 session produces prose. The core is the guarantee; the full ruleset still
 lives in the skill, which the model invokes when a turn needs more than the
@@ -318,8 +318,8 @@ the skill governs what Claude writes next; these act on what is written:
   restating them in the body, and links named blockers. PT:
   `/respostas-curtas:card`.
 - **`/concise:commit [context]`** drafts the commit message for what is
-  staged — title with the verb first and 72 characters or fewer, body saying
-  why rather than retelling the diff. Draft only; it never runs `git commit`.
+  staged — a title of 72 characters or fewer, in whatever shape the repo log
+  already uses, and a body saying why rather than retelling the diff. Draft only; it never runs `git commit`.
   PT: `/respostas-curtas:commit`.
 - **The `audit` agent** (PT: `auditar`) checks a draft against the checklist
   and returns only the violations — quoted line, rule, one-line fix — plus

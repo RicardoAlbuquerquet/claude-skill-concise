@@ -1,5 +1,5 @@
 ---
-description: Rascunha a mensagem de commit do que está staged — título com verbo ≤72 colunas, corpo com o porquê, nunca o diff recontado
+description: Rascunha a mensagem de commit do que está staged — título ≤72 colunas na forma que o log do repo usa, corpo com o porquê, nunca o diff recontado
 argument-hint: [contexto extra que o diff não mostra — opcional]
 ---
 
