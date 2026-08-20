@@ -1,6 +1,6 @@
 # Evals
 
-Twenty-one cases. Each gives the model the facts it would have discovered, sends
+Twenty-three cases. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -41,7 +41,7 @@ The style and the facts reach the CLI through `--append-system-prompt-file`,
 at case 17 with "Argument list too long" before the switch. A CLI old enough
 to lack the flag still works and says so.
 
-**Cost:** two API calls per case per run, so the default suite is 42 calls
+**Cost:** two API calls per case per run, so the default suite is 46 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -73,6 +73,8 @@ you change a rule here, change the rubric that tests it.
 | What waits on the reader sits apart from what informs them | 19 | **yes** |
 | A name out of the code stays only if the reader will use it | 20 | **yes** |
 | A fence is tagged for the shell the reader will paste into | 21 | **yes** |
+| The outcome, not the itinerary of the work | 22 | weakly |
+| A table column with one repeated value is not a column | 23 | **yes** |
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18

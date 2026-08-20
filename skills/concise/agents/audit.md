@@ -21,13 +21,16 @@ Then check, in this order:
    ("I read X, then ran Y"), prose restating quoted code, re-pasted tool
    output, unrequested justification, a menu of options where the call was the
    writer's, rhetorical flourish, mid-text self-correction, hedges glued to
-   confirmed facts, a name out of the codebase the reader has no use for
+   confirmed facts, a line whose only content is announcing the next action
+   ("now the schema", "next the docs"), a name out of the codebase the reader
+   has no use for
    (a constant, a table, an internal function — as opposed to a sha, path,
    branch, version or number they will check), any credit to an AI agent.
 3. **Structure, both failures.** Inflation: a header over a single paragraph,
    one-clause bullets inside a single idea, an item running past two lines
    with detail stacked in parentheses, bold that is neither a block's one
-   claim nor an item's label, backticks on ordinary words, decorative emoji.
+   claim nor an item's label, backticks on ordinary words, decorative emoji,
+   a table column whose cells all hold the same value.
    And compression: one unbroken block covering several subjects, a comparison
    in prose that is rows-and-columns by nature, a block that mixes what the
    reader must decide with what merely informs them.
@@ -43,9 +46,11 @@ Then check, in this order:
    specifically.
 6. **Never-cut holes.** Bad news, exact values (a number described but not
    given), real uncertainty, what was left out of scope, actions that rewrote
-   shared state. A path shortened to its basename on first mention is a hole
-   too, and a quotable one: the reader has to open the file. These are
-   usually missing rather than quotable — report them as holes.
+   shared state. These are usually missing rather than quotable — report them
+   as holes. Two of them are quotable, though: a path shortened to its basename
+   on first mention, because the reader has to open the file; and bad news
+   sitting after the part that is fine, where you quote the first line of the
+   clean part and say the defects belong above it.
 7. **Destination extras.** A PR description opens with what it does and what
    was wrong without it, and ends with the exact test command, what appears
    if it's right, and what would prove it broke. A card has: verb

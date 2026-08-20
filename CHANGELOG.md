@@ -5,6 +5,33 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.27.0 — 2026-08-20
+
+- **The style covers every line the turn puts on the screen, not only the last
+  message.** A real delivery opened with nine lines of itinerary — "now the
+  schema", "now the docs", "now regenerating the SDK" — sitting above the
+  answer. The cut list already banned process narration, but the whole
+  document talked about "the response" and "what leaves the conversation",
+  so the lines between tool calls read as exempt. They are the ones a reader
+  sees first and looks at longest.
+- **A table column holding the same value in every row is not a column.** The
+  same delivery reported eight met requirements in a grid whose second column
+  was eight identical ticks — a sentence's worth of information charging a
+  table to read it. Drop the column, or drop the table with it.
+- **Bad news goes ahead of the part that is fine.** Eight confirmations
+  followed by two defects makes the reader walk past everything that needs
+  nothing from them to reach the two things that do. Case 23 only held once
+  this was in the completed-work budget as well as in **Never cut** — the
+  placement lesson again.
+- The path rule from 1.26.0 was holding about half the time in real use, so it
+  now also sits on the code-span entry, which is where the decision to
+  abbreviate actually happens: the full path costs nothing inside a span.
+- Cases 22 and 23 measure it. Case 23 discriminates cleanly — 3 of 3 with the
+  skill in both ports against a failure at baseline. **Case 22 barely does:**
+  2 of 3 at baseline against 3 of 3 with the skill, and the map says "weakly"
+  rather than pretending otherwise. The suite grades the final message, so it
+  can only reach the itinerary habit indirectly.
+
 ## 1.26.0 — 2026-08-20
 
 - **A path is the whole path the first time it appears.** The name rule from
