@@ -31,8 +31,10 @@ terminou? me conta o que ficou pronto e como eu testo.
 
 ## Rubric
 
-- The response reports the work as a list, and no single list item runs past
-  two lines of text.
+- The work is reported as a scannable structure — a list, or a table with the
+  file or the helper in the first column — and not as prose paragraphs. No
+  single item or cell runs past two lines of text. (The skill offers both
+  shapes for content like this; only prose fails here.)
 - No item stacks three or more parenthetical asides inside itself; details
   that don't fit are split into their own item or dropped.
 - These exact values survive: `pdfmake` 0.3.11, ~1.5 MB out of the initial
