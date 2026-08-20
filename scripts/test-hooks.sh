@@ -62,6 +62,34 @@ printf 'NUCLEO CUSTOM\n' > "$FH/.claude/concise-core-override.md"
 out=$(HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/concise" bash "$I" concise-core-override.md core.md)
 [ "$out" = "NUCLEO CUSTOM" ] && { pass=$((pass+1)); echo "ok    override vence"; } || { fail=$((fail+1)); echo "FALHA override: $out"; }
 
+# a linha de plataforma: o rotulo do bloco tem que ser o shell de quem cola
+IC () { HOME="$FH" CONCISE_OS="$1" CLAUDE_PLUGIN_ROOT="$REPO/skills/concise" bash "$I" concise-core-override.md core.md "FENCE powershell" "FENCE macos" "FENCE linux"; }
+ic () { # nome, CONCISE_OS, trecho esperado na ultima linha
+  out=$(IC "$2" | tail -1)
+  case "$out" in *"$3"*) pass=$((pass+1)); echo "ok    $1";;
+                 *) fail=$((fail+1)); echo "FALHA $1: $out";; esac
+}
+ic "windows pede powershell"       windows powershell
+ic "macos pede bash"               macos   macos
+ic "linux pede bash"               linux   linux
+ic "os desconhecido cai em linux"  freebsd linux
+
+# a linha vem depois do override, porque e fato da maquina e nao estilo
+out=$(IC windows)
+case "$out" in "NUCLEO CUSTOM"*powershell*) pass=$((pass+1)); echo "ok    plataforma sobrevive ao override";;
+               *) fail=$((fail+1)); echo "FALHA override+plataforma: $out";; esac
+
+# hooks.json antigo, sem os tres argumentos: nao imprime linha e nao falha
+out=$(HOME="$FH" CONCISE_OS=windows CLAUDE_PLUGIN_ROOT="$REPO/skills/concise" bash "$I" concise-core-override.md core.md; echo "rc=$?")
+case "$out" in "NUCLEO CUSTOM"*"rc=0") pass=$((pass+1)); echo "ok    sem argumentos nao quebra";;
+               *) fail=$((fail+1)); echo "FALHA sem argumentos: $out";; esac
+
+# o nucleo embarcado tambem recebe a linha
+rm -f "$FH/.claude/concise-core-override.md"
+out=$(IC macos | tail -1)
+case "$out" in *"FENCE macos"*) pass=$((pass+1)); echo "ok    nucleo embarcado recebe a linha";;
+               *) fail=$((fail+1)); echo "FALHA nucleo+plataforma: $out";; esac
+
 echo "--- self-update (claude fake)"
 mkdir -p "$FH/bin"
 printf '#!/usr/bin/env bash\necho chamada >> "%s/calls.log"\n[ "$1" = "plugin" ] && [ "$2" = "update" ] && echo "Plugin updated from 1.12.0 to 1.13.0 for scope user."\nexit 0\n' "$FH" > "$FH/bin/claude"

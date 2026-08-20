@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/inject-core.sh\" respostas-curtas-nucleo-override.md nucleo.md",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/inject-core.sh\" respostas-curtas-nucleo-override.md nucleo.md 'Esta sessão roda no Windows: comando que a pessoa pode colar vai num bloco `powershell`, um comando por bloco — `&&` é erro de parser no Windows PowerShell 5.1, e `bash` digitado ali é o stub do WSL, não o Git Bash. Dê a forma longa do Git Bash quando a ferramenta só existir em POSIX.' 'Esta sessão roda no macOS: comando que a pessoa pode colar vai em bloco `bash`, um por bloco. `sed`, `date` e `readlink` do BSD têm flags diferentes das do GNU — prefira a forma portável.' 'Esta sessão roda no Linux: comando que a pessoa pode colar vai em bloco `bash`, um comando por bloco.'",
             "statusMessage": "Carregando o estilo respostas-curtas",
             "timeout": 10
           },

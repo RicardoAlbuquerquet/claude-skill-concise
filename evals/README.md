@@ -1,6 +1,6 @@
 # Evals
 
-Twenty cases. Each gives the model the facts it would have discovered, sends
+Twenty-one cases. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -35,7 +35,7 @@ measures the model's own habits, not the rules, and proves nothing when it
 passes with the skill. Its exit code is always 0 — the pass count is the
 signal, and a *low* one is the good news.
 
-**Cost:** two API calls per case per run, so the default suite is 40 calls
+**Cost:** two API calls per case per run, so the default suite is 42 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -66,10 +66,11 @@ you change a rule here, change the rubric that tests it.
 | A list item stays an item, not a packed paragraph | 18 | **yes** |
 | What waits on the reader sits apart from what informs them | 19 | **yes** |
 | A name out of the code stays only if the reader will use it | 20 | **yes** |
+| A fence is tagged for the shell the reader will paste into | 21 | **yes** |
 
 **Measured 2026-08-19, on `claude-opus-5`: 18/18 with the skill, 11/18 at
-baseline** (cases 19 and 20 measured separately: 3/3 with the skill against
-1/3 and 0/3 without). So eight cases measure what the plugin adds; the other eleven
+baseline** (cases 19, 20 and 21 measured separately: 3/3 with the skill
+against 1/3, 0/3 and 1/3 without). So ten cases measure what the plugin adds; the other eleven
 describe behaviour Claude Code already has by default, and would keep passing
 if the rule vanished. They are not worthless — a default can regress, and a
 rule that matches the default still documents it — but the suite's real

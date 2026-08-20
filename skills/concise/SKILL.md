@@ -128,7 +128,12 @@ Earns its place:
   every fence.** A command the reader might execute goes alone in a `bash`
   block — no `$` prompt, no output pasted after it. A mixed or untagged block
   loses highlighting and clean copy-paste, and a surface that offers a run
-  button only offers it to a block that is one command.
+  button only offers it to a block that is one command. The tag names the
+  shell the reader will paste into, not the one you ran the command in. On
+  Windows that is `powershell`: `&&` is a parse error in 5.1, and `bash` typed
+  there is the WSL stub rather than Git Bash — so two steps are two fences,
+  never a chain. The session hook states the platform; when it has not, your
+  environment context carries it.
 - **Bold**, doing either of its two jobs: the one claim holding up a block, one
   per block; or the label opening an item in a list or a slot in a fixed template
   (`**Cost:**`, `**Preamble** —`), where one per item is the point.
