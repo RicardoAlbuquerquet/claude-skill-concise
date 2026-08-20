@@ -96,7 +96,7 @@ reais. Quatro saem mais longas.
 | Peça | O que faz |
 |---|---|
 | Skill `respostas-curtas` | as regras completas, invocadas quando o turno pede |
-| Hook `SessionStart` | injeta o núcleo de ~35 linhas em toda sessão, mais a linha que diz o shell desta máquina; auto-atualiza o plugin |
+| Hook `SessionStart` | injeta o núcleo de ~36 linhas em toda sessão, mais a linha que diz o shell desta máquina; auto-atualiza o plugin |
 | Output style `respostas-curtas` | o mesmo núcleo no system prompt — sem shell, escolhido no `/config` |
 | `/respostas-curtas:reescrever` | reescreve um texto pronto pelas regras, sem perder nada |
 | `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
@@ -248,8 +248,8 @@ combina com a tarefa. Uma regra de *estilo* de resposta quer valer em todos,
 inclusive nos turnos em que nada na tarefa sugere "agora pense em brevidade".
 
 **Instalada como plugin, isso já vem resolvido.** Desde a 1.3.0 cada plugin
-embarca um hook `SessionStart` que imprime um núcleo de ~35 linhas do estilo no
-contexto a cada início de sessão — uns 320 tokens, gastos produza a sessão
+embarca um hook `SessionStart` que imprime um núcleo de ~36 linhas do estilo no
+contexto a cada início de sessão — uns 360 tokens, gastos produza a sessão
 prosa ou não. O núcleo é a garantia; as regras completas continuam na skill,
 que o modelo invoca quando o turno pede mais que o núcleo. O que é injetado é
 um arquivo só:
@@ -302,6 +302,11 @@ ponteiro que garante que elas estão no contexto. Um não substitui o outro.
 Desde a 1.4.0 cada plugin também embarca comandos — a skill governa o que o
 Claude escreve a seguir; estes produzem um texto específico sob demanda, saia
 ele da conversa ou fique nela, ou agem sobre o que já está escrito:
+
+Desde a 1.31.0 o núcleo injetado nomeia os cinco que saem da conversa, para o
+Claude buscar um sem ninguém mandar. É empurrão, não hook: ele disputa atenção
+com todo o resto do contexto, e o comando que você digita continua sendo a
+única garantia.
 
 - **`/respostas-curtas:reescrever <texto>`** reescreve um texto pronto — uma
   descrição de PR, um corpo de issue, um e-mail — pelas regras, sem perder
