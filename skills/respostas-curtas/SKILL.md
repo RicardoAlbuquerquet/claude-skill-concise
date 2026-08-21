@@ -90,7 +90,9 @@ frase que você já escreveu — diagrama que repete a linha de cima é enchimen
 passo extra.
 
 ASCII em bloco de código sempre funciona; mermaid só quando você sabe que a
-superfície renderiza. Menos de ~15 linhas, e rotule as setas com o que de fato
+superfície renderiza *e* o grafo é de fato bidimensional — corrente é corrente,
+e ASCII sobrevive à cópia para um terminal, um commit ou um campo que não
+renderiza nada. Menos de ~15 linhas, e rotule as setas com o que de fato
 passa por elas:
 
 ```

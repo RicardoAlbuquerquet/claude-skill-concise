@@ -100,11 +100,42 @@ Regras do desenho:
 - **Todo rótulo pendura no que ele nomeia**, por um `│` até um `└─`. Número
   flutuando entre duas caixas é lido contra a errada, e nada no desenho diz a
   quem lê qual era a certa.
-- **ASCII em bloco de código** sempre funciona. Use `mermaid` só onde você
-  sabe que a superfície renderiza — comentário e issue no GitHub renderizam,
-  resposta no terminal não.
+- **ASCII em bloco de código** sempre funciona, e é o padrão. `mermaid` tem as
+  condições e as regras dele, abaixo.
 - **Uma linha embaixo, só se o desenho já não disser** — o achado para o qual
   ele aponta, a caixa onde o problema mora.
+
+Mermaid no lugar do ASCII, e só sob duas condições, as duas necessárias. **A
+superfície renderiza** — comentário, issue e descrição de PR no GitHub
+renderizam; resposta no terminal, corpo de commit e campo de texto puro não, e
+lá quem lê recebe o código-fonte em vez da figura. **E o grafo é de fato
+bidimensional** — um nó com duas setas chegando, um ciclo, uma malha. Corrente
+é corrente, e o ASCII carrega ela sobrevivendo à cópia para um terminal, um
+commit ou um chat que não renderiza nada.
+
+Quando for mermaid, estas substituem as regras de alinhamento e mais nada:
+
+- **`flowchart LR` no fluxo, `flowchart TD` na bifurcação ou na árvore** — a
+  mesma regra de direção que o ASCII toma, pelo mesmo motivo.
+- **O rótulo visível é o que a pessoa lê, nunca o id do nó.**
+  `auth["/auth/refresh"]` — o id é contabilidade interna, e id críptico deixado
+  à mostra vira uma caixa para decifrar antes de o desenho começar a servir.
+- **Toda aresta rotulada**, `-->|todo resume|`. Um `-->` pelado é a mesma
+  afirmação vazia em mermaid que é em ASCII.
+- **Forma de nó significa alguma coisa ou fica no padrão.** `{...}` para
+  decisão de verdade, `[(...)]` para armazenamento, `([...])` para a entrada,
+  `[...]` para todo o resto. Forma escolhida por variedade é ruído que quem lê
+  tenta ler como significado.
+- **Sem `style`, sem `classDef`, sem cor.** Cor que carrega significado precisa
+  de legenda, e desenho que precisa de legenda já falhou; ainda por cima, o
+  tema de quem lê pode ser justo o que você não testou.
+- **Dez nós é o teto**, o equivalente em mermaid às quinze linhas. Passando
+  disso, corte até os nós que carregam o achado, ou parta em dois desenhos.
+- **Você não consegue renderizar antes de entregar, então fique no subconjunto
+  que sempre compila.** Aspas em todo rótulo com colchete, parêntese,
+  dois-pontos ou aspa; nunca `end` como id de nó pelado; nada de markdown
+  dentro de rótulo. Bloco que não compila vira uma caixa de erro, o que é pior
+  que desenho nenhum.
 
 Desenhe nesta ordem, porque alinhamento não é coisa que se conserta depois:
 
@@ -126,7 +157,9 @@ Antes de entregar, audite o rascunho você mesmo — toda seta rotulada, todo
 salto verificado ou marcado, nenhuma caixa nomeada por algo que a pessoa nunca
 vai tocar, abaixo de quinze linhas e de setenta e duas colunas, um conjunto de
 traços só, todo rótulo pendurado na caixa dele, e nenhuma linha embaixo
-repetindo a figura — e corrija o que falhar. Entregue só a versão limpa.
+repetindo a figura — e corrija o que falhar. Se saiu mermaid, audite que ele
+ganhou as duas condições, que nenhuma aresta está pelada, e que nada num
+rótulo deixaria de compilar. Entregue só a versão limpa.
 
 Entrega: o desenho em bloco de código, com a tag do que ele é. Nada antes dele
 além da única frase que ele ilustra, quando essa frase ainda não está na
