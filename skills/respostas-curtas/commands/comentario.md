@@ -52,12 +52,16 @@ Regras do comentário:
 - **Quem vai ler não estava nesta conversa** e não vai rolar a tela para cima:
   sem "como conversamos", sem referência a este chat, valor exato em vez da
   descrição dele. Recado em card ainda pega o painel estreito — sem cabeçalho,
-  sem tabela, negrito só como rótulo de item.
+  sem tabela, negrito só como rótulo de item. E recado em card é o resumo do
+  resumo: três linhas já é longo e uma é comum — o que mudou ou o que a pessoa
+  tem que fazer, com a âncora. O que precisa de um segundo parágrafo é uma
+  edição no corpo do card, não um comentário nele.
 - Nunca assine como agente de IA, aqui nem em lugar nenhum.
 
 Antes de entregar, audite o rascunho você mesmo — afirmação primeiro, âncora
-presente, se trava ou não dito, um ponto só, nada que só faça sentido para
-quem leu esta conversa — e corrija o que falhar. Entregue só a versão limpa.
+presente, se trava ou não dito, um ponto só, no máximo três linhas quando for
+recado em card, nada que só faça sentido para quem leu esta conversa — e
+corrija o que falhar. Entregue só a versão limpa.
 
 Entrega: cada comentário no seu próprio bloco de código, pronto para colar,
 com quatro crases quando carregar uma cerca própria — bloco de sugestão

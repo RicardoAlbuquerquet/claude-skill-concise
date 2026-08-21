@@ -43,6 +43,7 @@ dela, só o que muda uma decisão.
 | Plano que você propõe | os passos numerados que vai rodar + o que pode dar errado + o que fica de fora |
 | Descrição de PR | tudo acima + o passo a passo de como testar, no fim |
 | Tarefa ou issue | comportamento atual, esperado, valor exato, como fecha |
+| Comentário em card | o que mudou ou o que a pessoa tem que fazer, mais a âncora — ≤3 linhas, e uma é comum |
 
 Código, comando e diff não entram no orçamento e **não** se encurtam.
 
@@ -253,6 +254,13 @@ mais frouxo.
   genérica não é.
 - **Um comentário, um ponto.** Dois pontos sem relação são dois comentários,
   para cada um poder ser resolvido sozinho.
+- **Recado em card é o resumo do resumo.** Três linhas já é longo e uma é
+  comum: o que mudou desde que o card foi escrito, ou o que a pessoa tem que
+  fazer — com a âncora, e nada além. A descrição que fica de pé mora no corpo
+  do card e o raciocínio mora num documento linkado; a thread é um feed
+  cronológico que ninguém volta para ler, então o que é explicado ali é
+  explicado onde vai se perder. Recado que precisa de um segundo parágrafo é
+  uma edição no card, não um comentário nele.
 - A regra de crédito vale aqui também: nunca assine um comentário como agente
   de IA.
 
