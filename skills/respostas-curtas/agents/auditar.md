@@ -40,10 +40,12 @@ Depois cheque, nesta ordem:
    citação — reporte como buracos.
 7. **Extras do destino.** Descrição de PR abre com o que ela faz e o que
    estava errado sem ela, e termina com o comando de teste exato, o que
-   aparece se estiver certo, e o que provaria que quebrou. Card
-   tem: verbo no título, comportamento atual → esperado, valor exato, critério
-   de pronto, escopo fechado — e respeita o painel estreito: sem cabeçalho,
-   sem tabela, negrito só como rótulo de item. Mensagem de commit tem título
+   aparece se estiver certo, e o que provaria que quebrou. Card tem: o que
+   muda no título, com a área primeiro quando o board tem mais de uma,
+   comportamento atual → esperado, valor exato, critério de pronto, escopo
+   fechado — e estrutura que o conteúdo ganhou: cabeçalho só passando de
+   quinze linhas com três blocos de funções diferentes, tabela só a partir de
+   três linhas por três colunas de valores, negrito só como rótulo de item. Mensagem de commit tem título
    de 72 caracteres ou menos, sem ponto final, que nomeia o que muda, e corpo que
    diz o porquê em vez de recontar o diff. Em card e em commit vale também o
    teste do corpo autônomo: qualquer "como conversamos", "aquele problema que

@@ -317,9 +317,15 @@ ficou estabelecido" para de valer — o que ficou estabelecido não viaja junto.
 Uma boa descrição responde três coisas sem ninguém por perto para consultar: **o
 que muda, por que agora, e como saber que acabou.** Todo card carrega isto:
 
-- **Título com o verbo da ação.** "Corrigir o filtro de faturas que ignora o
-  fuso" em vez de "Filtro de faturas": na lista do board, a pessoa vê o que muda
-  quando o card fechar.
+- **Título que diz o que muda, localizado.** A área primeiro quando o board tem
+  mais de uma — "Documentos: negrito aparece com asteriscos no texto" — porque a
+  coluna mostra só o título e corta, e a primeira palavra é a que o olho varre.
+  Depois a mudança: o sintoma quando quem lê reconhece, o verbo da ação quando
+  não reconheceria ("Arquivados: esconder a página de quem não tem acesso",
+  "Corrigir o filtro de faturas que ignora o fuso"). O que nunca passa é rótulo
+  sem mudança dentro ("Filtro de faturas"). E nada que os campos do próprio card
+  já digam — um prefixo `fix(...)` ao lado de uma etiqueta `bugfix` vermelha
+  gasta duas vezes os caracteres que são varridos.
 - **Comportamento atual e comportamento esperado**, nesta ordem e em duas frases.
   É a diferença entre os dois que define o trabalho.
 - **Valor exato, não a descrição dele** — caminho, comando, linha do erro,
@@ -347,16 +353,24 @@ Quinze linhas já é um card longo, e o corpo se sustenta sozinho: sem "como
 conversamos", sem "aquele problema que você mencionou". Teste: leia daqui a três
 semanas, sem a conversa — dá para agir?
 
-Um card é lido num painel estreito, muitas vezes no celular, ao lado de uma
-parede de outros cards. Ele aguenta *menos* estrutura que uma resposta de chat,
-não mais:
+Um card é lido em duas larguras, e elas pedem regras diferentes. A coluna mostra
+só o título, cortado por volta de 300px — é isso que a regra de título acima
+paga. O corpo é lido na visão de detalhe que o clique abre, e essa costuma ser
+larga o bastante para estrutura de verdade. Então o corpo aguenta *menos*
+estrutura que uma resposta de chat por padrão, e ganha mais só onde o conteúdo
+tem mesmo essa forma:
 
-- **Sem cabeçalho sobre bloco.** Parágrafos curtos, com uma lista só onde estão
-  os passos, é o layout inteiro. `## O problema` sobre duas linhas é enfeite com
-  a confiança de um template atrás.
-- **Sem tabela, a não ser que você saiba que o painel é largo.** A largura de
-  coluna que funciona no chat vira papa num card estreito; o que é mesmo linha e
-  coluna fica melhor num documento linkado.
+- **Sem cabeçalho enquanto o corpo não passa de quinze linhas** e não carrega
+  três blocos com funções diferentes — reprodução, impacto, critério de pronto.
+  Abaixo disso, parágrafos curtos com uma lista só onde estão os passos é o
+  layout inteiro, e `## O problema` sobre duas linhas é enfeite com a confiança
+  de um template atrás. Passar de quinze linhas já é o primeiro sinal para
+  conferir se não são dois cards.
+- **Tabela quando o conteúdo é pelo menos três linhas por três colunas** e cada
+  célula é um valor, não uma frase — quatro filas contra retentativa, lease e
+  backoff é tabela, e em prosa vira um parágrafo que ninguém compara. Menor que
+  isso é lista. Quando você sabe que o destino renderiza em coluna estreita ou
+  em texto puro, a tabela vai para um documento linkado.
 - **Negrito só no rótulo que abre um item.** Num corpo de seis linhas, o segundo
   negrito disputa com o primeiro e nenhum dos dois lidera.
 

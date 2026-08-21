@@ -19,22 +19,27 @@ Regras do card:
   comando, linha do erro, número, ambiente — e não a descrição dele; se a
   conversa não produziu um valor que o card precisa, nomeie o buraco em vez
   de inventar.
-- **Todo card carrega:** título com o verbo da ação; comportamento atual e
+- **Todo card carrega:** título que diz o que muda, com a área primeiro quando
+  o board tem mais de uma, o sintoma ou o verbo da ação depois, e nada que um
+  campo ou uma etiqueta já diga; comportamento atual e
   depois o esperado, em duas frases; valores exatos; critério de pronto em
   uma linha; escopo fechado — um "e também" são dois cards, então diga isso e
   rascunhe o primeiro.
 - **Quando o caso pedir:** passos de reprodução numerados (com frequência se
   for intermitente), impacto com quem sente, dependências com link, o anexo
   que prova.
-- **Estrutura de painel estreito:** parágrafos curtos e no máximo uma lista;
-  sem cabeçalho, sem tabela, negrito só como rótulo de item. Prioridade,
-  responsável e prazo são campos, não corpo — o *motivo* do prazo, esse sim é
-  corpo.
+- **Duas larguras:** a coluna mostra só o título e corta; o corpo é lido na
+  visão de detalhe que o clique abre. Parágrafos curtos e no máximo uma lista
+  por padrão — cabeçalho só passando de quinze linhas com três blocos de
+  funções diferentes, tabela só a partir de três linhas por três colunas de
+  valores, e documento linkado no lugar quando o destino renderiza estreito ou
+  em texto puro. Negrito só como rótulo de item. Prioridade, responsável e
+  prazo são campos, não corpo — o *motivo* do prazo, esse sim é corpo.
 
 Antes de entregar, audite o rascunho contra o checklist do card você mesmo —
-verbo no título, atual → esperado, valores exatos, critério de pronto, sem
-cabeçalho nem tabela, corpo que se sustenta sozinho — e corrija o que
-falhar. Entregue só a versão limpa.
+o que muda no título com a área, atual → esperado, valores exatos, critério de
+pronto, cabeçalho e tabela só passando dos limites, corpo que se sustenta
+sozinho — e corrija o que falhar. Entregue só a versão limpa.
 
 Entrega: título na primeira linha, corpo em bloco de código, pronto para
 colar. Cerque com quatro crases quando o corpo carregar uma cerca própria —
