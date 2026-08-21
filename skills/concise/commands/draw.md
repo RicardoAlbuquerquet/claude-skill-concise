@@ -98,11 +98,41 @@ Rules of the drawing:
 - **Every label hangs off what it names**, by a `│` down to a `└─`. A number
   floating between two boxes gets read against the wrong one, and nothing in
   the drawing tells the reader which was meant.
-- **ASCII in a fenced block** always works. Use `mermaid` only where you know
-  the surface renders it — a GitHub comment or issue does, a terminal reply
-  does not.
+- **ASCII in a fenced block** always works, and it is the default. `mermaid`
+  has its own conditions and its own rules, below.
 - **One line under it, only if the drawing doesn't already say it** — the
   finding it points at, the box where the problem lives.
+
+Mermaid instead of ASCII, and only under two conditions, both required. **The
+surface renders it** — a GitHub comment, issue or PR description does; a
+terminal reply, a commit body and a plain-text field do not, and there the
+reader gets the source instead of a picture. **And the graph is genuinely
+two-dimensional** — a node with two arrows coming in, a cycle, a mesh. A chain
+is a chain, and ASCII carries it while surviving the copy into a terminal, a
+commit, or a chat that renders nothing.
+
+When it is mermaid, these replace the alignment rules and nothing else:
+
+- **`flowchart LR` for a flow, `flowchart TD` for a branch or a tree** — the
+  same direction rule ASCII takes, for the same reason.
+- **The visible label is what the reader reads, never the node id.**
+  `auth["/auth/refresh"]` — the id is bookkeeping, and a cryptic id left bare
+  becomes a box the reader has to decode before the drawing starts working.
+- **Every edge labelled**, `-->|every app resume|`. A bare `-->` is the same
+  empty claim in mermaid that it is in ASCII.
+- **A node shape means something or stays default.** `{...}` for a real
+  decision, `[(...)]` for a store, `([...])` for the entry point, `[...]` for
+  everything else. A shape picked for variety is noise the reader tries to
+  read as meaning.
+- **No `style`, no `classDef`, no colour.** A colour that carries meaning needs
+  a legend, and a drawing that needs a legend has already failed; on top of
+  that, the reader's theme may be the one you did not test.
+- **Ten nodes is the cap**, the mermaid equivalent of fifteen lines. Past it,
+  cut to the nodes that carry the finding, or split it into two drawings.
+- **You cannot render it before delivering, so stay in the subset that always
+  parses.** Quote any label holding a bracket, a parenthesis, a colon or a
+  quote; never `end` as a bare node id; no markdown inside a label. A block
+  that fails to parse renders as an error box, which is worse than no drawing.
 
 Draw it in this order, because alignment is not something you fix afterwards:
 
@@ -122,7 +152,9 @@ Before delivering, audit the draft yourself — every arrow labelled, every hop
 verified or marked, no box named after something the reader will never touch,
 under fifteen lines and under seventy-two columns, one glyph set, every label
 hanging off its own box, and no line under it that repeats the picture — and
-fix what fails. Deliver only the clean version.
+fix what fails. If it came out as mermaid, audit that it earned both
+conditions, that no edge is bare, and that nothing in a label would fail to
+parse. Deliver only the clean version.
 
 Delivery: the drawing in a fenced block, tagged for what it is. Nothing
 before it except the one sentence it illustrates, when that sentence isn't

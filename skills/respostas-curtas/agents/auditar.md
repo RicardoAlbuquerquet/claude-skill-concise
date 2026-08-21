@@ -32,7 +32,8 @@ Depois cheque, nesta ordem:
    E desenhos: seta sem rótulo, linha passando de setenta e duas colunas, dois
    conjuntos de traços na mesma figura, rótulo flutuando entre duas caixas em
    vez de pendurado numa, caixa nomeada por algo que quem lê nunca vai abrir,
-   ou desenho repetindo a frase de cima.
+   ou desenho repetindo a frase de cima. Bloco mermaid é violação onde o
+   destino não renderiza, e onde o ASCII teria carregado a mesma corrente.
 4. **Recomendações.** Cada uma carrega motivo (≤3 linhas) e custo (≤3 linhas).
    Campo de custo vazio é violação mesmo quando o texto lê bem.
 5. **Escolhas que são do leitor** — dinheiro, risco, irreversível: opções lado

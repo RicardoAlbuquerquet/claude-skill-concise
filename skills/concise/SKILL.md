@@ -89,7 +89,9 @@ sentence you already wrote — a diagram that repeats the line above it is paddi
 with extra steps.
 
 ASCII in a fenced block always works; use mermaid only when you know the surface
-renders it. Keep it under ~15 lines, and label the arrows with what actually
+renders it *and* the graph is genuinely two-dimensional — a chain is a chain,
+and ASCII survives the copy into a terminal, a commit or a field that renders
+nothing. Keep it under ~15 lines, and label the arrows with what actually
 flows:
 
 ```

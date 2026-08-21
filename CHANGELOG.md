@@ -5,6 +5,23 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.38.0 — 2026-08-21
+
+- **`mermaid` had one clause and no rules; now it has both conditions and seven
+  rules.** GitHub renders it, so `/concise:pr` and `/concise:card` reach it
+  routinely, and until now nothing said what a good mermaid block looks like.
+- **Two conditions, both required, before it is mermaid at all**: the surface
+  renders it, *and* the graph is genuinely two-dimensional — a node with two
+  arrows in, a cycle, a mesh. A chain stays ASCII, because ASCII survives the
+  copy into a terminal, a commit body, or a field that renders nothing.
+- **The rules**: `flowchart LR` for a flow and `TD` for a branch, the visible
+  label never the node id, every edge labelled, a node shape that means
+  something or stays default, no `style`/`classDef`/colour, ten nodes as the
+  cap, and a labelling subset that always parses — a block that fails to parse
+  renders as an error box, which is worse than no drawing.
+- **The audit agent flags a mermaid block on a surface that will not render
+  it**, and one used where ASCII would have carried the same chain.
+
 ## 1.37.0 — 2026-08-21
 
 - **`/concise:draw` now carries four canonical layouts** — a flow, a branch, a
