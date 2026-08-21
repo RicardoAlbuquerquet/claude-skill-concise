@@ -5,7 +5,27 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.35.0 — 2026-08-21
+
+- **A PR description now has three sections, in a fixed order: what is being
+  solved, what was done, how to test it.** The order is the change. The old
+  rule opened on what the PR does, which the title already said, and left the
+  problem as an optional second sentence — so the one thing the reviewer cannot
+  reconstruct from the page was the one thing that could be dropped.
+- **Markdown is explicitly welcome in a description**: tables, headers on the
+  three sections, lists for the deliverables, code spans on paths and values.
+  Three sections are three blocks doing different jobs, so they earn their
+  headers under the structure rule rather than fighting it. A description that
+  reads well is not padding.
+- **What counts as padding is named instead of capped**: the description
+  competing with the diff — a file-by-file map, a count of what changed, a
+  section per area touched. A discarded alternative gets a line, not a section,
+  and the argument that discarded it goes to the commit body or the linked
+  card.
+- `/concise:pr` audits the three sections and their order before delivering.
+
 ## 1.34.0 — 2026-08-21
+
 
 - **A note on a card now has a length, and it is three lines.** The section
   covering comments had rules about shape — claim first, one point, no filler

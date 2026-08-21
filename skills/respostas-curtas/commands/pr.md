@@ -33,18 +33,23 @@ Como:
    descrição como referência com link: `Closes #N` no GitHub quando a PR o
    resolve, o link ou id do card nos demais. Não achado, sem referência —
    nunca invente uma, e não trave perguntando por ela.
-4. Abra com duas frases: o que a PR faz, e depois o que estava errado sem
-   ela — o problema nos termos de quem lê, tirado dos commits, do card
-   linkado ou do nome da branch, nunca inventado. Quando a primeira frase já
-   carrega o problema, a segunda é redundante e sai.
-5. Depois disso, só o que o revisor não tira mais rápido do próprio diff: o
+4. Três seções, nesta ordem, com os cabeçalhos delas: **o que está sendo
+   resolvido**, **o que foi feito**, **como testar**. O problema abre, nos
+   termos de quem lê, tirado dos commits, do card linkado ou do nome da
+   branch e nunca inventado — o título já disse o que a PR faz. Depois o que
+   foi feito, na forma que o trabalho tomou: um parágrafo para uma coisa, uma
+   lista para várias, uma tabela quando a mudança é um valor por caso.
+5. Dentro dessas seções, só o que o revisor não tira mais rápido do diff: o
    que muda para quem usa, decisões tomadas com seus custos, o que ficou
    fora do escopo, e qualquer coisa não verificada — nomeada como não
    verificada. Quando o diff atravessa muitos arquivos, uma linha diz por
    onde começar a ler — o arquivo onde o mecanismo vive.
-6. Sem cabeçalho seu de template sobre conteúdo curto, sem prosa repetindo o
-   diff, sem narração de processo, sem crédito a agente de IA em lugar
-   nenhum. Várias entregas viram lista curta — uma linha cada, rótulo
+6. Markdown ganha lugar aqui como em qualquer canto: tabela para linha e
+   coluna, lista para as entregas, code span em caminho e valor, negrito na
+   afirmação que sustenta o bloco. O que não ganha: prosa repetindo o diff,
+   mapa arquivo por arquivo, contagem do que mudou, narração de processo,
+   seção para uma alternativa que uma linha carrega, e crédito a agente de IA
+   em lugar nenhum. Várias entregas viram lista curta — uma linha cada, rótulo
    primeiro, `- ` no começo da linha — nunca parágrafo emendado com
    ponto-e-vírgula ou travessão.
 7. Termine com os passos de teste: o comando exato copiável, o que aparece se
@@ -54,9 +59,10 @@ Como:
    direta, com rota e corpo, não uma nota de que a chamada direta existe.
 
 Antes de entregar, audite o rascunho contra o checklist você mesmo — título
-na forma do repo com a área dele, primeira linha diz o que a PR faz, valores
-exatos em span, entregas em lista, passos de teste com os não rodados
-marcados — e corrija o que falhar. Entregue só a
+na forma do repo com a área dele, a descrição abrindo no que está sendo
+resolvido, valores exatos em span, entregas em lista, as três seções na ordem,
+nada repetindo o diff, passos de teste com os não rodados marcados — e corrija
+o que falhar. Entregue só a
 versão limpa.
 
 Entregue o título primeiro, em linha própria — o que muda quando mescla, na
