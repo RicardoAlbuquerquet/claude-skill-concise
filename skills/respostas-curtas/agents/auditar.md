@@ -29,6 +29,10 @@ Depois cheque, nesta ordem:
    decorativo. E compressão: um bloco corrido cobrindo vários assuntos,
    comparação em prosa que é linha-e-coluna por natureza, bloco que mistura o
    que a pessoa tem que decidir com o que só informa.
+   E desenhos: seta sem rótulo, linha passando de setenta e duas colunas, dois
+   conjuntos de traços na mesma figura, rótulo flutuando entre duas caixas em
+   vez de pendurado numa, caixa nomeada por algo que quem lê nunca vai abrir,
+   ou desenho repetindo a frase de cima.
 4. **Recomendações.** Cada uma carrega motivo (≤3 linhas) e custo (≤3 linhas).
    Campo de custo vazio é violação mesmo quando o texto lê bem.
 5. **Escolhas que são do leitor** — dinheiro, risco, irreversível: opções lado
@@ -38,9 +42,13 @@ Depois cheque, nesta ordem:
    mas não dado), incerteza real, o que ficou fora do escopo, ação que
    reescreveu estado compartilhado. Esses normalmente faltam em vez de ter
    citação — reporte como buracos.
-7. **Extras do destino.** Descrição de PR abre com o que ela faz e o que
-   estava errado sem ela, e termina com o comando de teste exato, o que
-   aparece se estiver certo, e o que provaria que quebrou. Card tem: o que
+7. **Extras do destino.** Descrição de PR tem três seções nesta ordem — o que
+   está sendo resolvido, o que foi feito, como testar — com os cabeçalhos
+   delas. Abrir com o que a PR faz é a violação, não a forma: o título já disse
+   isso, e o problema é a única coisa que quem revisa não reconstrói do diff.
+   Termina com o comando de teste exato, o que aparece se estiver certo, e o
+   que provaria que quebrou. Prosa repetindo o diff, mapa arquivo por arquivo e
+   contagem do que mudou são enchimento aqui. Card tem: o que
    muda no título, com a área primeiro quando o board tem mais de uma,
    comportamento atual → esperado, valor exato, critério de pronto, escopo
    fechado — e estrutura que o conteúdo ganhou: cabeçalho só passando de

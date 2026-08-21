@@ -23,6 +23,54 @@ Primeiro decida se aquilo merece um desenho, e diga que não quando não merece:
   linha de cima é enchimento com passos a mais. Quando o assunto é um desses,
   diga isso em uma linha e pare — não desenhe assim mesmo.
 
+Depois escolha o layout que o assunto já tem. Estes quatro são ponto de
+partida, não molde — quando a forma real não é nenhuma delas, desenhe a real.
+
+**Fluxo**, quando é um caminho só com três saltos ou mais. Esquerda para
+direita, o caminho inteiro numa linha, todo o resto pendurado embaixo:
+
+```
+PWA ──todo resume──> /auth/refresh ──> sessions
+                      │
+                      └─ 2,1 s p95, sem índice em token_hash
+```
+
+**Bifurcação**, quando o achado é que duas rotas se separam. Cima para baixo,
+a condição na seta e não dentro de um losango, as duas saídas começando na
+mesma coluna:
+
+```
+POST /pedidos
+     │
+     ├── tem estoque ──> cobrança ──> e-mail de confirmação
+     │
+     └── sem estoque ──> fila de espera
+                          │
+                          └─ nada avisa quem comprou
+```
+
+**Antes/depois**, quando você mudou uma estrutura. Dois blocos empilhados, a
+mesma coluna à esquerda e a mesma ordem de caixas, para que a diferença seja a
+única coisa que se mexe:
+
+```
+antes    worker ──> cache ──> relatorios_dia
+depois   worker ────────────> relatorios_dia
+                               │
+                               └─ 3 leituras velhas/dia a menos
+```
+
+**Árvore de chamadas**, quando o achado é quem chama quem. A indentação
+carrega a profundidade, e uma segunda coluna carrega o que cada chamada custa:
+
+```
+handleOrder()
+├─ validate()      pura
+├─ charge()        rede, sem timeout
+│  └─ retry()      ×3, sem backoff
+└─ notify()        dispara e esquece
+```
+
 Regras do desenho:
 
 - **Fundamente cada salto na fonte.** Abra os arquivos, siga a chamada.
@@ -57,6 +105,22 @@ Regras do desenho:
   resposta no terminal não.
 - **Uma linha embaixo, só se o desenho já não disser** — o achado para o qual
   ele aponta, a caixa onde o problema mora.
+
+Desenhe nesta ordem, porque alinhamento não é coisa que se conserta depois:
+
+1. Escreva a linha principal inteira primeiro — as caixas e as setas
+   rotuladas, da esquerda para a direita. Toda coluna abaixo dela é medida a
+   partir dessa linha, então nada é desenhado embaixo antes de ela estar
+   pronta.
+2. Conte a coluna em que cada caixa começa. O `│` fica embaixo de um caractere
+   da caixa dele, não perto dela; cotovelo uma coluna fora lê como apontando
+   para a seta em vez da caixa.
+3. Pendure os rótulos de cima para baixo, o mais à esquerda fechando primeiro,
+   para que nenhum `└─` cruze um `│` ainda aberto. Cruzamento é o desenho
+   dizendo a quem lê que duas coisas se ligam sem se ligarem.
+4. Meça a linha mais longa antes de entregar. Passando de setenta e duas
+   colunas, corte os rótulos ou empilhe os blocos — nunca entregue torcendo
+   para o painel ser largo.
 
 Antes de entregar, audite o rascunho você mesmo — toda seta rotulada, todo
 salto verificado ou marcado, nenhuma caixa nomeada por algo que a pessoa nunca
