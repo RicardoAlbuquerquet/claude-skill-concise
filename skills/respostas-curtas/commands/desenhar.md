@@ -1,5 +1,5 @@
 ---
-description: Desenha a forma — ASCII de uma sequência, de uma bifurcação ou de um antes/depois, setas rotuladas com o que passa. Recusa quando o assunto não merece desenho
+description: Desenha a forma — ASCII de uma sequência, de uma bifurcação ou de um antes/depois, setas rotuladas com o que passa, um traço só, nada que quebre linha. Recusa quando o assunto não merece desenho
 argument-hint: [o que desenhar — vazio usa o que acabou de ser explicado]
 ---
 
@@ -40,6 +40,18 @@ Regras do desenho:
   vai usar de fato — um caminho, uma rota, um serviço que ela vai abrir.
 - **Abaixo de quinze linhas.** Passando disso deixa de ser forma e vira um
   segundo documento. Corte até os saltos que carregam o achado.
+- **Abaixo de setenta e duas colunas**, e esse limite é o duro. Linha que quebra
+  deixa de ser desenho, e ela quebra no painel de quem lê, não no seu rascunho,
+  então você nunca vê acontecer. Quando um antes/depois não cabe lado a lado
+  dentro disso, empilhe os dois blocos em vez de encolher os rótulos.
+- **Um conjunto de traços e uma direção.** Caixa desenhada ou ASCII puro, a
+  mesma ponta de seta até o fim — misturar lê como dois desenhos colados.
+  Esquerda para direita no fluxo, cima para baixo na bifurcação, e o que corre
+  em paralelo começa na mesma coluna: o olho lê margem esquerda irregular como
+  uma diferença que não existe.
+- **Todo rótulo pendura no que ele nomeia**, por um `│` até um `└─`. Número
+  flutuando entre duas caixas é lido contra a errada, e nada no desenho diz a
+  quem lê qual era a certa.
 - **ASCII em bloco de código** sempre funciona. Use `mermaid` só onde você
   sabe que a superfície renderiza — comentário e issue no GitHub renderizam,
   resposta no terminal não.
@@ -48,8 +60,9 @@ Regras do desenho:
 
 Antes de entregar, audite o rascunho você mesmo — toda seta rotulada, todo
 salto verificado ou marcado, nenhuma caixa nomeada por algo que a pessoa nunca
-vai tocar, abaixo de quinze linhas, e nenhuma linha embaixo repetindo a figura
-— e corrija o que falhar. Entregue só a versão limpa.
+vai tocar, abaixo de quinze linhas e de setenta e duas colunas, um conjunto de
+traços só, todo rótulo pendurado na caixa dele, e nenhuma linha embaixo
+repetindo a figura — e corrija o que falhar. Entregue só a versão limpa.
 
 Entrega: o desenho em bloco de código, com a tag do que ele é. Nada antes dele
 além da única frase que ele ilustra, quando essa frase ainda não está na
