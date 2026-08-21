@@ -52,13 +52,17 @@ How:
    feature with no screen yet is not an excuse — the step is the direct call
    itself, route and body included, not a note that a direct call exists.
 
-Before delivering, audit the draft against the checklist yourself — first
-line says what the PR does, exact values in spans, deliverables as a list,
-test steps with the unrun ones marked — and fix what fails. Deliver only the
+Before delivering, audit the draft against the checklist yourself — title in
+the repo's shape with its area, first line says what the PR does, exact
+values in spans, deliverables as a list, test steps with the unrun ones
+marked — and fix what fails. Deliver only the
 clean version.
 
-Deliver the title first, on its own line — what changes when it merges, verb
-first, ready for `gh pr create --title`. Then the description in a fenced
+Deliver the title first, on its own line — what changes when it merges, in
+the shape the repo's log already uses, the area first inside that shape when
+the list holds more than one, and nothing the list already shows beside it.
+Not the symptom form a card takes: the title names the state after the merge.
+Ready for `gh pr create --title`. Then the description in a fenced
 block, ready to paste into `--body` or the GitHub form. **Fence the delivery
 with four backticks**: the description carries a `bash` block by rule, and a
 three-backtick wrapper ends at that inner fence, truncating the delivery.

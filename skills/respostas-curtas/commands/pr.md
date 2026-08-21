@@ -53,13 +53,17 @@ Como:
    Feature ainda sem tela não é desculpa — o passo é a própria chamada
    direta, com rota e corpo, não uma nota de que a chamada direta existe.
 
-Antes de entregar, audite o rascunho contra o checklist você mesmo — primeira
-linha diz o que a PR faz, valores exatos em span, entregas em lista, passos
-de teste com os não rodados marcados — e corrija o que falhar. Entregue só a
+Antes de entregar, audite o rascunho contra o checklist você mesmo — título
+na forma do repo com a área dele, primeira linha diz o que a PR faz, valores
+exatos em span, entregas em lista, passos de teste com os não rodados
+marcados — e corrija o que falhar. Entregue só a
 versão limpa.
 
-Entregue o título primeiro, em linha própria — o que muda quando mescla,
-verbo primeiro, pronto para o `gh pr create --title`. Depois a descrição em
+Entregue o título primeiro, em linha própria — o que muda quando mescla, na
+forma que o log do repo já usa, com a área primeiro dentro dessa forma quando
+a lista tem mais de uma, e nada que a lista já mostra ao lado dele. Não a
+forma de sintoma que o card toma: o título nomeia o estado depois da mescla.
+Pronto para o `gh pr create --title`. Depois a descrição em
 bloco de código, pronta para colar no `--body` ou no formulário do GitHub.
 **Cerque a entrega com quatro crases**: a descrição carrega um bloco `bash`
 por regra, e um invólucro de três crases termina naquela cerca interna,

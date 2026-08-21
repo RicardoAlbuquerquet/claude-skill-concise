@@ -273,9 +273,18 @@ headers and fill them in this register. What it doesn't excuse is
 boilerplate — a section with nothing to say gets a "none", and a checklist
 box gets ticked only when it's true.
 
-The title follows the commit-title rule — what changes when it merges, verb
-first. And the scope rule from cards applies whole: a description that needs
-"and also" is describing two PRs.
+The title carries the card's title rule, minus one part. It says what changes
+when the PR merges, in the shape the repo's log already uses — a `fix(scope):`
+prefix, a ticket code, a bare `scope:`, or nothing at all — and inside that
+shape the area comes first when the list holds more than one, because the PR
+list cuts the line the same way a board column does. What does not carry over
+is the symptom form: a card names the broken state so someone picks it up, a
+PR names the state after it merges. "Documents: bold shows up as raw
+asterisks" is the card; "Documents: escape the asterisks the exporter emits
+raw" is the PR for it. And nothing the list already shows beside the title —
+the repo, a `bug` label, the branch name — earns characters inside it. The
+scope rule from cards applies whole: a description that needs "and also" is
+describing two PRs.
 
 The card that motivated the work rides in the description — when it exists.
 `Closes #52` on GitHub wires the automation; a board card enters as its link

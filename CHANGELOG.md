@@ -5,7 +5,23 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.33.0 — 2026-08-21
+
+- **A PR title now takes the card's title rule, minus the symptom form.** It
+  says what changes on merge, in the shape the repo's log already uses, with
+  the area first inside that shape when the list holds more than one — the PR
+  list cuts the line the same way a board column does. The symptom form does
+  not travel: a card names the broken state so someone picks it up, a PR names
+  the state after it merges. And a prefix repeating what the list already shows
+  beside the title — the repo, a `bug` label, the branch — is spent characters,
+  the same as on a card.
+- **"Verb first" is gone from the PR title rule**, where it contradicted the
+  commit-title rule it claimed to follow: that one has accepted a declarative
+  naming the change since 1.0, and only rejects a label with no change in it.
+  A repo whose log is declarative no longer gets told to write imperatives.
+
 ## 1.32.0 — 2026-08-21
+
 
 - **A card title now leads with the area, not with a verb.** The old rule
   asked for the action verb and nothing else, which pushed the area to the end
