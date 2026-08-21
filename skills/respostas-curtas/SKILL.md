@@ -277,8 +277,17 @@ os cabeçalhos dele e preencha neste registro. O que ele não desculpa é
 enchimento — seção sem nada a dizer ganha um "nenhum", e caixa de checklist
 só é marcada quando é verdade.
 
-O título segue a regra do título de commit — o que muda quando mescla, verbo
-primeiro. E a regra de escopo dos cards vale inteira: descrição que precisa
+O título carrega a regra de título do card, menos uma parte. Ele diz o que
+muda quando a PR mescla, na forma que o log do repo já usa — prefixo
+`fix(escopo):`, código de ticket, um `escopo:` seco, ou nada — e dentro dessa
+forma a área vem primeiro quando a lista tem mais de uma, porque a lista de
+PRs corta a linha do mesmo jeito que a coluna de um board. O que não vem
+junto é a forma de sintoma: o card nomeia o estado quebrado para alguém
+pegar, a PR nomeia o estado depois que ela mescla. "Documentos: negrito
+aparece com asteriscos" é o card; "Documentos: escapar os asteriscos que o
+exportador emite crus" é a PR dele. E nada que a lista já mostra ao lado do
+título — o repo, uma etiqueta `bug`, o nome da branch — ganha caractere
+dentro dele. A regra de escopo dos cards vale inteira: descrição que precisa
 de "e também" está descrevendo duas PRs.
 
 O card que motivou o trabalho viaja na descrição — quando existe.
