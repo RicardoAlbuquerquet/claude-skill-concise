@@ -100,6 +100,24 @@ Regras do desenho:
 - **Todo rótulo pendura no que ele nomeia**, por um `│` até um `└─`. Número
   flutuando entre duas caixas é lido contra a errada, e nada no desenho diz a
   quem lê qual era a certa.
+- **Rótulo solto na linha; caixa fechada só quando ela paga três linhas.**
+  `worker ──> cache` já é um desenho, e as mesmas duas coisas dentro de molduras
+  `┌──────┐` custam seis linhas pelo mesmo conteúdo — o orçamento de quinze
+  linhas tem cinco caixas de profundidade. Caixa fechada é para nó que segura
+  duas linhas, um nome e o que ele custa, ou para o bloco comparado num
+  antes/depois. Um estilo de caixa por desenho, como há um conjunto de traços.
+- **O caminho feliz fica na linha principal, a falha desce.** Com a rota de
+  erro na mesma linha, quem lê precisa descobrir qual das duas é a normal antes
+  de o desenho dizer qualquer coisa. E a seta de falha carrega o que se perde —
+  `timeout: pedido cobrado, não confirmado` — nunca `erro`.
+- **Repetição é contagem, não caixa.** Oito consumidores iguais são uma caixa e
+  `×8`; o que difere entre eles vai no rótulo, e quando nada difere a contagem
+  é o conteúdo inteiro. Desenhar os oito gasta o orçamento provando que são
+  iguais.
+- **Sem legenda, sem chave.** Desenho que precisa de uma linha explicando o que
+  um traço significa já falhou — dobre o significado dentro dos rótulos, ou
+  largue a distinção que ele carregava. Um `×8` ou uma unidade é rótulo, não
+  legenda.
 - **ASCII em bloco de código** sempre funciona, e é o padrão. `mermaid` tem as
   condições e as regras dele, abaixo.
 - **Uma linha embaixo, só se o desenho já não disser** — o achado para o qual
@@ -156,8 +174,10 @@ Desenhe nesta ordem, porque alinhamento não é coisa que se conserta depois:
 Antes de entregar, audite o rascunho você mesmo — toda seta rotulada, todo
 salto verificado ou marcado, nenhuma caixa nomeada por algo que a pessoa nunca
 vai tocar, abaixo de quinze linhas e de setenta e duas colunas, um conjunto de
-traços só, todo rótulo pendurado na caixa dele, e nenhuma linha embaixo
-repetindo a figura — e corrija o que falhar. Se saiu mermaid, audite que ele
+traços só, todo rótulo pendurado na caixa dele, sem legenda, a rota de falha
+abaixo da linha principal, repetição contada em vez de desenhada, e nenhuma
+linha embaixo repetindo a figura — e corrija o que falhar. Se saiu mermaid,
+audite que ele
 ganhou as duas condições, que nenhuma aresta está pelada, e que nada num
 rótulo deixaria de compilar. Entregue só a versão limpa.
 

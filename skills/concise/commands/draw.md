@@ -98,6 +98,23 @@ Rules of the drawing:
 - **Every label hangs off what it names**, by a `│` down to a `└─`. A number
   floating between two boxes gets read against the wrong one, and nothing in
   the drawing tells the reader which was meant.
+- **Bare labels on the line; a closed box only when it earns three lines.**
+  `worker ──> cache` is already a drawing, and the same two things inside
+  `┌──────┐` frames cost six lines for the same content — the fifteen-line
+  budget is five boxes deep. A closed box is for a node holding two lines, a
+  name and what it costs, or for the block being compared in a before/after.
+  One box style per drawing, the way there is one glyph set.
+- **The happy path stays on the main line, failure drops below it.** With the
+  error route inline, the reader has to work out which of the two is normal
+  before the drawing tells them anything. And the failure arrow carries what
+  the reader loses — `timeout: order charged, not confirmed` — never `error`.
+- **Repetition is a count, not boxes.** Eight identical consumers are one box
+  and `×8`; whatever differs between them goes in the label, and when nothing
+  differs the count is the whole content. Drawing all eight spends the budget
+  proving they are the same.
+- **No legend, no key.** A drawing that needs a line explaining what a glyph
+  means has already failed — fold the meaning into the labels, or drop the
+  distinction it was carrying. A `×8` or a unit is a label, not a legend.
 - **ASCII in a fenced block** always works, and it is the default. `mermaid`
   has its own conditions and its own rules, below.
 - **One line under it, only if the drawing doesn't already say it** — the
@@ -151,8 +168,9 @@ Draw it in this order, because alignment is not something you fix afterwards:
 Before delivering, audit the draft yourself — every arrow labelled, every hop
 verified or marked, no box named after something the reader will never touch,
 under fifteen lines and under seventy-two columns, one glyph set, every label
-hanging off its own box, and no line under it that repeats the picture — and
-fix what fails. If it came out as mermaid, audit that it earned both
+hanging off its own box, no legend, the failure route below the main line,
+repetition counted rather than drawn, and no line under it that repeats the
+picture — and fix what fails. If it came out as mermaid, audit that it earned both
 conditions, that no edge is bare, and that nothing in a label would fail to
 parse. Deliver only the clean version.
 

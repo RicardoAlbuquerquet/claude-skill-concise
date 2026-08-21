@@ -42,7 +42,9 @@ Then check, in this order:
    And drawings: an unlabelled arrow, a line past seventy-two columns, two
    glyph sets in one picture, a label floating between two boxes instead of
    hanging off one, a box named after something the reader will never open, or
-   a drawing that repeats the sentence above it. A mermaid block is a violation
+   a drawing that repeats the sentence above it, a legend explaining a glyph,
+   a failure route sharing the main line with the happy path, and identical
+   boxes repeated where a `×N` would carry it. A mermaid block is a violation
    wherever the destination does not render it, and wherever ASCII would have
    carried the same chain.
 4. **Recommendations.** Each one carries a reason (≤3 lines) and a cost (≤3
