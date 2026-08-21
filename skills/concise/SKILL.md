@@ -41,7 +41,7 @@ it.** After it, only what changes a decision.
 | Blocked, needs input | the question + what you already did without the answer |
 | Status update mid-work | only the delta since your last message; one line when nothing surprising happened |
 | A plan you are proposing | the numbered steps you will run + what could go wrong + what it leaves out |
-| Pull request description | everything above + the steps to test it, at the end |
+| Pull request description | what it solves, then what was done, then the exact test steps — none of it restating what the diff already shows |
 | Task or issue | current behaviour, expected behaviour, exact values, how it closes |
 | Comment on a card | what changed or what the reader has to do, plus the anchor — ≤3 lines, and one is common |
 
@@ -276,6 +276,22 @@ dashes is the same wall of text with different punctuation. And when the diff sp
 to start reading — the file where the mechanism lives. The reviewer scans
 the list, opens that file, skims the rest.
 
+A description has three jobs, and they run in this order: **what is being
+solved**, **what was done**, and **how to test it**. The problem leads because
+it is the only one the reviewer cannot reconstruct — the title already said
+what the PR does and the diff already shows what was done, but nothing on the
+page says why any of it had to happen. Three jobs are three blocks, so they
+earn their headers, and markdown earns its place here the way it does
+everywhere else: a table for what is rows and columns, a list for the
+deliverables, code spans on every path and value. A description that reads well
+is not padding.
+
+What is padding is the description competing with the diff: a file-by-file map,
+a count of what changed, a section per area touched. The reviewer has that open
+in the next tab and it is better at it than prose is. An alternative you
+discarded gets a line, not a section, and the argument that discarded it gets
+the commit body or the linked card.
+
 A repo's own `PULL_REQUEST_TEMPLATE` is a contract, not decoration: keep its
 headers and fill them in this register. What it doesn't excuse is
 boilerplate — a section with nothing to say gets a "none", and a checklist
@@ -300,13 +316,13 @@ or id. The reference comes from the conversation or from a tracker a tool
 can reach, and from nowhere else: a PR with no known card carries no
 reference, not an invented one.
 
-**Two sentences open it: what the PR does, then what was wrong without it.**
-The problem in the reader's terms, not the diff's — "the export truncated its
-own output whenever the description contained a code block" beats "fixes the
-fence handling". A reviewer who knows the symptom can judge whether this is
-the right fix; one who only knows the change can only check that it compiles.
-Skip the second sentence only when the first already carries the problem
-inside it.
+**What is being solved opens it**, in the reader's terms and not the diff's —
+"the export truncated its own output whenever the description contained a code
+block" beats "fixes the fence handling". A reviewer who knows the symptom can
+judge whether this is the right fix; one who only knows the change can only
+check that it compiles. Then what was done, in the shape the work took: one
+paragraph when it is one thing, a list when it is several, a table when the
+change is a value per case.
 
 A PR carries one thing a chat reply doesn't — **how the reviewer checks it
 themselves**.
