@@ -5,6 +5,28 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.37.0 — 2026-08-21
+
+- **`/concise:draw` now carries four canonical layouts** — a flow, a branch, a
+  before/after, and a call tree — each with a worked skeleton. The command used
+  to name four kinds of subject worth drawing and give no shape for any of
+  them, so every drawing invented its own layout and two drawings by the same
+  author looked unrelated. They are starting points, not moulds: when the real
+  shape is none of the four, the real shape wins.
+- **A drawing procedure, in order**, because alignment is not fixable
+  afterwards: the main line whole first, then the column of each box counted,
+  then the labels hung top down with the leftmost closing first, then the
+  longest line measured against the seventy-two column limit. The 1.36.0 rules
+  said what alignment had to look like and nothing about how to get it.
+- **Bug fix: `/concise:audit` contradicted `/concise:pr`.** Item 7 of the audit
+  agent still asked a PR description to open with what the PR does — the shape
+  1.35.0 replaced with three named sections opening on what is being solved. An
+  audited description could fail the rule it had just passed. Fixed in both
+  ports.
+- **The audit agent now checks drawings at all**: unlabelled arrows, lines past
+  seventy-two columns, mixed glyph sets, floating labels, boxes named after
+  internals, and a drawing that repeats the sentence above it.
+
 ## 1.36.0 — 2026-08-21
 
 - **A drawing now has a column limit, and it is the strict one: seventy-two.**

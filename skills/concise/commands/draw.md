@@ -22,6 +22,54 @@ First, decide whether it earns a drawing, and say no when it doesn't:
   line above it is padding with extra steps. When the subject is one of these,
   say so in one line and stop — do not draw it anyway.
 
+Then pick the layout the subject already has. These four are starting points,
+not moulds — when the real shape is none of them, draw the real shape.
+
+**A flow**, when it is one path with three or more hops. Left to right, the
+whole path on one line, everything else hanging under it:
+
+```
+PWA ──every app resume──> /auth/refresh ──> sessions
+                           │
+                           └─ 2.1 s p95, no index on token_hash
+```
+
+**A branch**, when the finding is that two routes diverge. Top to bottom, the
+condition on the arrow rather than in a diamond, both outcomes starting at the
+same column:
+
+```
+POST /orders
+     │
+     ├── stock ok ──────> charge ──> confirmation mail
+     │
+     └── out of stock ──> backorder queue
+                           │
+                           └─ nothing tells the buyer
+```
+
+**A before/after**, when you changed a structure. Two stacked blocks, the same
+left column and the same box order, so the difference is the only thing that
+moves:
+
+```
+before   worker ──> cache ──> reports_daily
+after    worker ────────────> reports_daily
+                               │
+                               └─ 3 stale reads/day gone
+```
+
+**A call tree**, when the finding is who calls whom. Indentation carries the
+depth, and a second column carries what each call costs:
+
+```
+handleOrder()
+├─ validate()      pure
+├─ charge()        network, no timeout
+│  └─ retry()      ×3, no backoff
+└─ notify()        fire and forget
+```
+
 Rules of the drawing:
 
 - **Ground every hop in the source.** Open the files, follow the call. A
@@ -55,6 +103,20 @@ Rules of the drawing:
   does not.
 - **One line under it, only if the drawing doesn't already say it** — the
   finding it points at, the box where the problem lives.
+
+Draw it in this order, because alignment is not something you fix afterwards:
+
+1. Write the main line whole first — the boxes and the labelled arrows, left
+   to right. Every column below it is measured from this line, so nothing gets
+   drawn under it until it is final.
+2. Count the column each box starts at. The `│` sits under a character of its
+   box, not near it; an elbow one column off reads as pointing at the arrow
+   instead of the box.
+3. Hang the labels top down, the leftmost one closing first, so no `└─`
+   crosses a `│` that is still open. A crossing is the drawing telling the
+   reader two things connect that don't.
+4. Measure the longest line before delivering. Past seventy-two columns, cut
+   the labels or stack the blocks — never ship it and hope the panel is wide.
 
 Before delivering, audit the draft yourself — every arrow labelled, every hop
 verified or marked, no box named after something the reader will never touch,

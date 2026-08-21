@@ -39,6 +39,10 @@ Then check, in this order:
    reader pastes into — two steps chained with `&&` for a reader on Windows
    PowerShell is the case that actually breaks, since there `&&` is a parser
    error rather than a warning.
+   And drawings: an unlabelled arrow, a line past seventy-two columns, two
+   glyph sets in one picture, a label floating between two boxes instead of
+   hanging off one, a box named after something the reader will never open, or
+   a drawing that repeats the sentence above it.
 4. **Recommendations.** Each one carries a reason (≤3 lines) and a cost (≤3
    lines). An empty cost slot is a violation even when the text reads well.
 5. **Choices that belong to the reader** — money, risk, irreversible: options
@@ -51,9 +55,14 @@ Then check, in this order:
    on first mention, because the reader has to open the file; and bad news
    sitting after the part that is fine, where you quote the first line of the
    clean part and say the defects belong above it.
-7. **Destination extras.** A PR description opens with what it does and what
-   was wrong without it, and ends with the exact test command, what appears
-   if it's right, and what would prove it broke. A card has: what changes in
+7. **Destination extras.** A PR description has three sections in this order —
+   what is being solved, what was done, how to test it — with their headers.
+   Opening on what the PR does is the violation, not the shape: the title
+   already said that, and the problem is the one thing the reviewer cannot
+   reconstruct from the diff. It ends with the exact test command, what appears
+   if it's right, and what would prove it broke. Prose restating the diff, a
+   file-by-file map, and a count of what changed are all padding here. A card
+   has: what changes in
    the title, area first when the board holds more than one, current →
    expected behaviour, exact values, a done criterion, closed scope — and
    structure earned by the content: a header only past fifteen lines with
