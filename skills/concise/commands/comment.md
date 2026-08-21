@@ -51,13 +51,17 @@ Rules of the comment:
   reader costs a round trip.
 - **The reader was not in this conversation** and will not scroll up: no "as
   discussed", no reference to this chat, exact values rather than descriptions
-  of them. A note on a card also takes the narrow panel — no headers, no
-  tables, bold only as an item label.
+  of them. A note on a card is the summary of the summary: three lines is
+  already long and one is common — what changed or what they have to do, with
+  the anchor. It also takes the narrow panel: no headers, no tables, bold only
+  as an item label. What needs a second paragraph is an edit to the card body,
+  not a comment on it.
 - Never sign as an AI agent, here or anywhere.
 
 Before delivering, audit the draft yourself — claim first, anchor present,
-blocking or not stated, one point, nothing that only makes sense to someone
-who read this conversation — and fix what fails. Deliver only the clean
+blocking or not stated, one point, three lines at most when it is a note on a
+card, nothing that only makes sense to someone who read this conversation —
+and fix what fails. Deliver only the clean
 version.
 
 Delivery: each comment in its own fenced block, ready to paste, with four

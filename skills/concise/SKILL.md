@@ -43,6 +43,7 @@ it.** After it, only what changes a decision.
 | A plan you are proposing | the numbered steps you will run + what could go wrong + what it leaves out |
 | Pull request description | everything above + the steps to test it, at the end |
 | Task or issue | current behaviour, expected behaviour, exact values, how it closes |
+| Comment on a card | what changed or what the reader has to do, plus the anchor — ≤3 lines, and one is common |
 
 Code, commands, and diffs are exempt. Never shorten those.
 
@@ -251,6 +252,13 @@ conversation. The register is tighter than a chat reply, not looser.
   that names a specific decision is content; the generic opener is not.
 - **One comment, one point.** Two unrelated points are two comments, so each
   can be resolved on its own.
+- **A note on a card is the summary of the summary.** Three lines is already
+  long and one is common: what changed since the card was written, or what the
+  reader has to do — with the anchor, and nothing else. The card body holds the
+  standing description and a linked document holds the reasoning; a thread is a
+  chronological feed nobody scrolls back through, so what gets explained there
+  is explained where it will be lost. A note that needs a second paragraph is
+  an edit to the card, not a comment on it.
 - The credit rule applies here too: never sign a comment as an AI agent.
 
 ## Pull request descriptions

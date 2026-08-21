@@ -5,7 +5,25 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.34.0 — 2026-08-21
+
+- **A note on a card now has a length, and it is three lines.** The section
+  covering comments had rules about shape — claim first, one point, no filler
+  praise — and none about length, so a note on an activity came out at the
+  length of a chat reply. It is now the summary of the summary: what changed
+  since the card was written, or what the reader has to do, with the anchor.
+  One line is common.
+- **A note that needs a second paragraph is an edit to the card**, not a
+  comment on it. A thread is a chronological feed nobody scrolls back through,
+  so reasoning parked there is parked where it gets lost; the card body holds
+  the standing description and a linked document holds the reasoning.
+- **The budget table gained a row for it**, next to the one for a task or an
+  issue. `/concise:comment` audits against the three lines before delivering.
+  A review comment anchored to a diff line keeps its own shape — this is the
+  note on an activity, not the line-level review.
+
 ## 1.33.0 — 2026-08-21
+
 
 - **A PR title now takes the card's title rule, minus the symptom form.** It
   says what changes on merge, in the shape the repo's log already uses, with
