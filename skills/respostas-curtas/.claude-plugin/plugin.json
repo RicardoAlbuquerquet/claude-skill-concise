@@ -1,7 +1,7 @@
 {
   "name": "respostas-curtas",
   "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão. Vale para resposta de chat, plano, decisão, mensagem de commit, descrição de PR, card, comentário de revisão e nota de release. Embarca um hook SessionStart sempre ligado com auto-update, guarda de crédito nos comandos que publicam texto, onze comandos — reescrever, pr, card, commit, comentario, release, plano, decidir, desenhar, status, auditar — e um agente de auditoria.",
-  "version": "1.39.0",
+  "version": "1.40.0",
   "author": {
     "name": "Ricardo Albuquerque",
     "url": "https://github.com/RicardoAlbuquerquet"

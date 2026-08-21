@@ -192,6 +192,11 @@ ela. O que isso implica:
   semana falhando, o plugin avisa na tela com o comando que mostra o erro;
   até lá fica quieto.
 - Quando uma atualização entra, a sessão seguinte diz para qual versão foi.
+- **Dentro deste repositório o carimbo do dia é ignorado** e a checagem roda a
+  cada sessão. Quem publica as versões é a única pessoa que anda mais rápido
+  que uma vez por dia, e cache de marketplace velho é também o que deixa o
+  botão de atualizar cinza no cliente. Em qualquer outro lugar, vale uma
+  checagem por dia.
 - Cópias na 1.3.0 ou antes não têm hook nenhum: alcançar uma versão que se
   auto-atualiza leva um update manual, ou o toggle do marketplace acima.
 - Para parar só isso: `touch ~/.claude/.respostas-curtas-no-self-update`. O

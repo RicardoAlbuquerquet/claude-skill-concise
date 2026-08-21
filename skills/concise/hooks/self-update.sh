@@ -14,7 +14,18 @@ note="$dir/.$plugin-update-note"
 command -v claude >/dev/null 2>&1 || exit 0
 
 today=$(date +%Y%m%d)
-[ "$(cat "$stamp" 2>/dev/null)" = "$today" ] && exit 0
+
+# One check a day is right for everyone except the person shipping the
+# versions: inside the marketplace's own repo the throttle would hold the
+# cache — and the client's update button with it — stale until tomorrow.
+in_repo=0
+[ -f .claude-plugin/marketplace.json ] &&
+  grep -q '"name"[[:space:]]*:[[:space:]]*"claude-skill-concise"' \
+    .claude-plugin/marketplace.json && in_repo=1
+
+if [ "$in_repo" = 0 ]; then
+  [ "$(cat "$stamp" 2>/dev/null)" = "$today" ] && exit 0
+fi
 
 # A lock older than an hour belongs to a crashed run, not a live one.
 [ -d "$lock" ] && find "$lock" -maxdepth 0 -mmin +60 2>/dev/null | grep -q . && rmdir "$lock" 2>/dev/null
