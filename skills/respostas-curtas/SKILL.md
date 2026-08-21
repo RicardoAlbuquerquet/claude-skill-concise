@@ -95,9 +95,21 @@ passa por elas:
 
 ```
 PWA ──todo resume──> /auth/refresh ──> sessions ──> users
-                        2,1 s p95         │
-                                          └─ sem índice em token_hash
+                      │                 │
+                      └─ 2,1 s p95      │
+                                        └─ sem índice em token_hash
 ```
+
+Três coisas decidem se aquilo lê como forma ou como ruído, e nenhuma delas é o
+conteúdo. **Um conjunto de traços só** — caixa desenhada ou ASCII puro, a mesma
+ponta de seta até o fim; desenho que mistura os dois lê como dois desenhos
+colados. **Uma direção só** — esquerda para direita no fluxo, cima para baixo
+na bifurcação, e o que corre em paralelo começando na mesma coluna, porque o
+olho lê margem esquerda irregular como uma diferença que não existe. **Abaixo
+de setenta e duas colunas**, e essa é a dura: linha que quebra deixa de ser
+desenho, e ela quebra no painel de quem lê, não no seu rascunho. Todo rótulo
+pendura no que ele nomeia por um `│` até um `└─`, nunca flutuando entre duas
+caixas onde vai ser lido contra a errada.
 
 ## Estrutura
 

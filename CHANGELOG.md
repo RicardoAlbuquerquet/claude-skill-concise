@@ -5,6 +5,23 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.36.0 — 2026-08-21
+
+- **A drawing now has a column limit, and it is the strict one: seventy-two.**
+  The old rule capped lines at fifteen and said nothing about width, so the
+  failure it never caught was the one that destroys a drawing outright — a line
+  that wraps in the reader's panel, which is not the panel it was drafted in. A
+  before/after that will not fit side by side inside that stacks instead of
+  shrinking its labels.
+- **One glyph set and one direction per drawing.** Box-drawing or plain ASCII,
+  the same arrowhead throughout, left to right for a flow and top to bottom for
+  a branch, with parallel paths starting at the same column — a ragged left edge
+  reads as a difference that is not there.
+- **Every label hangs off what it names**, by a `│` down to a `└─`, instead of
+  floating between two boxes. The example in the ruleset itself broke this: its
+  `2.1 s p95` sat loose between two hops with nothing saying which one it timed.
+  It is redrawn.
+
 ## 1.35.0 — 2026-08-21
 
 - **A PR description now has three sections, in a fixed order: what is being

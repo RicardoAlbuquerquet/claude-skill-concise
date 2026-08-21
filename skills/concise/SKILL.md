@@ -94,9 +94,21 @@ flows:
 
 ```
 PWA ──every app resume──> /auth/refresh ──> sessions ──> users
-                            2.1 s p95          │
-                                               └─ no index on token_hash
+                           │                 │
+                           └─ 2.1 s p95      │
+                                             └─ no index on token_hash
 ```
+
+Three things decide whether that reads as a shape or as noise, and none of them
+is the content. **One glyph set** — box-drawing or plain ASCII, the same
+arrowhead the whole way down; a drawing that mixes them reads as two drawings
+pasted together. **One direction** — left to right for a flow, top to bottom
+for a branch, and what runs in parallel starting at the same column, because
+the eye reads a ragged left edge as a difference that is not there. **Under
+seventy-two columns**, and this is the hard one: a line that wraps stops being
+a drawing, and it wraps in the reader's panel rather than in your draft. Every
+label hangs off what it names by a `│` down to a `└─`, never floating between
+two boxes where it will be read against the wrong one.
 
 ## Structure
 

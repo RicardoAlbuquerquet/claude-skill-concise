@@ -1,5 +1,5 @@
 ---
-description: Draw the shape — ASCII for a sequence, a branch, or a before/after, arrows labelled with what flows. Refuses when the subject doesn't earn a drawing
+description: Draw the shape — ASCII for a sequence, a branch, or a before/after, arrows labelled with what flows, one glyph set, nothing that wraps. Refuses when the subject doesn't earn a drawing
 argument-hint: [what to draw — empty uses what was just explained]
 ---
 
@@ -37,6 +37,19 @@ Rules of the drawing:
   reader will actually use — a path, a route, a service they will open.
 - **Under fifteen lines.** Past that it stops being a shape and becomes a
   second document. Cut to the hops that carry the finding.
+- **Under seventy-two columns**, and this limit is the hard one. A line that
+  wraps stops being a drawing altogether, and it wraps in the reader's panel
+  rather than in your draft, so you never see it happen. When a before/after
+  will not fit side by side inside that, stack the two blocks instead of
+  shrinking the labels.
+- **One glyph set and one direction.** Box-drawing or plain ASCII, the same
+  arrowhead the whole way down — mixing them reads as two drawings pasted
+  together. Left to right for a flow, top to bottom for a branch, and what runs
+  in parallel starts at the same column: the eye reads a ragged left edge as a
+  difference that is not there.
+- **Every label hangs off what it names**, by a `│` down to a `└─`. A number
+  floating between two boxes gets read against the wrong one, and nothing in
+  the drawing tells the reader which was meant.
 - **ASCII in a fenced block** always works. Use `mermaid` only where you know
   the surface renders it — a GitHub comment or issue does, a terminal reply
   does not.
@@ -45,8 +58,9 @@ Rules of the drawing:
 
 Before delivering, audit the draft yourself — every arrow labelled, every hop
 verified or marked, no box named after something the reader will never touch,
-under fifteen lines, and no line under it that repeats the picture — and fix
-what fails. Deliver only the clean version.
+under fifteen lines and under seventy-two columns, one glyph set, every label
+hanging off its own box, and no line under it that repeats the picture — and
+fix what fails. Deliver only the clean version.
 
 Delivery: the drawing in a fenced block, tagged for what it is. Nothing
 before it except the one sentence it illustrates, when that sentence isn't
