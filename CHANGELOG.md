@@ -5,6 +5,26 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.39.0 — 2026-08-21
+
+- **A closed box now has to earn its three lines.** Bare labels on the line are
+  the default: `worker ──> cache` is already a drawing, and the same two things
+  inside `┌──────┐` frames cost six lines for identical content — the
+  fifteen-line budget is only five boxes deep. A closed box is for a node
+  holding two lines, or for the block being compared in a before/after, and
+  there is one box style per drawing the way there is one glyph set.
+- **The happy path stays on the main line and failure drops below it**, with
+  the failure arrow carrying what the reader loses — `timeout: order charged,
+  not confirmed` — instead of `error`. An inline error route makes the reader
+  work out which of the two is normal before the drawing says anything.
+- **Repetition is a count, not boxes.** Eight identical consumers are one box
+  and `×8`; drawing all eight spends the budget proving they are the same.
+- **No legend, no key.** A drawing needing a line to explain a glyph has
+  already failed — the meaning folds into the labels or the distinction goes.
+  A `×8` or a unit is a label, not a legend.
+- **The audit agent checks all four**, alongside the drawing rules it gained in
+  1.37.0 and the mermaid conditions from 1.38.0.
+
 ## 1.38.0 — 2026-08-21
 
 - **`mermaid` had one clause and no rules; now it has both conditions and seven
