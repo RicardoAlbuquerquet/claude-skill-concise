@@ -316,9 +316,15 @@ settled doesn't travel with it.
 A good description answers three things with nobody around to ask: **what
 changes, why now, and how you know it's finished.** Every card carries this:
 
-- **A title with the action verb in it.** "Fix the invoice filter that ignores
-  the timezone" instead of "Invoice filter": in the board's list, the reader sees
-  what changes once the card closes.
+- **A title that says what changes, located.** The area first when the board
+  holds more than one — "Documents: bold shows up as raw asterisks" — because
+  the column shows the title alone and cuts it, and the first word is the one
+  that gets scanned. Then the change: the symptom when the reader recognises it,
+  the action verb when they wouldn't ("Archived: hide the page from whoever has
+  no access", "Fix the invoice filter that ignores the timezone"). What never
+  passes is a label with no change in it ("Invoice filter"). And nothing the
+  card's own fields already say — a `fix(...)` prefix beside a red `bugfix`
+  label spends the scanned characters twice.
 - **Current behaviour and expected behaviour**, in that order and in two
   sentences. The gap between them is what defines the work.
 - **Exact values, not a description of them** — path, command, error line,
@@ -347,15 +353,24 @@ Fifteen lines is already a long card, and the body stands on its own: no "as we
 discussed", no "that problem you mentioned". Test: read it three weeks from now
 with no conversation — can you act on it?
 
-A card is read in a narrow panel, often on a phone, next to a wall of other
-cards. It holds *less* structure than a chat reply, not more:
+A card is read at two widths, and they take different rules. The column shows
+the title alone, cut at around 300px — that is what the title rule above buys.
+The body is read in the detail view a click opens, and that one is usually wide
+enough for real structure. So the body holds *less* structure than a chat reply
+by default, and earns more only where the content is genuinely that shape:
 
-- **No header over a block.** Short paragraphs, with a single list where the
-  steps are, is the entire layout. `## The problem` over two lines is decoration
-  with a template's confidence behind it.
-- **No table unless you know the panel is wide.** Column widths that work in a
-  chat reply wrap to mush in a narrow card; content that really is rows and
-  columns sits better in a linked document.
+- **No header until the body passes fifteen lines** and carries three blocks
+  doing different jobs — repro, impact, done criterion. Below that, short
+  paragraphs with a single list where the steps are is the entire layout, and
+  `## The problem` over two lines is decoration with a template's confidence
+  behind it. Passing fifteen lines is itself the first sign to check whether
+  it's two cards.
+- **A table when the content is at least three rows by three columns** and
+  every cell is a value rather than a sentence — four queues against retry,
+  lease and backoff is a table, and in prose it becomes a paragraph nobody
+  compares. Anything smaller is a list. When you know the destination renders
+  in a narrow column or in plain text, the table goes to a linked document
+  instead.
 - **Bold only on the label that opens an item.** In a six-line body the second
   bold phrase competes with the first, and neither one leads.
 

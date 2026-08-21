@@ -18,21 +18,27 @@ Rules of the card:
   discussed", no reference to this chat. Exact values — path, command, error
   line, number, environment — not descriptions of them; if the conversation
   didn't produce a value the card needs, name the hole rather than invent it.
-- **Every card carries:** a title with the action verb in it; current
+- **Every card carries:** a title that says what changes, the area first when
+  the board holds more than one, the symptom or the action verb after it, and
+  nothing a field or a label already says; current
   behaviour then expected behaviour, two sentences; exact values; one line of
   done criterion; closed scope — an "and also" means two cards, so say so and
   draft the first.
 - **When the case calls for it:** numbered repro steps (with frequency if
   intermittent), impact with who feels it, linked dependencies, the
   attachment that proves it.
-- **Narrow-panel structure:** short paragraphs and at most one list; no
-  headers, no tables, bold only as item labels. Priority, assignee, and due
-  date are fields, not body text — the *reason* for a date is body.
+- **Two widths:** the column shows the title alone and cuts it; the body is
+  read in the detail view a click opens. Short paragraphs and at most one list
+  by default — a header only past fifteen lines with three blocks doing
+  different jobs, a table only at three rows by three columns of values, and a
+  linked document instead when the destination renders narrow or in plain
+  text. Bold only as item labels. Priority, assignee, and due date are fields,
+  not body text — the *reason* for a date is body.
 
 Before delivering, audit the draft against the card checklist yourself —
-verb in the title, current → expected, exact values, done criterion, no
-headers or tables, body standing alone — and fix what fails. Deliver only
-the clean version.
+what changes in the title with its area, current → expected, exact values,
+done criterion, headers and tables only past their thresholds, body standing
+alone — and fix what fails. Deliver only the clean version.
 
 Delivery: title on the first line, body in a fenced block, ready to paste.
 Fence it with four backticks when the body carries a fence of its own —

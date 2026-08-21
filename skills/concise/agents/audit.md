@@ -53,10 +53,12 @@ Then check, in this order:
    clean part and say the defects belong above it.
 7. **Destination extras.** A PR description opens with what it does and what
    was wrong without it, and ends with the exact test command, what appears
-   if it's right, and what would prove it broke. A card has: verb
-   in the title, current → expected behaviour, exact values, a done criterion,
-   closed scope — and respects the narrow panel: no headers, no table, bold
-   only as item labels. A commit message has a title of 72
+   if it's right, and what would prove it broke. A card has: what changes in
+   the title, area first when the board holds more than one, current →
+   expected behaviour, exact values, a done criterion, closed scope — and
+   structure earned by the content: a header only past fifteen lines with
+   three blocks doing different jobs, a table only at three rows by three
+   columns of values, bold only as item labels. A commit message has a title of 72
    characters or fewer, no trailing period, that names what changes, and a body that says why
    rather than retelling the diff. For a card or a commit, also apply the
    stands-alone test: any "as discussed", "the problem you mentioned", or

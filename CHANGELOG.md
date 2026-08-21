@@ -5,7 +5,25 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.32.0 — 2026-08-21
+
+- **A card title now leads with the area, not with a verb.** The old rule
+  asked for the action verb and nothing else, which pushed the area to the end
+  of the line — and the column cuts the line. "Documents: bold shows up as raw
+  asterisks" now passes where it used to fail for having no verb; the verb is
+  still right when the symptom alone wouldn't be recognised. A prefix that
+  repeats a label the card already carries (`fix(...)` beside a `bugfix` tag)
+  is now called out as spent characters.
+- **A card body may now carry a table or a header, at a written threshold**:
+  a table at three rows by three columns of values, a header past fifteen
+  lines with three blocks doing different jobs. The flat ban assumed the body
+  was read in the ~300px column; it is read in the detail view a click opens,
+  and the column shows only the title. Cards that were split into a linked
+  document purely to escape the ban no longer need to be, and `/concise:audit`
+  stops reporting those tables as violations.
+
 ## 1.31.0 — 2026-08-20
+
 
 - **The injected core now points at the commands.** Eleven commands shipped
   and nothing told the model to reach for one, so it wrote from what it
