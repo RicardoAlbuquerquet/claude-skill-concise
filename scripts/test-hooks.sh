@@ -94,11 +94,20 @@ echo "--- self-update (claude fake)"
 mkdir -p "$FH/bin"
 printf '#!/usr/bin/env bash\necho chamada >> "%s/calls.log"\n[ "$1" = "plugin" ] && [ "$2" = "update" ] && echo "Plugin updated from 1.12.0 to 1.13.0 for scope user."\nexit 0\n' "$FH" > "$FH/bin/claude"
 chmod +x "$FH/bin/claude"; rm -f "$FH/calls.log"
-HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise
+(cd "$FH" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
 n1=$(wc -l < "$FH/calls.log" 2>/dev/null | tr -d ' ')
-HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise
+(cd "$FH" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
 n2=$(wc -l < "$FH/calls.log" | tr -d ' ')
 [ "$n1" = "2" ] && [ "$n2" = "2" ] && { pass=$((pass+1)); echo "ok    throttle diario (2 chamadas, 2a sessao zero)"; } || { fail=$((fail+1)); echo "FALHA throttle: n1=$n1 n2=$n2"; }
+# dentro do repo do proprio marketplace o carimbo do dia nao segura
+(cd "$REPO" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+n3=$(wc -l < "$FH/calls.log" | tr -d ' ')
+[ "$n3" = "4" ] && { pass=$((pass+1)); echo "ok    no repo do marketplace ignora o carimbo"; } || { fail=$((fail+1)); echo "FALHA bypass no repo: n3=$n3"; }
+# e um repo qualquer continua respeitando o carimbo
+mkdir -p "$FH/outro"
+(cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+n4=$(wc -l < "$FH/calls.log" | tr -d ' ')
+[ "$n4" = "4" ] && { pass=$((pass+1)); echo "ok    fora do repo o carimbo continua valendo"; } || { fail=$((fail+1)); echo "FALHA carimbo fora do repo: n4=$n4"; }
 grep -q "1.13.0" "$FH/.claude/.concise-update-note" 2>/dev/null && { pass=$((pass+1)); echo "ok    grava nota de versao"; } || { fail=$((fail+1)); echo "FALHA nota de versao"; }
 [ -d "$FH/.claude/.concise-update-lock" ] && { fail=$((fail+1)); echo "FALHA lock ficou para tras"; } || { pass=$((pass+1)); echo "ok    lock liberado"; }
 # falha permanente: carimba mesmo assim (nao repete toda sessao)

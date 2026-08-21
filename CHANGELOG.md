@@ -5,6 +5,19 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.40.0 — 2026-08-21
+
+- **The self-update hook no longer holds the marketplace cache stale for the
+  author.** Inside this repo the once-a-day stamp is ignored and the check runs
+  every session. Everywhere else it is unchanged: one check a day.
+- **What this actually fixes is the update button.** The client compares the
+  installed version against the local marketplace clone, not against GitHub, so
+  a clone pinned at yesterday's commit greys the button out no matter how many
+  releases shipped since. The clone only advances when the marketplace refresh
+  runs — which the daily stamp was blocking.
+- Two new hook tests cover it: the stamp is ignored inside the marketplace's
+  own repo, and still respected in any other directory. The suite is at 39.
+
 ## 1.39.0 — 2026-08-21
 
 - **A closed box now has to earn its three lines.** Bare labels on the line are

@@ -194,6 +194,10 @@ runs it. What that implies:
   failures the plugin says so on screen, with the command that shows the
   error; until then it stays quiet.
 - When an update lands, the next session names the version it moved to.
+- **Inside this repo the daily stamp is ignored** and the check runs every
+  session. Whoever ships the versions is the one person who outpaces once a
+  day, and a stale marketplace cache is also what greys out the update button
+  in the client. Everywhere else, one check a day stands.
 - Copies on 1.3.0 or earlier have no hook at all: reaching a version that
   self-updates takes one manual update, or the marketplace toggle above.
 - To stop just this: `touch ~/.claude/.concise-no-self-update`. The style,
