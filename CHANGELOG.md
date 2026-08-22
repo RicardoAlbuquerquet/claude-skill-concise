@@ -5,6 +5,26 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.46.0 — 2026-08-22
+
+- **One hanging note per drawing, and it sits on the finding.** Until now the
+  rules asked for a label on every arrow and a cost on every hop, which can
+  end in a drawing where everything is annotated — and where everything is
+  annotated, nothing stands out. This is the first drawing rule that removes
+  output rather than asking for more. Two boxes deserving the mark means two
+  findings, and probably two drawings.
+- **`?` is the one form for an unverified hop** — `webhook retried ×3 ?`. The
+  rule already demanded the mark and never said what it looked like, so each
+  drawing invented `(?)`, `[unverified]` or `~`, and the mark became the thing
+  the reader had to decode.
+- **The boxes use the words the surrounding prose uses.** A box reading
+  `exporter` under a paragraph about "the export job" hands the reader two
+  pictures to hold at once.
+- **`CONTRIBUTING.md` now caps command length**, and closes `draw.md` to
+  further content at 218 lines against 87 for the next largest: a new drawing
+  rule has to replace one rather than join it. A command file is loaded whole
+  on every invocation, so its length is a cost paid before any output exists.
+
 ## 1.45.0 — 2026-08-22
 
 - **Bug fix: the welcome note still said "Eleven commands" and left `:handoff`

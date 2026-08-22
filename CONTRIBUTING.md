@@ -18,6 +18,17 @@ A rule already implied by the model's own instructions ("be concise", "avoid
 repetition") earns nothing by being restated here, and dilutes the rules that do
 work.
 
+## How long a command may get
+
+A command file is loaded whole on every invocation, so its length is a cost
+paid before any output exists. `commands/draw.md` is the outlier at 218 lines
+against 87 for the next largest, and it is closed to further content: a new
+drawing rule now has to replace one, not join it. If a rule genuinely does not
+fit that trade, the answer is a second command, not a longer one.
+
+The same test applies everywhere else, with more room: past roughly 100 lines,
+say in the PR description which existing lines the new ones buy.
+
 ## Removing a rule
 
 Removals are as welcome as additions. If you can show that a rule never fires,
