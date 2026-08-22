@@ -108,6 +108,7 @@ reais. Quatro saem mais longas.
 | `/respostas-curtas:decidir` | opções vivas lado a lado com os custos, e ainda uma recomendação |
 | `/respostas-curtas:desenhar` | desenha a forma em ASCII — um traço só, nada passando de 72 colunas; recusa quando o assunto não merece |
 | `/respostas-curtas:status` | escreve o update como delta desde o último, notícia ruim no topo |
+| `/respostas-curtas:passagem` | passa o trabalho adiante: estado completo, toda ressalva por inteiro, as armadilhas, o comando que retoma |
 | `/respostas-curtas:auditar` | roda o agente de auditoria num rascunho, arquivo ou corpo de PR e repassa o relatório |
 | Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
 | Agente `auditar` | devolve só as violações de um rascunho — citação, regra, correção |
@@ -384,6 +385,16 @@ com todo o resto do contexto, e o comando que você digita continua sendo a
   quando sai o próximo. Acha o update anterior e confere o que andou de
   verdade — `git log`, a execução de CI — em vez de lembrar. Só rascunho;
   nomear um canal não é permissão para publicar. EN: `/concise:status`.
+- **`/respostas-curtas:passagem [quem]`** passa o trabalho adiante — o oposto
+  exato de um update de status, e é por isso que é comando separado. Onde o
+  status larga o que quem lê já tem, a passagem assume que a pessoa não tem
+  nada: a branch, o sha, a PR e o estado dela; o que está pronto e verificado
+  separado do que falta com o critério de pronto; **toda ressalva de pé de
+  volta por inteiro** em vez de apontada; as armadilhas que só você sabe
+  nomear; o que foi decidido e por quê; e o comando exato que retoma o
+  trabalho. Lê `git status`, o log e as PRs abertas em vez de lembrar. Só
+  rascunho; nomear quem assume não é permissão para enviar. EN:
+  `/concise:handoff`.
 - **`/respostas-curtas:auditar [alvo]`** roda o agente de auditoria num
   rascunho, num caminho de arquivo, ou no corpo de PR ou issue que ele busca,
   e repassa o relatório como ele voltou — linha de veredito, violações
