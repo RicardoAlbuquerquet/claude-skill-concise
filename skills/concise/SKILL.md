@@ -452,7 +452,12 @@ the narrowest window — `git log --oneline` shows the title and nothing else.
   shape that gets there most reliably, and a declarative that names the
   change ("The invoice filter stops dropping the timezone") does the job
   too; what never passes is a label with no change in it ("Invoice filter",
-  "Fixes").
+  "Fixes"). And where the repo holds more than one area, the area comes
+  first, inside whatever shape the log already gives it — `fix(invoices):`,
+  a bare `invoices:`, a ticket code that carries it. This is the narrowest
+  window in the ruleset and the first word is the one that gets scanned; a
+  log where every line opens on the same verb costs the reader the whole
+  title before they know whether the commit is theirs.
 - **The repo's log is the convention, and the message lands inside it.** A
   `fix(scope):` prefix, a ticket code, another language, imperative or
   declarative — whatever the recent titles do consistently, the new one does

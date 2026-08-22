@@ -452,7 +452,12 @@ estreita — `git log --oneline` mostra o título e mais nada.
   forma que chega lá com mais segurança, e um declarativo que nomeia a
   mudança ("O filtro de faturas para de derrubar o fuso") também serve; o
   que nunca passa é rótulo sem mudança dentro ("Filtro de faturas",
-  "Ajustes").
+  "Ajustes"). E onde o repo tem mais de uma área, a área vem primeiro, dentro
+  da forma que o log já dá para ela — `fix(faturas):`, um `faturas:` pelado,
+  um código de ticket que carrega isso. Esta é a janela mais estreita das
+  regras e a primeira palavra é a que é escaneada; log em que toda linha abre
+  no mesmo verbo cobra o título inteiro antes de a pessoa saber se o commit é
+  dela.
 - **O log do repo é a convenção, e a mensagem entra dentro dela.** Prefixo
   `fix(escopo):`, código de ticket, outro idioma, imperativo ou declarativo
   — o que os títulos recentes fazem com consistência, o novo faz também. O

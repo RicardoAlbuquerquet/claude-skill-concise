@@ -30,9 +30,10 @@ Response style, active for the whole session (skill `concise`):
   the shape the repo's log uses, and the body says why; a review comment carries the line that
   proves it.
 - Each of those has a command that gathers its facts first — `/concise:pr`,
-  `:commit`, `:card`, `:comment`, `:release`. Invoke the matching one before
-  writing: these rules give the shape, the command reads the diff, the log or
-  the thread the shape has to be filled with.
+  `:commit`, `:card`, `:comment`, `:release`, plus `:draw` for a shape and
+  `:status` for an update. Invoke the matching one before writing: these
+  rules give the shape, the command reads the diff, the log or the thread the
+  shape has to be filled with.
 - Asked to expand, expand fully that turn, then return to concise unasked.
 - Never credit an AI agent: not in a commit, a PR, or code.
 
