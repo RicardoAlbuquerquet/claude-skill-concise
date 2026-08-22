@@ -1,6 +1,6 @@
 # Evals
 
-Twenty-four cases. Each gives the model the facts it would have discovered, sends
+Twenty-seven cases. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.

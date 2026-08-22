@@ -106,7 +106,7 @@ reais. Quatro saem mais longas.
 | `/respostas-curtas:release` | rascunha a entrada de changelog e o corpo da release dos commits desde a última tag — o que quebra primeiro |
 | `/respostas-curtas:plano` | rascunha o plano para aprovação — passos que nomeiam arquivo ou comando, o risco, o que fica de fora |
 | `/respostas-curtas:decidir` | opções vivas lado a lado com os custos, e ainda uma recomendação |
-| `/respostas-curtas:desenhar` | desenha a forma em ASCII, setas rotuladas; recusa quando o assunto não merece |
+| `/respostas-curtas:desenhar` | desenha a forma em ASCII — um traço só, nada passando de 72 colunas; recusa quando o assunto não merece |
 | `/respostas-curtas:status` | escreve o update como delta desde o último, notícia ruim no topo |
 | `/respostas-curtas:auditar` | roda o agente de auditoria num rascunho, arquivo ou corpo de PR e repassa o relatório |
 | Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
@@ -366,7 +366,12 @@ com todo o resto do contexto, e o comando que você digita continua sendo a
   vez de arredondado. EN: `/concise:decide`.
 - **`/respostas-curtas:desenhar [assunto]`** desenha a forma em ASCII — setas
   rotuladas com o que passa e o que custa, caixas rotuladas pelo que fazem em
-  vez do nome interno — depois de ler a fonte de cada salto. Recusa quando o
+  vez do nome interno — depois de ler a fonte de cada salto. Carrega quatro
+  layouts canônicos (fluxo, bifurcação, antes/depois, árvore de chamadas) e
+  as regras de acabamento: um conjunto de traços, nada passando de 72
+  colunas, todo rótulo pendurado na caixa que ele nomeia, falha abaixo da
+  linha principal, repetição como contagem, sem legenda; mermaid só onde a
+  superfície renderiza e o grafo é de fato bidimensional. Recusa quando o
   assunto não merece desenho (uma função, uma lista de três itens, a figura de
   uma frase que já está na tela) e diz isso em vez de desenhar assim mesmo.
   EN: `/concise:draw`.

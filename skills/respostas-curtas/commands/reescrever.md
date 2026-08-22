@@ -26,8 +26,8 @@ Regras da reescrita:
   reporte o buraco em vez de inventar conteúdo. Nunca invente valor, número ou
   resultado.
 - **Escolha o registro pelo destino.** Descrição de PR segue a seção de PR das
-  regras; tarefa ou issue segue a seção dela, inclusive os limites de
-  estrutura do painel estreito; resposta de chat segue a tabela de orçamentos.
+  regras; tarefa ou issue segue a seção dela, inclusive os limiares de duas
+  larguras para título e corpo; resposta de chat segue a tabela de orçamentos.
 
 Entregue o texto reescrito primeiro. Em bloco de código quando o destino for
 outra superfície — PR, issue, mensagem de commit, e-mail — para copiar

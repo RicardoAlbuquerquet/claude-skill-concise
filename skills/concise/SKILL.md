@@ -277,11 +277,11 @@ conversation. The register is tighter than a chat reply, not looser.
 
 ## Pull request descriptions
 
-Everything above applies: the first line says what the PR does, a recommendation
-carries its cost, process narration stays out. That includes the headers a
-template hands you ready-made — `## Summary` over two lines, `## Changes` over a
-diff the reviewer is already looking at. Same decoration as anywhere else, now
-with the template's authority behind it.
+Everything above applies: a recommendation carries its cost, process narration
+stays out, and the opening answers — here, by naming the problem the PR exists
+to solve. What a template hands ready-made still has to earn its place:
+`## Changes` over a diff the reviewer is already looking at is the same
+decoration as anywhere else, now with the template's authority behind it.
 
 When one PR carries several deliverables, they read as a short list — one
 line each, opening with its label, as a real markdown list (`- ` at the

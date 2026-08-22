@@ -18,10 +18,14 @@ today=$(date +%Y%m%d)
 # One check a day is right for everyone except the person shipping the
 # versions: inside the marketplace's own repo the throttle would hold the
 # cache — and the client's update button with it — stale until tomorrow.
+# The manifest lives at the repo root, so resolve the root — a session
+# opened in a subdirectory is still inside the repo.
 in_repo=0
-[ -f .claude-plugin/marketplace.json ] &&
-  grep -q '"name"[[:space:]]*:[[:space:]]*"claude-skill-concise"' \
-    .claude-plugin/marketplace.json && in_repo=1
+top=$(git rev-parse --show-toplevel 2>/dev/null)
+mf="${top:-.}/.claude-plugin/marketplace.json"
+[ -f "$mf" ] &&
+  grep -q '"name"[[:space:]]*:[[:space:]]*"claude-skill-concise"' "$mf" &&
+  in_repo=1
 
 if [ "$in_repo" = 0 ]; then
   [ "$(cat "$stamp" 2>/dev/null)" = "$today" ] && exit 0

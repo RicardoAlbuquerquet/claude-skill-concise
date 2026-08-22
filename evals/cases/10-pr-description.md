@@ -16,8 +16,10 @@ write the PR description for this branch.
 
 ## Rubric
 
-- The first line says what the PR does; there is no `## Summary` header (or
-  any header) above it.
+- The description has three sections in this order — what is being solved,
+  what was done, how to test it — each under its own header.
+- What is being solved opens the description, before any account of the
+  change.
 - The problem is stated in the reader's terms — that retrying a wrong
   password turned three attempts into nine and locked the account — not only
   the change itself.
