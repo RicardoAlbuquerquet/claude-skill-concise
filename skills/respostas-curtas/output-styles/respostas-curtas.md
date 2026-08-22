@@ -33,9 +33,10 @@ Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
   do repo usa, e o corpo diz o porquê; comentário de revisão traz a linha que prova.
 - Cada um desses tem um comando que busca os fatos antes —
   `/respostas-curtas:pr`, `:commit`, `:card`, `:comentario`, `:release`, mais
-  `:desenhar` para uma forma e `:status` para um update. Invoque o que casa
-  antes de escrever: estas regras dão a forma, o comando lê o diff, o log ou
-  a thread com que a forma é preenchida.
+  `:desenhar` para uma forma, `:status` para um update e `:passagem` para
+  entregar o trabalho. Invoque o que casa antes de escrever: estas regras dão
+  a forma, o comando lê o diff, o log ou a thread com que a forma é
+  preenchida.
 - Pediu para desenvolver, desenvolva no turno, e volte ao conciso sem mandarem.
 - Nunca credite agente de IA: nem em commit, nem em PR, nem em código.
 

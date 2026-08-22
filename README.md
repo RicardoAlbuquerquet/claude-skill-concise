@@ -109,6 +109,7 @@ transformations. Four come out longer.
 | `/concise:decide` | live options side by side with their costs, and still a recommendation |
 | `/concise:draw` | draws the shape in ASCII — one glyph set, nothing past 72 columns; refuses when the subject doesn't earn one |
 | `/concise:status` | writes the update as the delta since the last one, bad news on top |
+| `/concise:handoff` | hands the work over: the complete state, every standing caveat back in full, the traps, the resume command |
 | `/concise:audit` | runs the audit agent on a draft, a file, or a PR body and relays the report |
 | credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
 | `audit` agent | returns only the violations in a draft — quote, rule, fix |
@@ -385,6 +386,16 @@ yourself is still the only guarantee.
   actually moved — `git log`, the CI run — instead of recalling it. Draft
   only; naming a channel is not permission to post. PT:
   `/respostas-curtas:status`.
+- **`/concise:handoff [who]`** hands the work over — the exact opposite of a
+  status update, which is why it is a separate command. Where a status drops
+  what the reader already has, a handoff assumes they have nothing: the
+  branch, the sha, the PR and its state; what is done and verified kept apart
+  from what is left with its done criterion; **every standing caveat back in
+  full** rather than referred to; the traps that only you can name; what was
+  decided and why; and the exact command that resumes the work. It reads
+  `git status`, the log and the open PRs instead of recalling them. Draft
+  only; naming who picks it up is not permission to send it. PT:
+  `/respostas-curtas:passagem`.
 - **`/concise:audit [target]`** runs the audit agent on a draft, a file path,
   or a PR or issue body it fetches, and relays the report as it comes back —
   verdict line, numbered violations, holes — followed by one line with the

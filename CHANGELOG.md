@@ -5,6 +5,23 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.43.0 — 2026-08-22
+
+- **New command: `/concise:handoff` (PT `/respostas-curtas:passagem`)** — the
+  twelfth. It writes the handoff: the branch, the sha, the PR and its state;
+  what is done and verified kept apart from what is left with its done
+  criterion; the traps only the person leaving can name; what was decided and
+  why; and the exact command that resumes the work.
+- **It exists because it is the opposite of a status update**, and the two
+  were sharing one command's worth of rules. A status update is the delta and
+  earns the right to drop what the reader already has. A handoff assumes the
+  reader has nothing — no memory of the conversation, no caveat stated three
+  messages ago — so **every standing caveat comes back in full** instead of
+  being referred to by a clause. The ruleset already said that under "never
+  cut"; nothing produced it.
+- **The always-on core routes it**, alongside the six commands it already
+  named.
+
 ## 1.42.0 — 2026-08-22
 
 - **A commit title now carries the area too, completing the family.** A card
