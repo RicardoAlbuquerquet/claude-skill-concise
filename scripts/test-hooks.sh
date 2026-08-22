@@ -165,5 +165,24 @@ for port in concise respostas-curtas; do
   [ -z "$faltando" ] && { pass=$((pass+1)); echo "ok    boas-vindas de $port cita os comandos"; } || { fail=$((fail+1)); echo "FALHA boas-vindas de $port nao cita:$faltando"; }
 done
 
+echo "--- comando aponta para secao que existe"
+# Comando diz "siga a secao X das regras". Quando a secao e renomeada, a
+# referencia envelhece calada e o comando manda ler o que nao existe mais —
+# aconteceu tres vezes entre 1.32.0 e 1.41.0.
+for port in concise respostas-curtas; do
+  secoes="$FH/secoes-$port.txt"
+  sed -n 's/^## //p' "$REPO/skills/$port/SKILL.md" | tr -d '\r' > "$secoes"
+  mortas=""
+  for f in "$REPO/skills/$port/commands/"*.md "$REPO/skills/$port/agents/"*.md; do
+    while read -r s; do
+      [ -n "$s" ] || continue
+      grep -qxF "$s" "$secoes" || mortas="$mortas $(basename "$f"):\"$s\""
+    done <<EOF
+$(perl -CSD -0777 -ne 'while (/"([^"]+)"\s+section|seção\s+"([^"]+)"/g) { my $s=($1//$2); $s =~ s/\s+/ /g; print "$s\n" }' "$f")
+EOF
+  done
+  [ -z "$mortas" ] && { pass=$((pass+1)); echo "ok    referencias de secao em $port existem"; } || { fail=$((fail+1)); echo "FALHA secao morta em $port:$mortas"; }
+done
+
 echo "===== $pass ok, $fail falhas"
 [ "$fail" -eq 0 ]
