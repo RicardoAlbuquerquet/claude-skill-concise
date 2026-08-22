@@ -94,7 +94,7 @@ and ASCII survives the copy into a terminal, a commit or a field that renders
 nothing. Keep it under ~15 lines, and label the arrows with what actually
 flows:
 
-```
+```text
 PWA ──every app resume──> /auth/refresh ──> sessions ──> users
                            │                 │
                            └─ 2.1 s p95      │

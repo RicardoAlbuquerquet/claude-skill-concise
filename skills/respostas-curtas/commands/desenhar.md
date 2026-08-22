@@ -29,7 +29,7 @@ partida, não molde — quando a forma real não é nenhuma delas, desenhe a rea
 **Fluxo**, quando é um caminho só com três saltos ou mais. Esquerda para
 direita, o caminho inteiro numa linha, todo o resto pendurado embaixo:
 
-```
+```text
 PWA ──todo resume──> /auth/refresh ──> sessions
                       │
                       └─ 2,1 s p95, sem índice em token_hash
@@ -39,7 +39,7 @@ PWA ──todo resume──> /auth/refresh ──> sessions
 a condição na seta e não dentro de um losango, as duas saídas começando na
 mesma coluna:
 
-```
+```text
 POST /pedidos
      │
      ├── tem estoque ──> cobrança ──> e-mail de confirmação
@@ -53,7 +53,7 @@ POST /pedidos
 mesma coluna à esquerda e a mesma ordem de caixas, para que a diferença seja a
 única coisa que se mexe:
 
-```
+```text
 antes    worker ──> cache ──> relatorios_dia
 depois   worker ────────────> relatorios_dia
                                │
@@ -63,7 +63,7 @@ depois   worker ────────────> relatorios_dia
 **Árvore de chamadas**, quando o achado é quem chama quem. A indentação
 carrega a profundidade, e uma segunda coluna carrega o que cada chamada custa:
 
-```
+```text
 handleOrder()
 ├─ validate()      pura
 ├─ charge()        rede, sem timeout
@@ -171,16 +171,41 @@ Desenhe nesta ordem, porque alinhamento não é coisa que se conserta depois:
    colunas, corte os rótulos ou empilhe os blocos — nunca entregue torcendo
    para o painel ser largo.
 
+Depois o acabamento — sete regras que são todas sobre como ele fica, não sobre
+o que ele diz. É o que separa um desenho da figura de um:
+
+1. **Rótulos num registro só**: minúsculas, sem pontuação no fim, escritos do
+   mesmo jeito — `todo resume`, `2,1 s p95`, `retry ×3`. Três rótulos em três
+   registros leem como três autores.
+2. **Um estilo de unidade por desenho.** `2,1 s` ao lado de `40 minutos` são
+   dois desenhos; uma mesma medida em duas precisões também.
+3. **Comprimento de seta é espaçador, nunca sinal.** Estique uma seta só para
+   alinhar a coluna que ela alimenta. Quem vê seta longa e pensa "lento" foi
+   informado disso pelo espaçamento; se é lento, quem diz é o rótulo.
+4. **Coluna de custo começa numa coluna e fica nela**, mesmo onde os nomes na
+   frente dela estão irregulares. Essa segunda coluna é a única que a pessoa
+   lê de cima a baixo.
+5. **Encurte pela cabeça, nunca pela cauda** — `…/auth/refresh.rs:88`, porque
+   a cauda é o que identifica. O mesmo para um nome comprido.
+6. **A cerca leva a tag `text`.** Sem tag, perde a regra de marcar toda cerca;
+   com tag de shell, certos renderizadores colorem os traços de caixa como
+   sintaxe e transformam a forma em confete. `mermaid` é a única outra tag que
+   um desenho carrega.
+7. **Linha em branco separa blocos empilhados e mais nada.** Antes e depois
+   ganham uma entre eles; um fluxo só não ganha nenhuma, porque buraco dentro
+   de uma forma lê como duas formas.
+
 Antes de entregar, audite o rascunho você mesmo — toda seta rotulada, todo
 salto verificado ou marcado, nenhuma caixa nomeada por algo que a pessoa nunca
 vai tocar, abaixo de quinze linhas e de setenta e duas colunas, um conjunto de
 traços só, todo rótulo pendurado na caixa dele, sem legenda, a rota de falha
-abaixo da linha principal, repetição contada em vez de desenhada, e nenhuma
+abaixo da linha principal, repetição contada em vez de desenhada, rótulos num
+registro só, coluna de custo alinhada, a cerca com tag `text`, e nenhuma
 linha embaixo repetindo a figura — e corrija o que falhar. Se saiu mermaid,
 audite que ele
 ganhou as duas condições, que nenhuma aresta está pelada, e que nada num
 rótulo deixaria de compilar. Entregue só a versão limpa.
 
-Entrega: o desenho em bloco de código, com a tag do que ele é. Nada antes dele
-além da única frase que ele ilustra, quando essa frase ainda não está na
-conversa.
+Entrega: o desenho em bloco de código com a tag `text` — ou `mermaid` quando
+ele ganhou as duas condições. Nada antes dele além da única frase que ele
+ilustra, quando essa frase ainda não está na conversa.
