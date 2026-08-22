@@ -107,7 +107,7 @@ transformations. Four come out longer.
 | `/concise:release` | drafts the changelog entry and the release body from the commits since the last tag — what breaks first |
 | `/concise:plan` | drafts the plan for approval — steps that name a file or a command, the risk, what it leaves out |
 | `/concise:decide` | live options side by side with their costs, and still a recommendation |
-| `/concise:draw` | draws the shape in ASCII, arrows labelled; refuses when the subject doesn't earn one |
+| `/concise:draw` | draws the shape in ASCII — one glyph set, nothing past 72 columns; refuses when the subject doesn't earn one |
 | `/concise:status` | writes the update as the delta since the last one, bad news on top |
 | `/concise:audit` | runs the audit agent on a draft, a file, or a PR body and relays the report |
 | credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
@@ -367,9 +367,14 @@ yourself is still the only guarantee.
 - **`/concise:draw [subject]`** draws the shape in ASCII — arrows labelled
   with what flows and what it costs, boxes labelled by what they do rather
   than by their internal name — after reading the source for every hop. It
-  refuses when the subject does not earn a drawing (one function, a three-item
-  list, a picture of a sentence already on screen) and says so instead of
-  drawing it anyway. PT: `/respostas-curtas:desenhar`.
+  carries four canonical layouts (flow, branch, before/after, call tree) and
+  the craft rules: one glyph set, nothing past 72 columns, every label
+  hanging off the box it names, failure below the main line, repetition as a
+  count, no legend; mermaid only where the surface renders it and the graph
+  is genuinely two-dimensional. It refuses when the subject does not earn a
+  drawing (one function, a three-item list, a picture of a sentence already
+  on screen) and says so instead of drawing it anyway.
+  PT: `/respostas-curtas:desenhar`.
 - **`/concise:status [where]`** writes the update: only the delta since the
   last one, bad news on top, whatever is waiting on you in its own block, and
   when the next update lands. It finds the previous update and checks what

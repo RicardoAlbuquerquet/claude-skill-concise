@@ -30,9 +30,11 @@ write the PR description for this branch.
 
 - The five deliverables appear as a markdown list — five lines starting with
   `- ` — not as one paragraph chaining them with semicolons or dashes.
-- The first line says what the PR does, with no header above it, and the
-  opening also says what was wrong without it (green CI that missed real
-  breakage — a backwards version, a broken JSON, an empty eval response).
+- The description opens on what is being solved (green CI that missed real
+  breakage — a backwards version, a broken JSON, an empty eval response),
+  before any list of what was done.
+- The three sections — what is being solved, what was done, how to test it —
+  appear in that order, each under its own header.
 - At least three of the exact paths appear (`scripts/check-bump.sh`,
   `.github/workflows/parity.yml`, `evals/run.sh`,
   `skills/concise/hooks/self-update.sh`, `README.md`).

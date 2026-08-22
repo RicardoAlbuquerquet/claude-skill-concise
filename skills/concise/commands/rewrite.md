@@ -25,7 +25,8 @@ Rules of the rewrite:
   instead of inventing content. Never invent a value, a number, or a result.
 - **Pick the register by destination.** A PR description follows the PR
   section of the ruleset; a task or issue follows its section, including the
-  narrow-panel structure limits; a chat reply follows the budgets table.
+  two-widths thresholds for title and body; a chat reply follows the budgets
+  table.
 
 Deliver the rewritten text first. Put it in a fenced block when it is destined
 for another surface — PR, issue, commit message, e-mail — so it can be copied

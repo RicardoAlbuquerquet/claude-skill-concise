@@ -280,11 +280,11 @@ mais frouxo.
 
 ## Descrição de PR
 
-Vale tudo acima: a primeira linha diz o que a PR faz, recomendação vem com o
-custo, narração de processo continua fora. Isso inclui os cabeçalhos que o
-template entrega prontos — `## Resumo` sobre duas linhas, `## Mudanças` sobre um
-diff que o revisor já está olhando. O mesmo enfeite de sempre, agora com a
-autoridade do template atrás.
+Vale tudo acima: recomendação vem com o custo, narração de processo continua
+fora, e a abertura responde — aqui, nomeando o problema que a PR existe para
+resolver. O que o template entrega pronto ainda precisa merecer o lugar:
+`## Mudanças` sobre um diff que o revisor já está olhando é o mesmo enfeite de
+sempre, agora com a autoridade do template atrás.
 
 Quando uma PR carrega várias entregas, elas viram uma lista curta — uma linha
 cada, abrindo com o rótulo, como lista markdown de verdade (`- ` no começo

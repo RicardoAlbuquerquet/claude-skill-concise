@@ -5,6 +5,33 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.41.0 — 2026-08-21
+
+- **Bug fix: the ruleset contradicted itself on PR descriptions.** The PR
+  section still opened with "the first line says what the PR does" and called
+  every template header decoration — three paragraphs before the 1.35.0 rule
+  mandating three headed sections that open on what is being solved. The
+  opener now says the same thing the rule does, in both ports.
+- **Bug fix: three eval cases enforced revoked rules.** Cases 10 and 17
+  demanded the pre-1.35.0 PR shape (first line = what the PR does, no header
+  above it) and case 11 demanded verb-first card titles — the exact rule
+  1.32.0 replaced with "what changes, located". A response following today's
+  ruleset failed the suite. All three rubrics now grade the current rules.
+- **Three eval cases the rules never had**: a note on a card at three lines
+  with the anchor (1.34.0), a PR title with the area first and the state
+  after the merge (1.33.0), and a drawing that holds its shape — one glyph
+  set, nothing past 72 columns, labels hanging off their box (1.36.0+). The
+  suite goes from 24 to 27 cases.
+- **Bug fix: the 1.40.0 update-check bypass only worked at the repo root.**
+  The detection read `.claude-plugin/marketplace.json` relative to the
+  current directory, so a session opened in a subdirectory silently kept the
+  daily stamp. The repo root is now resolved through git; a new hook test
+  covers the subdirectory, taking the suite to 40.
+- **Stale references caught up**: `/concise:rewrite` pointed at the
+  "narrow-panel structure limits" — renamed "two widths" with different
+  thresholds in 1.32.0 — and both READMEs described `/concise:draw` without
+  any of the craft rules from 1.36.0–1.39.0.
+
 ## 1.40.0 — 2026-08-21
 
 - **The self-update hook no longer holds the marketplace cache stale for the

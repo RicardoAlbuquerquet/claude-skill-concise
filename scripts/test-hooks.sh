@@ -103,11 +103,15 @@ n2=$(wc -l < "$FH/calls.log" | tr -d ' ')
 (cd "$REPO" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
 n3=$(wc -l < "$FH/calls.log" | tr -d ' ')
 [ "$n3" = "4" ] && { pass=$((pass+1)); echo "ok    no repo do marketplace ignora o carimbo"; } || { fail=$((fail+1)); echo "FALHA bypass no repo: n3=$n3"; }
+# e tambem num subdiretorio do repo — a raiz e resolvida via git
+(cd "$REPO/skills/concise" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+n3b=$(wc -l < "$FH/calls.log" | tr -d ' ')
+[ "$n3b" = "6" ] && { pass=$((pass+1)); echo "ok    subdiretorio do repo tambem ignora o carimbo"; } || { fail=$((fail+1)); echo "FALHA bypass em subdir: n3b=$n3b"; }
 # e um repo qualquer continua respeitando o carimbo
 mkdir -p "$FH/outro"
 (cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
 n4=$(wc -l < "$FH/calls.log" | tr -d ' ')
-[ "$n4" = "4" ] && { pass=$((pass+1)); echo "ok    fora do repo o carimbo continua valendo"; } || { fail=$((fail+1)); echo "FALHA carimbo fora do repo: n4=$n4"; }
+[ "$n4" = "6" ] && { pass=$((pass+1)); echo "ok    fora do repo o carimbo continua valendo"; } || { fail=$((fail+1)); echo "FALHA carimbo fora do repo: n4=$n4"; }
 grep -q "1.13.0" "$FH/.claude/.concise-update-note" 2>/dev/null && { pass=$((pass+1)); echo "ok    grava nota de versao"; } || { fail=$((fail+1)); echo "FALHA nota de versao"; }
 [ -d "$FH/.claude/.concise-update-lock" ] && { fail=$((fail+1)); echo "FALHA lock ficou para tras"; } || { pass=$((pass+1)); echo "ok    lock liberado"; }
 # falha permanente: carimba mesmo assim (nao repete toda sessao)

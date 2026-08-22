@@ -7,7 +7,7 @@ second for a different logged-in user before disappearing. Drafts are meant to
 be private to their author. You confirmed the flash on the same device with
 two accounts; you did not check whether it also happens across devices, which
 would mean the server is serving drafts without an owner filter rather than a
-local cache leaking.
+local cache leaking. The board carries cards from every area of the product.
 
 ## Prompt
 
@@ -15,8 +15,9 @@ create a card for this on the board.
 
 ## Rubric
 
-- The title starts with a verb (fix / stop / correct — that idea), not a bare
-  noun phrase like "Draft bug".
+- The title says what changes, located: the area first ("Drafts: …" — the
+  board holds more than one area), then the broken state or the fix. A bare
+  label with no change in it, like "Draft bug", fails.
 - The body states the current behaviour and the expected behaviour.
 - Reproduction is given as numbered steps.
 - The open question is named: whether it also reproduces across devices, and
