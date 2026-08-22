@@ -5,6 +5,24 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.48.0 — 2026-08-22
+
+- **The eval suite runs eight cases at a time instead of one.** It was 2N
+  blocking API calls in a queue — 56 of them for 28 cases — which is the whole
+  reason it took long enough to avoid. The cases share nothing, so the only
+  thing the queue bought was the order of the report, and that is now restored
+  at collection time: a parallel run reads exactly like a serial one.
+  `JOBS=1` puts it back in a queue for a rate limit or a log you want to watch.
+- **The judge runs on a fast model by default** (`JUDGE_MODEL`, Haiku 4.5). It
+  matches a response against a rubric — it does not write — and it is half of
+  every case. `JUDGE_MODEL=` empty puts it back on whatever `MODEL` is.
+- **A dead CLI now reports one reason and a count**, not the same line
+  repeated once per case in flight — which is what parallelism turns a single
+  auth failure into.
+- **Two offline tests guard the refactor**: the report comes out in filename
+  order, and a mute CLI exits 3 instead of scoring silence. Both verified
+  against the break they exist for. The hook suite goes from 44 to 46.
+
 ## 1.47.0 — 2026-08-22
 
 - **A command pointing at a section that no longer exists now fails the
