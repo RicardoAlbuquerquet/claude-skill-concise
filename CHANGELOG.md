@@ -5,6 +5,22 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.47.0 — 2026-08-22
+
+- **A command pointing at a section that no longer exists now fails the
+  suite.** Every `"<name>" section` reference in a command or agent has to
+  match a `## <name>` heading in its port's `SKILL.md`. This is the class of
+  error that appeared three times between 1.32.0 and 1.41.0 — a rule gets
+  renamed or revoked and the files pointing at it go stale in silence.
+  Verified against a real rename: turning `## Show the shape` into
+  `## Draw the shape` turns the suite red naming `draw.md`. It runs offline,
+  so it gates every PR.
+- **Eval case 28 covers the one-hanging-note rule from 1.46.0**, which had no
+  coverage: a four-hop flow with exactly one thing wrong, so a drawing that
+  annotates all four fails. Case 27 could not carry it — that one has two
+  costs by construction. The suite goes from 27 to 28 cases, and the hook
+  suite from 42 to 44.
+
 ## 1.46.0 — 2026-08-22
 
 - **One hanging note per drawing, and it sits on the finding.** Until now the
