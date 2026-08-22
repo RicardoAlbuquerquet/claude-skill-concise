@@ -28,7 +28,7 @@ not moulds — when the real shape is none of them, draw the real shape.
 **A flow**, when it is one path with three or more hops. Left to right, the
 whole path on one line, everything else hanging under it:
 
-```
+```text
 PWA ──every app resume──> /auth/refresh ──> sessions
                            │
                            └─ 2.1 s p95, no index on token_hash
@@ -38,7 +38,7 @@ PWA ──every app resume──> /auth/refresh ──> sessions
 condition on the arrow rather than in a diamond, both outcomes starting at the
 same column:
 
-```
+```text
 POST /orders
      │
      ├── stock ok ──────> charge ──> confirmation mail
@@ -52,7 +52,7 @@ POST /orders
 left column and the same box order, so the difference is the only thing that
 moves:
 
-```
+```text
 before   worker ──> cache ──> reports_daily
 after    worker ────────────> reports_daily
                                │
@@ -62,7 +62,7 @@ after    worker ────────────> reports_daily
 **A call tree**, when the finding is who calls whom. Indentation carries the
 depth, and a second column carries what each call costs:
 
-```
+```text
 handleOrder()
 ├─ validate()      pure
 ├─ charge()        network, no timeout
@@ -165,15 +165,40 @@ Draw it in this order, because alignment is not something you fix afterwards:
 4. Measure the longest line before delivering. Past seventy-two columns, cut
    the labels or stack the blocks — never ship it and hope the panel is wide.
 
+Then the finish — seven rules that are all about how it looks, not what it
+says. They are what separates a drawing from a picture of one:
+
+1. **Labels in one register**: lowercase, no trailing punctuation, phrased the
+   same way — `every app resume`, `2.1 s p95`, `retry ×3`. Three labels in
+   three registers read as three authors.
+2. **One unit style per drawing.** `2.1 s` next to `40 minutes` is two
+   drawings; so is one measure carried at two precisions.
+3. **Arrow length is a spacer, never a signal.** Stretch an arrow only to line
+   up the column it feeds. A reader who sees a long arrow and thinks "slow"
+   was told that by the spacing; if it is slow, the label says so.
+4. **A cost column starts at one column and stays there**, even where the
+   names in front of it are ragged. That second column is the one thing the
+   reader scans down.
+5. **Shorten from the head, never the tail** — `…/auth/refresh.rs:88`, because
+   the tail is what identifies it. The same for a long name.
+6. **The fence is tagged `text`.** Untagged loses the tag-every-fence rule; a
+   shell tag makes some renderers colour the box-drawing characters as syntax
+   and turns the shape into confetti. `mermaid` is the only other tag a
+   drawing carries.
+7. **A blank line separates stacked blocks and nothing else.** Before and
+   after get one between them; a single flow gets none, because a gap inside
+   one shape reads as two shapes.
+
 Before delivering, audit the draft yourself — every arrow labelled, every hop
 verified or marked, no box named after something the reader will never touch,
 under fifteen lines and under seventy-two columns, one glyph set, every label
 hanging off its own box, no legend, the failure route below the main line,
-repetition counted rather than drawn, and no line under it that repeats the
+repetition counted rather than drawn, labels in one register, the cost column
+aligned, the fence tagged `text`, and no line under it that repeats the
 picture — and fix what fails. If it came out as mermaid, audit that it earned both
 conditions, that no edge is bare, and that nothing in a label would fail to
 parse. Deliver only the clean version.
 
-Delivery: the drawing in a fenced block, tagged for what it is. Nothing
-before it except the one sentence it illustrates, when that sentence isn't
-already in the conversation.
+Delivery: the drawing in a fenced block tagged `text` — or `mermaid` when it
+earned both conditions. Nothing before it except the one sentence it
+illustrates, when that sentence isn't already in the conversation.

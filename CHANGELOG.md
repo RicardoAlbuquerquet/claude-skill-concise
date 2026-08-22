@@ -5,6 +5,22 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.44.0 — 2026-08-22
+
+- **Seven finishing rules for a drawing**, all about how it looks rather than
+  what it says: labels in one register (lowercase, unpunctuated, phrased
+  alike), one unit style per drawing, arrow length as a spacer and never a
+  signal, a cost column that starts at one column and stays there, shortening
+  from the head so the identifying tail survives (`…/auth/refresh.rs:88`), and
+  a blank line only between stacked blocks — a gap inside one shape reads as
+  two.
+- **A drawing's fence is now tagged `text`.** Bare broke the ruleset's own
+  tag-every-fence rule; a shell tag makes some renderers colour the
+  box-drawing characters as syntax and turn the shape into confetti. Every
+  example inside the skill and the command is retagged to match.
+- Eval case 27 grades the two new checkable ones — the `text` tag and one
+  register for labels.
+
 ## 1.43.0 — 2026-08-22
 
 - **New command: `/concise:handoff` (PT `/respostas-curtas:passagem`)** — the

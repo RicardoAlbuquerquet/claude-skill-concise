@@ -95,7 +95,7 @@ e ASCII sobrevive à cópia para um terminal, um commit ou um campo que não
 renderiza nada. Menos de ~15 linhas, e rotule as setas com o que de fato
 passa por elas:
 
-```
+```text
 PWA ──todo resume──> /auth/refresh ──> sessions ──> users
                       │                 │
                       └─ 2,1 s p95      │

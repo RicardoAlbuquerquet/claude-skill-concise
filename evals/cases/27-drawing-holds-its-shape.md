@@ -24,3 +24,6 @@ draw how the nightly sync flows and where it hurts.
   two boxes where it could be read against either.
 - The drawing is under fifteen lines, with no legend or key explaining
   symbols.
+- The fence carries the tag `text`, not a shell tag and not bare.
+- Labels sit in one register — lowercase, no trailing periods — and the two
+  costs use one unit style rather than mixing `40 min` with `40 minutes`.
