@@ -74,8 +74,11 @@ Rules of the drawing:
 
 - **Ground every hop in the source.** Open the files, follow the call. A
   diagram of hops you inferred is fiction the reader will act on, and it is
-  believed more than a sentence would be. A hop you could not verify is
-  labelled as unverified inside the drawing, or left out and named under it.
+  believed more than a sentence would be. A hop you could not verify carries a
+  trailing `?` on its own label — `webhook retried ×3 ?` — and that is the one
+  form, because three drawings inventing `(?)`, `[unverified]` and `~` between
+  them make the mark itself the thing the reader has to decode. A hop you can't
+  even guess at is left out and named under the drawing instead.
 - **Label the arrows with what flows and what it costs** — `every app resume`,
   `2.1 s p95`, `retry ×3` — not with `calls` or a bare arrowhead. An unlabelled
   arrow only says two boxes are related, which the reader already assumed.
@@ -115,6 +118,16 @@ Rules of the drawing:
 - **No legend, no key.** A drawing that needs a line explaining what a glyph
   means has already failed — fold the meaning into the labels, or drop the
   distinction it was carrying. A `×8` or a unit is a label, not a legend.
+- **One thing is marked, and it is the finding.** The arrows get their labels
+  and the hops get their costs, but the box the finding lives in is the only
+  one carrying a hanging note under it. Annotate every box and the drawing
+  goes flat — the eye has nowhere to land, and the reader reads it as a
+  reference table rather than as a claim. When two boxes both deserve the
+  mark, that is two findings and probably two drawings.
+- **The boxes use the words in the sentence around them.** A box reading
+  `exporter` under a paragraph about "the export job" makes the reader
+  translate, and they are now holding two pictures: the drawn one and the one
+  the prose built. Pick the word once and let both use it.
 - **ASCII in a fenced block** always works, and it is the default. `mermaid`
   has its own conditions and its own rules, below.
 - **One line under it, only if the drawing doesn't already say it** — the
@@ -194,8 +207,9 @@ verified or marked, no box named after something the reader will never touch,
 under fifteen lines and under seventy-two columns, one glyph set, every label
 hanging off its own box, no legend, the failure route below the main line,
 repetition counted rather than drawn, labels in one register, the cost column
-aligned, the fence tagged `text`, and no line under it that repeats the
-picture — and fix what fails. If it came out as mermaid, audit that it earned both
+aligned, the fence tagged `text`, exactly one hanging note and it sits on the
+finding, the boxes named with the words the prose uses, and no line under it
+that repeats the picture — and fix what fails. If it came out as mermaid, audit that it earned both
 conditions, that no edge is bare, and that nothing in a label would fail to
 parse. Deliver only the clean version.
 

@@ -76,8 +76,11 @@ Regras do desenho:
 - **Fundamente cada salto na fonte.** Abra os arquivos, siga a chamada.
   Diagrama de saltos que você inferiu é ficção sobre a qual a pessoa vai agir,
   e ele é acreditado mais do que uma frase seria. Salto que você não conseguiu
-  verificar é rotulado como não verificado dentro do desenho, ou fica de fora
-  e é nomeado embaixo dele.
+  verificar leva um `?` no fim do rótulo dele — `webhook repetido ×3 ?` — e
+  essa é a forma única, porque três desenhos inventando `(?)`, `[nao
+  verificado]` e `~` entre eles transformam a própria marca naquilo que quem lê
+  tem que decifrar. Salto que você nem consegue supor fica de fora e é nomeado
+  embaixo do desenho.
 - **Rotule as setas com o que passa e o que custa** — `todo retorno ao app`,
   `2,1 s p95`, `retry ×3` — não com `chama` nem com a ponta da seta sozinha.
   Seta sem rótulo só diz que duas caixas se relacionam, o que a pessoa já
@@ -118,6 +121,16 @@ Regras do desenho:
   um traço significa já falhou — dobre o significado dentro dos rótulos, ou
   largue a distinção que ele carregava. Um `×8` ou uma unidade é rótulo, não
   legenda.
+- **Uma coisa é marcada, e ela é o achado.** As setas ganham os rótulos delas e
+  os saltos ganham os custos, mas a caixa onde o achado mora é a única que
+  carrega uma nota pendurada embaixo. Anote toda caixa e o desenho fica chapado
+  — o olho não tem onde pousar, e quem lê recebe aquilo como tabela de
+  consulta, não como afirmação. Quando duas caixas merecem a marca, são dois
+  achados e provavelmente dois desenhos.
+- **As caixas usam as palavras da frase em volta.** Caixa escrita `exporter`
+  embaixo de um parágrafo sobre "o job de exportação" obriga quem lê a
+  traduzir, e agora essa pessoa segura duas figuras: a desenhada e a que a
+  prosa montou. Escolha a palavra uma vez e deixe as duas usarem ela.
 - **ASCII em bloco de código** sempre funciona, e é o padrão. `mermaid` tem as
   condições e as regras dele, abaixo.
 - **Uma linha embaixo, só se o desenho já não disser** — o achado para o qual
@@ -200,8 +213,9 @@ salto verificado ou marcado, nenhuma caixa nomeada por algo que a pessoa nunca
 vai tocar, abaixo de quinze linhas e de setenta e duas colunas, um conjunto de
 traços só, todo rótulo pendurado na caixa dele, sem legenda, a rota de falha
 abaixo da linha principal, repetição contada em vez de desenhada, rótulos num
-registro só, coluna de custo alinhada, a cerca com tag `text`, e nenhuma
-linha embaixo repetindo a figura — e corrija o que falhar. Se saiu mermaid,
+registro só, coluna de custo alinhada, a cerca com tag `text`, exatamente uma
+nota pendurada e ela no achado, as caixas nomeadas com as palavras da prosa, e
+nenhuma linha embaixo repetindo a figura — e corrija o que falhar. Se saiu mermaid,
 audite que ele
 ganhou as duas condições, que nenhuma aresta está pelada, e que nada num
 rótulo deixaria de compilar. Entregue só a versão limpa.
