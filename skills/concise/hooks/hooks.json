@@ -17,7 +17,7 @@
           },
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/notices.sh\" concise \"concise is on. Eleven commands, by destination: /concise:pr, :card, :commit, :comment and :release write what leaves the conversation; :plan, :decide, :draw and :status shape what stays in it; :rewrite retrofits a finished text and :audit reports its violations without fixing them. This note shows once.\" \"concise: self-update has been failing for over a week. Run %s to see the error.\"",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/notices.sh\" concise \"concise is on. Twelve commands, by destination: /concise:pr, :card, :commit, :comment, :release and :handoff write what leaves the conversation; :plan, :decide, :draw and :status shape what stays in it; :rewrite retrofits a finished text and :audit reports its violations without fixing them. This note shows once.\" \"concise: self-update has been failing for over a week. Run %s to see the error.\"",
             "timeout": 10
           }
         ]

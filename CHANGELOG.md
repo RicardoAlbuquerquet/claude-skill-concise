@@ -5,6 +5,19 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.45.0 — 2026-08-22
+
+- **Bug fix: the welcome note still said "Eleven commands" and left `:handoff`
+  out of the map.** It is the one thing the plugin says on screen, it shows
+  once, and it went stale in 1.43.0 when the twelfth command shipped — so
+  anyone installing since then got an incomplete list at the only moment they
+  were reading one. Fixed in both ports.
+- **A test now makes that regression impossible to ship quietly**: every file
+  in `commands/` has to appear in its port's welcome text, so a new command
+  fails the suite instead of dropping off the map. Verified against the bug it
+  was written for — reverting the fix turns it red. The suite goes from 40 to
+  42.
+
 ## 1.44.0 — 2026-08-22
 
 - **Seven finishing rules for a drawing**, all about how it looks rather than
