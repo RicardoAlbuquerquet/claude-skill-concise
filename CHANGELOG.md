@@ -5,6 +5,26 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.42.0 — 2026-08-22
+
+- **A commit title now carries the area too, completing the family.** A card
+  got the rule in 1.32.0 and a PR title in 1.33.0; the commit title — read in
+  `git log --oneline`, the narrowest window in the ruleset — kept saying only
+  "what changes, in the shape the log uses". Where the repo holds more than
+  one area it now comes first, inside whatever shape the log already gives it
+  (`fix(invoices):`, a bare `invoices:`, a ticket code). One area, or a log
+  with no prefix: nothing is invented.
+- **`/concise:pr create` opens the PR, and `/concise:commit run` commits.**
+  Both stay draft-only by default; the literal word in the invocation is the
+  permission, and nothing else is — not a base ref, not staged changes, not a
+  PR you opened earlier in the same conversation. Anything that would make
+  the call wrong (no commits over the base, an unfilled hole, `gh` not
+  authenticated, an unpushed branch, two unrelated changes staged) stops
+  before it and says which, with the draft delivered anyway.
+- **The always-on core routes `:draw` and `:status` too.** It named five of
+  the eleven commands, so the two that come up most often outside a release
+  — showing a shape and reporting where work stands — were never pointed at.
+
 ## 1.41.0 — 2026-08-21
 
 - **Bug fix: the ruleset contradicted itself on PR descriptions.** The PR

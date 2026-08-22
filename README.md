@@ -320,13 +320,15 @@ yourself is still the only guarantee.
   missing cost, a missing test step) is either filled from the original or
   reported as a hole, never invented. Empty arguments target Claude's own
   previous reply. PT: `/respostas-curtas:reescrever`.
-- **`/concise:pr [base]`** drafts the pull request description for the
-  current branch from the real diff against `origin/main` (or the base you
-  name), first line saying what the PR does and the exact test steps at the
-  end. It reads the branch's commits for the why, fills the repo's
-  `PULL_REQUEST_TEMPLATE` when one exists, references the card or issue that
-  motivated the branch when one is known or findable — never invented — and
-  delivers the title alongside the body. PT: `/respostas-curtas:pr`.
+- **`/concise:pr [base] [create]`** drafts the pull request description for
+  the current branch from the real diff against `origin/main` (or the base
+  you name): what is being solved, what was done, how to test it, with the
+  exact test steps at the end. It reads the branch's commits for the why,
+  fills the repo's `PULL_REQUEST_TEMPLATE` when one exists, references the
+  card or issue that motivated the branch when one is known or findable —
+  never invented — and delivers the title alongside the body. Draft only,
+  unless you type the word `create`: that opens the PR with exactly the
+  drafted title and body and reports the URL. PT: `/respostas-curtas:pr`.
 - **`/concise:card <subject>`** drafts a task/issue card whose body stands
   alone — current → expected behaviour, exact values, a done criterion — and
   creates it when you name a destination a tool can reach (an MCP board, a
@@ -334,10 +336,12 @@ yourself is still the only guarantee.
   the tracker's issue template, sets the destination's fields instead of
   restating them in the body, and links named blockers. PT:
   `/respostas-curtas:card`.
-- **`/concise:commit [context]`** drafts the commit message for what is
+- **`/concise:commit [context] [run]`** drafts the commit message for what is
   staged — a title of 72 characters or fewer, in whatever shape the repo log
-  already uses, and a body saying why rather than retelling the diff. Draft only; it never runs `git commit`.
-  PT: `/respostas-curtas:commit`.
+  already uses, with the area first when the repo holds more than one, and a
+  body saying why rather than retelling the diff. Draft only, unless you type
+  the word `run`: that commits exactly the drafted message and reports the
+  short sha. PT: `/respostas-curtas:commit`.
 - **`/concise:comment [subject]`** drafts a review comment, a reply in a
   thread, a note on someone's card, or a message to a person: the claim
   first, then the `path:line` that proves it, whether it blocks stated inside

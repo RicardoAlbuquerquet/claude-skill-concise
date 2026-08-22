@@ -1,6 +1,6 @@
 ---
 description: Escreve a descrição da PR da branch atual — ancorada no diff real, com os passos de teste exatos no fim
-argument-hint: [ref base, contexto extra que o diff não mostra, ou os dois]
+argument-hint: [ref base, `create` para abrir a PR, contexto que o diff não mostra]
 ---
 
 Escreva a descrição da pull request da branch atual, seguindo a seção de PR
@@ -9,8 +9,9 @@ completas não estiverem no contexto.
 
 O argumento abaixo pode trazer uma ref base, contexto extra que o diff não
 mostra — id de card, restrição, motivo — ou os dois. Uma primeira palavra que
-o `git rev-parse --verify` resolve é a base; todo o resto é contexto. Sem
-ref, a base é `origin/main`.
+o `git rev-parse --verify` resolve é a base; a palavra literal `create` em
+qualquer lugar dele é a permissão para abrir a PR; todo o resto é contexto.
+Sem ref, a base é `origin/main`.
 
 $ARGUMENTS
 
@@ -76,5 +77,12 @@ por regra, e um invólucro de três crases termina naquela cerca interna,
 truncando a entrega. Nada depois do bloco além de buracos que você não
 conseguiu preencher pela branch, uma linha cada, abrindo com **Faltou:**.
 
-Só rascunho: nunca rode `gh pr create` — abrir a PR é decisão de quem pediu,
-e o título e o corpo já estão prontos para colar.
+Rascunho por padrão: o `gh pr create` não roda. A única exceção é a palavra
+literal `create` na invocação — ela é a permissão, e aí você entrega o título
+e a descrição como sempre, roda `gh pr create` com exatamente esses, e
+reporta a URL. A palavra tem que ter sido digitada: ref base, id de card,
+branch que obviamente quer uma PR, ou uma PR que você abriu antes nesta
+conversa não são permissão nenhuma. O que tornaria a chamada errada para
+antes dela — sem commits sobre a base, buraco que você não conseguiu
+preencher pela branch, `gh` sem autenticação, branch não publicada — e você
+diz qual, com o rascunho entregue do mesmo jeito.

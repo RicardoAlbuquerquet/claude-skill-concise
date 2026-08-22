@@ -320,13 +320,15 @@ com todo o resto do contexto, e o comando que você digita continua sendo a
   partir do original ou é reportado como buraco, nunca inventado. Sem
   argumento, o alvo é a resposta anterior do próprio Claude. EN:
   `/concise:rewrite`.
-- **`/respostas-curtas:pr [base]`** escreve a descrição da PR da branch atual
-  a partir do diff real contra `origin/main` (ou a base que você nomear), com
-  a primeira linha dizendo o que a PR faz e os passos de teste exatos no fim.
-  Lê os commits da branch atrás do porquê, preenche o
-  `PULL_REQUEST_TEMPLATE` do repo quando existe, referencia o card ou a
-  issue que motivou a branch quando é conhecido ou encontrável — nunca
-  inventado — e entrega o título junto do corpo. EN: `/concise:pr`.
+- **`/respostas-curtas:pr [base] [create]`** escreve a descrição da PR da
+  branch atual a partir do diff real contra `origin/main` (ou a base que você
+  nomear): o que está sendo resolvido, o que foi feito, como testar, com os
+  passos de teste exatos no fim. Lê os commits da branch atrás do porquê,
+  preenche o `PULL_REQUEST_TEMPLATE` do repo quando existe, referencia o card
+  ou a issue que motivou a branch quando é conhecido ou encontrável — nunca
+  inventado — e entrega o título junto do corpo. Só rascunho, a não ser que
+  você digite a palavra `create`: aí ela abre a PR com exatamente o título e
+  o corpo rascunhados e reporta a URL. EN: `/concise:pr`.
 - **`/respostas-curtas:card <assunto>`** rascunha um card de tarefa/issue com
   corpo que se sustenta sozinho — comportamento atual → esperado, valores
   exatos, critério de pronto — e cria quando você nomeia um destino que uma
@@ -334,10 +336,12 @@ com todo o resto do contexto, e o comando que você digita continua sendo a
   procura duplicata antes, honra o template de issue do tracker, preenche os
   campos do destino em vez de repeti-los no corpo, e linka bloqueadores
   nomeados. EN: `/concise:card`.
-- **`/respostas-curtas:commit [contexto]`** rascunha a mensagem de commit do
-  que está staged — título de 72 caracteres ou menos, na forma que o log do
-  repo já usa, e corpo dizendo o porquê em vez de recontar o diff. Só rascunho; nunca roda
-  `git commit`. EN: `/concise:commit`.
+- **`/respostas-curtas:commit [contexto] [run]`** rascunha a mensagem de
+  commit do que está staged — título de 72 caracteres ou menos, na forma que
+  o log do repo já usa, com a área primeiro quando o repo tem mais de uma, e
+  corpo dizendo o porquê em vez de recontar o diff. Só rascunho, a não ser
+  que você digite a palavra `run`: aí ela commita exatamente a mensagem
+  rascunhada e reporta o sha curto. EN: `/concise:commit`.
 - **`/respostas-curtas:comentario [assunto]`** rascunha comentário de revisão,
   resposta em thread, recado no card de alguém ou mensagem para uma pessoa: a
   afirmação primeiro, depois o `caminho:linha` que prova, se trava ou não dito

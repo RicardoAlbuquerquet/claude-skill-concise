@@ -1,6 +1,6 @@
 ---
 description: Draft the pull request description for the current branch — grounded in the real diff, exact test steps at the end
-argument-hint: [base ref, extra context the diff can't show, or both]
+argument-hint: [base ref, `create` to open it, extra context the diff can't show]
 ---
 
 Write the pull request description for the current branch, following the PR
@@ -9,7 +9,8 @@ is not already in context.
 
 The argument below may carry a base ref, extra context the diff can't show —
 a card id, a constraint, a reason — or both. A leading word that
-`git rev-parse --verify` resolves is the base; everything else is context.
+`git rev-parse --verify` resolves is the base; the literal word `create`
+anywhere in it is the permission to open the PR; everything else is context.
 No ref, base is `origin/main`.
 
 $ARGUMENTS
@@ -75,5 +76,12 @@ three-backtick wrapper ends at that inner fence, truncating the delivery.
 Nothing after the block except holes you could not fill from the branch, one
 line each, opening with **Missing:**.
 
-Draft only: never run `gh pr create` — opening a PR is the user's call, and
-they have the title and body ready to paste.
+Draft by default: `gh pr create` does not run. The one exception is the
+literal word `create` in the invocation — that is the permission, and then
+you deliver the title and description as always, run `gh pr create` with
+exactly those, and report the URL. The word has to be typed: a base ref, a
+card id, a branch that obviously wants a PR, or a PR you opened earlier in
+this conversation are none of them permission. Anything that would make the
+call wrong stops before it — no commits over the base, a hole you could not
+fill from the branch, `gh` not authenticated, the branch not pushed — and you
+say which, with the draft delivered anyway.
