@@ -151,5 +151,19 @@ rm -f "$SAD/prompt.txt"
 out=$(sa "linha ruim" "$SAD/nao-existe.md")
 grep -q "first sentence" "$SAD/prompt.txt" 2>/dev/null && { pass=$((pass+1)); echo "ok    stop-audit tem fallback sem o nucleo"; } || { fail=$((fail+1)); echo "FALHA stop-audit fallback"; }
 
+echo "--- boas-vindas cita todo comando"
+# O texto de boas-vindas do notices.sh e um mapa do plugin, e ele envelheceu
+# calado quando o :handoff entrou. Todo arquivo em commands/ tem que aparecer
+# nele, entao um comando novo quebra este teste em vez de sair do mapa.
+for port in concise respostas-curtas; do
+  hj="$REPO/skills/$port/hooks/hooks.json"
+  faltando=""
+  for cmd in "$REPO/skills/$port/commands/"*.md; do
+    n=$(basename "$cmd" .md)
+    grep -q ":$n\b" "$hj" || faltando="$faltando $n"
+  done
+  [ -z "$faltando" ] && { pass=$((pass+1)); echo "ok    boas-vindas de $port cita os comandos"; } || { fail=$((fail+1)); echo "FALHA boas-vindas de $port nao cita:$faltando"; }
+done
+
 echo "===== $pass ok, $fail falhas"
 [ "$fail" -eq 0 ]
