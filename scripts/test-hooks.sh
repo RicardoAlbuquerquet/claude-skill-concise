@@ -184,5 +184,20 @@ EOF
   [ -z "$mortas" ] && { pass=$((pass+1)); echo "ok    referencias de secao em $port existem"; } || { fail=$((fail+1)); echo "FALHA secao morta em $port:$mortas"; }
 done
 
+echo "--- harness dos evals (claude falso)"
+# O run.sh passou a rodar os casos em paralelo. Duas coisas que paralelismo
+# quebra calado: a ordem do relatorio e o abort quando o CLI morre.
+EV="$FH/ev"; mkdir -p "$EV"
+printf '#!/usr/bin/env bash\nif [ "$1" = "--help" ]; then echo "--append-system-prompt-file"; exit 0; fi\necho resposta\necho PASS\n' > "$EV/ok"
+printf '#!/usr/bin/env bash\nif [ "$1" = "--help" ]; then echo "--append-system-prompt-file"; exit 0; fi\nexit 0\n' > "$EV/vazio"
+chmod +x "$EV/ok" "$EV/vazio"
+
+esperado=$(ls "$REPO/evals/cases/"*.md | while read -r c; do basename "$c" .md; done)
+obtido=$(CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" 2>/dev/null | sed -n 's/^PASS  //p')
+[ "$esperado" = "$obtido" ] && { pass=$((pass+1)); echo "ok    evals reportam em ordem de arquivo"; } || { fail=$((fail+1)); echo "FALHA ordem do relatorio dos evals"; }
+
+CLAUDE_BIN="$EV/vazio" bash "$REPO/evals/run.sh" >/dev/null 2>&1
+[ "$?" -eq 3 ] && { pass=$((pass+1)); echo "ok    evals abortam com CLI mudo"; } || { fail=$((fail+1)); echo "FALHA evals nao abortaram com CLI mudo"; }
+
 echo "===== $pass ok, $fail falhas"
 [ "$fail" -eq 0 ]

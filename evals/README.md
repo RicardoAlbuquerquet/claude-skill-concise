@@ -1,6 +1,6 @@
 # Evals
 
-Twenty-eight cases. Each gives the model the facts it would have discovered, sends
+Twenty-eight cases, eight at a time. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -26,6 +26,8 @@ the long form works:
 | `BASELINE=1` | no style at all — see below |
 | `RUNS=3` | three attempts per case; anything short of all-pass reports `FLAKY` |
 | `MODEL=claude-sonnet-5` | pins the model, so two runs are comparable |
+| `JOBS=1` | serial, for a rate limit or a log you want to read as it goes |
+| `JUDGE_MODEL=` | judges with `MODEL` instead of the fast default |
 | `ONLY=07` | a single case, by filename fragment |
 | `CLAUDE_BIN=./stub` | swaps the CLI — how the harness itself is tested, free |
 
