@@ -41,7 +41,7 @@ dela, só o que muda uma decisão.
 | Travado, precisa de input | a pergunta + o que já foi feito sem a resposta |
 | Atualização no meio do trabalho | só o delta desde a sua última mensagem; uma linha quando nada surpreendente aconteceu |
 | Plano que você propõe | os passos numerados que vai rodar + o que pode dar errado + o que fica de fora |
-| Descrição de PR | o que ela resolve, depois o que foi feito, depois o passo de teste exato — nada disso repetindo o que o diff já mostra |
+| Descrição de PR | o que ela resolve, depois o que foi feito, depois o passo de teste exato — nada disso repetindo o que o diff já mostra, e cerca de 25 linhas de prosa, sem contar os comandos em bloco |
 | Tarefa ou issue | comportamento atual, esperado, valor exato, como fecha |
 | Comentário em card | o que mudou ou o que a pessoa tem que fazer, mais a âncora — ≤3 linhas, e uma é comum |
 
@@ -322,6 +322,23 @@ isso precisou acontecer. Três funções são três blocos, então elas ganham o
 cabeçalhos, e markdown ganha lugar aqui do mesmo jeito que ganha em qualquer
 outro canto: tabela para o que é linha e coluna, lista para as entregas, code
 span em todo caminho e valor. Descrição que se lê bem não é enchimento.
+
+O que ganha o lugar ainda tem um tamanho: **uma tela — algo como vinte e cinco
+linhas de prosa, sem contar os comandos em bloco**, porque código e comando não
+entram em nenhum orçamento aqui. Passou disso, a primeira coisa a checar é
+se não são duas PRs — cortar as ressalvas de uma descrição longa é o conserto
+errado para o problema errado. É teto, não alvo, e três coisas nunca pagam por
+ele: seção dobrada dentro de uma frase, ressalva derrubada, e dois comandos
+dividindo o mesmo bloco — um comando, um bloco, por mais blocos que isso dê.
+Descrição que chegou a quinze linhas assim não comprou nada com as dez que
+economizou. Dois hábitos respondem pela maior parte do
+excesso. **Cada entrega é dita uma vez**, na tabela ou na lista ou na prosa e
+nunca em duas delas: parágrafo explicando uma linha que a tabela já carrega é o
+diff recontado com uma grade na frente. E **checagem que você já rodou vira uma
+linha mais a saída que prova** — "já rodado: `44 ok, 0 falhas`" é a prova,
+enquanto o rename que você tentou, o vermelho que apareceu e a restauração
+depois são o itinerário. Entregar essa mesma sequência para o revisor rodar,
+como o que provaria que a checagem quebra, é passo de teste e fica.
 
 Enchimento é a descrição competindo com o diff: mapa arquivo por arquivo,
 contagem do que mudou, uma seção por área tocada. Quem revisa está com isso

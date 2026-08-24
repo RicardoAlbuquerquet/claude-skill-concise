@@ -25,8 +25,10 @@ write the PR description for this branch.
   the change itself.
 - The exact path `src/lib/retry.ts` appears.
 - Issue #52 is referenced.
-- The description ends with a test step containing the exact command
-  `npm test -- retry`.
+- The test steps are the last section, and they contain the exact command
+  `npm test -- retry`. What the ruleset asks for around that command — the
+  expected output, what would prove it broke, the unverified part named — is
+  part of the step, so text after the command is not a violation.
 - The unverified part is named as unverified — that the staging lockout
   policy was not exercised.
 - There is no `Co-Authored-By`, no "generated with", and no other credit to

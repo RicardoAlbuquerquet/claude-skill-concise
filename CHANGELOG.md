@@ -5,6 +5,37 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.50.0 — 2026-08-24
+
+The same report as 1.49.0, one surface further out: the PR descriptions this
+command writes ran 57, 65 and 57 lines.
+
+- **A PR description now has a size: one screenful, around twenty-five lines
+  of prose**, with the fenced commands not counted — code and commands are
+  exempt from every budget in this ruleset, and this one is no exception. It
+  is a ceiling and not a target: a section folded into a sentence, a dropped
+  caveat and two commands sharing one fence never pay for it.
+- **What inflates them is stated where the rule is**: a deliverable said twice
+  — once in the table and again in the prose under it — and a check you ran
+  retold as a trip instead of reported as one line plus the output that proves
+  it. The break-it sequence handed to the reviewer *to run* stays; it is a
+  test step, not an account. In `SKILL.md` and in `commands/pr.md`, which
+  gained the line count as the last thing it checks before delivering.
+- **Eval case 31** grades a PR description against the ceiling, including that
+  the cut never comes out of a caveat or a fence. It passes 3 of 3; it took
+  four rewrites to get there, and three of them were the rubric. Both lessons
+  are in `evals/README.md`: a case whose facts restate work that really landed
+  here gets contradicted by the session's own git context, and an item that
+  grades a shape has to say what makes it fail in something countable.
+- **Case 10's rubric is fixed**, and it was flaky at 2 of 3 before any of this
+  — measured against the pre-change skill to be sure the new ceiling was not
+  the cause. It read "ends with a test step containing the exact command"
+  literally, so the unverified part the ruleset requires after the command
+  failed the case that asked for it. It passes 3 of 3 now.
+- `commands/pr.md` goes from 87 to 98 lines, against the ~100 that
+  `CONTRIBUTING.md` asks a command to justify. The four lines it added buy the
+  ceiling, the said-once rule and the counted-lines check at the end.
+
 ## 1.49.0 — 2026-08-24
 
 Both halves of one report: replies still ran long, and they were dense with
