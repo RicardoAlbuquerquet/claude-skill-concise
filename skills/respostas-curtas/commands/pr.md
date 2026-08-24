@@ -39,7 +39,12 @@ Como:
    termos de quem lê, tirado dos commits, do card linkado ou do nome da
    branch e nunca inventado — o título já disse o que a PR faz. Depois o que
    foi feito, na forma que o trabalho tomou: um parágrafo para uma coisa, uma
-   lista para várias, uma tabela quando a mudança é um valor por caso.
+   lista para várias, uma tabela quando a mudança é um valor por caso. A
+   descrição inteira é uma tela — algo como vinte e cinco linhas de prosa,
+   sem contar os comandos em bloco. Passou disso, cheque se não são duas PRs
+   antes de cortar qualquer coisa de que o revisor precisa. É teto, não alvo,
+   e três coisas nunca pagam por ele: seção dobrada dentro de uma frase,
+   ressalva derrubada, e dois comandos dividindo o mesmo bloco.
 5. Dentro dessas seções, só o que o revisor não tira mais rápido do diff: o
    que muda para quem usa, decisões tomadas com seus custos, o que ficou
    fora do escopo, e qualquer coisa não verificada — nomeada como não
@@ -52,19 +57,25 @@ Como:
    seção para uma alternativa que uma linha carrega, e crédito a agente de IA
    em lugar nenhum. Várias entregas viram lista curta — uma linha cada, rótulo
    primeiro, `- ` no começo da linha — nunca parágrafo emendado com
-   ponto-e-vírgula ou travessão.
+   ponto-e-vírgula ou travessão, e cada uma dita uma vez: parágrafo
+   explicando uma linha que a tabela acima já carrega é o diff recontado com
+   uma grade na frente.
 7. Termine com os passos de teste: o comando exato copiável, o que aparece se
    estiver certo, e o que provaria que quebrou quando o comando não cobre o
-   caso. Quando você não rodou um passo, diga isso dentro do próprio passo.
+   caso. Quando você não rodou um passo, diga isso dentro do próprio passo;
+   quando rodou, isso é uma linha mais a linha de saída que prova, nunca o
+   relato de ter rodado — a sequência de quebrar entregue para o revisor
+   rodar é passo, não relato.
    Feature ainda sem tela não é desculpa — o passo é a própria chamada
    direta, com rota e corpo, não uma nota de que a chamada direta existe.
 
 Antes de entregar, audite o rascunho contra o checklist você mesmo — título
 na forma do repo com a área dele, a descrição abrindo no que está sendo
 resolvido, valores exatos em span, entregas em lista, as três seções na ordem,
-nada repetindo o diff, passos de teste com os não rodados marcados — e corrija
-o que falhar. Entregue só a
-versão limpa.
+nada repetindo o diff nem a tabela ao lado, passos de teste com os não rodados
+marcados — e corrija o que falhar. Conte também as linhas de prosa: passou de
+vinte e cinco, o corte sai do que repete outra coisa, nunca de uma ressalva, de
+um valor ou de um bloco de comando. Entregue só a versão limpa.
 
 Entregue o título primeiro, em linha própria — o que muda quando mescla, na
 forma que o log do repo já usa, com a área primeiro dentro dessa forma quando

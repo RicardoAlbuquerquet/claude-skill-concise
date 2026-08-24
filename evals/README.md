@@ -1,6 +1,6 @@
 # Evals
 
-Thirty cases, eight at a time. Each gives the model the facts it would have discovered, sends
+Thirty-one cases, eight at a time. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -43,7 +43,7 @@ The style and the facts reach the CLI through `--append-system-prompt-file`,
 at case 17 with "Argument list too long" before the switch. A CLI old enough
 to lack the flag still works and says so.
 
-**Cost:** two API calls per case per run, so the default suite is 60 calls
+**Cost:** two API calls per case per run, so the default suite is 62 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -84,6 +84,7 @@ you change a rule here, change the rubric that tests it.
 | One hanging note, and it sits on the finding | 28 | not measured |
 | One gloss per response; the rest of the terms become what they do | 29 | not measured |
 | One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | not measured |
+| PR description inside a screenful, and the cut comes out of what repeats | 31 | not measured |
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18
@@ -137,6 +138,24 @@ A rubric can be miscalibrated as easily as a rule can drift. Case 10 asked a
 single-change PR for a list of deliverables it did not have — the response
 was right and the rubric was wrong. When a case fails, read the quoted
 violation before assuming the skill moved.
+
+**Case 10 was flaky at 2 of 3 for the same reason, and it predates the rule
+that looked guilty.** "The description ends with a test step containing the
+exact command" was read literally: any caveat after the command — the
+unverified part, what would prove it broke — failed a response the ruleset
+had asked for. Measured against the pre-change skill before touching
+anything, which is what said the ceiling added in 1.49.0 was not the cause.
+The item now asks that the test steps be the last *section*, and the case
+passes 3 of 3.
+
+Case 31 cost four rewrites, and three of them were the rubric rather than the
+skill. Two lessons in it. A case whose facts restate work that really landed
+in this repository gets contradicted by the session's own git context — the
+model reported the branch as already merged, correctly — so its facts now
+name a project that has nothing to do with the checkout. And an item that
+grades a shape ("one line, not a story") has to say what makes it fail:
+counting sentences is checkable, "recounting your trip" is a judgement call
+the judge will make differently every run.
 
 ## Adding one
 

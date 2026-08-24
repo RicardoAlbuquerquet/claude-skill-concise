@@ -41,7 +41,7 @@ it.** After it, only what changes a decision.
 | Blocked, needs input | the question + what you already did without the answer |
 | Status update mid-work | only the delta since your last message; one line when nothing surprising happened |
 | A plan you are proposing | the numbered steps you will run + what could go wrong + what it leaves out |
-| Pull request description | what it solves, then what was done, then the exact test steps — none of it restating what the diff already shows |
+| Pull request description | what it solves, then what was done, then the exact test steps — none of it restating what the diff already shows, and about 25 lines of prose, the fenced commands not counted |
 | Task or issue | current behaviour, expected behaviour, exact values, how it closes |
 | Comment on a card | what changed or what the reader has to do, plus the anchor — ≤3 lines, and one is common |
 
@@ -320,6 +320,24 @@ earn their headers, and markdown earns its place here the way it does
 everywhere else: a table for what is rows and columns, a list for the
 deliverables, code spans on every path and value. A description that reads well
 is not padding.
+
+What earns its place still has a size: **one screenful — around twenty-five
+lines of prose, with the fenced commands not counted**, because code and
+commands are exempt from every budget here. Past that, the first thing to check is
+whether it is two PRs — cutting the caveats out of one long description is the
+wrong fix for the wrong problem. It is a ceiling and not a target, and three
+things never pay for it: a section folded into a sentence, a caveat dropped,
+and two commands sharing one fence — one command, one fence, however many that
+makes. A description that reached fifteen lines that way bought nothing with
+the ten it saved. Two habits carry most of the overrun. **Each
+deliverable is stated once**, in the table or the list or the prose and never
+in two of them: a paragraph explaining a row the table already holds is prose
+restating the diff with a grid in front of it. And **a check you already ran is
+reported in one line plus the output that proves it** — "already run: `44 ok, 0
+falhas`" is the evidence, while the rename you tried, the red you saw and the
+restore afterwards is the itinerary. Handing the reviewer that same sequence to
+run, as the thing that would prove the check can break, is a test step and
+stays.
 
 What is padding is the description competing with the diff: a file-by-file map,
 a count of what changed, a section per area touched. The reviewer has that open
