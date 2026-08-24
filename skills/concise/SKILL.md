@@ -41,6 +41,7 @@ it.** After it, only what changes a decision.
 | Blocked, needs input | the question + what you already did without the answer |
 | Status update mid-work | only the delta since your last message; one line when nothing surprising happened |
 | A plan you are proposing | the numbered steps you will run + what could go wrong + what it leaves out |
+| Commit message | a title that says what changes, ≤72 characters, in the log's shape; a body only when the diff can't show why — ≤6 lines, and no body is the common case |
 | Pull request description | what it solves, then what was done, then the exact test steps — none of it restating what the diff already shows, and about 25 lines of prose, the fenced commands not counted |
 | Task or issue | current behaviour, expected behaviour, exact values, how it closes |
 | Comment on a card | what changed or what the reader has to do, plus the anchor — ≤3 lines, and one is common |
@@ -504,11 +505,17 @@ the narrowest window — `git log --oneline` shows the title and nothing else.
   a title that says what changes, inside 72 characters, with no AI credit. A perfect title in the wrong convention still reads as a
   misfit in `git log --oneline`; a commitlint config turns the mismatch into
   a rejected commit.
-- **The body says why, not what.** The diff already shows what changed; the
-  body carries what the diff can't: why now, what behaviour changes, what to
-  watch. A body restating the diff is prose restating code. Wrap it near 72
-  columns — `git log` shows it indented, and unwrapped lines run off the
-  pane.
+- **The body says why, not what — and often says nothing.** The diff already
+  shows what changed; the body carries only what the diff can't: why now,
+  what behaviour changes, what to watch. **Six lines is the ceiling, and no
+  body at all is the common case** — most logs are almost entirely
+  title-only, and a title that already says the why has nothing left to add.
+  What pushes a body past six lines is never a second reason; it is the
+  investigation retold, the list of what you ran, a file-by-file account, or
+  the release note written early. Each of those has its own home — the PR
+  description, the test step, the changelog — and lands there anyway, so in
+  the commit it is the same text written twice. Wrap near 72 columns: `git
+  log` indents the body, and unwrapped lines run off the pane.
 - **Exact references survive** — the issue number, the path, the flag name.
 - **One commit, one change.** A message that needs "and also" is describing
   two commits.

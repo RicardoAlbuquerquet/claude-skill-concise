@@ -41,6 +41,7 @@ dela, só o que muda uma decisão.
 | Travado, precisa de input | a pergunta + o que já foi feito sem a resposta |
 | Atualização no meio do trabalho | só o delta desde a sua última mensagem; uma linha quando nada surpreendente aconteceu |
 | Plano que você propõe | os passos numerados que vai rodar + o que pode dar errado + o que fica de fora |
+| Mensagem de commit | título que diz o que muda, ≤72 caracteres, na forma do log; corpo só quando o diff não mostra o porquê — ≤6 linhas, e sem corpo é o caso comum |
 | Descrição de PR | o que ela resolve, depois o que foi feito, depois o passo de teste exato — nada disso repetindo o que o diff já mostra, e cerca de 25 linhas de prosa, sem contar os comandos em bloco |
 | Tarefa ou issue | comportamento atual, esperado, valor exato, como fecha |
 | Comentário em card | o que mudou ou o que a pessoa tem que fazer, mais a âncora — ≤3 linhas, e uma é comum |
@@ -502,11 +503,17 @@ estreita — `git log --oneline` mostra o título e mais nada.
   o que muda, dentro de 72 caracteres, sem crédito de IA. Título perfeito na convenção errada continua destoando no
   `git log --oneline`; uma config de commitlint transforma o descompasso em
   commit rejeitado.
-- **O corpo diz o porquê, não o quê.** O diff já mostra o que mudou; o corpo
-  carrega o que o diff não carrega: por que agora, que comportamento muda, o
-  que vigiar. Corpo repetindo o diff é prosa repetindo código. Quebre perto
-  de 72 colunas — o `git log` mostra indentado, e linha sem quebra vaza do
-  painel.
+- **O corpo diz o porquê, não o quê — e muitas vezes não diz nada.** O diff
+  já mostra o que mudou; o corpo carrega só o que o diff não carrega: por que
+  agora, que comportamento muda, o que vigiar. **Seis linhas é o teto, e
+  nenhum corpo é o caso comum** — a maioria dos logs é quase toda de título
+  só, e título que já diz o porquê não deixou nada para o corpo. O que empurra
+  um corpo além de seis linhas nunca é um segundo motivo; é a investigação
+  recontada, a lista do que você rodou, um relato arquivo por arquivo, ou a
+  nota de release escrita cedo. Cada uma dessas tem casa própria — descrição
+  de PR, passo de teste, changelog — e vai chegar lá de todo jeito, então no
+  commit é o mesmo texto escrito duas vezes. Quebre perto de 72 colunas: o
+  `git log` mostra indentado, e linha sem quebra vaza do painel.
 - **Referência exata sobrevive** — o número da issue, o caminho, o nome da
   flag.
 - **Um commit, uma mudança.** Mensagem que precisa de "e também" está

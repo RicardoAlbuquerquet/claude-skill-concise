@@ -5,6 +5,26 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.52.0 — 2026-08-24
+
+The commit body had no budget — the only surface in the ruleset without one.
+The three commits this repo wrote with the command carry 16, 19 and 23 lines
+of body; every other commit in its log has none.
+
+- **Six lines is the ceiling, and no body at all is the common case.** A
+  title that already says the why has nothing left to add, and most logs are
+  almost entirely title-only.
+- **What pushes a body over is named, because it is never a second reason**:
+  the investigation retold, the list of what you ran, a file-by-file account,
+  the release note written early. Each lands in the PR description, the test
+  step or the changelog anyway, so in the commit it is the same text twice.
+- In `SKILL.md` as a budget row of its own, in `commands/commit.md` as a
+  count before delivering, and in the hook core — which is where a session
+  reads it without invoking anything.
+- **Eval case 32** hands the model an hour of investigation, two green
+  commands and a written changelog line, and fails the message that keeps any
+  of them. It passes 3 of 3, and cases 09 and 16 still do.
+
 ## 1.51.0 — 2026-08-24
 
 The rule from 1.50.0 only fires if the command runs, and nothing made it

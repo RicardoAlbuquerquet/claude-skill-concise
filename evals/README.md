@@ -1,6 +1,6 @@
 # Evals
 
-Thirty-one cases, eight at a time. Each gives the model the facts it would have discovered, sends
+Thirty-two cases, eight at a time. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -43,7 +43,7 @@ The style and the facts reach the CLI through `--append-system-prompt-file`,
 at case 17 with "Argument list too long" before the switch. A CLI old enough
 to lack the flag still works and says so.
 
-**Cost:** two API calls per case per run, so the default suite is 62 calls
+**Cost:** two API calls per case per run, so the default suite is 64 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -85,6 +85,7 @@ you change a rule here, change the rubric that tests it.
 | One gloss per response; the rest of the terms become what they do | 29 | not measured |
 | One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | not measured |
 | PR description inside a screenful, and the cut comes out of what repeats | 31 | not measured |
+| Commit body: six lines at most, no investigation, no list of what was run | 32 | not measured |
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18

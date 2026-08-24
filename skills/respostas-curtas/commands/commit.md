@@ -34,8 +34,11 @@ Como:
    código de ticket). Área única: nenhum prefixo inventado para repo cujo log
    não tem nenhum.
 4. Corpo só quando acrescenta o que o diff não mostra: por que agora, que
-   comportamento muda, o que vigiar, quebrado perto de 72 colunas. Sem prosa
-   repetindo o diff. Referência exata — número de issue, caminho, flag —
+   comportamento muda, o que vigiar, quebrado perto de 72 colunas. **Seis
+   linhas é o teto e sem corpo é o caso comum** — conte antes de entregar, e
+   o que passa disso é a investigação recontada, a lista do que você rodou ou
+   a nota de release escrita cedo, e cada uma dessas chega na PR, no passo de
+   teste ou no changelog de todo jeito. Sem prosa repetindo o diff. Referência exata — número de issue, caminho, flag —
    sobrevive; nunca invente uma.
 5. Se o staged é claramente duas mudanças sem relação, diga isso, rascunhe a
    mensagem da dominante, e dê o `git restore --staged <caminhos>` exato que

@@ -33,9 +33,12 @@ How:
    ticket code). One area only: no prefix invented for a repo whose log has
    none.
 4. Body only when it adds what the diff can't show: why now, what behaviour
-   changes, what to watch, wrapped near 72 columns. No prose restating the
-   diff. Exact references — issue number, path, flag — survive; never invent
-   one.
+   changes, what to watch, wrapped near 72 columns. **Six lines is the
+   ceiling and no body is the common case** — count them before delivering,
+   and what goes over is the investigation retold, the list of what you ran
+   or the release note written early, each of which lands in the PR, the test
+   step or the changelog anyway. No prose restating the diff. Exact
+   references — issue number, path, flag — survive; never invent one.
 5. If the staged changes are clearly two unrelated changes, say so, draft the
    message for the dominant one, and give the exact
    `git restore --staged <paths>` that splits the other out.
