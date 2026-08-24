@@ -1,6 +1,6 @@
 ---
 description: Escreve um comentário de revisão, uma resposta em thread, um recado num card ou uma mensagem para alguém — a afirmação primeiro, a linha que prova, um ponto por comentário
-argument-hint: [sobre o que é o comentário, e opcionalmente para onde ele vai]
+argument-hint: "[sobre o que é o comentário, e opcionalmente para onde ele vai]"
 ---
 
 Escreva um comentário ou mensagem seguindo a seção "Comentário e resposta"

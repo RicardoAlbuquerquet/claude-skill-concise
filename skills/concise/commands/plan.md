@@ -1,6 +1,6 @@
 ---
 description: Draft the plan you are proposing — the numbered steps you will run, the risk named, what it leaves out. Text only; it runs nothing
-argument-hint: [what the plan is for — empty uses the work under discussion]
+argument-hint: "[what the plan is for — empty uses the work under discussion]"
 ---
 
 Write one plan for approval, following the "Plans you propose" section of the

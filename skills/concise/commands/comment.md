@@ -1,6 +1,6 @@
 ---
 description: Draft a review comment, a thread reply, a note on a card, or a message to a person — the claim first, the line that proves it, one point per comment
-argument-hint: [what the comment is about, and optionally where it goes]
+argument-hint: "[what the comment is about, and optionally where it goes]"
 ---
 
 Write one comment or message following the "Comments and replies" section of

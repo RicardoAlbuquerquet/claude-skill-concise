@@ -1,6 +1,6 @@
 ---
 description: Draw the shape — ASCII for a sequence, a branch, or a before/after, arrows labelled with what flows, one glyph set, nothing that wraps. Refuses when the subject doesn't earn a drawing
-argument-hint: [what to draw — empty uses what was just explained]
+argument-hint: "[what to draw — empty uses what was just explained]"
 ---
 
 Draw one diagram, following the "Show the shape" section of the `concise`

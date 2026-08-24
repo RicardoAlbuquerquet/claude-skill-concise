@@ -1,6 +1,6 @@
 ---
 description: Draft the commit message for what is staged — title ≤72 chars in the shape the repo log uses, body says why, never the diff retold
-argument-hint: [`run` to commit it, extra context the diff can't show]
+argument-hint: "[`run` to commit it, extra context the diff can't show]"
 ---
 
 Draft one commit message for what is currently staged, following the "Commit

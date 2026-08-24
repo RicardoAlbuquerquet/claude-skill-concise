@@ -1,6 +1,6 @@
 ---
 description: Escreve a descrição da PR da branch atual — ancorada no diff real, com os passos de teste exatos no fim
-argument-hint: [ref base, `create` para abrir a PR, contexto que o diff não mostra]
+argument-hint: "[ref base, `create` para abrir a PR, contexto que o diff não mostra]"
 ---
 
 Escreva a descrição da pull request da branch atual, seguindo a seção de PR

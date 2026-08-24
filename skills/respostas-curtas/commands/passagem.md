@@ -1,6 +1,6 @@
 ---
 description: Passa o trabalho adiante — o estado completo, toda ressalva de pé de volta por inteiro, as armadilhas, e o comando exato que retoma
-argument-hint: [quem assume, ou que parte do trabalho — opcional]
+argument-hint: "[quem assume, ou que parte do trabalho — opcional]"
 ---
 
 Escreva uma passagem de trabalho, seguindo a lista "nunca corte" das regras de

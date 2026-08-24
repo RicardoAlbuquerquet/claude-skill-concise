@@ -1,6 +1,6 @@
 ---
 description: Desenha a forma — ASCII de uma sequência, de uma bifurcação ou de um antes/depois, setas rotuladas com o que passa, um traço só, nada que quebre linha. Recusa quando o assunto não merece desenho
-argument-hint: [o que desenhar — vazio usa o que acabou de ser explicado]
+argument-hint: "[o que desenhar — vazio usa o que acabou de ser explicado]"
 ---
 
 Desenhe um diagrama, seguindo a seção "Mostre o desenho" das regras de

@@ -1,6 +1,6 @@
 ---
 description: Draft a task/issue card that stands alone — current → expected, exact values, done criterion — and create it when a destination is given
-argument-hint: [what the card is about, and optionally where to create it]
+argument-hint: "[what the card is about, and optionally where to create it]"
 ---
 
 Produce one task/issue card following the "Tasks and issues" section of the

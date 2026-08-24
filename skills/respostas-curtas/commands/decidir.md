@@ -1,6 +1,6 @@
 ---
 description: Põe as opções vivas lado a lado e ainda recomenda uma — cada custo nomeado, a recomendação argumentada contra as alternativas especificamente
-argument-hint: [a decisão, e as opções se você já souber quais são]
+argument-hint: "[a decisão, e as opções se você já souber quais são]"
 ---
 
 Monte uma decisão que é de quem lê, seguindo a seção "Quando a escolha é do

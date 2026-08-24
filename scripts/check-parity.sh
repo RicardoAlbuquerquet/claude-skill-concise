@@ -25,7 +25,7 @@ files ()   { find "$1" -name '*.md' 2>/dev/null | wc -l | tr -d ' '; }
 # must be byte-identical across ports — the language lives in hooks.json, which
 # passes the strings in. Counting lines would not catch a one-sided fix.
 identical () {
-  for f in credit-guard.sh inject-core.sh notices.sh self-update.sh; do
+  for f in credit-guard.sh inject-core.sh notices.sh route-hint.sh self-update.sh; do
     cmp -s "$EN/hooks/$f" "$PT/hooks/$f" || { printf '%s' "$f differs"; return; }
   done
   printf 'identical'

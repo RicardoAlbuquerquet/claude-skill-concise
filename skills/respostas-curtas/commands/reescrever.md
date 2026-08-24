@@ -1,6 +1,6 @@
 ---
 description: Reescreve um texto pronto pelas regras de respostas-curtas — a mesma informação, sem o enchimento
-argument-hint: [texto a reescrever — vazio mira sua resposta anterior]
+argument-hint: "[texto a reescrever — vazio mira sua resposta anterior]"
 ---
 
 Reescreva um texto pronto até ele cumprir as regras de `respostas-curtas`. Se

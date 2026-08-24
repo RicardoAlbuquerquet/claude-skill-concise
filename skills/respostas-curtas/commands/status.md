@@ -1,6 +1,6 @@
 ---
 description: Escreve o update de andamento — só o delta desde o último, notícia ruim primeiro, e o que depende de quem lê em bloco próprio
-argument-hint: [quem lê e para onde vai — opcional]
+argument-hint: "[quem lê e para onde vai — opcional]"
 ---
 
 Escreva um update de andamento, seguindo o orçamento "Update de andamento no

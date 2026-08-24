@@ -1,6 +1,6 @@
 ---
 description: Put the live options side by side and still recommend one — each cost named, the recommendation argued against the alternatives specifically
-argument-hint: [the decision, and the options if you already know them]
+argument-hint: "[the decision, and the options if you already know them]"
 ---
 
 Lay out one decision that belongs to the reader, following the "When the

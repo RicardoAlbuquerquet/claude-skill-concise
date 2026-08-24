@@ -122,6 +122,7 @@ transformations. Four come out longer.
 | `/concise:handoff` | hands the work over: the complete state, every standing caveat back in full, the traps, the resume command |
 | `/concise:audit` | runs the audit agent on a draft, a file, or a PR body and relays the report |
 | credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
+| PR route hint | `PreToolUse` hook that stops the session's first `gh pr create` to point at `/concise:pr`; repeat the call to go ahead |
 | `audit` agent | returns only the violations in a draft — quote, rule, fix |
 | [`extras/stop-audit`](extras/stop-audit/README.md) | opt-in per-turn style judge, installed by hand |
 
@@ -438,6 +439,17 @@ Two escapes, because a deterministic guard has false positives — writing
 - `export CONCISE_ALLOW_CREDIT=1` for one shell or one session.
 - `touch ~/.claude/.concise-no-credit-guard` to switch it off for good, with
   the style, the commands and the self-update untouched.
+
+**A second `PreToolUse` hook routes PR descriptions through the command that
+writes them.** The first `gh pr create` — or `gh pr edit --body` — of a
+session is denied once, with a reason naming `/concise:pr`; repeat the call
+and it goes through. That shape is deliberate: the failure it exists for is a
+description written from memory when a command was there to read the diff,
+the log and the template, and a hook that kept denying would be a wall the
+session could not leave. It cannot see a PR opened in the browser — nothing
+in a plugin can — so a repo whose PRs are opened on github.com puts the line
+in its own `PULL_REQUEST_TEMPLATE` instead. Same two escapes:
+`CONCISE_NO_ROUTE_HINT=1`, or `touch ~/.claude/.concise-no-route-hint`.
 
 There is also an **opt-in Stop auditor** in
 [`extras/stop-audit/`](extras/stop-audit/README.md): a hook you install by

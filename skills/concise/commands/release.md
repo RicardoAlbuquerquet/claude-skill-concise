@@ -1,6 +1,6 @@
 ---
 description: Draft the changelog entry and the release body for what shipped — what changes for whoever installs it, what breaks first, never the diff retold
-argument-hint: [version, a commit range, or extra context — optional]
+argument-hint: "[version, a commit range, or extra context — optional]"
 ---
 
 Draft the changelog entry and, when a release is being cut, the release body,

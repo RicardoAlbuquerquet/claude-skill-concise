@@ -184,6 +184,39 @@ EOF
   [ -z "$mortas" ] && { pass=$((pass+1)); echo "ok    referencias de secao em $port existem"; } || { fail=$((fail+1)); echo "FALHA secao morta em $port:$mortas"; }
 done
 
+echo "--- frontmatter de comando parseia"
+# Valor de frontmatter comecando em `[` e uma sequencia YAML, e um crase
+# abrindo item e token reservado: o parser desiste e o comando carrega com
+# metadata vazia — sem descricao e sem dica de argumento na lista de comandos,
+# calado. Foi assim que /concise:pr e :commit ficaram sem descricao.
+for port in concise respostas-curtas; do
+  cruas=$(grep -l -E '^(description|argument-hint): \[' "$REPO/skills/$port/commands/"*.md 2>/dev/null | while read -r f; do basename "$f"; done | tr '\n' ' ')
+  [ -z "$cruas" ] && { pass=$((pass+1)); echo "ok    frontmatter de $port sem sequencia crua"; } || { fail=$((fail+1)); echo "FALHA frontmatter nao citado em $port: $cruas"; }
+done
+
+echo "--- route-hint: a PR passa pelo comando que a escreve"
+# Uma negativa por sessao, e a segunda chamada passa. Se ela nao passasse, o
+# hook viraria parede: a sessao nao teria como abrir PR nenhuma.
+R="$REPO/skills/concise/hooks/route-hint.sh"
+RT="$FH/rt"; mkdir -p "$RT"
+r () { # nome, esperado(deny|allow), stdin
+  out=$(printf '%s' "$3" | HOME="$FH" TMPDIR="$RT" bash "$R" "MOTIVO" .concise-no-route-hint)
+  got=allow; case "$out" in *permissionDecision*) got=deny;; esac
+  if [ "$got" = "$2" ]; then pass=$((pass+1)); printf 'ok    %-46s %s\n' "$1" "$got"
+  else fail=$((fail+1)); printf 'FALHA %-46s esperado=%s obtido=%s\n' "$1" "$2" "$got"; fi
+}
+r "gh pr create avisa na primeira vez"   deny  '{"session_id":"s1","command":"gh pr create --fill"}'
+r "a segunda chamada da sessao passa"    allow '{"session_id":"s1","command":"gh pr create --fill"}'
+r "outra sessao avisa de novo"           deny  '{"session_id":"s2","command":"gh pr create --title x --body y"}'
+r "gh pr edit --body avisa"              deny  '{"session_id":"s3","command":"gh pr edit 77 --body-file b.md --body x"}'
+r "gh pr view nao avisa"                 allow '{"session_id":"s4","command":"gh pr view 77 --json body"}'
+r "git push nao avisa"                   allow '{"session_id":"s5","command":"git push -u origin minha-branch"}'
+touch "$FH/.claude/.concise-no-route-hint"
+r "opt-out pelo arquivo de flag"         allow '{"session_id":"s6","command":"gh pr create --fill"}'
+rm "$FH/.claude/.concise-no-route-hint"
+out=$(printf '%s' '{"session_id":"s7","command":"gh pr create --fill"}' | HOME="$FH" TMPDIR="$RT" CONCISE_NO_ROUTE_HINT=1 bash "$R" "M" .concise-no-route-hint)
+[ -z "$out" ] && { pass=$((pass+1)); echo "ok    opt-out pela variavel de ambiente"; } || { fail=$((fail+1)); echo "FALHA opt-out por variavel"; }
+
 echo "--- harness dos evals (claude falso)"
 # O run.sh passou a rodar os casos em paralelo. Duas coisas que paralelismo
 # quebra calado: a ordem do relatorio e o abort quando o CLI morre.

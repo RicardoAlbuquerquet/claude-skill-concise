@@ -1,6 +1,6 @@
 ---
 description: Rascunha a entrada de changelog e o corpo da release do que saiu — o que muda para quem instala, o que quebra primeiro, nunca o diff recontado
-argument-hint: [versão, um range de commits, ou contexto extra — opcional]
+argument-hint: "[versão, um range de commits, ou contexto extra — opcional]"
 ---
 
 Rascunhe a entrada de changelog e, quando uma release está sendo cortada, o
