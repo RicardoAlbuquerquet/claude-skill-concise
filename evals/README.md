@@ -1,6 +1,6 @@
 # Evals
 
-Twenty-eight cases, eight at a time. Each gives the model the facts it would have discovered, sends
+Thirty cases, eight at a time. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -22,7 +22,7 @@ the long form works:
 | Variable | What it does |
 |---|---|
 | `SKILL=respostas-curtas` | runs the PT port (rubrics check structure, not language) |
-| `CORE=1` | judges the ~20-line core the hook injects, not the full skill |
+| `CORE=1` | judges the ~45-line core the hook injects, not the full skill |
 | `BASELINE=1` | no style at all — see below |
 | `RUNS=3` | three attempts per case; anything short of all-pass reports `FLAKY` |
 | `MODEL=claude-sonnet-5` | pins the model, so two runs are comparable |
@@ -43,7 +43,7 @@ The style and the facts reach the CLI through `--append-system-prompt-file`,
 at case 17 with "Argument list too long" before the switch. A CLI old enough
 to lack the flag still works and says so.
 
-**Cost:** two API calls per case per run, so the default suite is 48 calls
+**Cost:** two API calls per case per run, so the default suite is 60 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -78,6 +78,12 @@ you change a rule here, change the rubric that tests it.
 | The outcome, not the itinerary of the work | 22 | weakly |
 | A table column with one repeated value is not a column | 23 | **yes** |
 | The reader's choice still gets a recommendation, at the end of a long report | 24 | weakly |
+| A note on a card is the summary of the summary | 25 | not measured |
+| PR title: the area first, the state after the merge | 26 | not measured |
+| Drawing craft: one glyph set, nothing wraps, labels hang off their box | 27 | not measured |
+| One hanging note, and it sits on the finding | 28 | not measured |
+| One gloss per response; the rest of the terms become what they do | 29 | not measured |
+| One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | not measured |
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18

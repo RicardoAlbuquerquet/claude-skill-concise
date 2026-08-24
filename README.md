@@ -45,7 +45,10 @@ None of that is wrong. All of it is between you and the answer.
 
 The skill installs one rule — **the answer goes in the first sentence, and after
 it only what changes a decision** — plus explicit budgets per situation, a list
-of constructs to always cut, and a shorter list to *never* cut.
+of constructs to always cut, and a shorter list to *never* cut. The budgets are
+per turn, not per topic: each block after the first is paid for by what it
+leaves the reader doing, which is what stops a reply that breaks no single rule
+from arriving three times too long.
 
 That second list is the part that matters. Compression is easy to overdo, and a
 one-line answer that dropped the caveat about production data is worse than the
@@ -77,11 +80,18 @@ say what each block is *for*, the structure is real; if the blocks are "part one
 part two", it's decoration.
 
 It also fixes the audience. The skill is written for a reader who owns the
-product but is not deep in the stack: keep the precise term, then pay for it once
-by glossing it **through its consequence** rather than its definition — not
-"`timestamptz` is a timezone-aware type" but "the column stores UTC, so a filter
-built in local time asks for a window that hasn't started yet". An answer the
-reader can't act on isn't concise, it's just short.
+product but is not deep in the stack, and a term faces two questions in order.
+**Will they meet it anyway** — type it, click it, approve changing it? If not,
+the sentence says what the thing does and never names it. If yes, keep it and
+pay for it once by glossing it **through its consequence** rather than its
+definition — not "`timestamptz` is a timezone-aware type" but "the column
+stores UTC, so a filter built in local time asks for a window that hasn't
+started yet". One gloss per response is the ceiling: the second term wanting an
+explanation is the reply carrying the shape of the investigation instead of the
+answer. And dropping a term is not going vague — "the column stores the time in
+UTC" is exact without it; "there's a timezone thing" threw the information away
+and kept the length. An answer the reader can't act on isn't concise, it's just
+short.
 
 The same paragraph draws the line the other way. A name lifted out of the
 source — a table, an internal method, a constant — is not a technical term and
@@ -97,7 +107,7 @@ transformations. Four come out longer.
 | Piece | What it does |
 |---|---|
 | `concise` skill | the full ruleset, invoked when a turn needs it |
-| `SessionStart` hook | injects the ~40-line core every session, plus the line naming this machine's shell; self-updates the plugin |
+| `SessionStart` hook | injects the ~45-line core every session, plus the line naming this machine's shell; self-updates the plugin |
 | `concise` output style | the same core in the system prompt — no shell needed, pick it in `/config` |
 | `/concise:rewrite` | rewrites a finished text to the rules, losing nothing |
 | `/concise:pr` | drafts the PR description from the real diff, test steps last |
@@ -255,7 +265,7 @@ A response-*style* rule wants to apply to all of them, including the turns where
 nothing about the task suggests "now think about brevity".
 
 **Installed as a plugin, this is handled for you.** Since 1.3.0 each plugin
-ships a `SessionStart` hook that prints a ~40-line core of the style into
+ships a `SessionStart` hook that prints a ~45-line core of the style into
 context at every session start — about 360 tokens, spent whether or not the
 session produces prose. The core is the guarantee; the full ruleset still
 lives in the skill, which the model invokes when a turn needs more than the

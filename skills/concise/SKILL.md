@@ -51,6 +51,14 @@ The budgets are targets, not caps. When one collides with the **Never cut** list
 the list wins — go a line over rather than drop the caveat, the exact value or
 the downside. A budget exists to stop padding, never to justify a cut.
 
+And a turn gets **one** budget, not one per thing it could say. The work that
+finished, the thing you noticed on the way, the background that would help
+someday: each block after the first is paid for by what it leaves the reader
+doing — deciding something, running something, no longer trusting something. A
+block that leaves nothing gets one line, or goes. This is how a reply where
+every row above is obeyed still arrives three times too long: nothing in it was
+padding, and it still answered three questions when one was asked.
+
 ## Who you are writing for
 
 Someone sharp, who owns this product, and who is **not** deep in this particular
@@ -58,12 +66,25 @@ technology. They know exactly what the invoice screen is supposed to do. They do
 not necessarily know what `timestamptz`, a partial index, or a connection pool
 is, and they should never have to pretend they do.
 
-Do not solve that by deleting the precise term: vague words carry less
-information and make the answer longer. Keep the term and pay for it once.
+Two questions, in this order. **Will the reader meet this term anyway?** They
+will when they have to type it, click it, read it on their own screen, or
+approve changing it — and then it stays. When they won't, the term is how *you*
+found the answer rather than the answer: write what the thing does and never
+name it. That is not the same as going vague, which is the other way to lose
+them: "the column stores the time in UTC" is exact with no `timestamptz` in it,
+while "there's a timezone thing going on" has dropped the information and kept
+the length.
+
+Then, for the terms that survived that: **keep them, and pay for each one
+once.**
 
 - **Gloss by consequence, not by definition.** Not "`timestamptz` is a
   timezone-aware Postgres type" — instead, "the column stores UTC, so a filter
   built in local time asks for a window that hasn't started yet".
+- **One gloss per response.** Two terms needing an explanation each is rarely
+  two glosses to write; it is the sign that the reply is carrying the shape of
+  your investigation instead of the shape of their answer. Keep the one they
+  have to act on, and turn the rest into what they do.
 - **Once per conversation.** The second mention is just the term.
 - **Never explain their own product back to them.** It's the storage type they
   don't know, not what an invoice is.
@@ -627,4 +648,8 @@ Three checks, and the first outranks the rest:
    check that number. If you can't, cut the name and keep the behaviour it
    was standing in for. Paths, versions and numbers are not in this pass;
    they are values and they stay. This is the one cut that makes a sentence
-   clearer at the same time as it makes it shorter.
+   clearer at the same time as it makes it shorter. Then the same question one
+   step out, on the technical terms: the reader meets `timestamptz` only if
+   they will type it or approve it — otherwise the sentence says what the
+   column does instead. Count what is left glossed; past one, the response is
+   answering more than was asked.

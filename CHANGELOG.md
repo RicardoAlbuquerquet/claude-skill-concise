@@ -5,6 +5,37 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.49.0 — 2026-08-24
+
+Both halves of one report: replies still ran long, and they were dense with
+terms the reader had no use for.
+
+- **A turn gets one budget, not one per thing it could say.** Every row of the
+  budget table is per situation, so a reply that finished some work, mentions
+  what it noticed on the way and adds background obeys all three rows and
+  arrives three times too long. Each block after the first now has to be paid
+  for by what it leaves the reader doing — deciding, running, no longer
+  trusting something — and a block that leaves nothing gets one line or goes.
+  In `SKILL.md` and in the hook core, which is where most sessions read it.
+- **A technical term now faces "will the reader meet it?" before it faces the
+  gloss.** The rule was "keep the precise term and gloss it by consequence",
+  which reads as a licence to keep every term and explain each one — four
+  glosses in a reply is both harder to read and longer. The term stays when
+  they will type it, click it, read it on their own screen or approve changing
+  it; otherwise the sentence says what the thing does and never names it.
+- **One gloss per response is the ceiling.** A second term wanting its own
+  explanation is the signal that the reply is carrying the shape of the
+  investigation instead of the shape of the answer. The final pass in
+  **Before sending** now counts them.
+- **Dropping a term is not going vague**, and the skill says so where the rule
+  lives: "the column stores the time in UTC" is exact without `timestamptz`;
+  "there's a timezone thing" threw the information away and kept the length.
+- **Two eval cases**, both aimed at what was reported: 29 grades a response
+  that may explain at most one term out of four, and 30 grades a completed-work
+  turn carrying one real finding and three inert observations. The suite goes
+  from 28 to 30 cases. The rule → case map also gained the four rows it was
+  missing for 25–28.
+
 ## 1.48.0 — 2026-08-22
 
 - **The eval suite runs eight cases at a time instead of one.** It was 2N

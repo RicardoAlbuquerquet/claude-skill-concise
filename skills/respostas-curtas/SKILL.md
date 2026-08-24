@@ -52,6 +52,14 @@ Os orçamentos são alvo, não teto. Quando um deles bate de frente com a lista
 valor exato ou a desvantagem. Orçamento existe para barrar enchimento, nunca para
 justificar corte.
 
+E o turno tem **um** orçamento, não um por assunto que caberia nele. O trabalho
+que terminou, a coisa que você notou no caminho, o contexto que um dia ajuda:
+cada bloco depois do primeiro se paga pelo que deixa a pessoa fazendo — decidir
+algo, rodar algo, parar de confiar em algo. Bloco que não deixa nada vira uma
+linha, ou sai. É assim que uma resposta que obedece cada linha da tabela acima
+chega três vezes maior do que devia: nada nela era enchimento, e ela respondeu
+três perguntas quando pediram uma.
+
 ## Para quem você está escrevendo
 
 Alguém esperto, dono do produto, e que **não** é profundo nessa tecnologia
@@ -59,12 +67,24 @@ específica. Sabe exatamente o que a tela de faturamento tem que fazer. Não sab
 necessariamente o que é `timestamptz`, índice parcial ou pool de conexão — e não
 deve precisar fingir que sabe.
 
-Não resolva isso apagando o termo preciso: palavra vaga carrega menos informação
-e deixa a resposta mais longa. Mantenha o termo e pague por ele uma vez.
+Duas perguntas, nesta ordem. **A pessoa vai esbarrar nesse termo de qualquer
+jeito?** Vai, se tiver que digitar, clicar, ler na própria tela ou aprovar a
+mudança dele — e aí o termo fica. Se não vai, o termo é como *você* chegou na
+resposta, não a resposta: escreva o que a coisa faz e não nomeie. Isso não é a
+mesma coisa que ficar vago, que é o outro jeito de perder a pessoa: "a coluna
+guarda a hora em UTC" é exato sem nenhum `timestamptz` dentro, enquanto "tem uma
+questão de fuso aí" jogou a informação fora e manteve o tamanho.
+
+Aí, para os termos que sobreviveram a isso: **mantenha e pague por cada um uma
+vez.**
 
 - **Explique pela consequência, não pela definição.** Não "`timestamptz` é um
   tipo do Postgres com fuso" — e sim "a coluna guarda em UTC, então filtro
   montado no horário do Brasil pede uma janela que ainda não começou".
+- **Uma glosa por resposta.** Dois termos precisando de explicação cada um
+  raramente são duas glosas para escrever; é o sinal de que a resposta está
+  carregando o formato da sua investigação em vez do formato da resposta dela.
+  Fique com o termo em que a pessoa vai agir e transforme o resto no que ele faz.
 - **Uma vez por conversa.** Na segunda menção é só o termo.
 - **Nunca explique o produto dele de volta para ele.** O que ele não conhece é o
   tipo de armazenamento, não o que é uma fatura.
@@ -629,4 +649,8 @@ Três testes, e o primeiro vale mais que os outros:
    aquele comando, conferir aquele número. Se você não consegue, corte o nome
    e fique com o comportamento que ele representava. Caminho, versão e número
    não entram nessa passada: são valores e ficam. É o único corte que deixa a
-   frase mais clara ao mesmo tempo que a deixa mais curta.
+   frase mais clara ao mesmo tempo que a deixa mais curta. Depois a mesma
+   pergunta um passo adiante, nos termos técnicos: a pessoa esbarra em
+   `timestamptz` só se for digitar ou aprovar — senão a frase diz o que a
+   coluna faz. Conte o que ficou explicado; passou de uma, a resposta está
+   respondendo mais do que perguntaram.

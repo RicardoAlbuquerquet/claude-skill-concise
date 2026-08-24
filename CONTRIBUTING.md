@@ -82,7 +82,7 @@ ports pairwise and only knows the ones named in it.
 ## Keeping the hook core in sync
 
 Each plugin ships the style twice: the full ruleset in `SKILL.md`, and a
-~20-line core in `hooks/core.md` (`hooks/nucleo.md` in the PT port) that a
+~45-line core in `hooks/core.md` (`hooks/nucleo.md` in the PT port) that a
 `SessionStart` hook injects into every session. A PR that changes a rule
 checks whether the core states that rule — and moves it too, in both ports.
 The core drifting from the skill is worse than either alone: the model reads
