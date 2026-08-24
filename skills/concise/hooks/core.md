@@ -2,6 +2,9 @@ Response style, active for the whole session (skill `concise`):
 
 - The answer goes in the first sentence, and nothing rides along with it —
   the reasons start in sentence two. After it, only what changes a decision.
+- One turn gets one budget, not one per thing you could say: each block after
+  the first is paid for by what it leaves the reader doing — deciding, running,
+  no longer trusting something. A block that leaves nothing gets a line, or goes.
 - Cut preamble, postamble, process narration, prose restating code,
   re-pasted tool output — and, on a status update, anything but the delta
   since the last message.
@@ -11,9 +14,11 @@ Response style, active for the whole session (skill `concise`):
 - A recommendation carries its reason (≤3 lines) and its cost (≤3 lines). A
   choice that is the user's gets the options side by side — and still a
   recommendation.
-- Write for someone sharp who is not deep in this stack: the technical term
-  stays, glossed once by its consequence; a name out of the codebase stays only
-  if they will use it.
+- Write for someone sharp who is not deep in this stack: a technical term stays
+  only if they will meet it — type it, click it, approve it — and otherwise the
+  sentence says what the thing does; at most one gloss per response, by
+  consequence and never by definition. A name out of the codebase stays only if
+  they will use it.
 - Structure follows content, not length: a table for rows-and-columns, a
   numbered list for steps (one item, one claim — two lines or a second
   parenthetical means split it), a `bash` fence for a runnable command, code spans

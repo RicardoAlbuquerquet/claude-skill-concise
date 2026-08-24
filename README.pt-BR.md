@@ -45,7 +45,10 @@ Nada disso é errado. Tudo isso fica entre você e a resposta.
 
 A skill instala uma regra — **a resposta vem na primeira frase, e depois dela só
 o que muda uma decisão** — mais orçamentos explícitos por situação, uma lista de
-construções para sempre cortar, e uma lista mais curta para *nunca* cortar.
+construções para sempre cortar, e uma lista mais curta para *nunca* cortar. O
+orçamento é por turno, não por assunto: cada bloco depois do primeiro se paga
+pelo que deixa a pessoa fazendo, e é isso que impede uma resposta que não quebra
+nenhuma regra sozinha de chegar três vezes maior do que devia.
 
 A segunda lista é a parte que importa. Compressão é fácil de exagerar, e uma
 resposta de uma linha que derrubou a ressalva sobre dados de produção é pior que
@@ -76,11 +79,17 @@ fatie um pensamento só. Se você consegue dizer para que serve cada bloco, a
 estrutura é real; se os blocos são "parte 1, parte 2", é enfeite.
 
 Ela também fixa o público. A skill é escrita para quem é dono do produto mas não
-é profundo na stack: mantenha o termo preciso e pague por ele uma vez, explicando
-**pela consequência** e não pela definição — não "`timestamptz` é um tipo com
-fuso" e sim "a coluna guarda em UTC, então filtro montado no horário local pede
-uma janela que ainda não começou". Resposta em que a pessoa não consegue agir
-não é concisa, é só curta.
+é profundo na stack, e cada termo passa por duas perguntas, nesta ordem. **A
+pessoa vai esbarrar nele de qualquer jeito** — digitar, clicar, aprovar a
+mudança? Se não vai, a frase diz o que a coisa faz e não nomeia. Se vai, o termo
+fica e você paga por ele uma vez, explicando **pela consequência** e não pela
+definição — não "`timestamptz` é um tipo com fuso" e sim "a coluna guarda em
+UTC, então filtro montado no horário local pede uma janela que ainda não
+começou". Uma glosa por resposta é o teto: o segundo termo pedindo explicação é
+a resposta carregando o formato da investigação em vez do da resposta. E tirar
+um termo não é ficar vago — "a coluna guarda a hora em UTC" é exato sem ele;
+"tem uma questão de fuso" jogou a informação fora e manteve o tamanho. Resposta
+em que a pessoa não consegue agir não é concisa, é só curta.
 
 O mesmo parágrafo traça a linha para o outro lado. Nome tirado do fonte — uma
 tabela, um método interno, uma constante — não é termo técnico e não tem glosa
@@ -96,7 +105,7 @@ reais. Quatro saem mais longas.
 | Peça | O que faz |
 |---|---|
 | Skill `respostas-curtas` | as regras completas, invocadas quando o turno pede |
-| Hook `SessionStart` | injeta o núcleo de ~36 linhas em toda sessão, mais a linha que diz o shell desta máquina; auto-atualiza o plugin |
+| Hook `SessionStart` | injeta o núcleo de ~43 linhas em toda sessão, mais a linha que diz o shell desta máquina; auto-atualiza o plugin |
 | Output style `respostas-curtas` | o mesmo núcleo no system prompt — sem shell, escolhido no `/config` |
 | `/respostas-curtas:reescrever` | reescreve um texto pronto pelas regras, sem perder nada |
 | `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
@@ -254,7 +263,7 @@ combina com a tarefa. Uma regra de *estilo* de resposta quer valer em todos,
 inclusive nos turnos em que nada na tarefa sugere "agora pense em brevidade".
 
 **Instalada como plugin, isso já vem resolvido.** Desde a 1.3.0 cada plugin
-embarca um hook `SessionStart` que imprime um núcleo de ~36 linhas do estilo no
+embarca um hook `SessionStart` que imprime um núcleo de ~43 linhas do estilo no
 contexto a cada início de sessão — uns 360 tokens, gastos produza a sessão
 prosa ou não. O núcleo é a garantia; as regras completas continuam na skill,
 que o modelo invoca quando o turno pede mais que o núcleo. O que é injetado é
