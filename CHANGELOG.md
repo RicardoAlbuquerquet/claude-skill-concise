@@ -7,9 +7,11 @@ without an entry tells nobody what it brought.
 
 ## 1.52.0 — 2026-08-24
 
-The commit body had no budget — the only surface in the ruleset without one.
-The three commits this repo wrote with the command carry 16, 19 and 23 lines
-of body; every other commit in its log has none.
+The two surfaces that had no budget get one, and the shortest of them gets
+the tightest. The commit body was the only surface in the ruleset without a
+number at all — the three commits this repo wrote with the command carry 16,
+19 and 23 lines of body, and every other commit in its log has none. A
+comment had a number for card notes only.
 
 - **Six lines is the ceiling, and no body at all is the common case.** A
   title that already says the why has nothing left to add, and most logs are
@@ -24,6 +26,19 @@ of body; every other commit in its log has none.
 - **Eval case 32** hands the model an hour of investigation, two green
   commands and a written changelog line, and fails the message that keeps any
   of them. It passes 3 of 3, and cases 09 and 16 still do.
+- **A comment is three lines at most, one is common, and it is the shortest
+  thing here** — review comment, thread reply, note on a card, message to a
+  person, all the same ceiling. It is written as a message to one person who
+  is mid-task: no header, no table, no list, no second paragraph, no greeting
+  and no sign-off. A point that needs structure needs a card or a paragraph
+  in the PR, and the comment is the line pointing at it.
+- **What a comment leaves out, it leaves out silently.** A note explaining
+  why the praise or the detail didn't go in is longer than the thing it left
+  out. That rule exists because eval case 33 caught the note twice in three
+  runs; loosening the rubric instead would have graded away what the case is
+  for.
+- **Eval case 33** grades a blocking review comment with praise dangled in
+  the facts on purpose. It passes 3 of 3, and case 25 still does.
 
 ## 1.51.0 — 2026-08-24
 

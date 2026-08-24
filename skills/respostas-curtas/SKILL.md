@@ -44,7 +44,7 @@ dela, só o que muda uma decisão.
 | Mensagem de commit | título que diz o que muda, ≤72 caracteres, na forma do log; corpo só quando o diff não mostra o porquê — ≤6 linhas, e sem corpo é o caso comum |
 | Descrição de PR | o que ela resolve, depois o que foi feito, depois o passo de teste exato — nada disso repetindo o que o diff já mostra, e cerca de 25 linhas de prosa, sem contar os comandos em bloco |
 | Tarefa ou issue | comportamento atual, esperado, valor exato, como fecha |
-| Comentário em card | o que mudou ou o que a pessoa tem que fazer, mais a âncora — ≤3 linhas, e uma é comum |
+| Comentário, resposta ou mensagem para alguém | a afirmação mais a linha que prova — ≤3 linhas e uma é comum, a superfície mais curta daqui; sem saudação, sem despedida, sem estrutura dentro |
 
 Código, comando e diff não entram no orçamento e **não** se encurtam.
 
@@ -280,13 +280,23 @@ mais frouxo.
 - **A afirmação, e depois a linha que prova.** "Isso derruba o retry no 401
   (`retry.ts:88`), então senha errada trava a conta em três tentativas" —
   arquivo e linha são o que tornam o comentário acionável em vez de opinião.
+- **Três linhas é o teto e uma é o caso comum — a superfície mais curta
+  destas regras.** Escreva como o que é: uma mensagem para uma pessoa no meio
+  de outra tarefa, não um documento sobre o problema. Então sem cabeçalho,
+  sem tabela, sem lista aninhada dentro, e sem nada que a thread acima já
+  diga. Ponto que precisa de estrutura precisa de um card ou de um parágrafo
+  na PR, e o comentário é a linha que aponta para lá.
 - **Diga o que mudaria sua conclusão** quando não tem certeza, em vez de
   amaciar a afirmação. "A não ser que exista um chamador que eu não vi" ganha
   de "talvez valha considerar".
-- **Elogio de enchimento não entra.** "Excelente trabalho!" antes de um
-  pedido de mudança custa um parágrafo até a pessoa descobrir que é pedido de
-  mudança. Elogio que nomeia uma decisão específica é conteúdo; a abertura
-  genérica não é.
+- **Elogio de enchimento não entra, nem saudação, nem despedida.** "Excelente
+  trabalho!" antes de um pedido de mudança custa um parágrafo até a pessoa
+  descobrir que é pedido de mudança, e "oi", "desde já obrigado" e "qualquer
+  coisa me avisa" gastam uma linha cada com quem está no meio de outra
+  tarefa. Elogio que nomeia uma decisão específica é conteúdo; a abertura
+  genérica não é. E o que você deixa de fora do comentário, deixa calado:
+  nota explicando por que o elogio ou o detalhe não entrou é mais longa que o
+  que ficou de fora.
 - **Um comentário, um ponto.** Dois pontos sem relação são dois comentários,
   para cada um poder ser resolvido sozinho.
 - **Recado em card é o resumo do resumo.** Três linhas já é longo e uma é

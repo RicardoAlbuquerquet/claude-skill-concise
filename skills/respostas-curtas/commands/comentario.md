@@ -27,6 +27,12 @@ Antes de rascunhar, duas coisas:
 
 Regras do comentário:
 
+- **Três linhas é o teto, uma é o caso comum, e isto é a coisa mais curta que
+  as regras mandam escrever.** É uma mensagem para uma pessoa no meio de
+  outra tarefa: sem cabeçalho, sem tabela, sem lista dentro, sem saudação e
+  sem despedida. Conte as linhas antes de entregar. Ponto que precisa de
+  estrutura precisa de um card ou de um parágrafo na PR, e o comentário é a
+  linha que aponta para lá.
 - **A afirmação, e depois a linha que prova.** "Isso derruba o retry no 401
   (`retry.ts:88`), então senha errada trava a conta em três tentativas."
   Sem a âncora é opinião, e quem lê tem que ir achar o que você já achou.
@@ -59,9 +65,10 @@ Regras do comentário:
 - Nunca assine como agente de IA, aqui nem em lugar nenhum.
 
 Antes de entregar, audite o rascunho você mesmo — afirmação primeiro, âncora
-presente, se trava ou não dito, um ponto só, no máximo três linhas quando for
-recado em card, nada que só faça sentido para quem leu esta conversa — e
-corrija o que falhar. Entregue só a versão limpa.
+presente, se trava ou não dito, um ponto só, no máximo três linhas seja qual
+for o tipo, nada que só faça sentido para quem leu esta conversa — e corrija
+o que falhar. O que passa de três linhas é o raciocínio que mora no card ou
+na PR, nunca a âncora nem o valor exato. Entregue só a versão limpa.
 
 Entrega: cada comentário no seu próprio bloco de código, pronto para colar,
 com quatro crases quando carregar uma cerca própria — bloco de sugestão

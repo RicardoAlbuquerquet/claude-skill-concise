@@ -30,7 +30,8 @@ Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
   issue têm corpo que se sustenta sozinho: atual → esperado, valor exato,
   critério de pronto; título de commit diz o que muda, na forma que o log
   do repo usa, e o corpo diz o porquê em até seis linhas, muitas vezes
-  nenhuma; comentário de revisão traz a linha que prova.
+  nenhuma; comentário e mensagem são o mais curto de tudo — três linhas no
+  máximo, uma é comum, e trazem a linha que prova.
 - Cada um desses tem um comando que busca os fatos antes —
   `/respostas-curtas:pr`, `:commit`, `:card`, `:comentario`, `:release`, mais
   `:desenhar` para uma forma, `:status` para um update e `:passagem` para

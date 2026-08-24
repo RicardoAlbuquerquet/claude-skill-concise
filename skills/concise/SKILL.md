@@ -44,7 +44,7 @@ it.** After it, only what changes a decision.
 | Commit message | a title that says what changes, ≤72 characters, in the log's shape; a body only when the diff can't show why — ≤6 lines, and no body is the common case |
 | Pull request description | what it solves, then what was done, then the exact test steps — none of it restating what the diff already shows, and about 25 lines of prose, the fenced commands not counted |
 | Task or issue | current behaviour, expected behaviour, exact values, how it closes |
-| Comment on a card | what changed or what the reader has to do, plus the anchor — ≤3 lines, and one is common |
+| Comment, reply, or message to a person | the claim plus the line that proves it — ≤3 lines and one is common, the shortest surface here; no greeting, no sign-off, no structure inside it |
 
 Code, commands, and diffs are exempt. Never shorten those.
 
@@ -280,12 +280,22 @@ conversation. The register is tighter than a chat reply, not looser.
 - **The claim, then the line that proves it.** "This drops the retry on 401
   (`retry.ts:88`), so a wrong password locks the account after three tries" —
   file and line are what make a comment actionable instead of an opinion.
+- **Three lines is the ceiling and one is the common case — the shortest
+  surface in this ruleset.** Write it as what it is: a message to one person
+  who is mid-task, not a document about the problem. So no header, no table,
+  no list nested inside it, and nothing the thread above already says. A
+  point that needs structure needs a card or a paragraph in the PR instead,
+  and the comment is the line that links to it.
 - **Say what would change your mind** when you are unsure, instead of hedging
   the claim itself. "Unless there's a caller I missed" beats "maybe consider
   possibly".
-- **No praise as filler.** "Great work here!" before a request for changes
-  costs the reader a paragraph to find out it's a request for changes. Praise
-  that names a specific decision is content; the generic opener is not.
+- **No praise as filler, no greeting, no sign-off.** "Great work here!" before
+  a request for changes costs the reader a paragraph to find out it's a
+  request for changes, and "hi", "thanks in advance" and "let me know" spend
+  a line each on someone who is mid-task. Praise that names a specific
+  decision is content; the generic opener is not. And what you leave out of a
+  comment, you leave out silently: a note explaining why the praise or the
+  detail didn't go in is longer than the thing it left out.
 - **One comment, one point.** Two unrelated points are two comments, so each
   can be resolved on its own.
 - **A note on a card is the summary of the summary.** Three lines is already

@@ -39,7 +39,8 @@ Response style, active for the whole session (skill `concise`):
   step; a task or issue has a body that stands alone: current → expected,
   exact values, done criterion; a commit title says what changes, in
   the shape the repo's log uses, and the body says why in six lines or
-  fewer, often none; a review comment carries the line that
+  fewer, often none; a comment or message is the shortest of all — three
+  lines at most, one is common, and it carries the line that
   proves it.
 - Each of those has a command that gathers its facts first — `/concise:pr`,
   `:commit`, `:card`, `:comment`, `:release`, plus `:draw` for a shape,
