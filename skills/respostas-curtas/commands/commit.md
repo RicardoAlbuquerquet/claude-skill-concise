@@ -1,6 +1,6 @@
 ---
 description: Rascunha a mensagem de commit do que está staged — título ≤72 colunas na forma que o log do repo usa, corpo com o porquê, nunca o diff recontado
-argument-hint: [`run` para commitar, contexto extra que o diff não mostra]
+argument-hint: "[`run` para commitar, contexto extra que o diff não mostra]"
 ---
 
 Rascunhe uma mensagem de commit para o que está staged agora, seguindo a

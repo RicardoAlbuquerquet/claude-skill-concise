@@ -1,6 +1,6 @@
 ---
 description: Escreve um card de tarefa/issue que se sustenta sozinho — atual → esperado, valor exato, critério de pronto — e cria quando o destino for dado
-argument-hint: [sobre o que é o card, e opcionalmente onde criar]
+argument-hint: "[sobre o que é o card, e opcionalmente onde criar]"
 ---
 
 Produza um card de tarefa/issue seguindo a seção "Tarefa e issue" das regras

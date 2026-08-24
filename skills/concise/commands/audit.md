@@ -1,6 +1,6 @@
 ---
 description: Audit a draft against the concise checklist and report only the violations — quoted line, rule broken, one-line fix. Diagnosis, never surgery
-argument-hint: [text, a file path, a PR or issue URL — empty audits your previous reply]
+argument-hint: "[text, a file path, a PR or issue URL — empty audits your previous reply]"
 ---
 
 Audit one finished text against the `concise` checklist and report what a

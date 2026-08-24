@@ -1,6 +1,6 @@
 ---
 description: Hand the work over — the complete state, every standing caveat back in full, the traps, and the exact command that resumes it
-argument-hint: [who picks it up, or what part of the work — optional]
+argument-hint: "[who picks it up, or what part of the work — optional]"
 ---
 
 Write one handoff, following the "Never cut" list of the `concise` ruleset —

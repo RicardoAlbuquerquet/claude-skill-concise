@@ -1,6 +1,6 @@
 ---
 description: Write the status update — only the delta since the last one, bad news first, and whatever is waiting on the reader in its own block
-argument-hint: [who reads it and where it goes — optional]
+argument-hint: "[who reads it and where it goes — optional]"
 ---
 
 Write one status update, following the "Status update mid-work" budget and the

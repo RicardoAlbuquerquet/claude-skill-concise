@@ -1,6 +1,6 @@
 ---
 description: Rascunha o plano que você propõe — os passos numerados que você vai rodar, o risco nomeado, o que fica de fora. Só texto; não roda nada
-argument-hint: [para que é o plano — vazio usa o trabalho em discussão]
+argument-hint: "[para que é o plano — vazio usa o trabalho em discussão]"
 ---
 
 Escreva um plano para aprovação, seguindo a seção "Plano que você propõe" das

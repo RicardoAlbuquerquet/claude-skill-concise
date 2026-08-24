@@ -1,3 +1,8 @@
+<!-- /concise:pr writes this body: it reads the diff, the repo's log and this
+template, and it ends with the test step below, filled. Opening the PR from
+the browser? Run the command in the session first and paste what it returns.
+-->
+
 <!--
 First line: what this PR does — no header above it.
 Then only what the reviewer can't get faster from the diff: what changes for

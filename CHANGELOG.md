@@ -5,6 +5,37 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.51.0 — 2026-08-24
+
+The rule from 1.50.0 only fires if the command runs, and nothing made it
+obvious that it should. Two PRs in a row got a description written from
+memory while `/concise:pr` sat there able to read the diff.
+
+- **A second `PreToolUse` hook routes PR writing through the command.** The
+  session's first `gh pr create` — or `gh pr edit --body` — is denied once,
+  with a reason naming `/concise:pr` and how to open the PR with it. Repeat
+  the call and it goes through: the failure is a description written from
+  memory, not a PR being opened, and a hook that kept denying would be a wall
+  the session could not leave. Same escapes as the credit guard:
+  `CONCISE_NO_ROUTE_HINT=1`, or `touch ~/.claude/.concise-no-route-hint`.
+- **What it cannot see is a PR opened in the browser**, and no plugin can. A
+  repo whose PRs are opened on github.com puts the line in its own
+  `PULL_REQUEST_TEMPLATE` instead — this one now does, in the comment at the
+  top.
+- **`/concise:pr` and `/concise:commit` were loading with no description and
+  no argument hint at all**, in both ports, and had been since the hints were
+  added. A backtick opening an item inside `argument-hint: [...]` is a
+  reserved token in a YAML flow sequence, so the frontmatter failed to parse
+  and every field was silently dropped — the command list showed the two
+  commands bare. `claude plugin validate ./skills/concise` said so; nothing
+  ran it. Every `argument-hint` in both ports is now a quoted string, which is
+  what it was always meant to be, and a test fails the suite on the next
+  unquoted one.
+- **Ten offline tests**, including the one that matters: the second call in
+  the same session passes. The hook suite goes from 46 to 56. `route-hint.sh`
+  is byte-identical across the ports and `check-parity.sh` now enforces that
+  for five scripts instead of four.
+
 ## 1.50.0 — 2026-08-24
 
 The same report as 1.49.0, one surface further out: the PR descriptions this

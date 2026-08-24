@@ -31,6 +31,11 @@
             "type": "command",
             "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. The concise rule bans crediting an AI agent in commits, PRs, issues and releases - rewrite without it.\" .concise-no-credit-guard",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"The description this call publishes is what /concise:pr writes: it reads the diff, the repo log and the PR template, and it ends with the exact test step. Run /concise:pr first - the word create in the invocation opens the PR - or repeat this call to go ahead without it.\" .concise-no-route-hint",
+            "timeout": 10
           }
         ]
       },
@@ -40,6 +45,11 @@
           {
             "type": "command",
             "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. The concise rule bans crediting an AI agent in commits, PRs, issues and releases - rewrite without it.\" .concise-no-credit-guard",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"The description this call publishes is what /concise:pr writes: it reads the diff, the repo log and the PR template, and it ends with the exact test step. Run /concise:pr first - the word create in the invocation opens the PR - or repeat this call to go ahead without it.\" .concise-no-route-hint",
             "timeout": 10
           }
         ]

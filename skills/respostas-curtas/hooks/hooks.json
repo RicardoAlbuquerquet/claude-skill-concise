@@ -31,6 +31,11 @@
             "type": "command",
             "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"Credito de IA no texto. A regra de respostas-curtas proibe creditar agente de IA em commit, PR, issue e release - reescreva sem isso.\" .respostas-curtas-no-credit-guard",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"A descricao que essa chamada publica e o que o /respostas-curtas:pr escreve: ele le o diff, o log do repo e o template de PR, e termina no passo de teste exato. Rode /respostas-curtas:pr antes - a palavra create na invocacao abre a PR - ou repita esta chamada para seguir sem ele.\" .respostas-curtas-no-route-hint",
+            "timeout": 10
           }
         ]
       },
@@ -40,6 +45,11 @@
           {
             "type": "command",
             "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"Credito de IA no texto. A regra de respostas-curtas proibe creditar agente de IA em commit, PR, issue e release - reescreva sem isso.\" .respostas-curtas-no-credit-guard",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"A descricao que essa chamada publica e o que o /respostas-curtas:pr escreve: ele le o diff, o log do repo e o template de PR, e termina no passo de teste exato. Rode /respostas-curtas:pr antes - a palavra create na invocacao abre a PR - ou repita esta chamada para seguir sem ele.\" .respostas-curtas-no-route-hint",
             "timeout": 10
           }
         ]

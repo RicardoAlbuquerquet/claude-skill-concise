@@ -120,6 +120,7 @@ reais. Quatro saem mais longas.
 | `/respostas-curtas:passagem` | passa o trabalho adiante: estado completo, toda ressalva por inteiro, as armadilhas, o comando que retoma |
 | `/respostas-curtas:auditar` | roda o agente de auditoria num rascunho, arquivo ou corpo de PR e repassa o relatório |
 | Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
+| Desvio da PR para o comando | hook `PreToolUse` que barra o primeiro `gh pr create` da sessão para apontar o `/respostas-curtas:pr`; repetir a chamada segue |
 | Agente `auditar` | devolve só as violações de um rascunho — citação, regra, correção |
 | [`extras/stop-audit`](extras/stop-audit/README.md) | juiz de estilo por turno, opcional, instalado à mão |
 
@@ -438,6 +439,17 @@ Duas saídas, porque guarda determinística tem falso positivo — escrever
 - `export CONCISE_ALLOW_CREDIT=1` para um shell ou uma sessão.
 - `touch ~/.claude/.respostas-curtas-no-credit-guard` para desligar de vez,
   sem mexer no estilo, nos comandos nem no auto-update.
+
+**Um segundo hook `PreToolUse` desvia a descrição de PR para o comando que a
+escreve.** O primeiro `gh pr create` — ou `gh pr edit --body` — da sessão é
+negado uma vez, com o motivo nomeando o `/respostas-curtas:pr`; repita a
+chamada e ela passa. Esse formato é de propósito: a falha que ele existe para
+pegar é descrição escrita de memória tendo um comando para ler o diff, o log
+e o template, e um hook que continuasse negando seria uma parede sem saída.
+Ele não enxerga PR aberta no navegador — nenhum plugin enxerga — então repo
+que abre PR pelo github.com põe essa linha no próprio `PULL_REQUEST_TEMPLATE`.
+As mesmas duas saídas: `CONCISE_NO_ROUTE_HINT=1`, ou
+`touch ~/.claude/.respostas-curtas-no-route-hint`.
 
 Há também um **auditor de Stop opcional** em
 [`extras/stop-audit/`](extras/stop-audit/README.md): um hook que você instala

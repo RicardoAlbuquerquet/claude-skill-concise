@@ -1,6 +1,6 @@
 ---
 description: Draft the pull request description for the current branch — grounded in the real diff, exact test steps at the end
-argument-hint: [base ref, `create` to open it, extra context the diff can't show]
+argument-hint: "[base ref, `create` to open it, extra context the diff can't show]"
 ---
 
 Write the pull request description for the current branch, following the PR

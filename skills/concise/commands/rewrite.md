@@ -1,6 +1,6 @@
 ---
 description: Rewrite a finished text to the concise ruleset — same information, none of the padding
-argument-hint: [text to rewrite — empty targets your previous reply]
+argument-hint: "[text to rewrite — empty targets your previous reply]"
 ---
 
 Rewrite one finished text so it complies with the `concise` ruleset. If the

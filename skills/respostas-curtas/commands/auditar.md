@@ -1,6 +1,6 @@
 ---
 description: Audita um rascunho pelo checklist de respostas-curtas e reporta só as violações — linha citada, regra quebrada, correção em uma linha. Diagnóstico, nunca cirurgia
-argument-hint: [texto, um caminho de arquivo, uma URL de PR ou issue — vazio audita sua resposta anterior]
+argument-hint: "[texto, um caminho de arquivo, uma URL de PR ou issue — vazio audita sua resposta anterior]"
 ---
 
 Audite um texto pronto contra o checklist de `respostas-curtas` e reporte o
