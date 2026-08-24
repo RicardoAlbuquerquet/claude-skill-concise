@@ -1,6 +1,6 @@
 # Evals
 
-Thirty-one cases, eight at a time. Each gives the model the facts it would have discovered, sends
+Thirty-three cases, eight at a time. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -43,7 +43,7 @@ The style and the facts reach the CLI through `--append-system-prompt-file`,
 at case 17 with "Argument list too long" before the switch. A CLI old enough
 to lack the flag still works and says so.
 
-**Cost:** two API calls per case per run, so the default suite is 62 calls
+**Cost:** two API calls per case per run, so the default suite is 66 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -85,6 +85,8 @@ you change a rule here, change the rubric that tests it.
 | One gloss per response; the rest of the terms become what they do | 29 | not measured |
 | One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | not measured |
 | PR description inside a screenful, and the cut comes out of what repeats | 31 | not measured |
+| Commit body: six lines at most, no investigation, no list of what was run | 32 | not measured |
+| Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | not measured |
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18
@@ -102,8 +104,16 @@ both reach `claude -p`. Copy `~/.claude/.credentials.json` and a
 plugin-less `settings.json` into a scratch directory and point
 `CLAUDE_CONFIG_DIR` at it — an empty directory alone loses the login.
 
-Not covered yet: plans, review comments, the expand-on-request valve, and the
-PT-only wording rules. Those are the next cases to write.
+Not covered yet: plans, the expand-on-request valve, and the PT-only wording
+rules. Those are the next cases to write.
+
+**Case 33 found a rule that was missing rather than a rubric to loosen.** Its
+facts dangle praise the reviewer genuinely means, and two runs in three the
+model delivered a three-line comment and then explained, underneath, why the
+praise had been left out — a note longer than the praise. Loosening the item
+would have graded away the very thing the case is for, so the rule went into
+`SKILL.md` instead: what a comment leaves out, it leaves out silently. It
+passes 3 of 3 after that, and case 25 still does.
 
 **Case 18 was unstable at about 2 of 3 from the day it was written until
 1.23.0, and the cause was not the rule it tests.** A dozen claims against a

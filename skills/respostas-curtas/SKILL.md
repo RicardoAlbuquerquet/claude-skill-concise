@@ -41,9 +41,10 @@ dela, só o que muda uma decisão.
 | Travado, precisa de input | a pergunta + o que já foi feito sem a resposta |
 | Atualização no meio do trabalho | só o delta desde a sua última mensagem; uma linha quando nada surpreendente aconteceu |
 | Plano que você propõe | os passos numerados que vai rodar + o que pode dar errado + o que fica de fora |
+| Mensagem de commit | título que diz o que muda, ≤72 caracteres, na forma do log; corpo só quando o diff não mostra o porquê — ≤6 linhas, e sem corpo é o caso comum |
 | Descrição de PR | o que ela resolve, depois o que foi feito, depois o passo de teste exato — nada disso repetindo o que o diff já mostra, e cerca de 25 linhas de prosa, sem contar os comandos em bloco |
 | Tarefa ou issue | comportamento atual, esperado, valor exato, como fecha |
-| Comentário em card | o que mudou ou o que a pessoa tem que fazer, mais a âncora — ≤3 linhas, e uma é comum |
+| Comentário, resposta ou mensagem para alguém | a afirmação mais a linha que prova — ≤3 linhas e uma é comum, a superfície mais curta daqui; sem saudação, sem despedida, sem estrutura dentro |
 
 Código, comando e diff não entram no orçamento e **não** se encurtam.
 
@@ -279,13 +280,23 @@ mais frouxo.
 - **A afirmação, e depois a linha que prova.** "Isso derruba o retry no 401
   (`retry.ts:88`), então senha errada trava a conta em três tentativas" —
   arquivo e linha são o que tornam o comentário acionável em vez de opinião.
+- **Três linhas é o teto e uma é o caso comum — a superfície mais curta
+  destas regras.** Escreva como o que é: uma mensagem para uma pessoa no meio
+  de outra tarefa, não um documento sobre o problema. Então sem cabeçalho,
+  sem tabela, sem lista aninhada dentro, e sem nada que a thread acima já
+  diga. Ponto que precisa de estrutura precisa de um card ou de um parágrafo
+  na PR, e o comentário é a linha que aponta para lá.
 - **Diga o que mudaria sua conclusão** quando não tem certeza, em vez de
   amaciar a afirmação. "A não ser que exista um chamador que eu não vi" ganha
   de "talvez valha considerar".
-- **Elogio de enchimento não entra.** "Excelente trabalho!" antes de um
-  pedido de mudança custa um parágrafo até a pessoa descobrir que é pedido de
-  mudança. Elogio que nomeia uma decisão específica é conteúdo; a abertura
-  genérica não é.
+- **Elogio de enchimento não entra, nem saudação, nem despedida.** "Excelente
+  trabalho!" antes de um pedido de mudança custa um parágrafo até a pessoa
+  descobrir que é pedido de mudança, e "oi", "desde já obrigado" e "qualquer
+  coisa me avisa" gastam uma linha cada com quem está no meio de outra
+  tarefa. Elogio que nomeia uma decisão específica é conteúdo; a abertura
+  genérica não é. E o que você deixa de fora do comentário, deixa calado:
+  nota explicando por que o elogio ou o detalhe não entrou é mais longa que o
+  que ficou de fora.
 - **Um comentário, um ponto.** Dois pontos sem relação são dois comentários,
   para cada um poder ser resolvido sozinho.
 - **Recado em card é o resumo do resumo.** Três linhas já é longo e uma é
@@ -502,11 +513,17 @@ estreita — `git log --oneline` mostra o título e mais nada.
   o que muda, dentro de 72 caracteres, sem crédito de IA. Título perfeito na convenção errada continua destoando no
   `git log --oneline`; uma config de commitlint transforma o descompasso em
   commit rejeitado.
-- **O corpo diz o porquê, não o quê.** O diff já mostra o que mudou; o corpo
-  carrega o que o diff não carrega: por que agora, que comportamento muda, o
-  que vigiar. Corpo repetindo o diff é prosa repetindo código. Quebre perto
-  de 72 colunas — o `git log` mostra indentado, e linha sem quebra vaza do
-  painel.
+- **O corpo diz o porquê, não o quê — e muitas vezes não diz nada.** O diff
+  já mostra o que mudou; o corpo carrega só o que o diff não carrega: por que
+  agora, que comportamento muda, o que vigiar. **Seis linhas é o teto, e
+  nenhum corpo é o caso comum** — a maioria dos logs é quase toda de título
+  só, e título que já diz o porquê não deixou nada para o corpo. O que empurra
+  um corpo além de seis linhas nunca é um segundo motivo; é a investigação
+  recontada, a lista do que você rodou, um relato arquivo por arquivo, ou a
+  nota de release escrita cedo. Cada uma dessas tem casa própria — descrição
+  de PR, passo de teste, changelog — e vai chegar lá de todo jeito, então no
+  commit é o mesmo texto escrito duas vezes. Quebre perto de 72 colunas: o
+  `git log` mostra indentado, e linha sem quebra vaza do painel.
 - **Referência exata sobrevive** — o número da issue, o caminho, o nome da
   flag.
 - **Um commit, uma mudança.** Mensagem que precisa de "e também" está

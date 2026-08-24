@@ -27,6 +27,12 @@ First, two things before drafting:
 
 Rules of the comment:
 
+- **Three lines is the ceiling, one is the common case, and this is the
+  shortest thing the ruleset asks you to write.** It is a message to one
+  person who is mid-task: no header, no table, no list inside it, no greeting
+  and no sign-off. Count the lines before delivering. A point that needs
+  structure needs a card or a paragraph in the PR, and the comment is the
+  line pointing at it.
 - **The claim, then the line that proves it.** "This drops the retry on 401
   (`retry.ts:88`), so a wrong password locks the account after three tries."
   Without the anchor it is an opinion, and the author has to go find what you
@@ -59,9 +65,10 @@ Rules of the comment:
 - Never sign as an AI agent, here or anywhere.
 
 Before delivering, audit the draft yourself — claim first, anchor present,
-blocking or not stated, one point, three lines at most when it is a note on a
-card, nothing that only makes sense to someone who read this conversation —
-and fix what fails. Deliver only the clean
+blocking or not stated, one point, three lines at most whatever the kind,
+nothing that only makes sense to someone who read this conversation — and fix
+what fails. What goes over three lines is the reasoning that belongs in the
+card or the PR, never the anchor or the exact value. Deliver only the clean
 version.
 
 Delivery: each comment in its own fenced block, ready to paste, with four
