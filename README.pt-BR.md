@@ -105,7 +105,7 @@ reais. Quatro saem mais longas.
 | Peça | O que faz |
 |---|---|
 | Skill `respostas-curtas` | as regras completas, invocadas quando o turno pede |
-| Hook `SessionStart` | injeta o núcleo de ~43 linhas em toda sessão, mais a linha que diz o shell desta máquina; auto-atualiza o plugin |
+| Hook `SessionStart` | injeta o núcleo de ~47 linhas em toda sessão, mais a linha que diz o shell desta máquina; auto-atualiza o plugin |
 | Output style `respostas-curtas` | o mesmo núcleo no system prompt — sem shell, escolhido no `/config` |
 | `/respostas-curtas:reescrever` | reescreve um texto pronto pelas regras, sem perder nada |
 | `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
@@ -264,7 +264,7 @@ combina com a tarefa. Uma regra de *estilo* de resposta quer valer em todos,
 inclusive nos turnos em que nada na tarefa sugere "agora pense em brevidade".
 
 **Instalada como plugin, isso já vem resolvido.** Desde a 1.3.0 cada plugin
-embarca um hook `SessionStart` que imprime um núcleo de ~43 linhas do estilo no
+embarca um hook `SessionStart` que imprime um núcleo de ~47 linhas do estilo no
 contexto a cada início de sessão — uns 360 tokens, gastos produza a sessão
 prosa ou não. O núcleo é a garantia; as regras completas continuam na skill,
 que o modelo invoca quando o turno pede mais que o núcleo. O que é injetado é

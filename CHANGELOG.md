@@ -5,6 +5,30 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.54.0 — 2026-08-25
+
+A reply that ends in a link kept going. The turn opened a pull request,
+handed over the URL — and then spent two more paragraphs describing the
+sections of the description the reader was one click from, and one praising a
+hook of ours for firing exactly as designed. Every budget in the ruleset was
+obeyed; nothing in it said the artifact is the answer.
+
+- **A tour of the artifact you just delivered is cut.** A PR URL, a card, a
+  file you wrote — that link is the answer, and the recap of what is inside it
+  is read *before* the thing it summarises, so it costs the reader twice.
+- **What survives the cut is what the reader would get wrong by not opening
+  it**: a part you did not verify, a value that came out different from what
+  was asked, a caveat they need before they act — in the reply even when the
+  artifact carries it too.
+- **Your own tooling behaving as designed is cut too.** A hook that fired, a
+  retry that went through, a check green on the first try. News is the
+  mechanism failing, or changing what the reader gets.
+- **Both land in the injected core**, not only the skill — the session that
+  produced the overlong reply had the core and not the full ruleset.
+- **Eval case 35** is that turn: a PR opened, a hook that rejected the first
+  push, and one test step that could not be run. It passes 3 of 3, after the
+  first wording of the exemption cost the unrun step one run in three.
+
 ## 1.53.0 — 2026-08-25
 
 Cards came out correct and unreadable: five paragraphs of prose with the done

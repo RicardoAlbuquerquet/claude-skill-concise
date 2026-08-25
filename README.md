@@ -107,7 +107,7 @@ transformations. Four come out longer.
 | Piece | What it does |
 |---|---|
 | `concise` skill | the full ruleset, invoked when a turn needs it |
-| `SessionStart` hook | injects the ~45-line core every session, plus the line naming this machine's shell; self-updates the plugin |
+| `SessionStart` hook | injects the ~50-line core every session, plus the line naming this machine's shell; self-updates the plugin |
 | `concise` output style | the same core in the system prompt — no shell needed, pick it in `/config` |
 | `/concise:rewrite` | rewrites a finished text to the rules, losing nothing |
 | `/concise:pr` | drafts the PR description from the real diff, test steps last |
@@ -266,7 +266,7 @@ A response-*style* rule wants to apply to all of them, including the turns where
 nothing about the task suggests "now think about brevity".
 
 **Installed as a plugin, this is handled for you.** Since 1.3.0 each plugin
-ships a `SessionStart` hook that prints a ~45-line core of the style into
+ships a `SessionStart` hook that prints a ~50-line core of the style into
 context at every session start — about 360 tokens, spent whether or not the
 session produces prose. The core is the guarantee; the full ruleset still
 lives in the skill, which the model invokes when a turn needs more than the

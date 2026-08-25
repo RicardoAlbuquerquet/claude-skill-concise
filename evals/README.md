@@ -1,6 +1,6 @@
 # Evals
 
-Thirty-four cases, eight at a time. Each gives the model the facts it would have discovered, sends
+Thirty-five cases, eight at a time. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -22,7 +22,7 @@ the long form works:
 | Variable | What it does |
 |---|---|
 | `SKILL=respostas-curtas` | runs the PT port (rubrics check structure, not language) |
-| `CORE=1` | judges the ~45-line core the hook injects, not the full skill |
+| `CORE=1` | judges the ~50-line core the hook injects, not the full skill |
 | `BASELINE=1` | no style at all — see below |
 | `RUNS=3` | three attempts per case; anything short of all-pass reports `FLAKY` |
 | `MODEL=claude-sonnet-5` | pins the model, so two runs are comparable |
@@ -43,7 +43,7 @@ The style and the facts reach the CLI through `--append-system-prompt-file`,
 at case 17 with "Argument list too long" before the switch. A CLI old enough
 to lack the flag still works and says so.
 
-**Cost:** two API calls per case per run, so the default suite is 68 calls
+**Cost:** two API calls per case per run, so the default suite is 70 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -88,6 +88,7 @@ you change a rule here, change the rubric that tests it.
 | Commit body: six lines at most, no investigation, no list of what was run | 32 | not measured |
 | Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | not measured |
 | Card layout: two paragraphs, then labelled lines, spans off the prose | 34 | not measured |
+| The delivered artifact is the answer; no tour of it, no praise for the tooling | 35 | not measured |
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18
@@ -175,6 +176,22 @@ name a project that has nothing to do with the checkout. And an item that
 grades a shape ("one line, not a story") has to say what makes it fail:
 counting sentences is checkable, "recounting your trip" is a judgement call
 the judge will make differently every run.
+
+
+**Case 35's first failure was the new rule eating an old one.** The rule that
+cuts a tour of the artifact you just delivered was written with the exemption
+"what the artifact cannot say about itself" — and the artifact could say it:
+the unrun test step was named inside the step. One run in three dropped it
+from the reply, correctly by that wording and wrongly by the **Never cut**
+list. The exemption is now what the reader *would get wrong by not opening
+it*, which keeps the unverified part in the reply even when the PR body also
+carries it. An exemption phrased around the artifact will lose to one phrased
+around the reader.
+
+Case 22 has been flaky at about 2 of 3 since before this, and the measurement
+against the stashed skill is what says so — its failing run buries the
+substance in bullets under a bare "yes", which is the first-sentence rule, not
+the cut list next to it.
 
 ## Adding one
 
