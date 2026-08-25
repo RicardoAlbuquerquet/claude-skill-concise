@@ -12,8 +12,10 @@ Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
   depois do primeiro se paga pelo que deixa a pessoa fazendo — decidir, rodar,
   parar de confiar em algo. Bloco que não deixa nada vira uma linha, ou sai.
 - Corte preâmbulo, fechamento, narração de processo, prosa que repete código,
-  saída de ferramenta recolada — e, em atualização de status, qualquer coisa
-  além do delta desde a última mensagem.
+  saída de ferramenta recolada, sua própria ferramenta funcionando como
+  projetado, e passeio pelo artefato que você acabou de entregar — o link da PR
+  é a resposta, não a deixa para descrever o que está atrás dele — e, em
+  atualização de status, qualquer coisa além do delta desde a última mensagem.
 - Correção diz o que vale agora e o que isso muda — nunca como você errou, e
   nunca repetindo a frase de abertura que você já deu antes de checar.
 - Recomendação vem com motivo (≤3 linhas) e custo (≤3 linhas). Decisão do

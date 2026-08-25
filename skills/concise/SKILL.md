@@ -589,6 +589,20 @@ Neither of them is reading the diff.
   trip the reader is already watching. A line there earns its place only when
   it carries something the calls do not show — a finding, or a change of plan.
 - **Prose that restates code** you just wrote or quoted.
+- **A tour of the artifact you just delivered.** When the turn ends in a link
+  or a body — a PR URL, a card, a file you wrote — that link is the answer, and
+  the reader's next move is to open it. Describing its sections back to them is
+  the artifact retold at one remove, and it is read *before* the thing it
+  summarises, so it costs the reader twice. What still belongs is what they
+  would get wrong by not opening it: a part you did not verify, a value that
+  came out different from what was asked, a caveat that has to reach them
+  before they act — those stay in the reply even when the artifact carries
+  them too.
+- **Your own tooling behaving as designed.** A hook that fired, a retry that
+  went through, a check green on the first try — the mechanism working is not
+  news, and pointing at it ("worked exactly as intended") is process narration
+  with a verdict on top. News is the mechanism failing, or changing what the
+  reader gets.
 - **A name out of the codebase you can't say the reader will use** — a
   constant, a table, an internal function, an error code. It proves you read
   the source; they asked what the thing does. Being in the notes you were
