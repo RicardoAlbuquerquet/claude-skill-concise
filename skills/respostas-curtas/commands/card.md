@@ -28,18 +28,32 @@ Regras do card:
 - **Quando o caso pedir:** passos de reprodução numerados (com frequência se
   for intermitente), impacto com quem sente, dependências com link, o anexo
   que prova.
+- **O layout:** comportamento atual num parágrafo, esperado no seguinte,
+  duas frases cada, com linha em branco entre eles — e depois os campos que
+  sempre voltam, cada um abrindo em
+  negrito na própria linha: **Onde:**, **Feito quando:**, **Fora de escopo:**,
+  **Reproduzir:**, **Impacto:**, **Reverte:**. Pule o campo que não tem nada
+  dentro; nunca junte dois na mesma linha, e o **Reproduzir:** encabeça os
+  passos numerados em vez de engoli-los. Esses rótulos são o que a pessoa
+  procura, e cinco parágrafos com o critério de pronto enterrado no quarto é
+  a falha que isso substitui.
+- **Dois code spans por parágrafo de prosa, nenhum parêntese dentro de
+  parêntese** — a linha **Onde:** não entra na conta, ela existe para isso. O
+  valor que a pessoa vai abrir ou digitar fica na frase; um terceiro nome no
+  mesmo fôlego vai para uma linha com rótulo ou sai.
 - **Duas larguras:** a coluna mostra só o título e corta; o corpo é lido na
-  visão de detalhe que o clique abre. Parágrafos curtos e no máximo uma lista
-  por padrão — cabeçalho só passando de quinze linhas com três blocos de
-  funções diferentes, tabela só a partir de três linhas por três colunas de
-  valores, e documento linkado no lugar quando o destino renderiza estreito ou
-  em texto puro. Negrito só como rótulo de item. Prioridade, responsável e
-  prazo são campos, não corpo — o *motivo* do prazo, esse sim é corpo.
+  visão de detalhe que o clique abre. Cabeçalho só passando de quinze linhas
+  com três blocos de funções diferentes, tabela só a partir de três linhas por
+  três colunas de valores, e documento linkado no lugar quando o destino
+  renderiza estreito ou em texto puro. Prioridade, responsável e prazo são
+  campos, não corpo — o *motivo* do prazo, esse sim é corpo.
 
 Antes de entregar, audite o rascunho contra o checklist do card você mesmo —
-o que muda no título com a área, atual → esperado, valores exatos, critério de
-pronto, cabeçalho e tabela só passando dos limites, corpo que se sustenta
-sozinho — e corrija o que falhar. Entregue só a versão limpa.
+o que muda no título com a área, atual → esperado em duas frases cada, cada
+campo recorrente na própria linha com rótulo, nenhum parágrafo com um terceiro
+span ou parêntese aninhado, valores exatos, critério de pronto, cabeçalho e
+tabela só passando dos limites, corpo que se sustenta sozinho — e corrija o
+que falhar. Entregue só a versão limpa.
 
 Entrega: título na primeira linha, corpo em bloco de código, pronto para
 colar. Cerque com quatro crases quando o corpo carregar uma cerca própria —
