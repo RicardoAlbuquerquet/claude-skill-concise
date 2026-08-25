@@ -456,12 +456,33 @@ The body is read in the detail view a click opens, and that one is usually wide
 enough for real structure. So the body holds *less* structure than a chat reply
 by default, and earns more only where the content is genuinely that shape:
 
+- **The default layout is two paragraphs and then labelled lines.** Current
+  behaviour is one paragraph and expected behaviour is the next, two
+  sentences each, with a blank line between them — run together in one block
+  they lose the seam, and the gap between the two *is* the work. After them
+  the recurring slots, each opening in bold on its own line: **Where:** for
+  the files and settings the change touches, then **Done when:**, **Out of
+  scope:**, **Repro:**, **Impact:**, **Reverts:**. Those labels are what a
+  card is read for, and a body without them is a wall the reader has to parse
+  to find the one line that says when it's finished. **Repro:** heads the
+  numbered steps instead of replacing them — three steps folded onto its line
+  is the packing the list rule bans. **Where:** is also what
+  keeps the opening paragraphs about behaviour: three pointers into the code
+  belong on that line, not stacked inside the sentence describing the bug. This is the
+  fixed-template bold, not emphasis: one label per line, nothing bold inside
+  the sentence after it.
+- **Two code spans in a prose paragraph, and no parenthesis inside a
+  parenthesis.** Past that the sentence has stopped explaining and started
+  carrying your evidence — a third path, a constant and a CSS value in one
+  breath is unreadable at any width. The value the reader will open or type
+  stays in the sentence; the rest moves to the **Where:** line, which is
+  exempt from the count because holding pointers is the whole reason it
+  exists.
 - **No header until the body passes fifteen lines** and carries three blocks
-  doing different jobs — repro, impact, done criterion. Below that, short
-  paragraphs with a single list where the steps are is the entire layout, and
-  `## The problem` over two lines is decoration with a template's confidence
-  behind it. Passing fifteen lines is itself the first sign to check whether
-  it's two cards.
+  doing different jobs — repro, impact, done criterion. Below that, the
+  layout above is the whole layout, and `## The problem` over two lines is
+  decoration with a template's confidence behind it. Passing fifteen lines is
+  itself the first sign to check whether it's two cards.
 - **A table when the content is at least three rows by three columns** and
   every cell is a value rather than a sentence — four queues against retry,
   lease and backoff is a table, and in prose it becomes a paragraph nobody

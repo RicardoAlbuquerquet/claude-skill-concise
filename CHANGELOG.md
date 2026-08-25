@@ -5,6 +5,32 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.53.0 — 2026-08-25
+
+Cards came out correct and unreadable: five paragraphs of prose with the done
+criterion buried in the fourth and five code spans stacked in the first. The
+rules said what a card must contain and what it must not wear, never how the
+body is laid out.
+
+- **The default layout is two paragraphs, then labelled lines.** Current
+  behaviour, expected behaviour, two sentences each with a blank line between
+  them — then **Where:**, **Done when:**, **Out of scope:**, **Repro:**,
+  **Impact:**, **Reverts:**, each opening in bold on its own line, skipping
+  the ones with nothing in them. Those labels are what a card is scanned for.
+- **Two code spans in a prose paragraph, and no parenthesis inside a
+  parenthesis.** The **Where:** line is exempt — holding the pointers is what
+  it is for, and it is what keeps the opening paragraphs about behaviour
+  instead of about files.
+- **`Repro:` heads the numbered steps rather than swallowing them**, which is
+  the collision the new label created and case 11 caught.
+- **Eval case 34** is the real card that prompted this, with its five names,
+  its reversal of an earlier decision and its out-of-scope values. It passes
+  3 of 3.
+- **Case 11 was already flaky at 1 of 3**, measured against the pre-change
+  skill before crediting anything: packed repro, title opening on the product
+  name. The layout rules took it to 2 of 3, and naming the board's areas in
+  its facts took it to 3 of 3.
+
 ## 1.52.0 — 2026-08-24
 
 The two surfaces that had no budget get one, and the shortest of them gets

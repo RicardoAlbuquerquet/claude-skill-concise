@@ -7,7 +7,10 @@ second for a different logged-in user before disappearing. Drafts are meant to
 be private to their author. You confirmed the flash on the same device with
 two accounts; you did not check whether it also happens across devices, which
 would mean the server is serving drafts without an owner filter rather than a
-local cache leaking. The board carries cards from every area of the product.
+local cache leaking. The board carries cards from every area of the product —
+its columns hold work labelled Drafts, Billing, Settings and Notifications,
+and this one belongs to Drafts. Every screen in the product is in the PWA, so
+that word locates nothing.
 
 ## Prompt
 

@@ -1,6 +1,6 @@
 # Evals
 
-Thirty-three cases, eight at a time. Each gives the model the facts it would have discovered, sends
+Thirty-four cases, eight at a time. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -43,7 +43,7 @@ The style and the facts reach the CLI through `--append-system-prompt-file`,
 at case 17 with "Argument list too long" before the switch. A CLI old enough
 to lack the flag still works and says so.
 
-**Cost:** two API calls per case per run, so the default suite is 66 calls
+**Cost:** two API calls per case per run, so the default suite is 68 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
@@ -87,6 +87,7 @@ you change a rule here, change the rubric that tests it.
 | PR description inside a screenful, and the cut comes out of what repeats | 31 | not measured |
 | Commit body: six lines at most, no investigation, no list of what was run | 32 | not measured |
 | Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | not measured |
+| Card layout: two paragraphs, then labelled lines, spans off the prose | 34 | not measured |
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18
@@ -114,6 +115,14 @@ praise had been left out — a note longer than the praise. Loosening the item
 would have graded away the very thing the case is for, so the rule went into
 `SKILL.md` instead: what a comment leaves out, it leaves out silently. It
 passes 3 of 3 after that, and case 25 still does.
+
+**Case 11 was flaky at 1 of 3 before the card layout rules existed, and the
+measurement is what said so.** Its repro came out as one packed line and its
+title opened on the product name instead of the board area — both failures
+its own rubric already asked about. The layout rules took it to 2 of 3 on
+their own; naming the board's areas in the facts, so that "PWA" locates
+nothing, took it to 3 of 3. Measure the case against the old skill before
+crediting a change with a regression, or with a fix.
 
 **Case 18 was unstable at about 2 of 3 from the day it was written until
 1.23.0, and the cause was not the rule it tests.** A dozen claims against a

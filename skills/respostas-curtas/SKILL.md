@@ -455,12 +455,32 @@ larga o bastante para estrutura de verdade. Então o corpo aguenta *menos*
 estrutura que uma resposta de chat por padrão, e ganha mais só onde o conteúdo
 tem mesmo essa forma:
 
+- **O layout padrão é dois parágrafos e depois linhas com rótulo.**
+  Comportamento atual é um parágrafo e o esperado é o seguinte, duas frases
+  cada, com linha em branco entre eles — emendados num bloco só eles perdem a
+  emenda, e a distância entre os dois *é* o trabalho. Depois deles vêm
+  depois deles os campos que sempre voltam, cada um abrindo em negrito na
+  própria linha: **Onde:** para os arquivos e ajustes que a mudança toca, e
+  depois **Feito quando:**, **Fora de escopo:**, **Reproduzir:**,
+  **Impacto:**, **Reverte:**. Esses rótulos são o que se procura num card, e
+  corpo sem eles é uma parede que a pessoa tem que ler inteira para achar a
+  linha que diz quando aquilo termina. O **Reproduzir:** encabeça os passos
+  numerados em vez de substituí-los — três passos dobrados na linha dele é o
+  empacotamento que a regra de lista proíbe. O **Onde:** é também o que mantém os
+  parágrafos de abertura falando de comportamento: três ponteiros para o
+  código moram nessa linha, não empilhados dentro da frase que descreve o bug. É o negrito de template fixo, não
+  ênfase: um rótulo por linha, e nada em negrito dentro da frase depois dele.
+- **Dois code spans por parágrafo de prosa, e nenhum parêntese dentro de
+  parêntese.** Passou disso, a frase parou de explicar e começou a carregar a
+  sua evidência — um terceiro caminho, mais uma constante e mais um valor de
+  CSS no mesmo fôlego não se lê em largura nenhuma. O valor que a pessoa vai
+  abrir ou digitar fica na frase; o resto vai para a linha **Onde:**, que não
+  entra nessa conta porque segurar ponteiro é a razão de ela existir.
 - **Sem cabeçalho enquanto o corpo não passa de quinze linhas** e não carrega
   três blocos com funções diferentes — reprodução, impacto, critério de pronto.
-  Abaixo disso, parágrafos curtos com uma lista só onde estão os passos é o
-  layout inteiro, e `## O problema` sobre duas linhas é enfeite com a confiança
-  de um template atrás. Passar de quinze linhas já é o primeiro sinal para
-  conferir se não são dois cards.
+  Abaixo disso, o layout acima é o layout inteiro, e `## O problema` sobre duas
+  linhas é enfeite com a confiança de um template atrás. Passar de quinze
+  linhas já é o primeiro sinal para conferir se não são dois cards.
 - **Tabela quando o conteúdo é pelo menos três linhas por três colunas** e cada
   célula é um valor, não uma frase — quatro filas contra retentativa, lease e
   backoff é tabela, e em prosa vira um parágrafo que ninguém compara. Menor que

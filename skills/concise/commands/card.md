@@ -27,18 +27,32 @@ Rules of the card:
 - **When the case calls for it:** numbered repro steps (with frequency if
   intermittent), impact with who feels it, linked dependencies, the
   attachment that proves it.
+- **The layout:** current behaviour in one paragraph, expected behaviour in
+  the next, two sentences each, blank line between — then the recurring
+  slots, each opening in bold on its own
+  line: **Where:**, **Done when:**, **Out of scope:**, **Repro:**, **Impact:**,
+  **Reverts:**. Skip the slots that have nothing in them; never merge two
+  into one line, and **Repro:** heads the numbered steps rather than
+  swallowing them. Those labels are what the reader scans for, and five
+  paragraphs with the done criterion buried in the fourth is the failure this
+  replaces.
+- **Two code spans in a prose paragraph, no parenthesis inside a
+  parenthesis** — the **Where:** line is exempt, it exists to hold them. The
+  value the reader opens or types stays in the sentence; a third name in the
+  same breath moves to that line or goes.
 - **Two widths:** the column shows the title alone and cuts it; the body is
-  read in the detail view a click opens. Short paragraphs and at most one list
-  by default — a header only past fifteen lines with three blocks doing
-  different jobs, a table only at three rows by three columns of values, and a
-  linked document instead when the destination renders narrow or in plain
-  text. Bold only as item labels. Priority, assignee, and due date are fields,
-  not body text — the *reason* for a date is body.
+  read in the detail view a click opens. A header only past fifteen lines
+  with three blocks doing different jobs, a table only at three rows by three
+  columns of values, and a linked document instead when the destination
+  renders narrow or in plain text. Priority, assignee, and due date are
+  fields, not body text — the *reason* for a date is body.
 
 Before delivering, audit the draft against the card checklist yourself —
-what changes in the title with its area, current → expected, exact values,
-done criterion, headers and tables only past their thresholds, body standing
-alone — and fix what fails. Deliver only the clean version.
+what changes in the title with its area, current → expected in two sentences
+each, every recurring slot on its own labelled line, no prose paragraph
+carrying a third span or a nested parenthesis, exact values, done criterion,
+headers and tables only past their thresholds, body standing alone — and fix
+what fails. Deliver only the clean version.
 
 Delivery: title on the first line, body in a fenced block, ready to paste.
 Fence it with four backticks when the body carries a fence of its own —
