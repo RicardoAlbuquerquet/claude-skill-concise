@@ -316,11 +316,24 @@ to solve. What a template hands ready-made still has to earn its place:
 decoration as anywhere else, now with the template's authority behind it.
 
 When one PR carries several deliverables, they read as a short list — one
-line each, opening with its label, as a real markdown list (`- ` at the
-start of the line). Chaining them inside a paragraph with semicolons or
-dashes is the same wall of text with different punctuation. And when the diff spans many files, say in one line where
-to start reading — the file where the mechanism lives. The reviewer scans
-the list, opens that file, skims the rest.
+line each, **opening with a bold label**, as a real markdown list (`- ` at the
+start of the line). The label names the surface the change landed on: a
+screen, an endpoint, a file, a behaviour. That column of labels down the left
+edge is what the reviewer reads first, and it is the whole difference between
+a list and five paragraphs wearing dashes. An item that runs past one line is
+two claims or one padded one — split it or cut it. Chaining them inside a
+paragraph with semicolons or dashes is the same wall of text with different
+punctuation. And when the diff spans many files, say in one line where to
+start reading — the file where the mechanism lives. The reviewer scans the
+list, opens that file, skims the rest.
+
+**Nothing floats between the sections.** A migration note, a risk, a value
+that came out different, a decision with its cost — each is a line under its
+own bold label, inside the section it belongs to, never an unlabelled
+paragraph parked between two headers. An unlabelled block is the one thing on
+the page with no way in: the headers say what the sections are and the labels
+say what the items are, while five lines of prose in the gap say nothing until
+they have been read whole.
 
 A description has three jobs, and they run in this order: **what is being
 solved**, **what was done**, and **how to test it**. The problem leads because
@@ -359,7 +372,11 @@ the commit body or the linked card.
 A repo's own `PULL_REQUEST_TEMPLATE` is a contract, not decoration: keep its
 headers and fill them in this register. What it doesn't excuse is
 boilerplate — a section with nothing to say gets a "none", and a checklist
-box gets ticked only when it's true.
+box gets ticked only when it's true. And a template with no slot for the
+problem does not delete the problem: it leads that template's first section,
+in a sentence or two, before whatever the header asks for. A body that opens
+on what changed has dropped the only part the reviewer cannot rebuild from
+the diff.
 
 The title carries the card's title rule, minus one part. It says what changes
 when the PR merges, in the shape the repo's log already uses — a `fix(scope):`
@@ -400,7 +417,11 @@ End every PR with this:
 
 If you didn't run it, say so in the step itself. A test step that reads as
 verified but wasn't is worse than no step: the reviewer stops checking it,
-trusting a check that never happened.
+trusting a check that never happened. **What you checked instead goes in that
+same step**, next to what blocked you — collected at the end as a paragraph
+about what did not happen, it reads as a disclaimer and gets skimmed as one,
+while inside step 3 it tells the reviewer exactly which step is theirs to
+redo.
 
 ## Tasks and issues
 

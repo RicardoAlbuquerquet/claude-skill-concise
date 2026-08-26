@@ -27,7 +27,9 @@ Como:
    `PULL_REQUEST_TEMPLATE.md`, `docs/`, ou o diretório
    `.github/PULL_REQUEST_TEMPLATE/`. Quando existe, é contrato: mantenha os
    cabeçalhos dele e preencha neste registro — seção sem nada a dizer ganha
-   um "nenhum", e caixa de checklist só é marcada quando é verdade.
+   um "nenhum", e caixa de checklist só é marcada quando é verdade. Template
+   sem espaço para o problema não apaga o problema: ele abre a primeira seção
+   desse template, em uma ou duas frases, antes do que o cabeçalho pede.
 3. Procure o card ou a issue que motivou a branch: primeiro na conversa,
    depois — quando uma ferramenta de tracker está ao alcance (`gh`, um board
    por MCP) — buscando nele o assunto da branch. Achado, ele entra na
@@ -55,15 +57,22 @@ Como:
    afirmação que sustenta o bloco. O que não ganha: prosa repetindo o diff,
    mapa arquivo por arquivo, contagem do que mudou, narração de processo,
    seção para uma alternativa que uma linha carrega, e crédito a agente de IA
-   em lugar nenhum. Várias entregas viram lista curta — uma linha cada, rótulo
-   primeiro, `- ` no começo da linha — nunca parágrafo emendado com
-   ponto-e-vírgula ou travessão, e cada uma dita uma vez: parágrafo
+   em lugar nenhum. Várias entregas viram lista curta — uma linha cada,
+   abrindo com um **rótulo em negrito** que nomeia a superfície onde a mudança
+   caiu, `- ` no começo da linha — nunca parágrafo emendado com
+   ponto-e-vírgula ou travessão, e nunca item que passa de uma linha, que é
+   duas afirmações ou uma inchada. Cada uma dita uma vez: parágrafo
    explicando uma linha que a tabela acima já carrega é o diff recontado com
-   uma grade na frente.
+   uma grade na frente. E nada flutua entre as seções: nota de migração,
+   risco, valor que saiu diferente é uma linha sob o próprio rótulo em
+   negrito, dentro da seção a que pertence, nunca parágrafo sem rótulo
+   estacionado entre dois cabeçalhos.
 7. Termine com os passos de teste: o comando exato copiável, o que aparece se
    estiver certo, e o que provaria que quebrou quando o comando não cobre o
-   caso. Quando você não rodou um passo, diga isso dentro do próprio passo;
-   quando rodou, isso é uma linha mais a linha de saída que prova, nunca o
+   caso. Quando você não rodou um passo, diga isso dentro do próprio passo, e
+   ponha nesse mesmo passo o que você conferiu no lugar — juntado no fim como
+   parágrafo sobre o que não aconteceu, vira aviso legal e é lido como um.
+   Quando rodou, isso é uma linha mais a linha de saída que prova, nunca o
    relato de ter rodado — a sequência de quebrar entregue para o revisor
    rodar é passo, não relato.
    Feature ainda sem tela não é desculpa — o passo é a própria chamada
@@ -71,11 +80,13 @@ Como:
 
 Antes de entregar, audite o rascunho contra o checklist você mesmo — título
 na forma do repo com a área dele, a descrição abrindo no que está sendo
-resolvido, valores exatos em span, entregas em lista, as três seções na ordem,
-nada repetindo o diff nem a tabela ao lado, passos de teste com os não rodados
-marcados — e corrija o que falhar. Conte também as linhas de prosa: passou de
-vinte e cinco, o corte sai do que repete outra coisa, nunca de uma ressalva, de
-um valor ou de um bloco de comando. Entregue só a versão limpa.
+resolvido, valores exatos em span, cada entrega em uma linha sob um rótulo em
+negrito, nenhum parágrafo sem rótulo entre dois cabeçalhos, as três seções na
+ordem, nada repetindo o diff nem a tabela ao lado, passos de teste com os não
+rodados marcados dentro do passo — e corrija o que falhar. Conte também as
+linhas de prosa: passou de vinte e cinco, o corte sai do que repete outra
+coisa, nunca de uma ressalva, de um valor ou de um bloco de comando. Entregue
+só a versão limpa.
 
 Entregue o título primeiro, em linha própria — o que muda quando mescla, na
 forma que o log do repo já usa, com a área primeiro dentro dessa forma quando

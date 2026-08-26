@@ -318,12 +318,25 @@ resolver. O que o template entrega pronto ainda precisa merecer o lugar:
 sempre, agora com a autoridade do template atrás.
 
 Quando uma PR carrega várias entregas, elas viram uma lista curta — uma linha
-cada, abrindo com o rótulo, como lista markdown de verdade (`- ` no começo
-da linha). Emendar dentro de um parágrafo com ponto-e-vírgula ou travessão é
-a mesma parede de texto com outra pontuação.
+cada, **abrindo com um rótulo em negrito**, como lista markdown de verdade
+(`- ` no começo da linha). O rótulo nomeia a superfície onde a mudança caiu:
+uma tela, um endpoint, um arquivo, um comportamento. Essa coluna de rótulos
+na margem esquerda é o que o revisor lê primeiro, e é toda a diferença entre
+uma lista e cinco parágrafos vestindo travessão. Item que passa de uma linha
+é duas afirmações ou uma inchada — separe ou corte. Emendar dentro de um
+parágrafo com ponto-e-vírgula ou travessão é a mesma parede de texto com
+outra pontuação.
 E quando o diff atravessa muitos arquivos, diga em uma linha por onde começar
 a ler — o arquivo onde o mecanismo vive. O revisor bate o olho na lista, abre
 esse arquivo, passa o olho no resto.
+
+**Nada flutua entre as seções.** Nota de migração, risco, valor que saiu
+diferente, decisão com o custo dela — cada um é uma linha sob o próprio
+rótulo em negrito, dentro da seção a que pertence, nunca um parágrafo sem
+rótulo estacionado entre dois cabeçalhos. Bloco sem rótulo é a única coisa na
+página sem porta de entrada: os cabeçalhos dizem quais são as seções e os
+rótulos dizem quais são os itens, enquanto cinco linhas de prosa no vão não
+dizem nada até serem lidas inteiras.
 
 Uma descrição tem três funções, e elas correm nesta ordem: **o que está sendo
 resolvido**, **o que foi feito** e **como testar**. O problema abre porque é o
@@ -360,7 +373,10 @@ para o corpo do commit ou para o card linkado.
 O `PULL_REQUEST_TEMPLATE` do próprio repo é contrato, não enfeite: mantenha
 os cabeçalhos dele e preencha neste registro. O que ele não desculpa é
 enchimento — seção sem nada a dizer ganha um "nenhum", e caixa de checklist
-só é marcada quando é verdade.
+só é marcada quando é verdade. E template sem espaço para o problema não
+apaga o problema: ele abre a primeira seção desse template, em uma ou duas
+frases, antes do que o cabeçalho pede. Corpo que começa pelo que mudou jogou
+fora a única parte que o revisor não consegue remontar a partir do diff.
 
 O título carrega a regra de título do card, menos uma parte. Ele diz o que
 muda quando a PR mescla, na forma que o log do repo já usa — prefixo
@@ -400,7 +416,11 @@ Termine toda PR com isso:
 
 Se você não rodou, diga no próprio passo que não rodou. Passo de teste que passa
 por verificado sem ter sido é pior que passo nenhum: o revisor para de checar
-aquilo, confiando numa checagem que não existiu.
+aquilo, confiando numa checagem que não existiu. **O que você conferiu no lugar
+vai nesse mesmo passo**, ao lado do que travou — juntado no fim como um
+parágrafo sobre o que não aconteceu, vira um aviso legal e é lido como um,
+enquanto dentro do passo 3 ele diz ao revisor exatamente qual passo é dele
+para refazer.
 
 ## Tarefa e issue
 
