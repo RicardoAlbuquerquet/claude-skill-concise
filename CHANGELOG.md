@@ -5,6 +5,32 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.55.0 — 2026-08-26
+
+A real PR body came back correct and unreadable: five deliverables as
+two-and-three-line paragraphs wearing dashes, an unlabelled block of prose
+parked between the two headers, and the "I could not run this" note collected
+at the end as a trailing paragraph. The template the repo ships has only
+`## O que mudou` and `## Como testar` — and the problem the PR solved, the one
+part the reviewer cannot rebuild from the diff, had nowhere to go and went
+nowhere.
+
+- **Every deliverable is one line under a bold label** naming the surface the
+  change landed on. That column of labels down the left edge is what the
+  reviewer reads first; an item running past one line is two claims or one
+  padded one.
+- **Nothing floats between the sections.** A migration note, a risk, a value
+  that came out different — each is a line under its own bold label inside the
+  section it belongs to, never an unlabelled paragraph between two headers.
+- **A template with no slot for the problem does not delete the problem**: it
+  opens that template's first section, in a sentence or two, before what the
+  header asks for.
+- **What you checked instead of running a step goes in that step.** Gathered
+  at the end as a paragraph about what did not happen, it reads as a
+  disclaimer and gets skimmed as one.
+- **All four are in `commands/pr.md` too**, including its pre-delivery
+  checklist, since that is what actually writes the body.
+
 ## 1.54.0 — 2026-08-25
 
 A reply that ends in a link kept going. The turn opened a pull request,
