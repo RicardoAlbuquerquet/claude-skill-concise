@@ -26,7 +26,9 @@ How:
    `PULL_REQUEST_TEMPLATE.md`, `docs/`, or a `.github/PULL_REQUEST_TEMPLATE/`
    directory. When one exists it is a contract: keep its headers and fill
    them in this register — a section with nothing to say gets a "none", and
-   a checklist box is ticked only when it's true.
+   a checklist box is ticked only when it's true. A template with no slot for
+   the problem does not delete the problem: it opens that template's first
+   section, in a sentence or two, before what the header asks for.
 3. Look for the card or issue that motivated the branch: first in the
    conversation, then — when a tracker tool is reachable (`gh`, an MCP
    board) — by searching it for the branch's subject. Found, it enters the
@@ -54,25 +56,33 @@ How:
    claim that carries a block. What does not: prose restating the diff, a
    file-by-file map, a count of what changed, process narration, a section
    for an alternative that a line would carry, and credit to an AI agent
-   anywhere. Several deliverables read as a short list — one line each, label
-   first, `- ` at the start of the line — never a paragraph chained with
-   semicolons or dashes, and each one stated once: a paragraph explaining a
-   row the table above it already carries is the diff retold with a grid in
-   front of it.
+   anywhere. Several deliverables read as a short list — one line each,
+   opening with a **bold label** that names the surface the change landed on,
+   `- ` at the start of the line — never a paragraph chained with semicolons
+   or dashes, and never an item running past one line, which is two claims or
+   one padded one. Each is stated once: a paragraph explaining a row the
+   table above it already carries is the diff retold with a grid in front of
+   it. And nothing floats between the sections: a migration note, a risk, a
+   value that came out different is a line under its own bold label inside
+   the section it belongs to, never an unlabelled paragraph parked between
+   two headers.
 7. End with the test steps: the exact copy-pasteable command, what appears if
    it's right, and what would prove it broke when the command doesn't cover
-   the case. When you did not run a step, say so inside the step itself; when
-   you did run it, that is one line and the output line that proves it, never
-   the account of running it — the break-it sequence handed to the reviewer
-   to run is a step, not an account. A feature with no screen yet is not an
-   excuse — the step is the direct call itself, route and body included, not
-   a note that a direct call exists.
+   the case. When you did not run a step, say so inside the step itself, and
+   put what you checked instead in that same step — gathered at the end as a
+   paragraph about what did not happen, it reads as a disclaimer and gets
+   skimmed as one. When you did run it, that is one line and the output line
+   that proves it, never the account of running it — the break-it sequence
+   handed to the reviewer to run is a step, not an account. A feature with no
+   screen yet is not an excuse — the step is the direct call itself, route
+   and body included, not a note that a direct call exists.
 
 Before delivering, audit the draft against the checklist yourself — title in
 the repo's shape with its area, the description opening on what is solved, exact
-values in spans, deliverables as a list, the three sections in order, nothing
-restating the diff or the table beside it, test steps with the unrun ones
-marked — and fix what fails. Count the prose lines too: over twenty-five, the
+values in spans, every deliverable one line under a bold label, no unlabelled
+paragraph between two headers, the three sections in order, nothing restating
+the diff or the table beside it, test steps with the unrun ones marked inside
+the step — and fix what fails. Count the prose lines too: over twenty-five, the
 cut comes out of what repeats something else, never out of a caveat, a value
 or a fence. Deliver only the clean version.
 
