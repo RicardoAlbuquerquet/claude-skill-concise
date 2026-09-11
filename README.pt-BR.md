@@ -158,7 +158,7 @@ npx skills add RicardoAlbuquerquet/claude-skill-concise
 ```
 
 Só as regras viajam. O output style forçado, o núcleo, o lembrete por turno, o
-auto-update, as guardas, os doze comandos e o agente de auditoria são
+auto-update, as guardas, os treze comandos e o agente de auditoria são
 maquinaria de plugin do Claude Code; em outro agente você fica com o documento
 e invoca à mão.
 
@@ -208,6 +208,12 @@ faltava era informação e não palavras:
 - **Desenhe o formato.** Quando a resposta é uma sequência ou uma bifurcação, um
   diagrama ASCII de cinco linhas ganha do parágrafo que você teria que montar na
   cabeça.
+
+**Ela chega ao código que o Claude escreve.** Comentário carrega só o que o
+código não diz — nunca a edição que o produziu — e a tela diz cada coisa uma
+vez: sem subtítulo ecoando o título, sem placeholder ecoando o rótulo, verbo em
+todo botão. A consequência de uma ação irreversível, o valor com que alguém
+decide e o nome acessível ficam.
 
 <details>
 <summary><b>Estrutura, público e jargão</b> — como as regras decidem o que fica na página</summary>
@@ -264,6 +270,7 @@ reais. Quatro delas saem mais longas.
 | | `/respostas-curtas:status` | escreve o update como delta desde o último, notícia ruim no topo |
 | | `/respostas-curtas:passagem` | passa o trabalho adiante: estado completo, toda ressalva por inteiro, as armadilhas, o comando que retoma |
 | **Texto que já existe** | `/respostas-curtas:reescrever` | reescreve um texto pronto pelas regras, sem perder nada |
+| | `/respostas-curtas:enxugar` | tira o texto morto do código e da tela — comentário que repete o código, texto que repete a tela |
 | | `/respostas-curtas:auditar` | roda o agente de auditoria num rascunho, arquivo ou corpo de PR e repassa o relatório |
 | | Agente `auditar` | devolve só as violações de um rascunho — citação, regra, correção |
 | **Guardas** | Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
@@ -291,7 +298,7 @@ segura onde a primeira enfraquece:
 O output style carrega o núcleo de ~47 linhas, menos de mil tokens, de um
 arquivo só: [`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md)
 ([`hooks/core.md`](skills/concise/hooks/core.md) no port em inglês); o CI falha
-quando os dois divergem. O lembrete é uma linha, uns 330 caracteres por turno.
+quando os dois divergem. O lembrete é uma linha, uns 430 caracteres por turno.
 Um hook `SessionStart` acrescenta só a linha que diz o seu shell, e o seu
 override do núcleo quando existe. As regras completas continuam na skill, que o
 modelo invoca quando o turno pede mais que o núcleo.
@@ -368,6 +375,7 @@ invocação:
 | `/respostas-curtas:release [versão]` | nunca — sem `gh release create`, sem tag empurrada |
 | `/respostas-curtas:status [onde]` · `/respostas-curtas:passagem [quem]` | nunca — nomear um canal ou uma pessoa não é permissão para enviar |
 | `/respostas-curtas:plano [assunto]` | nunca — não entra em plan mode nem começa o passo 1 |
+| `/respostas-curtas:enxugar [caminhos]` | sempre — cortar o texto é o trabalho, então ele edita os arquivos; nunca commita |
 | `/respostas-curtas:reescrever` · `/respostas-curtas:decidir` · `/respostas-curtas:desenhar` · `/respostas-curtas:auditar` | nunca — só texto |
 
 <details>
@@ -381,6 +389,14 @@ invocação:
   partir do original ou é reportado como buraco, nunca inventado. Sem
   argumento, o alvo é a resposta anterior do próprio Claude. EN:
   `/concise:rewrite`.
+- **`/respostas-curtas:enxugar [caminhos]`** tira o texto morto do código —
+  o comentário que repete a linha de baixo ou descreve a edição, código
+  comentado, e na tela a segunda vez que a mesma coisa é dita, o botão sem
+  verbo, a palavra de tom. Sem argumento, o alvo são os arquivos que a branch
+  mudou. Texto visível muda junto com os testes, snapshots e idiomas que casam
+  com ele, ou fica e é reportado; diretiva, cabeçalho de licença e nome
+  acessível nunca saem. Roda as checagens do repo e nunca commita. EN:
+  `/concise:trim`.
 - **`/respostas-curtas:pr [base] [create]`** escreve a descrição da PR da
   branch atual a partir do diff real contra `origin/main` (ou a base que você
   nomear): o que está sendo resolvido, o que foi feito, como testar, com os

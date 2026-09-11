@@ -5,6 +5,30 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.58.0 — 2026-09-11
+
+The style stopped at the edge of the conversation: no rule in it reached the
+comments in the code Claude writes, or the text on the screens it builds.
+
+- **`SKILL.md` gains "Text inside code and on screen"** (PT: "Texto no código
+  e na tela"). A comment says what the code can't, and nothing about the edit;
+  no commented-out code; a message names what failed, with the value; a screen
+  says each thing once, a button is a verb, tone words go. What stays: the
+  consequence of an irreversible action, a value the person decides with,
+  where a result lands when the screen can't show it, the way out of an error,
+  legally required text, and the accessible name. Two rows join the budgets
+  table, and the line exempting code now says the words inside it are not.
+- **The core carries it as one bullet**, so the forced output style applies it
+  without the skill being invoked, and the turn reminder gains one clause: 427
+  characters a turn in EN, up from 331, and 429 in PT, up from 328.
+- **`/concise:trim`** (PT: `/respostas-curtas:enxugar`) cuts the dead text out
+  of the files the branch changed, or the paths you name. It keeps directives,
+  license headers and accessible names, changes a visible string together with
+  the tests and locales that match it — or leaves it and says so — runs the
+  repo's checks, and never commits.
+- **Cases 36 and 37** grade the comments in a new search hook and the text of
+  a privacy settings page.
+
 ## 1.57.0 — 2026-09-11
 
 The plugin said the same thing too many times. Every session loaded the core

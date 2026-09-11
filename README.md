@@ -157,7 +157,7 @@ npx skills add RicardoAlbuquerquet/claude-skill-concise
 ```
 
 Only the ruleset travels. The forced output style, the core, the turn reminder,
-the self-update, the guards, the twelve commands and the audit agent are Claude
+the self-update, the guards, the thirteen commands and the audit agent are Claude
 Code plugin machinery; in another agent you get the document and invoke it
 yourself.
 
@@ -206,6 +206,12 @@ information rather than words:
   money or risk question silently is shorter and not its call to make.
 - **Draw the shape.** When the answer is a sequence or a branch, a five-line
   ASCII diagram beats the paragraph you would have to assemble in your head.
+
+**It reaches the code Claude writes, too.** A comment carries only what the
+code can't say — never the edit that produced it — and a screen says each
+thing once: no subtitle echoing its title, no placeholder echoing its label,
+a verb on every button. The consequence of an irreversible action, the value
+someone decides with and the accessible name stay.
 
 <details>
 <summary><b>Structure, audience and jargon</b> — how the rules decide what stays on the page</summary>
@@ -263,6 +269,7 @@ transformations. Four of them come out longer.
 | | `/concise:status` | writes the update as the delta since the last one, bad news on top |
 | | `/concise:handoff` | hands the work over: the complete state, every standing caveat back in full, the traps, the resume command |
 | **Text that already exists** | `/concise:rewrite` | rewrites a finished text to the rules, losing nothing |
+| | `/concise:trim` | cuts the dead text out of code and screens — comments that repeat the code, copy that repeats the screen |
 | | `/concise:audit` | runs the audit agent on a draft, a file, or a PR body and relays the report |
 | | `audit` agent | returns only the violations in a draft — quote, rule, fix |
 | **Guards** | credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
@@ -290,7 +297,7 @@ holds where the first fades:
 The output style carries the ~50-line core, under a thousand tokens, from one
 file: [`hooks/core.md`](skills/concise/hooks/core.md)
 ([`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md) in the PT port);
-CI fails when the two drift. The reminder is one line, about 330 characters a
+CI fails when the two drift. The reminder is one line, about 430 characters a
 turn. A `SessionStart` hook adds only the line naming your shell, and your core
 override when you wrote one. The full ruleset still lives in the skill, which
 the model invokes when a turn needs more than the core.
@@ -367,6 +374,7 @@ the invocation itself:
 | `/concise:release [version]` | never — no `gh release create`, no tag pushed |
 | `/concise:status [where]` · `/concise:handoff [who]` | never — naming a channel or a person is not permission to send |
 | `/concise:plan [subject]` | never — it doesn't enter plan mode or start step 1 |
+| `/concise:trim [paths]` | always — cutting the text is the job, so it edits the files; it never commits |
 | `/concise:rewrite` · `/concise:decide` · `/concise:draw` · `/concise:audit` | never — text only |
 
 <details>
@@ -379,6 +387,14 @@ the invocation itself:
   missing cost, a missing test step) is either filled from the original or
   reported as a hole, never invented. Empty arguments target Claude's own
   previous reply. PT: `/respostas-curtas:reescrever`.
+- **`/concise:trim [paths]`** cuts the dead text out of code — the comment
+  that repeats the line under it or describes the edit, commented-out code,
+  and on screen the second saying of the same thing, the button with no verb,
+  the tone words. Empty arguments target the files the branch changed. A
+  visible string changes together with the tests, snapshots and locales that
+  match it, or stays and is reported; directives, license headers and
+  accessible names are never cut. It runs the repo's checks and never
+  commits. PT: `/respostas-curtas:enxugar`.
 - **`/concise:pr [base] [create]`** drafts the pull request description for
   the current branch from the real diff against `origin/main` (or the base
   you name): what is being solved, what was done, how to test it, with the

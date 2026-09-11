@@ -53,7 +53,7 @@ plugin:
 | `hooks/hooks.json` | the plugin name in every command, the override filename, the opt-out flag names, and the human strings (welcome, deny reasons, the turn reminder — kept free of quotes, `$` and backticks, since it rides inside single quotes on a bash command line) |
 | `hooks/*.sh` | **nothing** — the six scripts are byte-identical across ports and take everything as arguments; `check-parity.sh` enforces that |
 | `output-styles/` | one file: `name`, `description`, and the body regenerated from your core; keep `force-for-plugin: true` |
-| `commands/` | twelve files: translate, and rename them if the command name changes |
+| `commands/` | thirteen files: translate, and rename them if the command name changes |
 | `agents/` | one file: `name`, `description`, body |
 
 Then add your port to `scripts/check-parity.sh` (it only knows EN and PT

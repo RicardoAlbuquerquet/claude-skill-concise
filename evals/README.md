@@ -1,6 +1,6 @@
 # Evals
 
-Thirty-five cases, eight at a time. Each gives the model the facts it would have discovered, sends
+Thirty-seven cases, eight at a time. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -89,6 +89,8 @@ you change a rule here, change the rubric that tests it.
 | Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | not measured |
 | Card layout: two paragraphs, then labelled lines, spans off the prose | 34 | not measured |
 | The delivered artifact is the answer; no tour of it, no praise for the tooling | 35 | not measured |
+| A comment says only what the code can't; no docstring retelling the signature, no banner | 36 | not measured |
+| A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | not measured |
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18
@@ -192,6 +194,14 @@ Case 22 has been flaky at about 2 of 3 since before this, and the measurement
 against the stashed skill is what says so — its failing run buries the
 substance in bullets under a bare "yes", which is the first-sentence rule, not
 the cut list next to it.
+
+**The first drafts of cases 36 and 37 measured nothing.** A bugfix to a retry
+function passed 3 of 3 against the 1.57.0 core, which carries no rule about
+code, and so did an export dialog whose facts dictated every string on the
+screen — a case that passes without the rule cannot show the rule working.
+The current drafts leave the model room to add text: a new file with no
+convention to copy, and a settings page with four switches and a toast in
+reach.
 
 ## Adding one
 

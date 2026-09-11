@@ -1,6 +1,6 @@
 ---
 name: respostas-curtas
-description: Estilo obrigatório de toda resposta escrita ao usuário — a resposta na primeira frase, sem poluição visual, sem informação além da necessária. Vale em todo turno que produza texto ao usuário, inclusive atualização de status, e no que sai da conversa: mensagem de commit, descrição de PR, tarefa, issue e nota de release.
+description: Estilo obrigatório de toda resposta escrita ao usuário — a resposta na primeira frase, sem poluição visual, sem informação além da necessária. Vale em todo turno que produza texto ao usuário, inclusive atualização de status; no que sai da conversa: mensagem de commit, descrição de PR, tarefa, issue e nota de release; e no texto escrito dentro do código: comentário, mensagem e o que a tela diz.
 ---
 
 # Respostas curtas
@@ -43,8 +43,12 @@ dela, só o que muda uma decisão.
 | Descrição de PR | o que ela resolve, depois o que foi feito, depois o passo de teste exato — nada disso repetindo o que o diff já mostra, e cerca de 25 linhas de prosa, sem contar os comandos em bloco |
 | Tarefa ou issue | comportamento atual, esperado, valor exato, como fecha |
 | Comentário, resposta ou mensagem para alguém | a afirmação mais a linha que prova — ≤3 linhas e uma é comum, a superfície mais curta daqui; sem saudação, sem despedida, sem estrutura dentro |
+| Comentário no código | o que o código não diz — o porquê, a armadilha, a unidade; a maioria das linhas não precisa de nenhum |
+| Texto na tela | cada coisa dita uma vez, verbo no botão, e o valor com que a pessoa decide mantido |
 
-Código, comando e diff não entram no orçamento e **não** se encurtam.
+Código, comando e diff não entram no orçamento — o que roda **não** se
+encurta. As palavras dentro do código entram: comentário e texto que alguém lê
+seguem **Texto no código e na tela**.
 
 Os orçamentos são alvo, não teto. Quando um deles bate de frente com a lista
 **Nunca corte**, a lista ganha — passe uma linha em vez de derrubar a ressalva, o
@@ -527,6 +531,45 @@ Nenhum dos dois está lendo o diff.
   a flag, a configuração que mudou de lugar, o nome antigo que a pessoa vai
   procurar. "Quebra: `--fence` virou `--fence-style`" é a entrada fazendo o
   trabalho dela.
+
+## Texto no código e na tela
+
+O que você escreve dentro de uma aplicação é lido por quem nunca viu esta
+conversa: quem mexe no código depois, num comentário, e quem usa o produto, na
+tela — no meio de outra tarefa, e sem ler nada duas vezes. Os dois levam o
+corte de uma resposta.
+
+- **Comentário diz o que o código não diz** — por que é assim, a armadilha, a
+  unidade: `// o banco recusa mais de 2 casas decimais: arredonde antes de assinar`.
+  O que a linha de baixo já diz sai (`// incrementa o contador`), e sai também
+  a docstring que reconta a assinatura em palavras.
+- **Nada sobre a própria edição.** "Agora usa o cliente novo", "corrigido o
+  race", "era 30" descrevem o diff, e a casa do diff é o commit: depois do
+  merge eles apontam para uma versão que ninguém vê.
+- **Sem código comentado, sem banner dividindo o arquivo.** O git guarda o
+  código antigo, e a densidade de comentário do próprio arquivo é a convenção
+  — arquivo sem nenhum não ganha um por função.
+- **Mensagem nomeia o que falhou, com o valor, e o que fazer**:
+  `porta "80a" em config.yaml não é número`, nunca `Configuração inválida`. Na
+  tela, o mesmo nas palavras de quem usa — sem stack trace, sem código de
+  status, sem "Ops".
+- **Tela diz cada coisa uma vez.** Subtítulo repetindo o título
+  (`Faturas` sobre `Veja e gerencie suas faturas`), placeholder repetindo o
+  rótulo, tooltip repetindo o botão, toast de uma mudança que a pessoa acabou
+  de ver acontecer: a mesma frase, duas vezes.
+- **Botão é o verbo do que ele faz** — `Salvar rascunho`, `Excluir` — nunca
+  `OK` ou `Clique aqui`, e confirmação pergunta com a consequência:
+  `Cancelar o plano? O acesso acaba em 31 de maio.`
+- **Palavra de tom sai**: "por favor", "com sucesso", "simplesmente", ponto de
+  exclamação, a linha dando boas-vindas a uma página que a pessoa já abriu.
+
+Tem texto que só parece cortável, e fica: a consequência de uma ação
+irreversível, o valor com que a pessoa decide (um preço, um prazo, um tamanho
+de arquivo), onde o resultado chega quando a tela não consegue mostrar, a
+única saída de um erro, o texto que lei ou contrato exige, e o nome acessível —
+botão só de ícone mantém o `aria-label` quando a palavra visível sai. Texto que
+um teste, um snapshot ou outro idioma conferem muda em todos de uma vez, ou não
+muda.
 
 ## Corte sempre
 
