@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Exercises the four hook scripts outside a session, with a fake $HOME and a
+# Exercises the hook scripts outside a session, with a fake $HOME and a
 # fake `claude` on PATH — no API calls, no writes outside the temp dir.
 # Runs the EN copies; the PT ones are byte-identical (check-parity enforces).
 cd "$(dirname "$0")/.." || exit 1
@@ -216,6 +216,39 @@ r "opt-out pelo arquivo de flag"         allow '{"session_id":"s6","command":"gh
 rm "$FH/.claude/.concise-no-route-hint"
 out=$(printf '%s' '{"session_id":"s7","command":"gh pr create --fill"}' | HOME="$FH" TMPDIR="$RT" CONCISE_NO_ROUTE_HINT=1 bash "$R" "M" .concise-no-route-hint)
 [ -z "$out" ] && { pass=$((pass+1)); echo "ok    opt-out pela variavel de ambiente"; } || { fail=$((fail+1)); echo "FALHA opt-out por variavel"; }
+
+echo "--- estilo forcado: output style e lembrete por turno"
+# O nucleo chega uma vez, no inicio da sessao, e sessao longa se afasta dele.
+# Duas camadas seguram: o output style forcado vai no system prompt de toda
+# request, e o lembrete entra do lado de cada mensagem. Se uma delas some, o
+# estilo volta a depender da sorte — entao as duas quebram teste aqui.
+TR="$REPO/skills/concise/hooks/turn-reminder.sh"
+ok () { pass=$((pass+1)); echo "ok    $1"; }
+ko () { fail=$((fail+1)); echo "FALHA $1"; }
+json_ok () { perl -MJSON::PP -e 'local $/; my $j = decode_json(<STDIN>); exit(($j->{hookSpecificOutput}{hookEventName} eq "UserPromptSubmit" && length $j->{hookSpecificOutput}{additionalContext}) ? 0 : 1)'; }
+
+out=$(printf '%s' '{"prompt":"oi"}' | HOME="$FH" bash "$TR" "Resposta na primeira frase." .concise-no-turn-reminder)
+printf '%s' "$out" | json_ok && ok "lembrete sai como additionalContext valido" || ko "lembrete nao e JSON de UserPromptSubmit: $out"
+case "$out" in *"Resposta na primeira frase."*) ok "lembrete leva o texto recebido" ;; *) ko "lembrete perdeu o texto" ;; esac
+
+out=$(printf '%s' '{}' | HOME="$FH" bash "$TR" 'aspas " e barra \ no texto' .concise-no-turn-reminder)
+printf '%s' "$out" | json_ok && ok "aspas e barra no texto nao quebram o JSON" || ko "texto com aspas quebrou o JSON: $out"
+
+touch "$FH/.claude/.concise-no-turn-reminder"
+out=$(printf '%s' '{}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder)
+[ -z "$out" ] && ok "lembrete: opt-out pelo arquivo de flag" || ko "lembrete ignorou a flag"
+rm "$FH/.claude/.concise-no-turn-reminder"
+out=$(printf '%s' '{}' | HOME="$FH" CONCISE_NO_TURN_REMINDER=1 bash "$TR" "X" .concise-no-turn-reminder)
+[ -z "$out" ] && ok "lembrete: opt-out pela variavel de ambiente" || ko "lembrete ignorou a variavel"
+
+for port in concise respostas-curtas; do
+  grep -q '"UserPromptSubmit"' "$REPO/skills/$port/hooks/hooks.json" &&
+    grep -q 'hooks/turn-reminder.sh' "$REPO/skills/$port/hooks/hooks.json" &&
+    ok "hooks.json de $port registra o lembrete" || ko "hooks.json de $port sem o lembrete"
+  style=$(ls "$REPO/skills/$port/output-styles/"*.md)
+  awk '/^---$/{n++; next} n==1' "$style" | tr -d '\r' | grep -qx 'force-for-plugin: true' &&
+    ok "output style de $port e forcado" || ko "output style de $port nao tem force-for-plugin: true"
+done
 
 echo "--- harness dos evals (claude falso)"
 # O run.sh passou a rodar os casos em paralelo. Duas coisas que paralelismo

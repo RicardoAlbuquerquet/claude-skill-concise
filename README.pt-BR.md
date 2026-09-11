@@ -157,9 +157,10 @@ arquivos `SKILL.md` — as regras viajam pelo [skills.sh](https://skills.sh):
 npx skills add RicardoAlbuquerquet/claude-skill-concise
 ```
 
-Só as regras viajam. O núcleo sempre-ligado, o auto-update, as guardas, os doze
-comandos e o agente de auditoria são maquinaria de plugin do Claude Code; em
-outro agente você fica com o documento e invoca à mão.
+Só as regras viajam. O output style forçado, o núcleo, o lembrete por turno, o
+auto-update, as guardas, os doze comandos e o agente de auditoria são
+maquinaria de plugin do Claude Code; em outro agente você fica com o documento
+e invoca à mão.
 
 Confira que registrou digitando `/respostas-curtas` no Claude Code. Se não
 aparecer, cheque o caminho: copiar para um `skills/` que ainda não existe
@@ -250,7 +251,8 @@ reais. Quatro delas saem mais longas.
 |---|---|---|
 | **O estilo** | Skill `respostas-curtas` | as regras completas, invocadas quando o turno pede |
 | | Hook `SessionStart` | injeta o núcleo de ~47 linhas em toda sessão, mais a linha que diz o shell desta máquina; auto-atualiza o plugin |
-| | Output style `respostas-curtas` | o mesmo núcleo no system prompt — sem shell, escolhido no `/config` |
+| | Output style `respostas-curtas` | o mesmo núcleo no system prompt, forçado enquanto o plugin está ligado |
+| | Lembrete por turno | hook `UserPromptSubmit` que relembra o estilo em uma linha ao lado de cada mensagem |
 | **O que sai da conversa** | `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
 | | `/respostas-curtas:commit` | rascunha a mensagem de commit do staged — título na forma que o log do repo usa, corpo com o porquê |
 | | `/respostas-curtas:card` | rascunha o card que se sustenta sozinho; cria quando o destino é nomeado |
@@ -278,13 +280,27 @@ digitando `/respostas-curtas`, ou pelo modelo decidindo que a `description`
 combina com a tarefa. Uma regra de *estilo* de resposta quer valer em todos,
 inclusive nos turnos em que nada na tarefa sugere "agora pense em brevidade".
 
-**Instalada como plugin, isso já vem resolvido.** Cada plugin embarca um hook
-`SessionStart` que imprime um núcleo de ~47 linhas do estilo no contexto a cada
-início de sessão — menos de mil tokens, gastos produza a sessão prosa ou não. O
-núcleo é a garantia; as regras completas continuam na skill, que o modelo
-invoca quando o turno pede mais que o núcleo. O que é injetado é um arquivo só:
+**Instalada como plugin, o estilo vem forçado, em três camadas** — cada uma
+segura onde a anterior enfraquece:
+
+| Camada | Onde entra | Quando |
+|---|---|---|
+| **Output style**, forçado | o system prompt | toda request — e o Claude Code relembra o modelo do estilo ativo no meio da conversa |
+| **Núcleo**, por um hook `SessionStart` | o contexto da sessão | início da sessão, retomada, e de novo depois da compactação |
+| **Lembrete por turno**, por um hook `UserPromptSubmit` | ao lado da sua mensagem, fora do histórico visível | toda mensagem |
+
+O núcleo tem ~47 linhas, menos de mil tokens, e é um arquivo só:
 [`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md)
-([`hooks/core.md`](skills/concise/hooks/core.md) no port em inglês).
+([`hooks/core.md`](skills/concise/hooks/core.md) no port em inglês). O output
+style carrega o mesmo texto, e o CI falha quando os dois divergem. O lembrete é
+uma linha, uns 330 caracteres por turno. As regras completas continuam na skill,
+que o modelo invoca quando o turno pede mais que o núcleo.
+
+> [!WARNING]
+> **Forçar sobrescreve o seu próprio output style.** Com o plugin ligado, ele
+> substitui o que você escolheu — Explanatory, Learning, ou o seu — e se outro
+> plugin ligado também forçar um, vale o primeiro carregado. Desligar o plugin
+> é o caminho de volta; o lembrete por turno tem [a própria chave](#os-comandos-e-o-agente).
 
 > [!TIP]
 > **Para conferir que carregou mesmo**, pergunte numa sessão nova: *"que estilo
@@ -302,19 +318,17 @@ cache — o auto-update sobrescreve na release seguinte. Escreva
 (`~/.claude/concise-core-override.md` no port em inglês): quando esse arquivo
 existe, o hook injeta ele no lugar do núcleo embarcado, e ele sobrevive a toda
 atualização. Ele substitui o núcleo por inteiro — comece de uma cópia do
-arquivo embarcado e corte.
+arquivo embarcado e corte. Substitui só a cópia do hook: o output style forçado
+carrega o núcleo embarcado.
 
-**Uma aresta de plataforma:** no Windows o hook roda pelo Git Bash. Sem o Git
-for Windows instalado ele falha em silêncio e você volta ao só-por-invocação —
-as mesmas máquinas onde a própria ferramenta Bash do Claude Code não roda,
-então na prática o hook funciona onde o resto funciona.
-
-**O caminho sem shell é o output style.** O mesmo núcleo também vem como output
-style do Claude Code, que vive no system prompt em vez de ser impresso por um
-hook — sem shell, sem Git Bash, e cacheado em vez de reenviado a cada sessão.
-Escolha em `/config` → **Output style** → `respostas-curtas`. É a resposta para
-quando o hook não roda, e custa uma seleção manual; o plugin não força, porque
-forçar sobrescreveria o output style que você escolheu.
+**Sem shell, o estilo continua de pé.** No Windows os hooks rodam pelo Git
+Bash, e sem o Git for Windows instalado eles falham em silêncio — o núcleo, o
+lembrete e as guardas ficam mudos, nas mesmas máquinas onde a própria
+ferramenta Bash do Claude Code não roda. O output style forçado não precisa de
+shell, então o estilo continua no system prompt ali. Um Claude Code antigo
+demais para conhecer o `force-for-plugin` ignora a chave; o estilo fica então a
+uma escolha de distância, em `/config` → **Output style** →
+`respostas-curtas:respostas-curtas`.
 
 **Instalada por cópia, o hook não vem junto** — `~/.claude/skills/` leva só a
 skill. Emparelhe com uma linha no `CLAUDE.md`, que é carregado no contexto a
@@ -475,11 +489,13 @@ continuasse negando seria uma parede sem saída. Ele não enxerga PR aberta no
 navegador — nenhum plugin enxerga — então repo que abre PR pelo github.com põe
 essa linha no próprio `PULL_REQUEST_TEMPLATE`.
 
-Toda guarda desliga sem mexer no estilo, porque guarda determinística tem falso
-positivo — escrever *sobre* a regra dispara ela, como este repo descobriu:
+Tudo em volta do estilo desliga sozinho, sem mexer nele — guarda determinística
+tem falso positivo, e escrever *sobre* a regra dispara ela, como este repo
+descobriu:
 
 | Para parar | Num shell ou numa sessão | De vez |
 |---|---|---|
+| o lembrete por turno | `export CONCISE_NO_TURN_REMINDER=1` | `touch ~/.claude/.respostas-curtas-no-turn-reminder` |
 | a guarda de crédito | `export CONCISE_ALLOW_CREDIT=1` | `touch ~/.claude/.respostas-curtas-no-credit-guard` |
 | o desvio da PR | `export CONCISE_NO_ROUTE_HINT=1` | `touch ~/.claude/.respostas-curtas-no-route-hint` |
 | o auto-update | — | `touch ~/.claude/.respostas-curtas-no-self-update` |

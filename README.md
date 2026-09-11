@@ -156,9 +156,10 @@ Project-level instead, committed with the repo so your team shares it: create
 npx skills add RicardoAlbuquerquet/claude-skill-concise
 ```
 
-Only the ruleset travels. The always-on core, the self-update, the guards, the
-twelve commands and the audit agent are Claude Code plugin machinery; in another
-agent you get the document and invoke it yourself.
+Only the ruleset travels. The forced output style, the core, the turn reminder,
+the self-update, the guards, the twelve commands and the audit agent are Claude
+Code plugin machinery; in another agent you get the document and invoke it
+yourself.
 
 Verify it registered by typing `/concise` in Claude Code. If it doesn't appear,
 check the path: copying into a `skills/` directory that doesn't exist yet lands
@@ -249,7 +250,8 @@ transformations. Four of them come out longer.
 |---|---|---|
 | **The style** | `concise` skill | the full ruleset, invoked when a turn needs it |
 | | `SessionStart` hook | injects the ~50-line core every session, plus the line naming this machine's shell; self-updates the plugin |
-| | `concise` output style | the same core in the system prompt — no shell needed, pick it in `/config` |
+| | `concise` output style | the same core in the system prompt, forced on while the plugin is enabled |
+| | turn reminder | `UserPromptSubmit` hook that restates the style in one line beside every prompt |
 | **What leaves the conversation** | `/concise:pr` | drafts the PR description from the real diff, test steps last |
 | | `/concise:commit` | drafts the commit message for what is staged — title in the shape the repo log uses, body says why |
 | | `/concise:card` | drafts a task/issue card that stands alone; creates it when a destination is named |
@@ -277,13 +279,27 @@ typing `/concise`, or by the model deciding the `description` matches the task.
 A response-*style* rule wants to apply to all of them, including the turns where
 nothing about the task suggests "now think about brevity".
 
-**Installed as a plugin, this is handled for you.** Each plugin ships a
-`SessionStart` hook that prints a ~50-line core of the style into context at
-every session start — under a thousand tokens, spent whether or not the session
-produces prose. The core is the guarantee; the full ruleset still lives in the
-skill, which the model invokes when a turn needs more than the core. What gets
-injected is one file: [`hooks/core.md`](skills/concise/hooks/core.md)
+**Installed as a plugin, the style is forced on, in three layers** — each one
+holds where the one before it fades:
+
+| Layer | Where it lands | When |
+|---|---|---|
+| **Output style**, forced | the system prompt | every request — and Claude Code reminds the model of an active style mid-conversation |
+| **Core**, from a `SessionStart` hook | the session's context | session start, resume, and again after compaction |
+| **Turn reminder**, from a `UserPromptSubmit` hook | beside your message, unseen in the transcript | every prompt |
+
+The core is ~50 lines, under a thousand tokens, and it is one file:
+[`hooks/core.md`](skills/concise/hooks/core.md)
 ([`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md) in the PT port).
+The output style carries the same text, and CI fails when the two drift. The
+reminder is one line, about 330 characters a turn. The full ruleset still lives
+in the skill, which the model invokes when a turn needs more than the core.
+
+> [!WARNING]
+> **Forcing overrides your own output style.** While the plugin is enabled it
+> replaces the one you picked — Explanatory, Learning, or your own — and if
+> another enabled plugin also forces one, the first loaded wins. Disabling the
+> plugin is the way back; the turn reminder has [its own switch](#the-commands-and-the-agent).
 
 > [!TIP]
 > **To check it actually loaded**, ask in a fresh session: *"what response style
@@ -301,19 +317,16 @@ the self-update overwrites it on the next release. Write
 (`~/.claude/respostas-curtas-nucleo-override.md` for the PT port): when that
 file exists the hook injects it in place of the shipped core, and it survives
 every update. It replaces the core wholesale — start from a copy of the shipped
-file and cut.
+file and cut. It replaces the hook's copy only: the forced output style carries
+the shipped core.
 
-**One platform edge:** the hook runs through Git Bash on Windows. Without Git
-for Windows installed it fails silently and you're back to invocation-only —
-the same machines where Claude Code's own Bash tool doesn't run, so in practice
-the hook works wherever the rest does.
-
-**The shell-free path is the output style.** The same core also ships as a
-Claude Code output style, which lives in the system prompt instead of being
-printed by a hook — no shell, no Git Bash, and cached rather than re-sent every
-session. Pick it in `/config` → **Output style** → `concise`. It is the answer
-when the hook can't run, and it costs one manual selection; the plugin does not
-force it, because that would override the output style you chose yourself.
+**Without a shell, the style still holds.** The hooks run through Git Bash on
+Windows, and without Git for Windows installed they fail silently — the core,
+the reminder and the guards go quiet, on the same machines where Claude Code's
+own Bash tool doesn't run. The forced output style needs no shell, so the style
+stays in the system prompt there. A Claude Code too old to know
+`force-for-plugin` ignores the key; the style is then one pick away, in
+`/config` → **Output style** → `concise:concise`.
 
 **Installed by copy, the hook doesn't come along** — `~/.claude/skills/` takes
 only the skill. Pair it with a line in `CLAUDE.md`, which is loaded into context
@@ -474,12 +487,13 @@ kept denying would be a wall the session could not leave. It cannot see a PR
 opened in the browser — nothing in a plugin can — so a repo whose PRs are opened
 on github.com puts the line in its own `PULL_REQUEST_TEMPLATE` instead.
 
-Every guard can be switched off without touching the style, because a
-deterministic guard has false positives — writing *about* the rule trips it, as
-this repo found out:
+Everything around the style switches off on its own, without touching it — a
+deterministic guard has false positives, and writing *about* the rule trips it,
+as this repo found out:
 
 | To stop | For one shell or session | For good |
 |---|---|---|
+| the turn reminder | `export CONCISE_NO_TURN_REMINDER=1` | `touch ~/.claude/.concise-no-turn-reminder` |
 | the credit guard | `export CONCISE_ALLOW_CREDIT=1` | `touch ~/.claude/.concise-no-credit-guard` |
 | the PR route hint | `export CONCISE_NO_ROUTE_HINT=1` | `touch ~/.claude/.concise-no-route-hint` |
 | the self-update | — | `touch ~/.claude/.concise-no-self-update` |

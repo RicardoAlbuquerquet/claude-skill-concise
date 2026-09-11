@@ -50,9 +50,10 @@ plugin:
 | `.claude-plugin/plugin.json` | `name`, `description` |
 | `SKILL.md` | frontmatter `name` and `description` |
 | `hooks/core.md` | rename to your language's core, translate |
-| `hooks/hooks.json` | the plugin name in all five commands, the override filename, the opt-out flag names, and the two human strings (welcome, deny reason) |
-| `hooks/*.sh` | **nothing** — the four scripts are byte-identical across ports and take everything as arguments; `check-parity.sh` enforces that |
-| `commands/` | eleven files: translate, and rename them if the command name changes |
+| `hooks/hooks.json` | the plugin name in every command, the override filename, the opt-out flag names, and the human strings (welcome, deny reasons, the turn reminder — kept free of quotes, `$` and backticks, since it rides inside single quotes on a bash command line) |
+| `hooks/*.sh` | **nothing** — the six scripts are byte-identical across ports and take everything as arguments; `check-parity.sh` enforces that |
+| `output-styles/` | one file: `name`, `description`, and the body regenerated from your core; keep `force-for-plugin: true` |
+| `commands/` | twelve files: translate, and rename them if the command name changes |
 | `agents/` | one file: `name`, `description`, body |
 
 Then add your port to `scripts/check-parity.sh` (it only knows EN and PT
@@ -82,8 +83,9 @@ ports pairwise and only knows the ones named in it.
 ## Keeping the hook core in sync
 
 Each plugin ships the style twice: the full ruleset in `SKILL.md`, and a
-~45-line core in `hooks/core.md` (`hooks/nucleo.md` in the PT port) that a
-`SessionStart` hook injects into every session. A PR that changes a rule
+~50-line core in `hooks/core.md` (`hooks/nucleo.md` in the PT port) that a
+`SessionStart` hook injects into every session and the forced output style
+carries in the system prompt. A PR that changes a rule
 checks whether the core states that rule — and moves it too, in both ports.
 The core drifting from the skill is worse than either alone: the model reads
 one in context and the other on invocation, and follows whichever it saw

@@ -5,6 +5,36 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.56.0 — 2026-09-11
+
+Claude kept drifting out of the style in long sessions. The core arrived once,
+at session start, as context; the output style carrying the same core was
+opt-in, one `/config` pick almost nobody made; and nothing restated the rules
+after the first screen of the conversation.
+
+- **The output style is forced on while the plugin is enabled.** Both ports set
+  `force-for-plugin: true`, so the core lands in the system prompt of every
+  request, and Claude Code reminds the model of an active style mid-conversation
+  on its own. It overrides the output style the user picked — Explanatory,
+  Learning, their own — and when another enabled plugin also forces one, the
+  first loaded wins. Disabling the plugin is the way back.
+- **A `UserPromptSubmit` hook restates the style beside every prompt**, as
+  `additionalContext`: the model sees one line between the message and the
+  history, the transcript shows nothing. 331 characters a turn in EN, 328 in
+  PT, and about 65 ms through Git Bash on Windows — drained and escaped with
+  bash builtins, because it runs before every prompt. Off with
+  `CONCISE_NO_TURN_REMINDER=1` or `~/.claude/.concise-no-turn-reminder`.
+- **The `SessionStart` core stays**, for the core override, the shell line, and
+  any Claude Code too old to know the frontmatter key — which ignores it and
+  leaves the style one pick away in `/config`.
+- **`~/.claude/concise-core-override.md` now replaces only the hook's copy.**
+  The forced output style carries the shipped core.
+- **Nine new checks in `scripts/test-hooks.sh`**: the reminder's JSON, quote
+  and backslash escaping, both opt-outs, the registration in both
+  `hooks.json`, and `force-for-plugin` in both styles — deleting the key fails
+  the suite. `check-parity.sh` compares `turn-reminder.sh` byte for byte and
+  counts `UserPromptSubmit` in the hooks shape.
+
 ## 1.55.0 — 2026-08-26
 
 A real PR body came back correct and unreadable: five deliverables as

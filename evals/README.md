@@ -101,8 +101,8 @@ still documents it — but the suite's discriminating power is those ten, and a
 new case should aim to fail at baseline.
 
 The baseline run needs an isolated config, or it grades the skill against
-itself: a global `CLAUDE.md` carrying the style, and the plugin's own hook,
-both reach `claude -p`. Copy `~/.claude/.credentials.json` and a
+itself: a global `CLAUDE.md` carrying the style, the plugin's own hooks, and
+since 1.56.0 its forced output style all reach `claude -p`. Copy `~/.claude/.credentials.json` and a
 plugin-less `settings.json` into a scratch directory and point
 `CLAUDE_CONFIG_DIR` at it — an empty directory alone loses the login.
 

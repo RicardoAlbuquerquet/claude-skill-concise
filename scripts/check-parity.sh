@@ -25,7 +25,7 @@ files ()   { find "$1" -name '*.md' 2>/dev/null | wc -l | tr -d ' '; }
 # must be byte-identical across ports — the language lives in hooks.json, which
 # passes the strings in. Counting lines would not catch a one-sided fix.
 identical () {
-  for f in credit-guard.sh inject-core.sh notices.sh route-hint.sh self-update.sh; do
+  for f in credit-guard.sh inject-core.sh notices.sh route-hint.sh self-update.sh turn-reminder.sh; do
     cmp -s "$EN/hooks/$f" "$PT/hooks/$f" || { printf '%s' "$f differs"; return; }
   done
   printf 'identical'
@@ -34,7 +34,7 @@ identical () {
 # Same for the shape of hooks.json: same events, same matchers, same script
 # called with the same argument count — only the human strings may differ.
 shape () {
-  sed -n 's/.*"\(SessionStart\|PreToolUse\)".*/\1/p; s/.*"matcher": *"\([^"]*\)".*/matcher=\1/p; s/.*hooks\/\([a-z-]*\.sh\).*/script=\1/p' "$1" | tr '\n' ' '
+  sed -n 's/.*"\(SessionStart\|UserPromptSubmit\|PreToolUse\)".*/\1/p; s/.*"matcher": *"\([^"]*\)".*/matcher=\1/p; s/.*hooks\/\([a-z-]*\.sh\).*/script=\1/p' "$1" | tr '\n' ' '
 }
 
 # The marketplace card is what someone reads before installing. It drifted
