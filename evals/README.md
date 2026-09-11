@@ -22,7 +22,7 @@ the long form works:
 | Variable | What it does |
 |---|---|
 | `SKILL=respostas-curtas` | runs the PT port (rubrics check structure, not language) |
-| `CORE=1` | judges the ~65-line core the output style carries, not the full skill |
+| `CORE=1` | judges the ~60-line core the output style carries, not the full skill |
 | `BASELINE=1` | no style at all — see below |
 | `RUNS=3` | three attempts per case; anything short of all-pass reports `FLAKY` |
 | `MODEL=claude-sonnet-5` | pins the model, so two runs are comparable |

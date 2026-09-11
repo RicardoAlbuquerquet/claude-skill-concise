@@ -1,12 +1,12 @@
 ---
-description: Tira o texto morto do código e da tela — comentário que repete o código, texto que repete a tela
+description: Tira o texto morto do código e da tela — comentário, texto, palavra de tom
 argument-hint: "[caminhos — vazio mira os arquivos que esta branch mudou]"
 ---
 
 Tire do código o texto que não carrega nada: comentário, docstring, mensagem de
 log e de erro, e o texto que uma pessoa lê na tela. Leia
-`${CLAUDE_PLUGIN_ROOT}/referencias/codigo.md` antes e siga, e invoque a skill
-`respostas-curtas` se ela não estiver no contexto.
+`${CLAUDE_PLUGIN_ROOT}/referencias/codigo.md` antes: as regras moram lá, e
+aqui só o procedimento.
 
 $ARGUMENTS
 

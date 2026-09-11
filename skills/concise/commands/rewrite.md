@@ -1,5 +1,5 @@
 ---
-description: Rewrite a finished text to the concise ruleset — same information, none of the padding
+description: Rewrite a finished text to the rules, losing nothing
 argument-hint: "[text to rewrite — empty targets your previous reply]"
 ---
 

@@ -1,12 +1,12 @@
 ---
-description: Cut the dead text out of code and screens — comments that repeat the code, copy that repeats the screen
+description: Cut dead text from code and screens — comments, copy, tone words
 argument-hint: "[paths — empty targets the files this branch changed]"
 ---
 
 Cut the text that carries nothing out of the code: comments, docstrings, log
 and error messages, and the strings a person reads on screen. Read
-`${CLAUDE_PLUGIN_ROOT}/references/code.md` first and follow it, and invoke the
-`concise` skill if it is not already in context.
+`${CLAUDE_PLUGIN_ROOT}/references/code.md` first: it holds the rules, and
+this file only the procedure.
 
 $ARGUMENTS
 

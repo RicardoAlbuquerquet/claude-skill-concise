@@ -302,10 +302,10 @@ segura onde a primeira enfraquece:
 | **Output style**, forçado | o system prompt | toda request — e o Claude Code relembra o modelo do estilo ativo no meio da conversa |
 | **Lembrete por turno**, por um hook `UserPromptSubmit` | ao lado da sua mensagem, fora do histórico visível | toda mensagem |
 
-O output style carrega o núcleo de ~65 linhas, cerca de 1.600 tokens, de um
+O output style carrega o núcleo de ~60 linhas, cerca de 1.450 tokens, de um
 arquivo só: [`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md)
 ([`hooks/core.md`](skills/concise/hooks/core.md) no port em inglês); o CI falha
-quando os dois divergem. O lembrete é uma linha, uns 430 caracteres por turno.
+quando os dois divergem. O lembrete é uma linha, uns 300 caracteres por turno.
 Um hook `SessionStart` acrescenta só a linha que diz o seu shell, e o seu
 override do núcleo quando existe. As regras completas continuam na skill, que o
 modelo invoca quando o turno pede mais que o núcleo.

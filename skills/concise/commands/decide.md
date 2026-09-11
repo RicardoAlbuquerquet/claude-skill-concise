@@ -1,5 +1,5 @@
 ---
-description: Put the live options side by side and still recommend one — each cost named, the recommendation argued against the alternatives specifically
+description: Options side by side with their costs, and still a recommendation
 argument-hint: "[the decision, and the options if you already know them]"
 ---
 
@@ -40,10 +40,7 @@ Rules of the layout:
   the advice out leaves the reader exactly where they were, holding a choice
   whose costs only you measured.
 
-Before delivering, audit the draft yourself — every option live, no column
-whose cells all say the same thing, a recommendation present and argued
-against the alternatives, the flip condition stated, unverified costs marked —
-and fix what fails. Deliver only the clean version.
+Check the draft against the rules above and fix what fails before delivering.
 
 Delivery: the table and the recommendation in the conversation. When the
 invocation names another destination, take that surface's register from the

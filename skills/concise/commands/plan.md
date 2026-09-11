@@ -1,5 +1,5 @@
 ---
-description: Draft the plan you are proposing — the numbered steps you will run, the risk named, what it leaves out. Text only; it runs nothing
+description: Draft the plan for approval — steps, risk, what it leaves out
 argument-hint: "[what the plan is for — empty uses the work under discussion]"
 ---
 
@@ -41,10 +41,7 @@ Rules of the plan:
 - **Draw it when it branches** — a plan with three or more hops, a retry, or
   a rollback path gets the ASCII in a fenced block, arrows labelled.
 
-Before delivering, audit the draft yourself — first line says what you will
-do, every step names a file or a command, risk present, out-of-scope stated,
-nothing that is exploration wearing a step number — and fix what fails.
-Deliver only the clean version.
+Check the draft against the rules above and fix what fails before delivering.
 
 Delivery: the plan as prose in the conversation, since it is read here to be
 approved. Put it in a fenced block only when the invocation says it goes

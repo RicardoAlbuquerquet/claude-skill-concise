@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Response style concise is active for this turn: the answer goes in the first sentence and nothing rides along with it; the whole turn gets one budget, so cut preamble, recap, process narration and any tour of what you just delivered; in code you write, a comment says only what the code cannot, and a screen says each thing once; never cut bad news, exact values, real uncertainty or a caveat that changes what the reader does.' .concise-no-turn-reminder",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Style concise, this turn: the answer in the first sentence; one budget for the turn, so no preamble, recap, narration or tour of what you delivered; in code, a comment says only what the code cannot; never cut bad news, exact values, real uncertainty or a caveat that changes what the reader does.' .concise-no-turn-reminder",
             "timeout": 5
           }
         ]

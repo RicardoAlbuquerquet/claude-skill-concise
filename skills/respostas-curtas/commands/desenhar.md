@@ -1,33 +1,46 @@
 ---
-description: Desenha a forma — ASCII de uma sequência, de uma bifurcação ou de um antes/depois, setas rotuladas com o que passa, um traço só, nada que quebre linha. Recusa quando o assunto não merece desenho
+description: Desenha a forma em ASCII — recusa assunto que não merece desenho
 argument-hint: "[o que desenhar — vazio usa o que acabou de ser explicado]"
 ---
 
 Desenhe um diagrama, seguindo a seção "Mostre o desenho" das regras de
-`respostas-curtas`. Invoque a skill antes se as regras completas não estiverem
-no contexto.
+`respostas-curtas`.
 
 O assunto é o texto abaixo. Se estiver vazio, o assunto é o mecanismo
 explicado mais recentemente nesta conversa.
 
 $ARGUMENTS
 
-Primeiro decida se aquilo merece um desenho, e diga que não quando não merece:
+## Crenças
 
-- **Vale desenhar:** caminho com três saltos ou mais, qualquer coisa com
-  bifurcação, retry ou rota de falha, o antes e o depois de uma estrutura que
-  você mudou, ou quem chama quem quando o achado é que a coisa errada chama a
-  outra.
-- **Não vale desenhar:** o comportamento de uma função, uma lista de três
-  itens, ou a figura de uma frase que já está na tela. Diagrama repetindo a
-  linha de cima é enchimento com passos a mais. Quando o assunto é um desses,
-  diga isso em uma linha e pare — não desenhe assim mesmo.
+- **Desenho é acreditado mais que frase**, então salto que você inferiu é
+  ficção em que a pessoa vai agir.
+- **Ele quebra no painel de quem lê, não no seu rascunho** — você nunca vê
+  acontecer, e linha que quebra deixa de ser desenho.
+- **O olho lê alinhamento como significado**: margem esquerda irregular como
+  diferença que não existe, seta longa como lentidão, número solto contra a
+  caixa errada, cruzamento como conexão.
+- **Desenho que precisa de legenda já falhou**, e caixa com o nome de uma
+  tabela que a pessoa nunca vai consultar não ensina nada.
+- **Toda caixa anotada é nenhuma caixa marcada**: a pessoa lê como tabela de
+  referência, não como afirmação.
 
-Depois escolha o layout que o assunto já tem. Estes quatro são ponto de
-partida, não molde — quando a forma real não é nenhuma delas, desenhe a real.
+## Desejos
 
-**Fluxo**, quando é um caminho só com três saltos ou mais. Esquerda para
-direita, o caminho inteiro numa linha, todo o resto pendurado embaixo:
+- Quem lê vê a forma e o achado de relance, e pode confiar em cada salto.
+
+## Intenções
+
+Primeiro, se merece desenho — e diga não quando não merece: caminho com três
+ou mais saltos, bifurcação, retry ou rota de falha, o antes e depois de uma
+estrutura que você mudou, ou quem chama quem, sim; comportamento de uma
+função só, lista de três itens, ou figura de uma frase que já está na tela,
+não — uma linha dizendo isso, e pare.
+
+Depois o layout que o assunto já tem. Quatro pontos de partida, não moldes:
+
+**Fluxo** — um caminho, da esquerda para a direita, todo o resto pendurado
+embaixo:
 
 ```text
 PWA ──todo resume──> /auth/refresh ──> sessions
@@ -35,33 +48,31 @@ PWA ──todo resume──> /auth/refresh ──> sessions
                       └─ 2,1 s p95, sem índice em token_hash
 ```
 
-**Bifurcação**, quando o achado é que duas rotas se separam. Cima para baixo,
-a condição na seta e não dentro de um losango, as duas saídas começando na
-mesma coluna:
+**Bifurcação** — de cima para baixo, a condição na seta, as duas saídas
+começando na mesma coluna:
 
 ```text
-POST /pedidos
+POST /orders
      │
-     ├── tem estoque ──> cobrança ──> e-mail de confirmação
+     ├── com estoque ──> cobrança ──> e-mail de confirmação
      │
-     └── sem estoque ──> fila de espera
+     └── sem estoque ──> fila de backorder
                           │
-                          └─ nada avisa quem comprou
+                          └─ nada avisa o comprador
 ```
 
-**Antes/depois**, quando você mudou uma estrutura. Dois blocos empilhados, a
-mesma coluna à esquerda e a mesma ordem de caixas, para que a diferença seja a
-única coisa que se mexe:
+**Antes/depois** — dois blocos empilhados, mesma coluna esquerda e mesma
+ordem de caixas, para a diferença ser a única coisa que se move:
 
 ```text
-antes    worker ──> cache ──> relatorios_dia
-depois   worker ────────────> relatorios_dia
+antes    worker ──> cache ──> reports_daily
+depois   worker ────────────> reports_daily
                                │
                                └─ 3 leituras velhas/dia a menos
 ```
 
-**Árvore de chamadas**, quando o achado é quem chama quem. A indentação
-carrega a profundidade, e uma segunda coluna carrega o que cada chamada custa:
+**Árvore de chamadas** — indentação para a profundidade, segunda coluna para
+o que cada chamada custa:
 
 ```text
 handleOrder()
@@ -71,155 +82,67 @@ handleOrder()
 └─ notify()        dispara e esquece
 ```
 
-Regras do desenho:
+O desenho:
 
-- **Fundamente cada salto na fonte.** Abra os arquivos, siga a chamada.
-  Diagrama de saltos que você inferiu é ficção sobre a qual a pessoa vai agir,
-  e ele é acreditado mais do que uma frase seria. Salto que você não conseguiu
-  verificar leva um `?` no fim do rótulo dele — `webhook repetido ×3 ?` — e
-  essa é a forma única, porque três desenhos inventando `(?)`, `[nao
-  verificado]` e `~` entre eles transformam a própria marca naquilo que quem lê
-  tem que decifrar. Salto que você nem consegue supor fica de fora e é nomeado
-  embaixo do desenho.
-- **Rotule as setas com o que passa e o que custa** — `todo retorno ao app`,
-  `2,1 s p95`, `retry ×3` — não com `chama` nem com a ponta da seta sozinha.
-  Seta sem rótulo só diz que duas caixas se relacionam, o que a pessoa já
-  supunha.
-- **Rotule as caixas pelo que elas fazem**, não pelo nome interno. Caixa
-  escrita `cópia diária` ensina; a mesma caixa carregando o nome da tabela não
-  ensina nada a quem nunca vai consultar ela. A exceção é o nome que a pessoa
-  vai usar de fato — um caminho, uma rota, um serviço que ela vai abrir.
-- **Abaixo de quinze linhas.** Passando disso deixa de ser forma e vira um
-  segundo documento. Corte até os saltos que carregam o achado.
-- **Abaixo de setenta e duas colunas**, e esse limite é o duro. Linha que quebra
-  deixa de ser desenho, e ela quebra no painel de quem lê, não no seu rascunho,
-  então você nunca vê acontecer. Quando um antes/depois não cabe lado a lado
-  dentro disso, empilhe os dois blocos em vez de encolher os rótulos.
-- **Um conjunto de traços e uma direção.** Caixa desenhada ou ASCII puro, a
-  mesma ponta de seta até o fim — misturar lê como dois desenhos colados.
-  Esquerda para direita no fluxo, cima para baixo na bifurcação, e o que corre
-  em paralelo começa na mesma coluna: o olho lê margem esquerda irregular como
-  uma diferença que não existe.
-- **Todo rótulo pendura no que ele nomeia**, por um `│` até um `└─`. Número
-  flutuando entre duas caixas é lido contra a errada, e nada no desenho diz a
-  quem lê qual era a certa.
-- **Rótulo solto na linha; caixa fechada só quando ela paga três linhas.**
-  `worker ──> cache` já é um desenho, e as mesmas duas coisas dentro de molduras
-  `┌──────┐` custam seis linhas pelo mesmo conteúdo — o orçamento de quinze
-  linhas tem cinco caixas de profundidade. Caixa fechada é para nó que segura
-  duas linhas, um nome e o que ele custa, ou para o bloco comparado num
-  antes/depois. Um estilo de caixa por desenho, como há um conjunto de traços.
-- **O caminho feliz fica na linha principal, a falha desce.** Com a rota de
-  erro na mesma linha, quem lê precisa descobrir qual das duas é a normal antes
-  de o desenho dizer qualquer coisa. E a seta de falha carrega o que se perde —
-  `timeout: pedido cobrado, não confirmado` — nunca `erro`.
-- **Repetição é contagem, não caixa.** Oito consumidores iguais são uma caixa e
-  `×8`; o que difere entre eles vai no rótulo, e quando nada difere a contagem
-  é o conteúdo inteiro. Desenhar os oito gasta o orçamento provando que são
-  iguais.
-- **Sem legenda, sem chave.** Desenho que precisa de uma linha explicando o que
-  um traço significa já falhou — dobre o significado dentro dos rótulos, ou
-  largue a distinção que ele carregava. Um `×8` ou uma unidade é rótulo, não
-  legenda.
-- **Uma coisa é marcada, e ela é o achado.** As setas ganham os rótulos delas e
-  os saltos ganham os custos, mas a caixa onde o achado mora é a única que
-  carrega uma nota pendurada embaixo. Anote toda caixa e o desenho fica chapado
-  — o olho não tem onde pousar, e quem lê recebe aquilo como tabela de
-  consulta, não como afirmação. Quando duas caixas merecem a marca, são dois
-  achados e provavelmente dois desenhos.
-- **As caixas usam as palavras da frase em volta.** Caixa escrita `exporter`
-  embaixo de um parágrafo sobre "o job de exportação" obriga quem lê a
-  traduzir, e agora essa pessoa segura duas figuras: a desenhada e a que a
-  prosa montou. Escolha a palavra uma vez e deixe as duas usarem ela.
-- **ASCII em bloco de código** sempre funciona, e é o padrão. `mermaid` tem as
-  condições e as regras dele, abaixo.
-- **Uma linha embaixo, só se o desenho já não disser** — o achado para o qual
-  ele aponta, a caixa onde o problema mora.
+- **Todo salto confirmado na fonte** — abra os arquivos, siga a chamada.
+  Salto que você não conseguiu verificar leva um `?` no fim do rótulo, a
+  única forma (`webhook retentado ×3 ?`); salto que nem dá para chutar fica
+  de fora e é nomeado embaixo do desenho.
+- **Setas rotuladas com o que passa e o que custa** — `todo resume`,
+  `2,1 s p95`, `retry ×3` — nunca `chama` nem ponta de seta nua.
+- **Caixas nomeadas pelo que fazem** — `cópia diária`, não o nome da tabela —
+  salvo nome que a pessoa vai abrir: caminho, rota, serviço. E com as
+  palavras que a prosa em volta usa.
+- **Abaixo de quinze linhas, e abaixo de setenta e duas colunas** — o limite
+  duro. Antes/depois que não cabe lado a lado, empilhe.
+- **Um conjunto de traços, uma ponta de seta, uma direção** — esquerda para
+  direita no fluxo, cima para baixo na bifurcação — e o que corre em paralelo
+  começa na mesma coluna.
+- **Todo rótulo pendura no que ele nomeia**, por um `│` até um `└─`.
+- **Rótulo solto na linha; caixa fechada só para nó com duas linhas** ou o
+  bloco comparado num antes/depois — moldura `┌──────┐` custa seis linhas
+  para o que `worker ──> cache` já diz. Um estilo de caixa por desenho.
+- **O caminho feliz na linha principal, a falha embaixo dela**, e a seta de
+  falha carrega o que a pessoa perde — `timeout: pedido cobrado, não
+  confirmado`, nunca `erro`.
+- **Repetição é contagem**: oito consumidores iguais são uma caixa e `×8`.
+- **Sem legenda, sem chave.** `×8` ou uma unidade é rótulo.
+- **Uma marca, no achado**: a caixa onde o achado mora é a única com nota
+  pendurada. Duas caixas merecendo são dois achados, provavelmente dois
+  desenhos.
+- **Uma linha embaixo, só se o desenho ainda não diz.**
 
-Mermaid no lugar do ASCII, e só sob duas condições, as duas necessárias. **A
-superfície renderiza** — comentário, issue e descrição de PR no GitHub
-renderizam; resposta no terminal, corpo de commit e campo de texto puro não, e
-lá quem lê recebe o código-fonte em vez da figura. **E o grafo é de fato
-bidimensional** — um nó com duas setas chegando, um ciclo, uma malha. Corrente
-é corrente, e o ASCII carrega ela sobrevivendo à cópia para um terminal, um
-commit ou um chat que não renderiza nada.
+Mermaid no lugar de ASCII só com duas condições, as duas obrigatórias: a
+superfície renderiza — comentário, issue ou PR no GitHub sim; resposta no
+terminal, corpo de commit e campo de texto puro não — e o grafo é de fato
+bidimensional: nó com duas setas entrando, ciclo, malha. Aí, substituindo as
+regras de alinhamento e nada mais: `flowchart LR` para fluxo, `TD` para
+bifurcação ou árvore; o rótulo visível é o que a pessoa lê, nunca o id do nó
+(`auth["/auth/refresh"]`); toda aresta rotulada, `-->|todo resume|`; forma de
+nó significa algo ou fica no padrão — `{...}` decisão real, `[(...)]`
+armazenamento, `([...])` ponto de entrada; sem `style`, `classDef` nem cor;
+dez nós é o teto; e fique no subconjunto que sempre parseia — aspas em
+rótulo com colchete, parêntese, dois-pontos ou aspas, nunca `end` como id
+nu, sem markdown dentro de rótulo.
 
-Quando for mermaid, estas substituem as regras de alinhamento e mais nada:
+Nesta ordem, porque alinhamento não se conserta depois:
 
-- **`flowchart LR` no fluxo, `flowchart TD` na bifurcação ou na árvore** — a
-  mesma regra de direção que o ASCII toma, pelo mesmo motivo.
-- **O rótulo visível é o que a pessoa lê, nunca o id do nó.**
-  `auth["/auth/refresh"]` — o id é contabilidade interna, e id críptico deixado
-  à mostra vira uma caixa para decifrar antes de o desenho começar a servir.
-- **Toda aresta rotulada**, `-->|todo resume|`. Um `-->` pelado é a mesma
-  afirmação vazia em mermaid que é em ASCII.
-- **Forma de nó significa alguma coisa ou fica no padrão.** `{...}` para
-  decisão de verdade, `[(...)]` para armazenamento, `([...])` para a entrada,
-  `[...]` para todo o resto. Forma escolhida por variedade é ruído que quem lê
-  tenta ler como significado.
-- **Sem `style`, sem `classDef`, sem cor.** Cor que carrega significado precisa
-  de legenda, e desenho que precisa de legenda já falhou; ainda por cima, o
-  tema de quem lê pode ser justo o que você não testou.
-- **Dez nós é o teto**, o equivalente em mermaid às quinze linhas. Passando
-  disso, corte até os nós que carregam o achado, ou parta em dois desenhos.
-- **Você não consegue renderizar antes de entregar, então fique no subconjunto
-  que sempre compila.** Aspas em todo rótulo com colchete, parêntese,
-  dois-pontos ou aspa; nunca `end` como id de nó pelado; nada de markdown
-  dentro de rótulo. Bloco que não compila vira uma caixa de erro, o que é pior
-  que desenho nenhum.
+1. A linha principal inteira primeiro — caixas e setas rotuladas; toda coluna
+   abaixo se mede por ela.
+2. A coluna em que cada caixa começa: o `│` fica embaixo de um caractere da
+   caixa, não perto.
+3. Rótulos pendurados de cima para baixo, o mais à esquerda fechando
+   primeiro, para nenhum `└─` cruzar um `│` aberto.
+4. A linha mais longa medida: passou de setenta e duas colunas, corte rótulos
+   ou empilhe blocos — nunca entregue torcendo pelo painel largo.
 
-Desenhe nesta ordem, porque alinhamento não é coisa que se conserta depois:
+O acabamento: rótulos num registro só — minúsculas, sem pontuação final,
+mesma forma; um estilo de unidade por desenho; comprimento de seta é
+espaçador, nunca sinal; coluna de custo começa numa coluna e fica nela;
+encurte pela cabeça, nunca pelo fim (`…/auth/refresh.rs:88`); bloco com
+rótulo `text` — sem rótulo perde a regra, rótulo de shell colore os traços —
+ou `mermaid`; linha em branco só entre blocos empilhados.
 
-1. Escreva a linha principal inteira primeiro — as caixas e as setas
-   rotuladas, da esquerda para a direita. Toda coluna abaixo dela é medida a
-   partir dessa linha, então nada é desenhado embaixo antes de ela estar
-   pronta.
-2. Conte a coluna em que cada caixa começa. O `│` fica embaixo de um caractere
-   da caixa dele, não perto dela; cotovelo uma coluna fora lê como apontando
-   para a seta em vez da caixa.
-3. Pendure os rótulos de cima para baixo, o mais à esquerda fechando primeiro,
-   para que nenhum `└─` cruze um `│` ainda aberto. Cruzamento é o desenho
-   dizendo a quem lê que duas coisas se ligam sem se ligarem.
-4. Meça a linha mais longa antes de entregar. Passando de setenta e duas
-   colunas, corte os rótulos ou empilhe os blocos — nunca entregue torcendo
-   para o painel ser largo.
-
-Depois o acabamento — sete regras que são todas sobre como ele fica, não sobre
-o que ele diz. É o que separa um desenho da figura de um:
-
-1. **Rótulos num registro só**: minúsculas, sem pontuação no fim, escritos do
-   mesmo jeito — `todo resume`, `2,1 s p95`, `retry ×3`. Três rótulos em três
-   registros leem como três autores.
-2. **Um estilo de unidade por desenho.** `2,1 s` ao lado de `40 minutos` são
-   dois desenhos; uma mesma medida em duas precisões também.
-3. **Comprimento de seta é espaçador, nunca sinal.** Estique uma seta só para
-   alinhar a coluna que ela alimenta. Quem vê seta longa e pensa "lento" foi
-   informado disso pelo espaçamento; se é lento, quem diz é o rótulo.
-4. **Coluna de custo começa numa coluna e fica nela**, mesmo onde os nomes na
-   frente dela estão irregulares. Essa segunda coluna é a única que a pessoa
-   lê de cima a baixo.
-5. **Encurte pela cabeça, nunca pela cauda** — `…/auth/refresh.rs:88`, porque
-   a cauda é o que identifica. O mesmo para um nome comprido.
-6. **A cerca leva a tag `text`.** Sem tag, perde a regra de marcar toda cerca;
-   com tag de shell, certos renderizadores colorem os traços de caixa como
-   sintaxe e transformam a forma em confete. `mermaid` é a única outra tag que
-   um desenho carrega.
-7. **Linha em branco separa blocos empilhados e mais nada.** Antes e depois
-   ganham uma entre eles; um fluxo só não ganha nenhuma, porque buraco dentro
-   de uma forma lê como duas formas.
-
-Antes de entregar, audite o rascunho você mesmo — toda seta rotulada, todo
-salto verificado ou marcado, nenhuma caixa nomeada por algo que a pessoa nunca
-vai tocar, abaixo de quinze linhas e de setenta e duas colunas, um conjunto de
-traços só, todo rótulo pendurado na caixa dele, sem legenda, a rota de falha
-abaixo da linha principal, repetição contada em vez de desenhada, rótulos num
-registro só, coluna de custo alinhada, a cerca com tag `text`, exatamente uma
-nota pendurada e ela no achado, as caixas nomeadas com as palavras da prosa, e
-nenhuma linha embaixo repetindo a figura — e corrija o que falhar. Se saiu mermaid,
-audite que ele
-ganhou as duas condições, que nenhuma aresta está pelada, e que nada num
-rótulo deixaria de compilar. Entregue só a versão limpa.
-
-Entrega: o desenho em bloco de código com a tag `text` — ou `mermaid` quando
-ele ganhou as duas condições. Nada antes dele além da única frase que ele
-ilustra, quando essa frase ainda não está na conversa.
+Entrega: o desenho em bloco de código com rótulo `text` — ou `mermaid` quando
+mereceu as duas condições. Nada antes dele além da frase que ele ilustra,
+quando essa frase ainda não está na conversa.

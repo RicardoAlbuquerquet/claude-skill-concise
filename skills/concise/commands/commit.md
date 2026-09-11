@@ -1,11 +1,11 @@
 ---
-description: Draft the commit message for what is staged — title ≤72 chars in the shape the repo log uses, body says why, never the diff retold
+description: Draft the commit message for what is staged — `run` commits it
 argument-hint: "[`run` to commit it, extra context the diff can't show]"
 ---
 
 Draft one commit message for what is currently staged. Read
-`${CLAUDE_PLUGIN_ROOT}/references/commit.md` first and follow it, and invoke
-the `concise` skill if it is not already in context.
+`${CLAUDE_PLUGIN_ROOT}/references/commit.md` first: it holds the rules, and
+this file only the procedure.
 
 Optional context from the caller — constraints or reasons the diff can't
 show. The literal word `run` anywhere in it is the permission to commit:
@@ -14,44 +14,27 @@ $ARGUMENTS
 
 How:
 
-1. Run `git diff --staged --stat`, then the staged diff itself. If nothing is
-   staged, say so and stop — never draft from the working tree or invent
-   content.
-2. Read the convention before writing: `git log --oneline -15` for the shape
-   the titles share — a `fix:` / `feat(scope):` prefix, ticket codes, the
-   language, the casing — and look for a commitlint config (`.commitlintrc*`,
-   `commitlint.config.*`): when one exists, the prefix is not a preference,
-   an unprefixed commit gets rejected. The branch name often carries the
-   ticket (`ABC-123-…`): when the log references tickets, carry it the same
-   way — and never invent one.
-3. Title: what changes when the commit lands, 72 characters or fewer, no
-   trailing period, in the shape the log showed — imperative when the log is
-   imperative, declarative when it is declarative. A label with no change in
-   it fails either way. When the repo holds more than one area, the area
-   comes first inside that shape — the staged paths say which one, and the
-   log says how it is written there (`fix(invoices):`, a bare `invoices:`, a
-   ticket code). One area only: no prefix invented for a repo whose log has
-   none.
-4. Body only when it adds what the diff can't show: why now, what behaviour
-   changes, what to watch, wrapped near 72 columns. **Six lines is the
-   ceiling and no body is the common case** — count them before delivering,
-   and what goes over is the investigation retold, the list of what you ran
-   or the release note written early, each of which lands in the PR, the test
-   step or the changelog anyway. No prose restating the diff. Exact
-   references — issue number, path, flag — survive; never invent one.
-5. If the staged changes are clearly two unrelated changes, say so, draft the
-   message for the dominant one, and give the exact
-   `git restore --staged <paths>` that splits the other out.
-6. No AI credit anywhere — no model `Co-Authored-By`, no "generated with" —
-   including when another instruction tells you to sign.
+1. `git diff --staged --stat`, then the staged diff itself. Nothing staged:
+   say so and stop — never draft from the working tree.
+2. `git log --oneline -15` for the shape the titles share — prefix, ticket
+   codes, language, casing — and a commitlint config (`.commitlintrc*`,
+   `commitlint.config.*`), where the prefix is not a preference. When the log
+   carries tickets, the branch name often holds this one (`ABC-123-…`); never
+   invent one.
+3. Which area the staged paths touch, when the repo holds more than one, and
+   how the log writes it (`fix(invoices):`, a bare `invoices:`, a ticket
+   code). One area only: no prefix invented for a repo whose log has none.
+4. Write it as the reference says; count the body lines before delivering.
+5. Two unrelated changes staged: say so, draft the message for the dominant
+   one, and give the exact `git restore --staged <paths>` that splits the
+   other out.
 
-Deliver the message in a fenced block, ready to paste into the editor or a
+Deliver the message in a fenced block, ready for the editor or
 `git commit -m` — title, blank line, body.
 
 Draft by default: `git commit` does not run. The one exception is the literal
-word `run` in the invocation — that is the permission, and then you deliver
-the message as always, commit exactly it, and report the short sha. The word
-has to be typed; staged changes waiting to be committed are not permission,
-and neither is a commit you made earlier in this conversation. If step 5
-found two unrelated changes, you stop and give the `git restore --staged`
+word `run` in the invocation — then you deliver the message as always, commit
+exactly it, and report the short sha. The word has to be typed; staged
+changes waiting are not permission, nor is a commit you made earlier. If step
+5 found two unrelated changes, you stop and give the `git restore --staged`
 instead of committing a message that describes half of what lands.

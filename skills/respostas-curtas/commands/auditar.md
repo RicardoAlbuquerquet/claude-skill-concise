@@ -1,5 +1,5 @@
 ---
-description: Audita um rascunho pelo checklist de respostas-curtas e reporta só as violações — linha citada, regra quebrada, correção em uma linha. Diagnóstico, nunca cirurgia
+description: Reporta as violações de respostas-curtas num rascunho — citação, regra, correção — nunca reescreve
 argument-hint: "[texto, um caminho de arquivo, uma URL de PR ou issue — vazio audita sua resposta anterior]"
 ---
 

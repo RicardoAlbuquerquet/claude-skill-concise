@@ -1,5 +1,5 @@
 ---
-description: Escreve o update de andamento — só o delta desde o último, notícia ruim primeiro, e o que depende de quem lê em bloco próprio
+description: Escreve o update — só o delta, notícia ruim primeiro
 argument-hint: "[quem lê e para onde vai — opcional]"
 ---
 
@@ -45,10 +45,8 @@ uma oração de âncora é permitida — "desde terça: …" — e recapitulaç�
 Quando você realmente não tem update anterior para partir, diga isso na
 primeira linha e dê o estado atual em vez de um delta.
 
-Antes de entregar, audite o rascunho você mesmo — nada que a pessoa já tinha,
-notícia ruim no topo, o que está travado e em quem, valores exatos, sem
-narração de processo e sem "só passando para atualizar" — e corrija o que
-falhar. Entregue só a versão limpa.
+Confira o rascunho contra as regras acima e corrija o que falhar antes de
+entregar.
 
 Entrega: em prosa quando o destino é esta conversa; em bloco de código quando
 vai para outro lugar, no registro daquela superfície — comentário em card pega

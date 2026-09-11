@@ -1,5 +1,5 @@
 ---
-description: Põe as opções vivas lado a lado e ainda recomenda uma — cada custo nomeado, a recomendação argumentada contra as alternativas especificamente
+description: Opções lado a lado com os custos, e ainda uma recomendação
 argument-hint: "[a decisão, e as opções se você já souber quais são]"
 ---
 
@@ -40,10 +40,8 @@ Regras da montagem:
   recomendação de dentro deixa quem lê exatamente onde estava, segurando uma
   escolha cujos custos só você mediu.
 
-Antes de entregar, audite o rascunho você mesmo — toda opção viva, nenhuma
-coluna com o mesmo valor em todas as células, recomendação presente e
-argumentada contra as alternativas, condição de virada dita, custos não
-verificados marcados — e corrija o que falhar. Entregue só a versão limpa.
+Confira o rascunho contra as regras acima e corrija o que falhar antes de
+entregar.
 
 Entrega: a tabela e a recomendação na conversa. Quando a invocação nomear
 outro destino, o registro daquela superfície vem das regras — card ou painel

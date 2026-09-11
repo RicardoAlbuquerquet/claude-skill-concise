@@ -1,5 +1,5 @@
 ---
-description: Write the status update — only the delta since the last one, bad news first, and whatever is waiting on the reader in its own block
+description: Write the update — only the delta, bad news first
 argument-hint: "[who reads it and where it goes — optional]"
 ---
 
@@ -45,10 +45,7 @@ update, one clause of anchor is allowed — "since Tuesday: …" — and a recap
 not. When you genuinely have no previous update to build on, say that in the
 first line and give the current state instead of a delta.
 
-Before delivering, audit the draft yourself — nothing the reader already had,
-bad news on top, what is blocked and on whom, exact values, no process
-narration and no "just wanted to update you" — and fix what fails. Deliver
-only the clean version.
+Check the draft against the rules above and fix what fails before delivering.
 
 Delivery: as prose when the destination is this conversation; in a fenced
 block when it goes somewhere else, in that surface's register — a comment on a
