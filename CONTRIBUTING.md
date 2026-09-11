@@ -83,9 +83,9 @@ ports pairwise and only knows the ones named in it.
 ## Keeping the hook core in sync
 
 Each plugin ships the style twice: the full ruleset in `SKILL.md`, and a
-~50-line core in `hooks/core.md` (`hooks/nucleo.md` in the PT port) that a
-`SessionStart` hook injects into every session and the forced output style
-carries in the system prompt. A PR that changes a rule
+~50-line core in `hooks/core.md` (`hooks/nucleo.md` in the PT port) that the
+forced output style carries in the system prompt — the `SessionStart` hook
+prints it too only under `CONCISE_INJECT_CORE=1`. A PR that changes a rule
 checks whether the core states that rule — and moves it too, in both ports.
 The core drifting from the skill is worse than either alone: the model reads
 one in context and the other on invocation, and follows whichever it saw

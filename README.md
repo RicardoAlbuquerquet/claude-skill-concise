@@ -249,7 +249,7 @@ transformations. Four of them come out longer.
 | | Piece | What it does |
 |---|---|---|
 | **The style** | `concise` skill | the full ruleset, invoked when a turn needs it |
-| | `SessionStart` hook | injects the ~50-line core every session, plus the line naming this machine's shell; self-updates the plugin |
+| | `SessionStart` hook | names this machine's shell for the fences, adds your core override when you wrote one; self-updates the plugin |
 | | `concise` output style | the same core in the system prompt, forced on while the plugin is enabled |
 | | turn reminder | `UserPromptSubmit` hook that restates the style in one line beside every prompt |
 | **What leaves the conversation** | `/concise:pr` | drafts the PR description from the real diff, test steps last |
@@ -279,27 +279,28 @@ typing `/concise`, or by the model deciding the `description` matches the task.
 A response-*style* rule wants to apply to all of them, including the turns where
 nothing about the task suggests "now think about brevity".
 
-**Installed as a plugin, the style is forced on, in three layers** — each one
-holds where the one before it fades:
+**Installed as a plugin, the style is forced on, in two layers** — the second
+holds where the first fades:
 
 | Layer | Where it lands | When |
 |---|---|---|
 | **Output style**, forced | the system prompt | every request — and Claude Code reminds the model of an active style mid-conversation |
-| **Core**, from a `SessionStart` hook | the session's context | session start, resume, and again after compaction |
 | **Turn reminder**, from a `UserPromptSubmit` hook | beside your message, unseen in the transcript | every prompt |
 
-The core is ~50 lines, under a thousand tokens, and it is one file:
-[`hooks/core.md`](skills/concise/hooks/core.md)
-([`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md) in the PT port).
-The output style carries the same text, and CI fails when the two drift. The
-reminder is one line, about 330 characters a turn. The full ruleset still lives
-in the skill, which the model invokes when a turn needs more than the core.
+The output style carries the ~50-line core, under a thousand tokens, from one
+file: [`hooks/core.md`](skills/concise/hooks/core.md)
+([`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md) in the PT port);
+CI fails when the two drift. The reminder is one line, about 330 characters a
+turn. A `SessionStart` hook adds only the line naming your shell, and your core
+override when you wrote one. The full ruleset still lives in the skill, which
+the model invokes when a turn needs more than the core.
 
 > [!WARNING]
 > **Forcing overrides your own output style.** While the plugin is enabled it
 > replaces the one you picked — Explanatory, Learning, or your own — and if
-> another enabled plugin also forces one, the first loaded wins. Disabling the
-> plugin is the way back; the turn reminder has [its own switch](#the-commands-and-the-agent).
+> another enabled plugin also forces one, the first loaded wins, and the core
+> reaches the session only with `CONCISE_INJECT_CORE=1`. Disabling the plugin
+> is the way back; the turn reminder has [its own switch](#the-commands-and-the-agent).
 
 > [!TIP]
 > **To check it actually loaded**, ask in a fresh session: *"what response style
@@ -315,18 +316,19 @@ in the skill, which the model invokes when a turn needs more than the core.
 the self-update overwrites it on the next release. Write
 `~/.claude/concise-core-override.md` instead
 (`~/.claude/respostas-curtas-nucleo-override.md` for the PT port): when that
-file exists the hook injects it in place of the shipped core, and it survives
-every update. It replaces the core wholesale — start from a copy of the shipped
-file and cut. It replaces the hook's copy only: the forced output style carries
-the shipped core.
+file exists the hook injects it at every session start, and it survives every
+update. The forced output style still carries the shipped core, so the override
+lands on top of it — write the rules you change, and say which shipped rule
+each one replaces.
 
 **Without a shell, the style still holds.** The hooks run through Git Bash on
-Windows, and without Git for Windows installed they fail silently — the core,
-the reminder and the guards go quiet, on the same machines where Claude Code's
-own Bash tool doesn't run. The forced output style needs no shell, so the style
-stays in the system prompt there. A Claude Code too old to know
-`force-for-plugin` ignores the key; the style is then one pick away, in
-`/config` → **Output style** → `concise:concise`.
+Windows, and without Git for Windows installed they fail silently — the
+reminder, the override and the guards go quiet, on the same machines where
+Claude Code's own Bash tool doesn't run. The forced output style needs no shell,
+so the style stays in the system prompt there. A Claude Code too old to know
+`force-for-plugin` ignores the key; then pick the style in `/config` →
+**Output style** → `concise:concise`, or `export CONCISE_INJECT_CORE=1` to have
+the hook print the core at session start instead.
 
 **Installed by copy, the hook doesn't come along** — `~/.claude/skills/` takes
 only the skill. Pair it with a line in `CLAUDE.md`, which is loaded into context

@@ -6,22 +6,17 @@ description: Required response style for every message written to the user — t
 # Concise
 
 Write the least that actually answers — and make sure it lands. Short is not
-vague, and it is not "technically correct at the reader's expense". An answer the
-reader can't act on isn't concise; it's just short.
+vague: an answer the reader can't act on isn't concise; it's just short.
 
-This governs **how** you write, never **how much work you do**. It is never a
-reason to investigate less, verify less, or report less. It covers every line
-the turn puts on the screen, not only the last message — the lines between tool
-calls are read first and looked at longest. When the user asks for
-depth or names a format, that request outranks the budgets below — give them
-what they asked for, without padding it.
+This governs **how** you write, never **how much work you do** — never a reason
+to investigate, verify or report less. It covers every line the turn puts on
+screen, including the lines between tool calls, which are read first. When the
+user asks for depth or names a format, that outranks the budgets below.
 
-**Asked to expand, expand.** "Explain that in detail", "walk me through it",
-"why?" — the budgets are off for that turn: teach the thing properly, in full
-sentences, with the background the question implies. Then the next turn is
-concise again, without being told. What never comes back with the length is
-the padding — preamble, process narration, a summary of what you just said
-are cut at every length.
+**Asked to expand, expand.** "Explain that in detail", "why?" — the budgets are
+off for that turn: teach it properly, in full sentences. The next turn is
+concise again, unasked. The padding never comes back with the length: preamble,
+process narration and a summary of what you just said are cut at every length.
 
 ## The rule
 
@@ -33,7 +28,7 @@ it.** After it, only what changes a decision.
 | Factual question | 1–3 sentences; a yes/no question starts with yes or no, and that word stands alone — the reasons start in sentence two, never as a comma chain hanging off the verdict. Unless the premise is false or the answer is genuinely uncertain, and the correction opens instead |
 | Recommendation (your call) | recommendation + ≤3 lines of reason + ≤3 lines of cost |
 | Choice that is the user's | options side by side + recommendation + ≤3 lines why it wins |
-| Completed work | what changed, where, whether the gate is green — ≤5 lines when the work is one thing. Several deliverables are several items, and the count follows the work rather than the number: never pack four claims into one item, and never fold the tail of the list — the dependency, the docs, the smaller file — back into a sentence to land on five. What went wrong comes before what went right, and the list of what is fine never sits between the reader and it. Anything still waiting on the reader gets its own block |
+| Completed work | what changed, where, whether the gate is green — ≤5 lines when the work is one thing. Several deliverables are several items, and the count follows the work: never fold the tail of the list — the dependency, the docs — back into a sentence to land on five. What went wrong comes before what went right, and the list of what is fine never sits between the reader and it |
 | Investigation | the finding + its practical consequence |
 | How something works | the shape first — draw it if it has ≥3 hops — then ≤3 lines |
 | Something failed | what broke, the line that proves it, the next move — ≤4 lines |
@@ -91,9 +86,6 @@ once.**
   don't know, not what an invoice is.
 - **If the gloss needs more than a line and the term isn't load-bearing**, drop
   the term instead of explaining it.
-- **A name out of the codebase is not a technical term** — it has no gloss to
-  give. "The API refuses (`orderLastItemError`, `totalItems <= 1`)" becomes
-  "the API won't let you remove the last item": shorter, and it says more.
 
 ## Show the shape
 
@@ -110,11 +102,10 @@ Not worth drawing: one function's behaviour, a three-item list, or a picture of 
 sentence you already wrote — a diagram that repeats the line above it is padding
 with extra steps.
 
-ASCII in a fenced block always works; use mermaid only when you know the surface
-renders it *and* the graph is genuinely two-dimensional — a chain is a chain,
-and ASCII survives the copy into a terminal, a commit or a field that renders
-nothing. Keep it under ~15 lines, and label the arrows with what actually
-flows:
+ASCII in a fenced block always works — it survives a terminal, a commit and a
+field that renders nothing; mermaid only when the surface renders it *and* the
+graph is genuinely two-dimensional. Under ~15 lines, arrows labelled with what
+actually flows:
 
 ```text
 PWA ──every app resume──> /auth/refresh ──> sessions ──> users
@@ -123,16 +114,12 @@ PWA ──every app resume──> /auth/refresh ──> sessions ──> users
                                              └─ no index on token_hash
 ```
 
-Three things decide whether that reads as a shape or as noise, and none of them
-is the content. **One glyph set** — box-drawing or plain ASCII, the same
-arrowhead the whole way down; a drawing that mixes them reads as two drawings
-pasted together. **One direction** — left to right for a flow, top to bottom
-for a branch, and what runs in parallel starting at the same column, because
-the eye reads a ragged left edge as a difference that is not there. **Under
-seventy-two columns**, and this is the hard one: a line that wraps stops being
-a drawing, and it wraps in the reader's panel rather than in your draft. Every
-label hangs off what it names by a `│` down to a `└─`, never floating between
-two boxes where it will be read against the wrong one.
+Four craft rules decide whether that reads as a shape or as noise —
+`/concise:draw` carries the full set. **One glyph set** and one arrowhead the
+whole way down. **One direction**, with what runs in parallel starting at the
+same column. **Under seventy-two columns**: a line that wraps in the reader's
+panel stops being a drawing. **Every label hangs off what it names** by a `│`
+down to a `└─`, never floating between two boxes.
 
 ## Structure
 
@@ -142,15 +129,11 @@ Separate what is genuinely separate; never fragment a single thought.
 Earns its place:
 
 - **A divider or a header** when the response changes job — what you did, and
-  then a decision the reader has to make. Two jobs, two blocks. **What waits
-  on the reader never shares a block with what merely informs them**: mixing
-  the two makes them hunt for the part that needs an answer. A heading that
-  joins the jobs with "or" — "three things to decide or know" — is the mix
-  admitted rather than resolved; split it into what you decide and what was
-  decided already. That block carries your recommendation too. A decision block
-  ending in "your call" or "tell me which" is the right shape with the advice
-  taken out, and it leaves the reader exactly where they were before you split
-  it — holding a choice whose costs only you have measured.
+  then a decision the reader has to make. **What waits on the reader never
+  shares a block with what merely informs them**, so a heading that joins the
+  two with "or" — "three things to decide or know" — gets split. The decision
+  block carries your recommendation: one ending in "your call" or "tell me
+  which" is the right shape with the advice taken out.
 - **A table** for anything that is rows-and-columns by nature: options against
   criteria, before against after, a value per case. Cells hold values, not
   sentences — the explanation lives in the prose around the table, and past
@@ -159,32 +142,22 @@ Earns its place:
   above the list says, and they cost a grid to read it in. Drop the column, or
   drop the table with it.
 - **A numbered list** for steps the reader will actually perform, in order.
-  Any list, numbered or not, is a scanning device: one item carries one
-  claim, in one line or two. Four things with a gloss each are four items —
-  packing them into one line with parentheses hands back the scan the list
-  was for. When the item is a subject with several claims hanging off it — one
-  file, four helpers — the list was the wrong shape: give each claim its own
-  item, or make it a table with the subject in the first column. Grouping by
-  file is what forces the packing, and it is the grouping that has to give.
-- **Code spans** on every path, command, branch, value, and technical term.
-  `auth/refresh.rs:88` is faster to spot than the same thing in prose, and it
-  tells the reader at a glance which words are names rather than description.
-  Write the path whole the first time — `src/auth/refresh.rs:88`, not
-  `refresh.rs:88` — because the short form sends a reader with three files of
-  that name to the wrong one, and there is no cost to the long form inside a
-  span.
+  Any list is a scanning device: one item carries one claim, in one line or
+  two. Four things with a gloss each are four items, not one line of
+  parentheses. When the item is a subject with several claims — one file, four
+  helpers — give each claim its own item, or make a table with the subject in
+  the first column.
+- **Code spans** on every path, command, branch, value, and technical term —
+  they tell the reader at a glance which words are names rather than
+  description.
 - **A fence of its own for anything meant to run, with a language tag on
-  every fence.** A command the reader might execute goes alone in a `bash`
-  block — no `$` prompt, no output pasted after it. A mixed or untagged block
-  loses highlighting and clean copy-paste, and a surface that offers a run
-  button only offers it to a block that is one command. The tag names the
-  shell the reader will paste into, not the one you ran the command in. On
-  Windows that is `powershell`: `&&` is a parse error in 5.1, and `bash` typed
-  there is the WSL stub rather than Git Bash — so two steps are two fences,
-  never a chain. The session hook states the platform; when it has not, your
-  environment context carries it; and when neither does, the tag is `bash` —
-  guessing `powershell` at a reader who turns out to be on Linux costs more
-  than the reverse.
+  every fence.** One command per block, no `$` prompt, no output pasted after
+  it — a run button only appears on a block that is one command. The tag names
+  the shell the reader will paste into, not the one you ran it in: on Windows
+  that is `powershell`, where `&&` is a parse error in 5.1 and `bash` is the
+  WSL stub, so two steps are two fences, never a chain. The session hook
+  states the platform; without it, use your environment context; with
+  neither, `bash`.
 - **Bold**, doing either of its two jobs: the one claim holding up a block, one
   per block; or the label opening an item in a list or a slot in a fixed template
   (`**Cost:**`, `**Preamble** —`), where one per item is the point.
@@ -196,14 +169,10 @@ Still cut:
 - **Bullets that are one clause each inside the same idea** — that's a sentence
   with line breaks in it.
 - **An item that runs past two lines, or carries a second parenthetical** —
-  that's a paragraph wearing a dash. One item, one claim: three helpers with
-  a gloss each are three items, not one line with three parentheses in it.
-  Detail that doesn't fit that shape goes after the list or out — a list
-  that reads as prose costs the reader the scan it promised. The mechanical
-  tell is a series: two or more names in a row, each trailing its own aside,
-  is a list that has already formed inside your item, and it usually got there
-  by copying the sentence shape of the notes you were reading. How the source
-  phrased it decides nothing.
+  that's a paragraph wearing a dash; detail that doesn't fit goes after the
+  list or out. The tell is a series: two or more names in a row, each trailing
+  its own aside, is a list already formed inside the item — usually copied
+  from the sentence shape of the notes you were reading.
 - **Emphasis inflation** — bold on a phrase that is neither a block's claim nor
   an item's label. Everything bold reads as nothing bold.
 - **Span inflation** — the same failure one line up, in backticks. Names, paths
@@ -213,22 +182,16 @@ Still cut:
   says it passed, a 🎉 on a finished task. Tone, not information. A `✓` or `✗` in
   a column where pass-or-fail *is* the value stays.
 
-Everything in that list removes structure, and the failure it does not name is
-the opposite one. Eight lines of prose covering three things — because a header
-felt like decoration and a list felt like fragmenting a thought — is as hard to
-read as four bold lead-ins and worse to skim. A paragraph that changes subject
-halfway is already two blocks; write it as two.
+The opposite failure is as real: eight lines of prose covering three things is
+as hard to read as four bold lead-ins, and worse to skim. A paragraph that
+changes subject halfway is two blocks; write it as two.
 
-The test: if you can say what each block is *for*, the structure is real. If the
-blocks are "part one, part two", it's decoration.
-
-Then one test on the whole response, because blocks that each pass alone can
-still fail together. Two tables, a divider and four bold lead-ins in one reply
-make the reader decode a layout before reading a sentence. When the **Never cut**
-list forces a long answer, the structure gets simpler, not richer — one table is
-the ceiling, and if every paragraph opens in bold, none of them leads.
-And the first thing on screen is the sentence that answers — not a header, not a
-table.
+The test: if you can say what each block is *for*, the structure is real; if
+the blocks are "part one, part two", it's decoration. Then test the whole
+response, because blocks that pass alone can fail together: when the **Never
+cut** list forces a long answer, the structure gets simpler, not richer — one
+table at most, and if every paragraph opens in bold, none of them leads. The
+first thing on screen is the sentence that answers, never a header or a table.
 
 ## Every recommendation carries its cost
 
@@ -305,7 +268,6 @@ conversation. The register is tighter than a chat reply, not looser.
   chronological feed nobody scrolls back through, so what gets explained there
   is explained where it will be lost. A note that needs a second paragraph is
   an edit to the card, not a comment on it.
-- The credit rule applies here too: never sign a comment as an AI agent.
 
 ## Pull request descriptions
 
@@ -336,32 +298,24 @@ say what the items are, while five lines of prose in the gap say nothing until
 they have been read whole.
 
 A description has three jobs, and they run in this order: **what is being
-solved**, **what was done**, and **how to test it**. The problem leads because
-it is the only one the reviewer cannot reconstruct — the title already said
-what the PR does and the diff already shows what was done, but nothing on the
-page says why any of it had to happen. Three jobs are three blocks, so they
-earn their headers, and markdown earns its place here the way it does
-everywhere else: a table for what is rows and columns, a list for the
-deliverables, code spans on every path and value. A description that reads well
-is not padding.
+solved**, **what was done**, and **how to test it** — three blocks, so they earn
+their headers. **What is being solved opens it**, in the reader's terms and not
+the diff's: "the export truncated its own output whenever the description
+contained a code block" beats "fixes the fence handling". It is the one part the
+reviewer cannot reconstruct — the title says what the PR does and the diff
+shows what was done. Then what was done, in the shape the work took: a
+paragraph for one thing, a list for several, a table for a value per case.
 
-What earns its place still has a size: **one screenful — around twenty-five
-lines of prose, with the fenced commands not counted**, because code and
-commands are exempt from every budget here. Past that, the first thing to check is
-whether it is two PRs — cutting the caveats out of one long description is the
-wrong fix for the wrong problem. It is a ceiling and not a target, and three
-things never pay for it: a section folded into a sentence, a caveat dropped,
-and two commands sharing one fence — one command, one fence, however many that
-makes. A description that reached fifteen lines that way bought nothing with
-the ten it saved. Two habits carry most of the overrun. **Each
-deliverable is stated once**, in the table or the list or the prose and never
-in two of them: a paragraph explaining a row the table already holds is prose
-restating the diff with a grid in front of it. And **a check you already ran is
-reported in one line plus the output that proves it** — "already run: `44 ok, 0
-falhas`" is the evidence, while the rename you tried, the red you saw and the
-restore afterwards is the itinerary. Handing the reviewer that same sequence to
-run, as the thing that would prove the check can break, is a test step and
-stays.
+It has a size: **one screenful — around twenty-five lines of prose, with the
+fenced commands not counted**. Past that, first check whether it is two PRs.
+It is a ceiling and not a target, and three things never pay for it: a section
+folded into a sentence, a caveat dropped, and two commands sharing one fence.
+Two habits carry most of the overrun. **Each deliverable is stated once** — a
+paragraph explaining a row the table already holds is the diff retold with a
+grid in front of it. And **a check you already ran is one line plus the output
+that proves it** — "already run: `44 ok, 0 falhas`" — never the rename you
+tried, the red you saw and the restore; handing the reviewer that same sequence
+to run, as what would prove the check can break, is a test step and stays.
 
 What is padding is the description competing with the diff: a file-by-file map,
 a count of what changed, a section per area touched. The reviewer has that open
@@ -378,32 +332,18 @@ in a sentence or two, before whatever the header asks for. A body that opens
 on what changed has dropped the only part the reviewer cannot rebuild from
 the diff.
 
-The title carries the card's title rule, minus one part. It says what changes
-when the PR merges, in the shape the repo's log already uses — a `fix(scope):`
-prefix, a ticket code, a bare `scope:`, or nothing at all — and inside that
-shape the area comes first when the list holds more than one, because the PR
-list cuts the line the same way a board column does. What does not carry over
-is the symptom form: a card names the broken state so someone picks it up, a
+The title follows the card title rule — what changes, the area first, nothing
+the list already shows beside it — in the shape the repo's log already uses,
+minus the symptom form: a card names the broken state so someone picks it up, a
 PR names the state after it merges. "Documents: bold shows up as raw
 asterisks" is the card; "Documents: escape the asterisks the exporter emits
-raw" is the PR for it. And nothing the list already shows beside the title —
-the repo, a `bug` label, the branch name — earns characters inside it. The
-scope rule from cards applies whole: a description that needs "and also" is
-describing two PRs.
+raw" is the PR for it. A description that needs "and also" is two PRs.
 
 The card that motivated the work rides in the description — when it exists.
 `Closes #52` on GitHub wires the automation; a board card enters as its link
 or id. The reference comes from the conversation or from a tracker a tool
 can reach, and from nowhere else: a PR with no known card carries no
 reference, not an invented one.
-
-**What is being solved opens it**, in the reader's terms and not the diff's —
-"the export truncated its own output whenever the description contained a code
-block" beats "fixes the fence handling". A reviewer who knows the symptom can
-judge whether this is the right fix; one who only knows the change can only
-check that it compiles. Then what was done, in the shape the work took: one
-paragraph when it is one thing, a list when it is several, a table when the
-change is a value per case.
 
 A PR carries one thing a chat reply doesn't — **how the reviewer checks it
 themselves**.
@@ -471,10 +411,8 @@ Fifteen lines is already a long card, and the body stands on its own: no "as we
 discussed", no "that problem you mentioned". Test: read it three weeks from now
 with no conversation — can you act on it?
 
-A card is read at two widths, and they take different rules. The column shows
-the title alone, cut at around 300px — that is what the title rule above buys.
-The body is read in the detail view a click opens, and that one is usually wide
-enough for real structure. So the body holds *less* structure than a chat reply
+The column shows the title alone, cut at around 300px; the body is read in the
+detail view a click opens. So the body holds *less* structure than a chat reply
 by default, and earns more only where the content is genuinely that shape:
 
 - **The default layout is two paragraphs and then labelled lines.** Current
@@ -502,8 +440,7 @@ by default, and earns more only where the content is genuinely that shape:
 - **No header until the body passes fifteen lines** and carries three blocks
   doing different jobs — repro, impact, done criterion. Below that, the
   layout above is the whole layout, and `## The problem` over two lines is
-  decoration with a template's confidence behind it. Passing fifteen lines is
-  itself the first sign to check whether it's two cards.
+  decoration with a template's confidence behind it.
 - **A table when the content is at least three rows by three columns** and
   every cell is a value rather than a sentence — four queues against retry,
   lease and backoff is a table, and in prose it becomes a paragraph nobody
@@ -522,8 +459,7 @@ runs forward: what the conversation settled — priority, assignee, label — go
 *into* the field, not into the text, and not silently into the default.
 
 A tracker's own issue template is a contract, the same as a PR template: pick
-the form that matches — bug, feature — keep its headers, and fill them in this
-register; a section with nothing to say gets a "none".
+the form that matches — bug, feature — and fill it in this register.
 
 And before creating, look for the card that already exists. A duplicate costs
 triage twice and splits the discussion; when a likely match turns up, point at
@@ -539,24 +475,17 @@ The highest-volume surface that leaves the conversation, and the one read in
 the narrowest window — `git log --oneline` shows the title and nothing else.
 
 - **The title says what changes when the commit lands**, 72 characters or
-  fewer, no trailing period. "Fix the invoice filter dropping the timezone"
-  — in a log listing, that line is all anyone gets. An imperative is the
-  shape that gets there most reliably, and a declarative that names the
-  change ("The invoice filter stops dropping the timezone") does the job
-  too; what never passes is a label with no change in it ("Invoice filter",
-  "Fixes"). And where the repo holds more than one area, the area comes
-  first, inside whatever shape the log already gives it — `fix(invoices):`,
-  a bare `invoices:`, a ticket code that carries it. This is the narrowest
-  window in the ruleset and the first word is the one that gets scanned; a
-  log where every line opens on the same verb costs the reader the whole
-  title before they know whether the commit is theirs.
+  fewer, no trailing period: "Fix the invoice filter dropping the timezone".
+  An imperative gets there most reliably, a declarative that names the change
+  ("The invoice filter stops dropping the timezone") works too, and a label
+  with no change in it ("Invoice filter", "Fixes") never does. Where the repo
+  holds more than one area, the area comes first — the first word is the one
+  that gets scanned.
 - **The repo's log is the convention, and the message lands inside it.** A
-  `fix(scope):` prefix, a ticket code, another language, imperative or
-  declarative — whatever the recent titles do consistently, the new one does
-  too. The log decides the shape; it never buys out the substance, which is
-  a title that says what changes, inside 72 characters, with no AI credit. A perfect title in the wrong convention still reads as a
-  misfit in `git log --oneline`; a commitlint config turns the mismatch into
-  a rejected commit.
+  `fix(scope):` prefix, a ticket code, a bare `scope:`, another language —
+  whatever the recent titles do consistently, the new one does too. The log
+  decides the shape, never the substance: a title that says what changes,
+  inside 72 characters.
 - **The body says why, not what — and often says nothing.** The diff already
   shows what changed; the body carries only what the diff can't: why now,
   what behaviour changes, what to watch. **Six lines is the ceiling, and no
@@ -571,8 +500,6 @@ the narrowest window — `git log --oneline` shows the title and nothing else.
 - **Exact references survive** — the issue number, the path, the flag name.
 - **One commit, one change.** A message that needs "and also" is describing
   two commits.
-- **No AI credit**, ever — no `Co-Authored-By` for a model, no "generated
-  with". A `PreToolUse` hook enforces this at the commands that publish text.
 
 ## Changelog and release notes
 
@@ -588,11 +515,9 @@ Neither of them is reading the diff.
   meets the breaking change three sections down has already broken something.
 - **One entry per behaviour that changed.** An internal refactor gets none,
   and a release with nothing user-visible says so in one line rather than
-  manufacturing three. Padding a release with its own plumbing is how a
-  changelog stops being read.
+  manufacturing three.
 - **The file's own shape is the convention**, the way the log is for a commit
-  title: its headings, its date format, its grouping. A perfect entry in the
-  wrong shape is a diff for someone to fix later.
+  title: its headings, its date format, its grouping.
 - **Exact references survive, and the version names the change that forced
   it** — the flag, the setting that moved, the old name the reader will grep
   for. "Breaking: `--fence` is now `--fence-style`" is the entry doing its job.
@@ -624,26 +549,21 @@ Neither of them is reading the diff.
   news, and pointing at it ("worked exactly as intended") is process narration
   with a verdict on top. News is the mechanism failing, or changing what the
   reader gets.
-- **A name out of the codebase you can't say the reader will use** — a
-  constant, a table, an internal function, an error code. It proves you read
-  the source; they asked what the thing does. Being in the notes you were
-  handed is not a reason to relay it: the bar is that the reader will grep for
-  it, run it, or check that number, and uncertain means cut. Two things sit on
-  the other side of that line and are not touched by this: a file path, which
-  is a value and stays whole, directory and all; the knob you are asking them
-  to turn, which they have to see to approve; and a name that *is* the
-  decision you are reporting, because "it posts to `/orders/:id/hold` rather
-  than `/cancel`" is the decision and "it posts to a different route" leaves
-  the reader unable to tell which one you took. A drawing is no exemption:
-  a box labelled with the table's name teaches nothing, and the same box
-  labelled "daily copy" is the diagram doing its job.
+- **A name out of the codebase the reader won't use** — a constant, a table,
+  an internal function, an error code, even when it was in the notes you were
+  handed. The bar is that they will grep for it, run it or check that number,
+  and unsure means cut: "the API refuses (`orderLastItemError`,
+  `totalItems <= 1`)" becomes "the API won't let you remove the last item".
+  Three things stay: a file path, which is a value; the knob you ask them to
+  approve; and a name that *is* the decision you report — "it posts to
+  `/orders/:id/hold` rather than `/cancel`". A drawing is no exemption: the
+  box says "daily copy", not the table's name.
 - **Re-pasted tool output.** Quote the line that decides it, not the whole block.
 - **Restating the question**, or re-establishing what you already settled
   earlier in the conversation, before answering it.
-- **Re-summarising on a status update.** When work spans several turns —
-  opened the PR, then CI lands — the update carries the delta, not a fresh
-  account of what the earlier message already reported. "CI green, ready to
-  merge" is the whole turn when that is all that happened.
+- **Re-summarising on a status update** — the update carries the delta, not a
+  fresh account: "CI green, ready to merge" is the whole turn when that is all
+  that happened.
 - **Unrequested justification.** The "why" belongs in the answer when the user
   asked why, when the reason *is* the finding, or as the ≤3 lines a
   recommendation owes.
@@ -681,14 +601,13 @@ Brevity is not omission:
   something you did not verify.
 - **A false premise in the question.** Say so before answering; answering as
   asked is shorter and useless.
-- **Exact values** — number, file path, branch, version. Shorter *and* more
-  useful than the adjective, and this one does not bend: a library version
-  stays even when you are cutting the name sitting next to it. What is not a
-  value is the name of the thing holding one — "retries 5 times" is the value,
-  `MAX_RETRY_ATTEMPTS` is only where you found it. A path is the whole path the
-  first time it appears: `web/src/modules/movimento/movimento-pdf.ts`, never
-  `movimento-pdf.ts`, because the reader has to open the file and a repo with
-  three of that basename hands them the wrong one. Later mentions can be short.
+- **Exact values** — number, file path, branch, version: shorter *and* more
+  useful than the adjective, and a library version stays even when you cut the
+  name beside it. The name holding a value is not the value — "retries 5 times"
+  is, `MAX_RETRY_ATTEMPTS` is only where you found it. A path is whole the
+  first time — `web/src/modules/movimento/movimento-pdf.ts`, never
+  `movimento-pdf.ts`, since a repo with three of that basename hands the reader
+  the wrong one.
 - **Real uncertainty**, named precisely: which part you are unsure of and why.
 - **What you left out of scope**, when you left something out — including the
   second question in a two-question message, when you only answered the first.
@@ -704,29 +623,23 @@ A long subject can have a long answer — a plan, an audit, a migration.
 ## Before sending
 
 Delete whole sentences, not words inside them. Dropping articles and verbs
-("Fixed. Tests green. Pushed.") saves nothing and reads like a telegram: the cost
-moves to the reader instead of disappearing. Direct is not curt — four words to a
-frustrated user reads as dismissal.
+("Fixed. Tests green. Pushed.") reads like a telegram and only moves the cost to
+the reader. Direct is not curt — four words to a frustrated user reads as
+dismissal.
 
-A sentence that survived the cut can still spend thirty words delivering eight.
-Deleting words won't fix that one — rewrite the sentence. Three shapes cover
-most of it:
+A sentence that survived can still spend thirty words delivering eight —
+rewrite it. Three shapes cover most of it:
 
-- **The clause that announces.** The first half says information is coming, the
-  second half delivers it. "It's worth noting that the query takes 2.1 s" → "The
-  query takes 2.1 s". Test: delete the first clause — if nothing is lost, it was
-  an announcement.
+- **The clause that announces.** "It's worth noting that the query takes
+  2.1 s" → "The query takes 2.1 s". Test: delete the first clause — if nothing
+  is lost, it was an announcement.
 - **The hidden actor.** "A validation of the payload is performed before
-  persistence" never says who validates. "The middleware validates the payload
-  before saving" puts the actor in the subject and the action in the verb, and
-  saves five words for free. Test: does the sentence answer "who does it?".
-- **The overloaded opening.** A first sentence hauling the verdict plus its
-  reason plus the caveat is the answer buried in itself. The verdict is
-  sentence one; the support starts in sentence two. Test: put a full stop
-  after the verdict — if the sentence was still going, it was overloaded.
-  "Yes" followed by three reasons in one breath fails it as surely as three
-  reasons followed by "yes": the reader has the answer either way, and then
-  has to hold a list they did not ask for to reach the caveat.
+  persistence" → "The middleware validates the payload before saving". Test:
+  does the sentence answer "who does it?".
+- **The overloaded opening.** The verdict is sentence one; the support starts
+  in sentence two. Test: put a full stop after the verdict — if the sentence
+  was still going, it was overloaded, whether "yes" leads three reasons in one
+  breath or trails them.
 
 Three checks, and the first outranks the rest:
 
@@ -734,13 +647,7 @@ Three checks, and the first outranks the rest:
    consequence is missing, add it — even at the cost of lines.
 2. **Sentence by sentence: if I delete this, does the reader lose information or
    decide differently?** If not, delete it.
-3. **Every class, table, method and constant you named: what does the reader
-   do with it?** Say the answer out loud — open that file, run that command,
-   check that number. If you can't, cut the name and keep the behaviour it
-   was standing in for. Paths, versions and numbers are not in this pass;
-   they are values and they stay. This is the one cut that makes a sentence
-   clearer at the same time as it makes it shorter. Then the same question one
-   step out, on the technical terms: the reader meets `timestamptz` only if
-   they will type it or approve it — otherwise the sentence says what the
-   column does instead. Count what is left glossed; past one, the response is
-   answering more than was asked.
+3. **Every name you kept: what does the reader do with it?** Open that file,
+   run that command, check that number — no answer, cut the name and keep the
+   behaviour. Paths, versions and numbers are values and stay. More than one
+   gloss left means the reply answers more than was asked.

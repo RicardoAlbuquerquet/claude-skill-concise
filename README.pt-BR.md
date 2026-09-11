@@ -250,7 +250,7 @@ reais. Quatro delas saem mais longas.
 | | Peça | O que faz |
 |---|---|---|
 | **O estilo** | Skill `respostas-curtas` | as regras completas, invocadas quando o turno pede |
-| | Hook `SessionStart` | injeta o núcleo de ~47 linhas em toda sessão, mais a linha que diz o shell desta máquina; auto-atualiza o plugin |
+| | Hook `SessionStart` | diz o shell desta máquina para os blocos de comando, acrescenta o seu override do núcleo quando existe; auto-atualiza o plugin |
 | | Output style `respostas-curtas` | o mesmo núcleo no system prompt, forçado enquanto o plugin está ligado |
 | | Lembrete por turno | hook `UserPromptSubmit` que relembra o estilo em uma linha ao lado de cada mensagem |
 | **O que sai da conversa** | `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
@@ -280,27 +280,28 @@ digitando `/respostas-curtas`, ou pelo modelo decidindo que a `description`
 combina com a tarefa. Uma regra de *estilo* de resposta quer valer em todos,
 inclusive nos turnos em que nada na tarefa sugere "agora pense em brevidade".
 
-**Instalada como plugin, o estilo vem forçado, em três camadas** — cada uma
-segura onde a anterior enfraquece:
+**Instalada como plugin, o estilo vem forçado, em duas camadas** — a segunda
+segura onde a primeira enfraquece:
 
 | Camada | Onde entra | Quando |
 |---|---|---|
 | **Output style**, forçado | o system prompt | toda request — e o Claude Code relembra o modelo do estilo ativo no meio da conversa |
-| **Núcleo**, por um hook `SessionStart` | o contexto da sessão | início da sessão, retomada, e de novo depois da compactação |
 | **Lembrete por turno**, por um hook `UserPromptSubmit` | ao lado da sua mensagem, fora do histórico visível | toda mensagem |
 
-O núcleo tem ~47 linhas, menos de mil tokens, e é um arquivo só:
-[`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md)
-([`hooks/core.md`](skills/concise/hooks/core.md) no port em inglês). O output
-style carrega o mesmo texto, e o CI falha quando os dois divergem. O lembrete é
-uma linha, uns 330 caracteres por turno. As regras completas continuam na skill,
-que o modelo invoca quando o turno pede mais que o núcleo.
+O output style carrega o núcleo de ~47 linhas, menos de mil tokens, de um
+arquivo só: [`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md)
+([`hooks/core.md`](skills/concise/hooks/core.md) no port em inglês); o CI falha
+quando os dois divergem. O lembrete é uma linha, uns 330 caracteres por turno.
+Um hook `SessionStart` acrescenta só a linha que diz o seu shell, e o seu
+override do núcleo quando existe. As regras completas continuam na skill, que o
+modelo invoca quando o turno pede mais que o núcleo.
 
 > [!WARNING]
 > **Forçar sobrescreve o seu próprio output style.** Com o plugin ligado, ele
 > substitui o que você escolheu — Explanatory, Learning, ou o seu — e se outro
-> plugin ligado também forçar um, vale o primeiro carregado. Desligar o plugin
-> é o caminho de volta; o lembrete por turno tem [a própria chave](#os-comandos-e-o-agente).
+> plugin ligado também forçar um, vale o primeiro carregado, e o núcleo só chega
+> na sessão com `CONCISE_INJECT_CORE=1`. Desligar o plugin é o caminho de volta;
+> o lembrete por turno tem [a própria chave](#os-comandos-e-o-agente).
 
 > [!TIP]
 > **Para conferir que carregou mesmo**, pergunte numa sessão nova: *"que estilo
@@ -316,19 +317,19 @@ que o modelo invoca quando o turno pede mais que o núcleo.
 cache — o auto-update sobrescreve na release seguinte. Escreva
 `~/.claude/respostas-curtas-nucleo-override.md`
 (`~/.claude/concise-core-override.md` no port em inglês): quando esse arquivo
-existe, o hook injeta ele no lugar do núcleo embarcado, e ele sobrevive a toda
-atualização. Ele substitui o núcleo por inteiro — comece de uma cópia do
-arquivo embarcado e corte. Substitui só a cópia do hook: o output style forçado
-carrega o núcleo embarcado.
+existe, o hook injeta ele a cada início de sessão, e ele sobrevive a toda
+atualização. O output style forçado continua levando o núcleo embarcado, então
+o override entra por cima dele — escreva as regras que você muda, e diga qual
+regra embarcada cada uma substitui.
 
 **Sem shell, o estilo continua de pé.** No Windows os hooks rodam pelo Git
-Bash, e sem o Git for Windows instalado eles falham em silêncio — o núcleo, o
-lembrete e as guardas ficam mudos, nas mesmas máquinas onde a própria
+Bash, e sem o Git for Windows instalado eles falham em silêncio — o lembrete, o
+override e as guardas ficam mudos, nas mesmas máquinas onde a própria
 ferramenta Bash do Claude Code não roda. O output style forçado não precisa de
 shell, então o estilo continua no system prompt ali. Um Claude Code antigo
-demais para conhecer o `force-for-plugin` ignora a chave; o estilo fica então a
-uma escolha de distância, em `/config` → **Output style** →
-`respostas-curtas:respostas-curtas`.
+demais para conhecer o `force-for-plugin` ignora a chave; aí escolha o estilo
+em `/config` → **Output style** → `respostas-curtas:respostas-curtas`, ou
+`export CONCISE_INJECT_CORE=1` para o hook imprimir o núcleo no início da sessão.
 
 **Instalada por cópia, o hook não vem junto** — `~/.claude/skills/` leva só a
 skill. Emparelhe com uma linha no `CLAUDE.md`, que é carregado no contexto a
