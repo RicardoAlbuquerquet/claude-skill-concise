@@ -43,7 +43,8 @@
   dois comandos dividindo um bloco. Cada entrega é dita uma vez — parágrafo
   recontando uma linha da tabela de cima é o diff de novo — e checagem que
   você já rodou é uma linha mais a saída que prova ("já rodado:
-  `44 ok, 0 falhas`"), nunca o relato de ter rodado.
+  `44 ok, 0 falhas`"), nunca o relato de ter rodado — com o comando dela em
+  bloco próprio, como todo comando que o corpo cita.
 - **Quando o diff atravessa muitos arquivos, uma linha diz por onde começar a
   ler** — o arquivo onde o mecanismo vive.
 - **A alternativa que você descartou ganha uma linha**, e o argumento que a

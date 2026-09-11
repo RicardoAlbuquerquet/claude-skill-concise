@@ -42,7 +42,8 @@
   commands sharing a fence. Each deliverable is stated once — a paragraph
   retelling a row of the table above it is the diff again — and a check you
   already ran is one line plus the output that proves it ("already run:
-  `44 ok, 0 falhas`"), never the account of running it.
+  `44 ok, 0 falhas`"), never the account of running it — with its command in
+  a fence of its own, like every other command the body names.
 - **When the diff spans many files, one line says where to start reading** —
   the file where the mechanism lives.
 - **An alternative you discarded gets a line**, and the argument that
