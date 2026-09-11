@@ -123,8 +123,8 @@ downloads the update, the next one runs it. What that implies:
 <summary><b>Copying the file instead</b> — no plugin, a project-level copy, or another agent</summary>
 <br>
 
-It's one Markdown file with no dependencies, so copying it works too — and keeps
-the unprefixed `/concise`. This is the path that differs per platform.
+It's a folder of Markdown files with no dependencies, so copying it works too —
+and keeps the unprefixed `/concise`. This is the path that differs per platform.
 
 Clone first, on any of the three:
 
@@ -213,6 +213,13 @@ thing once: no subtitle echoing its title, no placeholder echoing its label,
 a verb on every button. The consequence of an irreversible action, the value
 someone decides with and the accessible name stay.
 
+**The ruleset is written as beliefs, desires and intentions**: what Claude holds
+true about the reader, the medium and itself, what every reply is for, and what
+it commits to on every turn. `SKILL.md` keeps what applies to every reply, in
+under 300 lines, and each text that leaves the conversation has its own file,
+read by the command that writes it — so a session that compacts still brings
+back the rules that matter most.
+
 <details>
 <summary><b>Structure, audience and jargon</b> — how the rules decide what stays on the page</summary>
 <br>
@@ -254,7 +261,7 @@ transformations. Four of them come out longer.
 
 | | Piece | What it does |
 |---|---|---|
-| **The style** | `concise` skill | the full ruleset, invoked when a turn needs it |
+| **The style** | `concise` skill | the ruleset as beliefs, desires and intentions, invoked when a turn needs it; the rules for PRs, cards, commits, changelogs, comments and code sit in `references/`, read by the command that writes each |
 | | `SessionStart` hook | names this machine's shell for the fences, adds your core override when you wrote one; self-updates the plugin |
 | | `concise` output style | the same core in the system prompt, forced on while the plugin is enabled |
 | | turn reminder | `UserPromptSubmit` hook that restates the style in one line beside every prompt |
@@ -294,7 +301,7 @@ holds where the first fades:
 | **Output style**, forced | the system prompt | every request — and Claude Code reminds the model of an active style mid-conversation |
 | **Turn reminder**, from a `UserPromptSubmit` hook | beside your message, unseen in the transcript | every prompt |
 
-The output style carries the ~50-line core, under a thousand tokens, from one
+The output style carries the ~65-line core, about 1,300 tokens, from one
 file: [`hooks/core.md`](skills/concise/hooks/core.md)
 ([`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md) in the PT port);
 CI fails when the two drift. The reminder is one line, about 430 characters a

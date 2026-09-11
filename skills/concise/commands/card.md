@@ -3,9 +3,9 @@ description: Draft a task/issue card that stands alone — current → expected,
 argument-hint: "[what the card is about, and optionally where to create it]"
 ---
 
-Produce one task/issue card following the "Tasks and issues" section of the
-`concise` ruleset. Invoke the skill first if the full ruleset is not already
-in context.
+Produce one task/issue card. Read `${CLAUDE_PLUGIN_ROOT}/references/task.md`
+first and follow it, and invoke the `concise` skill if it is not already in
+context.
 
 The subject is the text below. If it is empty, the subject is the most recent
 problem or piece of work discussed in this conversation.

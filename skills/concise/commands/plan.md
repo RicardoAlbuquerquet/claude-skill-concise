@@ -3,9 +3,9 @@ description: Draft the plan you are proposing — the numbered steps you will ru
 argument-hint: "[what the plan is for — empty uses the work under discussion]"
 ---
 
-Write one plan for approval, following the "Plans you propose" section of the
-`concise` ruleset. Invoke the skill first if the full ruleset is not already
-in context.
+Write one plan for approval, following the "Recommendations, choices and
+plans" section of the `concise` ruleset. Invoke the skill first if the full
+ruleset is not already in context.
 
 The subject is the text below. If it is empty, the subject is the work most
 recently under discussion in this conversation.

@@ -4,9 +4,8 @@ argument-hint: "[versão, um range de commits, ou contexto extra — opcional]"
 ---
 
 Rascunhe a entrada de changelog e, quando uma release está sendo cortada, o
-corpo dela, seguindo a seção "Changelog e notas de release" das regras de
-`respostas-curtas`. Invoque a skill antes se as regras completas não
-estiverem no contexto.
+corpo dela. Leia `${CLAUDE_PLUGIN_ROOT}/referencias/changelog.md` antes e
+siga, e invoque a skill `respostas-curtas` se ela não estiver no contexto.
 
 O argumento abaixo pode trazer a versão a lançar, um range de commits, ou
 contexto que os commits não mostram. Vazio, o range é da última tag até

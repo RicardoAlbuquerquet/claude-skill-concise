@@ -3,8 +3,8 @@ description: Põe as opções vivas lado a lado e ainda recomenda uma — cada c
 argument-hint: "[a decisão, e as opções se você já souber quais são]"
 ---
 
-Monte uma decisão que é de quem lê, seguindo a seção "Quando a escolha é do
-usuário" das regras de `respostas-curtas`. Invoque a skill antes se as regras
+Monte uma decisão que é de quem lê, seguindo a seção "Recomendações,
+escolhas e planos" das regras de `respostas-curtas`. Invoque a skill antes se as regras
 completas não estiverem no contexto.
 
 O assunto é o texto abaixo. Se estiver vazio, o assunto é a escolha levantada

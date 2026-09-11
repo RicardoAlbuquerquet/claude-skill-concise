@@ -18,6 +18,13 @@ A rule already implied by the model's own instructions ("be concise", "avoid
 repetition") earns nothing by being restated here, and dilutes the rules that do
 work.
 
+**Where it goes.** A rule for one surface — a PR, a card, a commit, a changelog,
+a comment, text in code — goes in that surface's file under `references/`.
+`SKILL.md` keeps only what applies to every reply, as beliefs, desires and
+intentions, and stays under 500 lines: `test-hooks.sh` fails past that, and
+after compaction Claude Code brings back only the first 5,000 tokens of a skill
+— which is why Never cut and Always cut sit right after the budgets.
+
 ## How long a command may get
 
 A command file is loaded whole on every invocation, so its length is a cost
@@ -50,6 +57,7 @@ plugin:
 | `.claude-plugin/plugin.json` | `name`, `description` |
 | `SKILL.md` | frontmatter `name` and `description` |
 | `hooks/core.md` | rename to your language's core, translate |
+| `references/` | six files: translate them, rename the folder and the files to your language, and add the pairs to `check-parity.sh` |
 | `hooks/hooks.json` | the plugin name in every command, the override filename, the opt-out flag names, and the human strings (welcome, deny reasons, the turn reminder — kept free of quotes, `$` and backticks, since it rides inside single quotes on a bash command line) |
 | `hooks/*.sh` | **nothing** — the six scripts are byte-identical across ports and take everything as arguments; `check-parity.sh` enforces that |
 | `output-styles/` | one file: `name`, `description`, and the body regenerated from your core; keep `force-for-plugin: true` |
@@ -82,8 +90,8 @@ ports pairwise and only knows the ones named in it.
 
 ## Keeping the hook core in sync
 
-Each plugin ships the style twice: the full ruleset in `SKILL.md`, and a
-~50-line core in `hooks/core.md` (`hooks/nucleo.md` in the PT port) that the
+Each plugin ships the style twice: the full ruleset in `SKILL.md` and
+`references/`, and a ~65-line core in `hooks/core.md` (`hooks/nucleo.md` in the PT port) that the
 forced output style carries in the system prompt — the `SessionStart` hook
 prints it too only under `CONCISE_INJECT_CORE=1`. A PR that changes a rule
 checks whether the core states that rule — and moves it too, in both ports.
@@ -93,8 +101,9 @@ last.
 
 CI enforces the mechanical half of this: `scripts/check-parity.sh` compares
 the structure of the two ports — section, bullet, and table counts in
-`SKILL.md`, bullets in the hook core, versions, file counts under `commands/`
-and `agents/` — and the `parity` workflow fails the PR on any drift. It
+`SKILL.md` and in each reference file, bullets in the hook core, versions, file
+counts under `commands/`, `agents/` and `references/` — and the `parity`
+workflow fails the PR on any drift. It
 counts structure, not meaning: a translation that keeps the bullet count but
 drops the rule still gets through, so the by-eye check above stays.
 
@@ -138,7 +147,8 @@ Three layers, cheapest first:
   allow and deny cases, the daily throttle, the notices, the platform line,
   and the opt-in `stop-audit` extra. CI runs it too.
 - **Evals**, two API calls per case: `bash evals/run.sh` sends each case in
-  `evals/cases/` through the skill and grades the response against its
+  `evals/cases/` through the skill, with every reference file appended, and
+  grades the response against its
   rubric — see [`evals/README.md`](evals/README.md) for the count and cost.
   Run it before
   and after a `SKILL.md` edit and compare; the judge is a model grading

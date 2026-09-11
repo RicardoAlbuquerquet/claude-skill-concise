@@ -3,9 +3,9 @@ description: Escreve um card de tarefa/issue que se sustenta sozinho — atual �
 argument-hint: "[sobre o que é o card, e opcionalmente onde criar]"
 ---
 
-Produza um card de tarefa/issue seguindo a seção "Tarefa e issue" das regras
-de `respostas-curtas`. Invoque a skill antes se as regras completas não
-estiverem no contexto.
+Produza um card de tarefa/issue. Leia
+`${CLAUDE_PLUGIN_ROOT}/referencias/tarefa.md` antes e siga, e invoque a skill
+`respostas-curtas` se ela não estiver no contexto.
 
 O assunto é o texto abaixo. Se estiver vazio, o assunto é o problema ou
 trabalho mais recente discutido nesta conversa.

@@ -3,8 +3,8 @@ description: Rascunha o plano que você propõe — os passos numerados que voc�
 argument-hint: "[para que é o plano — vazio usa o trabalho em discussão]"
 ---
 
-Escreva um plano para aprovação, seguindo a seção "Plano que você propõe" das
-regras de `respostas-curtas`. Invoque a skill antes se as regras completas não
+Escreva um plano para aprovação, seguindo a seção "Recomendações, escolhas e
+planos" das regras de `respostas-curtas`. Invoque a skill antes se as regras completas não
 estiverem no contexto.
 
 O assunto é o texto abaixo. Se estiver vazio, o assunto é o trabalho mais

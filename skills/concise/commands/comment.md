@@ -3,9 +3,9 @@ description: Draft a review comment, a thread reply, a note on a card, or a mess
 argument-hint: "[what the comment is about, and optionally where it goes]"
 ---
 
-Write one comment or message following the "Comments and replies" section of
-the `concise` ruleset. Invoke the skill first if the full ruleset is not
-already in context.
+Write one comment or message. Read
+`${CLAUDE_PLUGIN_ROOT}/references/comment.md` first and follow it, and invoke
+the `concise` skill if it is not already in context.
 
 The subject is the text below. If it is empty, the subject is the thing most
 recently under discussion — the diff hunk you just read, the thread you were

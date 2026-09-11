@@ -3,9 +3,9 @@ description: Escreve a descrição da PR da branch atual — ancorada no diff re
 argument-hint: "[ref base, `create` para abrir a PR, contexto que o diff não mostra]"
 ---
 
-Escreva a descrição da pull request da branch atual, seguindo a seção de PR
-das regras de `respostas-curtas`. Invoque a skill antes se as regras
-completas não estiverem no contexto.
+Escreva a descrição da pull request da branch atual. Leia
+`${CLAUDE_PLUGIN_ROOT}/referencias/pr.md` antes e siga, e invoque a skill
+`respostas-curtas` se ela não estiver no contexto.
 
 O argumento abaixo pode trazer uma ref base, contexto extra que o diff não
 mostra — id de card, restrição, motivo — ou os dois. Uma primeira palavra que

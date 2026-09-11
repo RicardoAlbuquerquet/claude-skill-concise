@@ -4,9 +4,9 @@ argument-hint: "[caminhos — vazio mira os arquivos que esta branch mudou]"
 ---
 
 Tire do código o texto que não carrega nada: comentário, docstring, mensagem de
-log e de erro, e o texto que uma pessoa lê na tela. Siga a seção "Texto no
-código e na tela" das regras de `respostas-curtas`; se as regras completas não
-estiverem no contexto, invoque a skill `respostas-curtas` primeiro.
+log e de erro, e o texto que uma pessoa lê na tela. Leia
+`${CLAUDE_PLUGIN_ROOT}/referencias/codigo.md` antes e siga, e invoque a skill
+`respostas-curtas` se ela não estiver no contexto.
 
 $ARGUMENTS
 
@@ -21,15 +21,15 @@ Como:
    dele: quanto os vizinhos comentam, onde moram os textos — no próprio código
    ou num catálogo como `locales/` ou `messages/` — e quais testes conferem
    texto.
-3. **Corte o que a seção corta**: o comentário que a linha de baixo já diz, o
-   comentário sobre uma edição, código comentado, banner, a docstring que
+3. **Corte o que o arquivo corta**: o comentário que a linha de baixo já diz,
+   o comentário sobre uma edição, código comentado, banner, a docstring que
    reconta a assinatura; na tela, a segunda vez que a mesma coisa é dita, o
    botão sem verbo, a palavra de tom, o toast de uma mudança que a pessoa viu
    acontecer.
-4. **Mantenha o que a seção mantém, e o que só parece morto**: diretiva dentro
-   de comentário (`eslint-disable`, `@ts-expect-error`, `# type: ignore`),
-   cabeçalho de licença, docstring que um gerador de documentação publica, e
-   JSDoc que carrega os tipos num projeto JavaScript.
+4. **Mantenha o que o arquivo mantém, e o que só parece morto**: diretiva
+   dentro de comentário (`eslint-disable`, `@ts-expect-error`,
+   `# type: ignore`), cabeçalho de licença, docstring que um gerador de
+   documentação publica, e JSDoc que carrega os tipos num projeto JavaScript.
 5. **Texto muda junto com tudo que casa com ele.** Antes de mudar um texto
    visível, procure por ele no repo — teste, snapshot, outro idioma, cliente
    que lê a mensagem de erro — e mude tudo junto. Quando uma parte não pode

@@ -3,9 +3,9 @@ description: Escreve um comentário de revisão, uma resposta em thread, um reca
 argument-hint: "[sobre o que é o comentário, e opcionalmente para onde ele vai]"
 ---
 
-Escreva um comentário ou mensagem seguindo a seção "Comentário e resposta"
-das regras de `respostas-curtas`. Invoque a skill antes se as regras
-completas não estiverem no contexto.
+Escreva um comentário ou mensagem. Leia
+`${CLAUDE_PLUGIN_ROOT}/referencias/comentario.md` antes e siga, e invoque a
+skill `respostas-curtas` se ela não estiver no contexto.
 
 O assunto é o texto abaixo. Se estiver vazio, o assunto é o que está em
 discussão agora — o trecho do diff que você acabou de ler, a thread sobre a

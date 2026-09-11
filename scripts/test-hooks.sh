@@ -174,7 +174,7 @@ echo "--- comando aponta para secao que existe"
 # aconteceu tres vezes entre 1.32.0 e 1.41.0.
 for port in concise respostas-curtas; do
   secoes="$FH/secoes-$port.txt"
-  sed -n 's/^## //p' "$REPO/skills/$port/SKILL.md" | tr -d '\r' > "$secoes"
+  sed -n 's/^###* //p' "$REPO/skills/$port/SKILL.md" | tr -d '\r' > "$secoes"
   mortas=""
   for f in "$REPO/skills/$port/commands/"*.md "$REPO/skills/$port/agents/"*.md; do
     while read -r s; do
@@ -251,6 +251,26 @@ for port in concise respostas-curtas; do
   style=$(ls "$REPO/skills/$port/output-styles/"*.md)
   awk '/^---$/{n++; next} n==1' "$style" | tr -d '\r' | grep -qx 'force-for-plugin: true' &&
     ok "output style de $port e forcado" || ko "output style de $port nao tem force-for-plugin: true"
+done
+
+echo "--- skill: arquivos de referencia e tamanho"
+# Cada superficie que sai da conversa mora num arquivo proprio, que a skill e
+# os comandos citam. Nome errado deixa o comando sem regra, calado. E o
+# SKILL.md chegou a 696 linhas: acima de 500 a recomendacao e dividir, e
+# depois da compactacao so os primeiros 5.000 tokens da skill voltam.
+for port in concise respostas-curtas; do
+  dir="$REPO/skills/$port"
+  faltando=""
+  for ref in $(grep -oh 'refer[a-z]*/[a-z-]*\.md' "$dir/SKILL.md" "$dir/commands/"*.md "$dir/agents/"*.md | sort -u); do
+    [ -f "$dir/$ref" ] || faltando="$faltando $ref"
+  done
+  for f in "$dir"/refer*/*.md; do
+    n="$(basename "$(dirname "$f")")/$(basename "$f")"
+    grep -q "$n" "$dir/SKILL.md" || faltando="$faltando fora-da-skill:$n"
+  done
+  [ -z "$faltando" ] && ok "referencias de $port existem e a skill cita todas" || ko "referencias de $port:$faltando"
+  linhas=$(wc -l < "$dir/SKILL.md" | tr -d ' ')
+  [ "$linhas" -le 500 ] && ok "SKILL.md de $port com $linhas linhas" || ko "SKILL.md de $port passou de 500 linhas: $linhas"
 done
 
 echo "--- harness dos evals (claude falso)"

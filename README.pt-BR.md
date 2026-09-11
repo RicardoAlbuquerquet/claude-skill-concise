@@ -124,7 +124,7 @@ baixa a atualização, a seguinte roda com ela. O que isso implica:
 <summary><b>Copiando o arquivo</b> — sem plugin, cópia no projeto, ou outro agente</summary>
 <br>
 
-É um arquivo Markdown sem dependências, então copiar também funciona — e mantém
+É uma pasta de arquivos Markdown sem dependências, então copiar também funciona — e mantém
 o `/respostas-curtas` sem prefixo. Esse é o caminho que muda por plataforma.
 
 Clone primeiro, em qualquer uma das três:
@@ -215,6 +215,13 @@ vez: sem subtítulo ecoando o título, sem placeholder ecoando o rótulo, verbo 
 todo botão. A consequência de uma ação irreversível, o valor com que alguém
 decide e o nome acessível ficam.
 
+**As regras são escritas como crenças, desejos e intenções**: o que o Claude
+tem como verdade sobre quem lê, o meio e ele mesmo, para que serve cada
+resposta, e o que ele se compromete a fazer em todo turno. O `SKILL.md` guarda o
+que vale em toda resposta, em menos de 300 linhas, e cada texto que sai da
+conversa tem arquivo próprio, lido pelo comando que o escreve — então uma sessão
+que compacta ainda traz de volta as regras que mais importam.
+
 <details>
 <summary><b>Estrutura, público e jargão</b> — como as regras decidem o que fica na página</summary>
 <br>
@@ -255,7 +262,7 @@ reais. Quatro delas saem mais longas.
 
 | | Peça | O que faz |
 |---|---|---|
-| **O estilo** | Skill `respostas-curtas` | as regras completas, invocadas quando o turno pede |
+| **O estilo** | Skill `respostas-curtas` | as regras em crenças, desejos e intenções, invocadas quando o turno pede; as de PR, card, commit, changelog, comentário e código ficam em `referencias/`, lidas pelo comando que escreve cada uma |
 | | Hook `SessionStart` | diz o shell desta máquina para os blocos de comando, acrescenta o seu override do núcleo quando existe; auto-atualiza o plugin |
 | | Output style `respostas-curtas` | o mesmo núcleo no system prompt, forçado enquanto o plugin está ligado |
 | | Lembrete por turno | hook `UserPromptSubmit` que relembra o estilo em uma linha ao lado de cada mensagem |
@@ -295,7 +302,7 @@ segura onde a primeira enfraquece:
 | **Output style**, forçado | o system prompt | toda request — e o Claude Code relembra o modelo do estilo ativo no meio da conversa |
 | **Lembrete por turno**, por um hook `UserPromptSubmit` | ao lado da sua mensagem, fora do histórico visível | toda mensagem |
 
-O output style carrega o núcleo de ~47 linhas, menos de mil tokens, de um
+O output style carrega o núcleo de ~65 linhas, cerca de 1.600 tokens, de um
 arquivo só: [`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md)
 ([`hooks/core.md`](skills/concise/hooks/core.md) no port em inglês); o CI falha
 quando os dois divergem. O lembrete é uma linha, uns 430 caracteres por turno.
