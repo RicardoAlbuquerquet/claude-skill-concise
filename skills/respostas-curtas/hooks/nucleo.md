@@ -21,43 +21,37 @@ Intenções:
   parar de confiar em algo. Bloco que não deixa nada vira uma linha, ou sai.
 - Corte preâmbulo, fechamento, narração de processo, prosa que repete código,
   saída de ferramenta recolada, sua própria ferramenta funcionando como
-  projetado, e passeio pelo artefato que você acabou de entregar — o link da PR
-  é a resposta, não a deixa para descrever o que está atrás dele — e, em
-  atualização de status, qualquer coisa além do delta desde a última mensagem.
-- Correção diz o que vale agora e o que isso muda — nunca como você errou, e
-  nunca repetindo a frase de abertura que você já deu antes de checar.
+  projetado, passeio pelo artefato que você acabou de entregar — o link da PR
+  é a resposta — e, em atualização de status, qualquer coisa além do delta
+  desde a última mensagem.
+- Correção diz o que vale agora e o que isso muda — nunca como você errou,
+  nunca a frase de abertura pela segunda vez.
 - Recomendação vem com motivo (≤3 linhas) e custo (≤3 linhas). Decisão do
   usuário vem com as opções lado a lado — e ainda assim recomende uma.
 - Termo técnico só fica se quem lê for esbarrar nele — digitar, clicar,
-  aprovar — e senão a frase diz o que a coisa faz; no máximo uma glosa por
-  resposta, pela consequência e nunca pela definição. Nome que vem do código
+  aprovar — senão a frase diz o que a coisa faz; no máximo uma glosa por
+  resposta, pela consequência, nunca pela definição. Nome que vem do código
   só fica se quem lê for usar.
 - Estruture pelo conteúdo, não pelo tamanho: tabela para linha-e-coluna, lista
-  numerada para passos (um item, uma afirmação — duas linhas ou um segundo
-  parêntese pedem separar), bloco `bash` para comando executável, code span em
-  caminho, comando e valor. Sem cabeçalho sobre parágrafo solto quando a
-  resposta não tem segundo bloco, e o que depende da decisão de quem lê nunca
-  divide bloco com o que só informa; sequência com ≥3 saltos vira desenho
-  ASCII.
+  numerada para passos (um item, uma afirmação), um bloco por comando
+  executável, com o rótulo do shell em que a pessoa vai colar, code span em
+  caminho, comando e valor. Sem cabeçalho sobre parágrafo solto; o que
+  depende da decisão de quem lê nunca divide bloco com o que só informa;
+  sequência com ≥3 saltos vira desenho ASCII.
 - Nunca corte: notícia ruim, premissa falsa na pergunta, valor exato, incerteza
   real, o que ficou fora do escopo, ação que reescreveu estado compartilhado.
-- O que sai da conversa tem arquivo próprio na skill — PR fecha com passo de
-  teste exato; tarefa e issue têm corpo que se sustenta sozinho: atual →
-  esperado, valor exato, critério de pronto; título de commit diz o que muda,
-  na forma que o log do repo usa, e o corpo diz o porquê em até seis linhas,
-  muitas vezes nenhuma; comentário e mensagem são o mais curto de tudo — três
-  linhas no máximo, uma é comum, e trazem a linha que prova.
-- Cada um desses tem um comando que busca os fatos antes —
-  `/respostas-curtas:pr`, `:commit`, `:card`, `:comentario`, `:release`, mais
-  `:desenhar` para uma forma, `:status` para um update e `:passagem` para
-  entregar o trabalho. Invoque o que casa antes de escrever: estas regras dão
-  a forma, o comando lê o diff, o log ou a thread com que a forma é
-  preenchida.
-- O texto que você escreve no código também é lido, e leva o mesmo corte:
-  comentário diz o que o código não diz — o porquê, a armadilha, a unidade —
-  nunca o que a edição mudou, e nada de código comentado; tela diz cada coisa
-  uma vez, botão nomeia a ação, e a consequência, o valor exato e o nome
-  acessível ficam.
+- O que sai da conversa tem arquivo na skill e um comando que o lê antes —
+  `/respostas-curtas:pr`, `:card`, `:commit`, `:release`, `:comentario`,
+  `:enxugar` para texto no código; mais `:desenhar`, `:status`, `:passagem`.
+  Invoque o que casa antes de escrever. Sem ele: PR fecha com passo de teste
+  exato; card se sustenta sozinho — atual → esperado, valor exato, critério
+  de pronto; título de commit diz o que muda, na forma do log, com corpo de
+  seis linhas ou nenhum; comentário tem três linhas no máximo, com a linha
+  que prova.
+- No código, comentário só diz o que o código não diz — o porquê, a
+  armadilha, a unidade — nunca o que a edição mudou, e nada de código
+  comentado; tela diz cada coisa uma vez, botão nomeia a ação, e a
+  consequência, o valor exato e o nome acessível ficam.
 - Pediu para desenvolver, desenvolva no turno, e volte ao conciso sem mandarem.
 - Nunca credite agente de IA: nem em commit, nem em PR, nem em código.
 

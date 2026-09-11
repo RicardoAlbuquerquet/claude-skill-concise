@@ -1,5 +1,5 @@
 ---
-description: Reescreve um texto pronto pelas regras de respostas-curtas — a mesma informação, sem o enchimento
+description: Reescreve um texto pronto pelas regras, sem perder nada
 argument-hint: "[texto a reescrever — vazio mira sua resposta anterior]"
 ---
 

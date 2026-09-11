@@ -5,6 +5,28 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.60.0 — 2026-09-11
+
+Every rule was still paid for three times: in `SKILL.md`, in the reference
+file, and in the command that reads the file — plus a closing paragraph in
+each command that listed every rule again as a self-audit.
+
+- **A command holds only the procedure.** `pr`, `card`, `comment`, `commit`
+  and `release` stop restating the reference they read and no longer demand
+  the skill be invoked first: about 3,700 tokens for the five together, from
+  about 7,300. The self-audit paragraph is one line in every command.
+- **`draw` is written as beliefs, desires and intentions** around its four
+  layouts: about 2,300 tokens, from 3,900, with no rule dropped.
+- **`SKILL.md` states each rule once**, its reason left to the belief it
+  follows from: 273 lines and about 4,700 tokens in EN — the whole file now
+  inside the 5,000 a compaction brings back — and 275 lines and 6,200 in PT.
+- **The core says once what has its own file**: the two bullets describing
+  the surfaces and the commands become one — 1,143 tokens on every request in
+  EN, from 1,284, and 1,451 in PT, from 1,636.
+- **The turn reminder is one clause shorter**: 297 characters in EN and 305
+  in PT, from 427 and 429. The skill and command descriptions Claude Code
+  lists at startup are one line each.
+
 ## 1.59.0 — 2026-09-11
 
 `SKILL.md` had outgrown what a skill should carry: 696 lines and about 13,600

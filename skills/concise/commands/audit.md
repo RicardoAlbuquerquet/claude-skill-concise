@@ -1,5 +1,5 @@
 ---
-description: Audit a draft against the concise checklist and report only the violations — quoted line, rule broken, one-line fix. Diagnosis, never surgery
+description: Report the concise violations in a draft — quote, rule, fix — never a rewrite
 argument-hint: "[text, a file path, a PR or issue URL — empty audits your previous reply]"
 ---
 

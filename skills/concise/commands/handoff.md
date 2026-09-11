@@ -1,5 +1,5 @@
 ---
-description: Hand the work over — the complete state, every standing caveat back in full, the traps, and the exact command that resumes it
+description: Hand the work over — full state, every caveat, the resume command
 argument-hint: "[who picks it up, or what part of the work — optional]"
 ---
 
@@ -49,11 +49,7 @@ How:
    the test run — in a runnable block, in the shell the reader uses.
 8. **What is blocked and on whom**, with what stalls if it does not come.
 
-Before delivering, audit the draft yourself — nothing that only makes sense to
-someone who read this conversation, every caveat back in full rather than
-referenced, done and left kept apart, exact values instead of descriptions of
-them, no process narration, and the resume command actually runnable — and fix
-what fails. Deliver only the clean version.
+Check the draft against the rules above and fix what fails before delivering.
 
 Delivery: as prose when the handoff stays in this conversation; in a fenced
 block when it goes into a card, a document or a message, with four backticks

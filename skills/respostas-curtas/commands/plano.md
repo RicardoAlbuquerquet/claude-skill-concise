@@ -1,5 +1,5 @@
 ---
-description: Rascunha o plano que você propõe — os passos numerados que você vai rodar, o risco nomeado, o que fica de fora. Só texto; não roda nada
+description: Rascunha o plano para aprovação — passos, risco, o que fica de fora
 argument-hint: "[para que é o plano — vazio usa o trabalho em discussão]"
 ---
 
@@ -42,10 +42,8 @@ Regras do plano:
 - **Desenhe quando bifurca** — plano com três ou mais saltos, com retry ou com
   caminho de rollback ganha o ASCII em bloco de código, setas rotuladas.
 
-Antes de entregar, audite o rascunho você mesmo — a primeira linha diz o que
-você vai fazer, todo passo nomeia arquivo ou comando, risco presente, fora de
-escopo dito, nada que seja exploração vestida de passo — e corrija o que
-falhar. Entregue só a versão limpa.
+Confira o rascunho contra as regras acima e corrija o que falhar antes de
+entregar.
 
 Entrega: o plano em prosa na conversa, já que ele é lido aqui para ser
 aprovado. Em bloco de código só quando a invocação disser que ele vai para

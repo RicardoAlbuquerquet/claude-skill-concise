@@ -301,10 +301,10 @@ holds where the first fades:
 | **Output style**, forced | the system prompt | every request — and Claude Code reminds the model of an active style mid-conversation |
 | **Turn reminder**, from a `UserPromptSubmit` hook | beside your message, unseen in the transcript | every prompt |
 
-The output style carries the ~65-line core, about 1,300 tokens, from one
+The output style carries the ~60-line core, about 1,150 tokens, from one
 file: [`hooks/core.md`](skills/concise/hooks/core.md)
 ([`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md) in the PT port);
-CI fails when the two drift. The reminder is one line, about 430 characters a
+CI fails when the two drift. The reminder is one line, about 300 characters a
 turn. A `SessionStart` hook adds only the line naming your shell, and your core
 override when you wrote one. The full ruleset still lives in the skill, which
 the model invokes when a turn needs more than the core.

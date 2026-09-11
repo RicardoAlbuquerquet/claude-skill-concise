@@ -1,5 +1,5 @@
 ---
-description: Passa o trabalho adiante — o estado completo, toda ressalva de pé de volta por inteiro, as armadilhas, e o comando exato que retoma
+description: Passa o trabalho adiante — estado completo, toda ressalva, o comando que retoma
 argument-hint: "[quem assume, ou que parte do trabalho — opcional]"
 ---
 
@@ -50,11 +50,8 @@ Como:
    rodada de teste — em bloco executável, no shell de quem vai ler.
 8. **O que está travado e em quem**, com o que para se aquilo não vier.
 
-Antes de entregar, audite o rascunho você mesmo — nada que só faça sentido
-para quem leu esta conversa, toda ressalva de volta por inteiro em vez de
-apontada, pronto e faltando separados, valor exato em vez da descrição dele,
-sem narração de processo, e o comando de retomada de fato executável — e
-corrija o que falhar. Entregue só a versão limpa.
+Confira o rascunho contra as regras acima e corrija o que falhar antes de
+entregar.
 
 Entrega: em prosa quando a passagem fica nesta conversa; em bloco de código
 quando vai para um card, um documento ou uma mensagem, com quatro crases
