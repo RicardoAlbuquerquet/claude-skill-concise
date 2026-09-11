@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 660" width="1280" height="660" role="img" aria-labelledby="t d">
+  <title id="t">por que o endpoint de login está tão lento?</title>
+  <desc id="d">SEM 8 LINHAS: Algumas coisas costumam deixar um endpoint de login lento. O hash de senha é o suspeito usual — se o bcrypt está com fator de custo alto, só ele pode dominar a request. Além disso, vale conferir se a busca de usuário bate índice, se a escrita de sessão está na mesma transação, e […] COM concise. 3 FRASES: Não está. O /auth/login está em 84 ms p95 nas últimas 24 h; o lento é o /auth/refresh, a 2,1 s, e o PWA chama ele a cada retomada do app — é quase certamente isso que você está sentindo.  Quer que eu investigue o refresh?</desc>
+  <defs>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="16"/><feOffset dy="12"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.1"/></feComponentTransfer>
+      <feFlood flood-color="#0F172A"/><feComposite in2="SourceAlpha" operator="in"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="card"><rect x="36" y="28" width="1208" height="588" rx="18"/></clipPath>
+  </defs>
+  <style>
+    text { font-family: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, 'Liberation Mono', monospace; font-size: 19px; }
+    .b { fill: #6A717B; animation: in .5s ease-out both; }
+    .a { fill: #0F0F12; animation: type .42s steps(18, end) both; }
+    .lead { font-weight: 700; fill: #0F0F12; }
+    .val { fill: #0B63CE; }
+    .q { fill: #0F0F12; font-size: 21px; }
+    .prompt { fill: #E5431B; font-size: 21px; font-weight: 700; }
+    .title { fill: #9AA1AA; font-size: 14px; letter-spacing: .5px; }
+    .label { font-size: 15px; font-weight: 700; letter-spacing: 2.6px; }
+    .l-before { fill: #9AA1AA; }
+    .l-after { fill: #0F0F12; }
+    .count { fill: #9AA1AA; font-weight: 400; }
+    .v { font-size: 18px; animation: in .6s ease-out both; }
+    .v-before { fill: #E5431B; }
+    .v-after { fill: #0F0F12; }
+    .caret { fill: #E5431B; animation: blink 1.1s steps(1, end) 2.71s 4 both; }
+    .accent { fill: #E5431B; }
+    @keyframes in { 0% { opacity: 0; transform: translateY(4px); } 100% { opacity: 1; transform: none; } }
+    @keyframes type { 0% { clip-path: inset(-20% 100% -20% 0); } 100% { clip-path: inset(-20% 0 -20% 0); } }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+
+  <g filter="url(#sh)"><rect x="36" y="28" width="1208" height="588" rx="18" fill="#FFFFFF"/></g>
+  <g clip-path="url(#card)">
+    <rect x="36" y="28" width="1208" height="54" fill="#F6F7F9"/>
+    <path d="M36 82.5H1244" stroke="#E4E8ED"/>
+  </g>
+  <rect x="36.5" y="28.5" width="1207" height="587" rx="17.5" fill="none" stroke="#D9DEE5"/>
+  <circle cx="66" cy="55" r="6" fill="#D3D8DF"/>
+  <circle cx="86" cy="55" r="6" fill="#D3D8DF"/>
+  <circle cx="106" cy="55" r="6" fill="#D3D8DF"/>
+  <text class="title" x="640" y="60" text-anchor="middle">claude — ~/api</text>
+
+  <text class="prompt" x="92" y="138">›</text>
+  <text class="q" x="118" y="138">por que o endpoint de login está tão lento?</text>
+  <path d="M68 172H1212" stroke="#E4E8ED"/>
+  <path d="M640 196V528" stroke="#E4E8ED"/>
+
+  <text class="label l-before" x="92" y="214">SEM<tspan class="count" dx="14">·  8 LINHAS</tspan></text>
+  <text class="label l-after" x="692" y="214">COM concise<tspan class="accent">.</tspan><tspan class="count" dx="14">·  3 FRASES</tspan></text>
+
+  <g>
+    <text class="b" style="animation-delay:0.35s" x="92" y="256" textLength="478.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Algumas coisas costumam deixar um endpoint</text>
+    <text class="b" style="animation-delay:0.42s" x="92" y="289" textLength="501.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve">de login lento. O hash de senha é o suspeito</text>
+    <text class="b" style="animation-delay:0.49s" x="92" y="322" textLength="490.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">usual — se o bcrypt está com fator de custo</text>
+    <text class="b" style="animation-delay:0.56s" x="92" y="355" textLength="467.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">alto, só ele pode dominar a request. Além</text>
+    <text class="b" style="animation-delay:0.63s" x="92" y="388" textLength="478.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">disso, vale conferir se a busca de usuário</text>
+    <text class="b" style="animation-delay:0.7s" x="92" y="421" textLength="490.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">bate índice, se a escrita de sessão está na</text>
+    <text class="b" style="animation-delay:0.77s" x="92" y="454" textLength="250.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">mesma transação, e […]</text>
+  </g>
+  <g>
+    <text class="a" style="animation-delay:1.25s" x="692" y="256" textLength="353.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve"><tspan class="lead">Não está.</tspan> O <tspan class="val">/auth/login</tspan> está em</text>
+    <text class="a" style="animation-delay:1.41s" x="692" y="289" textLength="444.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve"><tspan class="val">84 ms</tspan> p95 nas últimas 24 h; o lento é o</text>
+    <text class="a" style="animation-delay:1.57s" x="692" y="322" textLength="467.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve"><tspan class="val">/auth/refresh</tspan>, a <tspan class="val">2,1 s</tspan>, e o PWA chama ele</text>
+    <text class="a" style="animation-delay:1.73s" x="692" y="355" textLength="364.8" lengthAdjust="spacingAndGlyphs" xml:space="preserve">a cada retomada do app — é quase</text>
+    <text class="a" style="animation-delay:1.89s" x="692" y="388" textLength="444.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve">certamente isso que você está sentindo.</text>
+    
+    <text class="a" style="animation-delay:2.21s" x="692" y="454" textLength="376.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">Quer que eu investigue o refresh?</text>
+    <rect class="caret" x="1074.2" y="437" width="10" height="21" rx="1.5"/>
+  </g>
+
+  <path d="M68 528H1212" stroke="#E4E8ED"/>
+  <text class="v v-before" style="animation-delay:1.05s" x="92" y="564">✕  a premissa era falsa</text>
+  <text class="v v-after" style="animation-delay:2.71s" x="692" y="564"><tspan class="accent">✓</tspan>  a resposta, na primeira frase</text>
+</svg>
