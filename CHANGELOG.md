@@ -5,6 +5,37 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.59.0 — 2026-09-11
+
+`SKILL.md` had outgrown what a skill should carry: 696 lines and about 13,600
+tokens in EN, 17,700 in PT, against a recommended ceiling of 500 lines. And
+after a compaction Claude Code brings back only the first 5,000 tokens of each
+invoked skill, so Always cut, Never cut and Before sending — at the end of the
+file — were the part a long session lost.
+
+- **The ruleset is written as beliefs, desires and intentions**: what Claude
+  holds true about the reader, the medium and itself; what every reply is for;
+  and what it commits to on every turn, in order of precedence — the budgets,
+  Never cut, Always cut and Before sending first.
+- **`SKILL.md` keeps what applies to every reply**: 278 lines and about 5,100
+  tokens in EN, 280 lines and 6,500 in PT. Those four intentions end at about
+  3,100 tokens in EN and 3,900 in PT, inside what a compaction brings back.
+- **Each text that leaves the conversation has its own file, in the same
+  shape**: `references/pull-request.md`, `task.md`, `commit.md`,
+  `changelog.md`, `comment.md` and `code.md` — in PT, `referencias/pr.md`,
+  `tarefa.md`, `commit.md`, `changelog.md`, `comentario.md` and `codigo.md`.
+  The command that writes each text reads its file through
+  `${CLAUDE_PLUGIN_ROOT}`, and `decide` and `plan` point at the merged
+  "Recommendations, choices and plans" section.
+- **The core takes the same shape**: two beliefs and one desire above the
+  intentions it already carried — about 145 tokens more on every request in
+  EN, 1,139 to 1,284.
+- **The checks follow the split**: the eval harness appends the reference
+  files in skill mode, since a case can't open one; `check-parity.sh` compares
+  each reference with its translation; `test-hooks.sh` fails when a cited
+  reference is missing, a reference goes uncited, or `SKILL.md` passes 500
+  lines.
+
 ## 1.58.0 — 2026-09-11
 
 The style stopped at the edge of the conversation: no rule in it reached the

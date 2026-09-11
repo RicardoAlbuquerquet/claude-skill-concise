@@ -22,7 +22,7 @@ the long form works:
 | Variable | What it does |
 |---|---|
 | `SKILL=respostas-curtas` | runs the PT port (rubrics check structure, not language) |
-| `CORE=1` | judges the ~50-line core the hook injects, not the full skill |
+| `CORE=1` | judges the ~65-line core the output style carries, not the full skill |
 | `BASELINE=1` | no style at all — see below |
 | `RUNS=3` | three attempts per case; anything short of all-pass reports `FLAKY` |
 | `MODEL=claude-sonnet-5` | pins the model, so two runs are comparable |
@@ -30,6 +30,10 @@ the long form works:
 | `JUDGE_MODEL=` | judges with `MODEL` instead of the fast default |
 | `ONLY=07` | a single case, by filename fragment |
 | `CLAUDE_BIN=./stub` | swaps the CLI — how the harness itself is tested, free |
+
+In skill mode the harness appends every file in `references/` after `SKILL.md`:
+a case can't open a file, and the command that writes a PR or a card would have
+read its own.
 
 **`BASELINE=1` is the one that tells you whether a case is worth having.** It
 runs the same prompts with no style attached. A case that passes at baseline
@@ -52,7 +56,7 @@ a FAIL is a signal to read the printed verdict, not a verdict by itself.
 The map is what makes an edited rule regress instead of silently drifting: if
 you change a rule here, change the rubric that tests it.
 
-| Rule (SKILL.md) | Case | Discriminates |
+| Rule (`SKILL.md` or its reference file) | Case | Discriminates |
 |---|---|---|
 | Answer in the first sentence; no preamble | 01, and every other rubric | no |
 | Completed work ≤5 lines, gate result | 02 | no |

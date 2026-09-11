@@ -3,9 +3,9 @@ description: Rascunha a mensagem de commit do que está staged — título ≤72
 argument-hint: "[`run` para commitar, contexto extra que o diff não mostra]"
 ---
 
-Rascunhe uma mensagem de commit para o que está staged agora, seguindo a
-seção "Mensagem de commit" das regras de `respostas-curtas`. Invoque a skill
-antes se as regras completas não estiverem no contexto.
+Rascunhe uma mensagem de commit para o que está staged agora. Leia
+`${CLAUDE_PLUGIN_ROOT}/referencias/commit.md` antes e siga, e invoque a skill
+`respostas-curtas` se ela não estiver no contexto.
 
 Contexto opcional de quem chamou — restrições ou motivos que o diff não
 mostra. A palavra literal `run` em qualquer lugar dele é a permissão para

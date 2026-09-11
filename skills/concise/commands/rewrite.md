@@ -23,10 +23,10 @@ Rules of the rewrite:
   a missing test step on a PR description — but only when the original
   contains the information to fill it. When it doesn't, report the hole
   instead of inventing content. Never invent a value, a number, or a result.
-- **Pick the register by destination.** A PR description follows the PR
-  section of the ruleset; a task or issue follows its section, including the
-  two-widths thresholds for title and body; a chat reply follows the budgets
-  table.
+- **Pick the register by destination.** A PR description, a card, a commit
+  message, a changelog entry, a comment or text in code follows its own file
+  under `${CLAUDE_PLUGIN_ROOT}/references/` — read it first; a chat reply
+  follows the budgets table.
 
 Deliver the rewritten text first. Put it in a fenced block when it is destined
 for another surface — PR, issue, commit message, e-mail — so it can be copied

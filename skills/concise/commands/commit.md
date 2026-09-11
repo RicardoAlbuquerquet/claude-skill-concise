@@ -3,9 +3,9 @@ description: Draft the commit message for what is staged — title ≤72 chars i
 argument-hint: "[`run` to commit it, extra context the diff can't show]"
 ---
 
-Draft one commit message for what is currently staged, following the "Commit
-messages" section of the `concise` ruleset. Invoke the skill first if the
-full ruleset is not already in context.
+Draft one commit message for what is currently staged. Read
+`${CLAUDE_PLUGIN_ROOT}/references/commit.md` first and follow it, and invoke
+the `concise` skill if it is not already in context.
 
 Optional context from the caller — constraints or reasons the diff can't
 show. The literal word `run` anywhere in it is the permission to commit:

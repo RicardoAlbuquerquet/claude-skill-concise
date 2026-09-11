@@ -3,9 +3,9 @@ description: Draft the changelog entry and the release body for what shipped —
 argument-hint: "[version, a commit range, or extra context — optional]"
 ---
 
-Draft the changelog entry and, when a release is being cut, the release body,
-following the "Changelog and release notes" section of the `concise` ruleset.
-Invoke the skill first if the full ruleset is not already in context.
+Draft the changelog entry and, when a release is being cut, the release body.
+Read `${CLAUDE_PLUGIN_ROOT}/references/changelog.md` first and follow it, and
+invoke the `concise` skill if it is not already in context.
 
 The argument below may carry the version to release, a commit range, or
 context the commits can't show. Empty, the range is the last tag to `HEAD`.

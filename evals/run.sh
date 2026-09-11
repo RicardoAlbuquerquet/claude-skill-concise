@@ -32,7 +32,10 @@ if [ -n "${BASELINE:-}" ]; then
 elif [ -n "${CORE:-}" ]; then
   STYLE=$(cat "$CORE_FILE"); MODE=core
 else
-  STYLE=$(cat "$SKILL_FILE"); MODE=skill
+  # The skill sends each surface that leaves the conversation to its own file,
+  # and a case can't open one, so it gets all of them — what the matching
+  # command would have read.
+  STYLE=$(cat "$SKILL_FILE" "$ROOT/skills/$SKILL"/refer*/*.md); MODE=skill
 fi
 MODEL_ARG=""
 [ -n "${MODEL:-}" ] && MODEL_ARG="--model ${MODEL}"

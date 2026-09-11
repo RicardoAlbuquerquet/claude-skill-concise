@@ -3,9 +3,9 @@ description: Draft the pull request description for the current branch — groun
 argument-hint: "[base ref, `create` to open it, extra context the diff can't show]"
 ---
 
-Write the pull request description for the current branch, following the PR
-section of the `concise` ruleset. Invoke the skill first if the full ruleset
-is not already in context.
+Write the pull request description for the current branch. Read
+`${CLAUDE_PLUGIN_ROOT}/references/pull-request.md` first and follow it, and
+invoke the `concise` skill if it is not already in context.
 
 The argument below may carry a base ref, extra context the diff can't show —
 a card id, a constraint, a reason — or both. A leading word that

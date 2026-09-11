@@ -3,9 +3,9 @@ description: Put the live options side by side and still recommend one — each 
 argument-hint: "[the decision, and the options if you already know them]"
 ---
 
-Lay out one decision that belongs to the reader, following the "When the
-choice is the user's" section of the `concise` ruleset. Invoke the skill first
-if the full ruleset is not already in context.
+Lay out one decision that belongs to the reader, following the
+"Recommendations, choices and plans" section of the `concise` ruleset. Invoke
+the skill first if the full ruleset is not already in context.
 
 The subject is the text below. If it is empty, the subject is the choice most
 recently raised in this conversation.

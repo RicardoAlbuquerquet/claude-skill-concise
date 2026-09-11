@@ -61,6 +61,7 @@ style_matches_core () { # $1 = plugin dir, $2 = style file, $3 = core file
 printf '%-38s %8s %8s\n' '' concise resp-cur
 
 check 'SKILL.md: ## sections'     "$(count '^## ' $EN/SKILL.md)"        "$(count '^## ' $PT/SKILL.md)"
+check 'SKILL.md: ### intentions'  "$(count '^### ' $EN/SKILL.md)"       "$(count '^### ' $PT/SKILL.md)"
 check 'SKILL.md: table lines'     "$(count '^\|' $EN/SKILL.md)"         "$(count '^\|' $PT/SKILL.md)"
 check 'SKILL.md: bullets'         "$(count '^- ' $EN/SKILL.md)"         "$(count '^- ' $PT/SKILL.md)"
 check 'SKILL.md: numbered items'  "$(count '^[0-9]+\. ' $EN/SKILL.md)"  "$(count '^[0-9]+\. ' $PT/SKILL.md)"
@@ -76,6 +77,13 @@ check 'marketplace desc == plugin (PT)' "$(mkt_matches_plugin respostas-curtas $
 check 'plugin.json: version'      "$(version $EN/.claude-plugin/plugin.json)" "$(version $PT/.claude-plugin/plugin.json)"
 check 'commands/: files'          "$(files $EN/commands)"               "$(files $PT/commands)"
 check 'agents/: files'            "$(files $EN/agents)"                 "$(files $PT/agents)"
+check 'references/: files'        "$(files $EN/references)"             "$(files $PT/referencias)"
+
+# Each surface's file against its translation: sections/bullets/numbered.
+ref_shape () { printf '%s/%s/%s' "$(count '^## ' "$1")" "$(count '^- ' "$1")" "$(count '^[0-9]+\. ' "$1")"; }
+for pair in pull-request:pr task:tarefa commit:commit changelog:changelog comment:comentario code:codigo; do
+  check "references/${pair%%:*}.md" "$(ref_shape "$EN/references/${pair%%:*}.md")" "$(ref_shape "$PT/referencias/${pair#*:}.md")"
+done
 check 'README: ## sections'       "$(count '^## ' README.md)"           "$(count '^## ' README.pt-BR.md)"
 
 exit $fail

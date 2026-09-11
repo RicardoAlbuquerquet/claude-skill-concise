@@ -9,6 +9,8 @@ on:
   pull_request:
     paths:
       - 'skills/**/SKILL.md'
+      - 'skills/**/references/**'
+      - 'skills/**/referencias/**'
       - 'skills/**/hooks/core.md'
       - 'skills/**/hooks/nucleo.md'
       - 'skills/**/commands/**'
