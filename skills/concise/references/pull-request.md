@@ -42,7 +42,8 @@
   commands sharing a fence. Each deliverable is stated once — a paragraph
   retelling a row of the table above it is the diff again — and a check you
   already ran is one line plus the output that proves it ("already run:
-  `44 ok, 0 falhas`"), never the account of running it.
+  `44 ok, 0 falhas`"), never the account of running it — with its command in
+  a fence of its own, like every other command the body names.
 - **When the diff spans many files, one line says where to start reading** —
   the file where the mechanism lives.
 - **An alternative you discarded gets a line**, and the argument that
@@ -61,8 +62,10 @@
   conversation or a tracker a tool can reach, never invented.
 - **It ends with how the reviewer checks it**:
 
-1. **The exact command**, copy-pasteable: `npm test -- auth` counts, "run the
-   tests" doesn't.
+1. **The exact command**, copy-pasteable, in a fence of its own even when you
+   already ran it — the line saying you ran it and what came out sits beside
+   the fence, never in its place: `npm test -- auth` counts, "run the tests"
+   doesn't.
 2. **What shows up if it's right** — the number, the output line, the screen.
 3. **What would prove it broke**, when step 1's command doesn't cover the
    case.

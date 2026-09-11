@@ -34,7 +34,7 @@ How:
 Delivery: each comment in its own fenced block, ready to paste — four
 backticks when it carries a fence of its own, as a suggestion block does.
 Several comments get the anchor above each block on its own line
-(`retry.ts:88`). Nothing after them except values you could not fill from the
+(`api/src/auth/retry.ts:88`). Nothing after them except values you could not fill from the
 subject, one line each, opening with **Missing:**.
 
 Posting: draft only, by default. When the invocation names a destination a

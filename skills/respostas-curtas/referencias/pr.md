@@ -43,7 +43,8 @@
   dois comandos dividindo um bloco. Cada entrega é dita uma vez — parágrafo
   recontando uma linha da tabela de cima é o diff de novo — e checagem que
   você já rodou é uma linha mais a saída que prova ("já rodado:
-  `44 ok, 0 falhas`"), nunca o relato de ter rodado.
+  `44 ok, 0 falhas`"), nunca o relato de ter rodado — com o comando dela em
+  bloco próprio, como todo comando que o corpo cita.
 - **Quando o diff atravessa muitos arquivos, uma linha diz por onde começar a
   ler** — o arquivo onde o mecanismo vive.
 - **A alternativa que você descartou ganha uma linha**, e o argumento que a
@@ -62,8 +63,9 @@
   tracker que uma ferramenta alcança, nunca inventado.
 - **Ela termina com como quem revisa confere sozinho**:
 
-1. **O comando exato**, copiável: `npm test -- auth` conta, "rode os testes"
-   não.
+1. **O comando exato**, copiável, em bloco próprio mesmo quando você já rodou
+   — a linha dizendo que rodou e o que saiu fica ao lado do bloco, nunca no
+   lugar dele: `npm test -- auth` conta, "rode os testes" não.
 2. **O que aparece se estiver certo** — o número, a linha da saída, a tela.
 3. **O que provaria que quebrou**, quando o comando do passo 1 não pega o
    caso.
