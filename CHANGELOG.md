@@ -5,6 +5,30 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.57.0 — 2026-09-11
+
+The plugin said the same thing too many times. Every session loaded the core
+twice — in the forced output style and again from the `SessionStart` hook — and
+`SKILL.md` stated several rules in three or four places.
+
+- **The `SessionStart` hook stops printing the shipped core.** The forced
+  output style already carries it in the system prompt; the hook now prints
+  only the line naming the shell, and the core override when one exists. About
+  560 words less at every session start, resume and compaction.
+  `CONCISE_INJECT_CORE=1` brings the old behaviour back, for a Claude Code that
+  ignores `force-for-plugin` or a session where another plugin's forced style
+  loads first.
+- **The core override now lands on top of the shipped core** rather than
+  replacing it, since the style in the system prompt carries the shipped one.
+- **`SKILL.md` is 1,282 words shorter in EN and 1,223 in PT, about 15%, with no
+  rule dropped.** The rule about names lifted from the code was stated four
+  times, the title rule three, the AI-credit ban three, the whole-path rule
+  twice; the drawing craft now points at `/concise:draw`; "Before sending" stops
+  re-deriving the rules above it; the PR section said its opening twice.
+- **Three inject-core checks changed in `scripts/test-hooks.sh`**: the core is
+  not printed by default, comes back under `CONCISE_INJECT_CORE=1`, and without
+  an override the session gets the platform line alone.
+
 ## 1.56.0 — 2026-09-11
 
 Claude kept drifting out of the style in long sessions. The core arrived once,

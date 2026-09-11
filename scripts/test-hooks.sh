@@ -56,8 +56,12 @@ case "$out" in *"1.13.0"*) pass=$((pass+1)); echo "ok    anuncia versao aplicada
 [ -f "$FH/.claude/.concise-update-note" ] && { fail=$((fail+1)); echo "FALHA nota nao foi limpa"; } || { pass=$((pass+1)); echo "ok    nota limpa apos exibir"; }
 
 echo "--- inject-core"
-out=$(HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/concise" bash "$I" concise-core-override.md core.md | head -1)
-case "$out" in "Response style"*) pass=$((pass+1)); echo "ok    injeta core embarcado";; *) fail=$((fail+1)); echo "FALHA core: $out";; esac
+# O output style forcado ja leva o nucleo no system prompt; imprimir de novo no
+# inicio da sessao pagava o mesmo texto duas vezes. So com CONCISE_INJECT_CORE=1.
+out=$(HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/concise" bash "$I" concise-core-override.md core.md)
+[ -z "$out" ] && { pass=$((pass+1)); echo "ok    nucleo embarcado nao sai duas vezes"; } || { fail=$((fail+1)); echo "FALHA nucleo duplicado: $(printf '%s' "$out" | head -1)"; }
+out=$(HOME="$FH" CONCISE_INJECT_CORE=1 CLAUDE_PLUGIN_ROOT="$REPO/skills/concise" bash "$I" concise-core-override.md core.md | head -1)
+case "$out" in "Response style"*) pass=$((pass+1)); echo "ok    CONCISE_INJECT_CORE=1 devolve o nucleo";; *) fail=$((fail+1)); echo "FALHA CONCISE_INJECT_CORE: $out";; esac
 printf 'NUCLEO CUSTOM\n' > "$FH/.claude/concise-core-override.md"
 out=$(HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/concise" bash "$I" concise-core-override.md core.md)
 [ "$out" = "NUCLEO CUSTOM" ] && { pass=$((pass+1)); echo "ok    override vence"; } || { fail=$((fail+1)); echo "FALHA override: $out"; }
@@ -84,11 +88,10 @@ out=$(HOME="$FH" CONCISE_OS=windows CLAUDE_PLUGIN_ROOT="$REPO/skills/concise" ba
 case "$out" in "NUCLEO CUSTOM"*"rc=0") pass=$((pass+1)); echo "ok    sem argumentos nao quebra";;
                *) fail=$((fail+1)); echo "FALHA sem argumentos: $out";; esac
 
-# o nucleo embarcado tambem recebe a linha
+# sem override, a sessao recebe so a linha da plataforma, sem linha em branco antes
 rm -f "$FH/.claude/concise-core-override.md"
-out=$(IC macos | tail -1)
-case "$out" in *"FENCE macos"*) pass=$((pass+1)); echo "ok    nucleo embarcado recebe a linha";;
-               *) fail=$((fail+1)); echo "FALHA nucleo+plataforma: $out";; esac
+out=$(IC macos)
+[ "$out" = "FENCE macos" ] && { pass=$((pass+1)); echo "ok    sem override sai so a linha da plataforma"; } || { fail=$((fail+1)); echo "FALHA so a plataforma: $out"; }
 
 echo "--- self-update (claude fake)"
 mkdir -p "$FH/bin"
