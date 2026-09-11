@@ -5,6 +5,18 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.61.0 — 2026-09-11
+
+Two eval cases kept failing the same way after the split. A PR body put its
+test command in prose whenever the command had already been run, and a review
+comment shortened its path to `retry.ts:88` — the exact form the reference's
+own example used.
+
+- **`references/pull-request.md` keeps the fence on a command you already
+  ran**: the line saying you ran it sits beside the fence, never in its place.
+- **The comment examples carry a whole path**, `api/src/auth/retry.ts:88`, in
+  the reference and in the command, both ports.
+
 ## 1.60.0 — 2026-09-11
 
 Every rule was still paid for three times: in `SKILL.md`, in the reference

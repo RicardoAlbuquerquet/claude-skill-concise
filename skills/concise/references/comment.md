@@ -20,7 +20,8 @@
 ## Intentions
 
 - **The claim, then the line that proves it**: "This drops the retry on 401
-  (`retry.ts:88`), so a wrong password locks the account after three tries."
+  (`api/src/auth/retry.ts:88`), so a wrong password locks the account after
+  three tries."
 - **Three lines is the ceiling and one is the common case** — the shortest
   surface in this ruleset. No header, no table, no list nested inside it, and
   nothing the thread above already says; a point that needs structure goes to

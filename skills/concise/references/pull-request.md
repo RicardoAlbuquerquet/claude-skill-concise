@@ -61,8 +61,10 @@
   conversation or a tracker a tool can reach, never invented.
 - **It ends with how the reviewer checks it**:
 
-1. **The exact command**, copy-pasteable: `npm test -- auth` counts, "run the
-   tests" doesn't.
+1. **The exact command**, copy-pasteable, in a fence of its own even when you
+   already ran it — the line saying you ran it and what came out sits beside
+   the fence, never in its place: `npm test -- auth` counts, "run the tests"
+   doesn't.
 2. **What shows up if it's right** — the number, the output line, the screen.
 3. **What would prove it broke**, when step 1's command doesn't cover the
    case.

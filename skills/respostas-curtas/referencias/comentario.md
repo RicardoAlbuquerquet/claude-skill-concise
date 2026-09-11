@@ -21,7 +21,8 @@
 ## Intenções
 
 - **A afirmação, e depois a linha que prova**: "Isso derruba o retry no 401
-  (`retry.ts:88`), então senha errada trava a conta em três tentativas."
+  (`api/src/auth/retry.ts:88`), então senha errada trava a conta em três
+  tentativas."
 - **Três linhas é o teto e uma é o caso comum** — a superfície mais curta
   destas regras. Sem cabeçalho, sem tabela, sem lista aninhada, e sem nada que
   a thread acima já diga; ponto que precisa de estrutura vai para um card ou

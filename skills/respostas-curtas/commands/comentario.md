@@ -34,7 +34,7 @@ Como:
 Entrega: cada comentário no próprio bloco de código, pronto para colar —
 quatro crases quando ele carrega um bloco próprio, como bloco de sugestão
 carrega. Vários comentários levam a âncora acima de cada bloco, numa linha
-só (`retry.ts:88`). Nada depois deles além dos valores que você não conseguiu
+só (`api/src/auth/retry.ts:88`). Nada depois deles além dos valores que você não conseguiu
 preencher pelo assunto, uma linha cada, abrindo com **Faltou:**.
 
 Publicar: só rascunho, por padrão. Quando a invocação nomeia um destino que

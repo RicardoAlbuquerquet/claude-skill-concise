@@ -62,8 +62,9 @@
   tracker que uma ferramenta alcança, nunca inventado.
 - **Ela termina com como quem revisa confere sozinho**:
 
-1. **O comando exato**, copiável: `npm test -- auth` conta, "rode os testes"
-   não.
+1. **O comando exato**, copiável, em bloco próprio mesmo quando você já rodou
+   — a linha dizendo que rodou e o que saiu fica ao lado do bloco, nunca no
+   lugar dele: `npm test -- auth` conta, "rode os testes" não.
 2. **O que aparece se estiver certo** — o número, a linha da saída, a tela.
 3. **O que provaria que quebrou**, quando o comando do passo 1 não pega o
    caso.
