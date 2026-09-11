@@ -1,131 +1,32 @@
-# respostas-curtas
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/banner-dark.pt-BR.svg">
+    <img alt="concise. — A resposta na primeira frase." src="docs/brand/banner-light.pt-BR.svg" width="100%">
+  </picture>
+</p>
 
-[![parity](https://github.com/RicardoAlbuquerquet/claude-skill-concise/actions/workflows/parity.yml/badge.svg)](https://github.com/RicardoAlbuquerquet/claude-skill-concise/actions/workflows/parity.yml)
-[![version](https://img.shields.io/badge/dynamic/json?label=vers%C3%A3o&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRicardoAlbuquerquet%2Fclaude-skill-concise%2Fmain%2Fskills%2Frespostas-curtas%2F.claude-plugin%2Fplugin.json)](CHANGELOG.md)
-[![license](https://img.shields.io/badge/licen%C3%A7a-MIT-blue)](LICENSE)
+<p align="center">
+  <a href="https://github.com/RicardoAlbuquerquet/claude-skill-concise/actions/workflows/parity.yml"><img alt="paridade" src="https://img.shields.io/github/actions/workflow/status/RicardoAlbuquerquet/claude-skill-concise/parity.yml?branch=main&label=paridade&style=flat-square&labelColor=24292f"></a>
+  <a href="CHANGELOG.md"><img alt="versão" src="https://img.shields.io/badge/dynamic/json?label=vers%C3%A3o&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRicardoAlbuquerquet%2Fclaude-skill-concise%2Fmain%2Fskills%2Frespostas-curtas%2F.claude-plugin%2Fplugin.json&style=flat-square&labelColor=24292f&color=ee4a1f"></a>
+  <a href="LICENSE"><img alt="licença: MIT" src="https://img.shields.io/badge/licen%C3%A7a-MIT-57606a?style=flat-square&labelColor=24292f"></a>
+  <a href="README.md"><img alt="Read in English" src="https://img.shields.io/badge/read_in-English-57606a?style=flat-square&labelColor=24292f"></a>
+</p>
 
-**English:** [README.md](README.md)
+<p align="center">
+  Um plugin de Claude Code que faz o Claude responder no registro que um terminal quer —<br>
+  <b>a resposta primeiro, nada enchendo, e toda ressalva que muda o que você faz mantida.</b>
+</p>
 
-Um plugin de Claude Code que faz o Claude responder no registro que um
-terminal realmente quer — a resposta primeiro, nada enchendo, nenhum
-sacrifício de correção — e que traz as ferramentas para aplicar o mesmo
-registro a texto que já existe.
+<p align="center">
+  <a href="#instalação">Instalação</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#o-que-ela-faz">O que ela faz</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#o-que-embarca">O que embarca</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#os-comandos-e-o-agente">Comandos</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#o-critério-para-uma-regra">O critério para uma regra</a>
+</p>
 
-![A mesma pergunta respondida sem e com a skill](docs/before-after.pt-BR.svg)
+<br>
 
-Dois comandos dentro de uma sessão do Claude Code, e vale a partir da sua
-próxima sessão:
-
-```
-/plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
-```
-
-```
-/plugin install respostas-curtas@claude-skill-concise
-```
-
-A [instalação](#instalação) completa — com a forma de terminal e o caminho da
-cópia — está mais abaixo.
-
-## O problema
-
-O registro padrão de escrita do Claude é expansivo. É um bom padrão numa janela
-de chat e um ruim num terminal, onde aparece como:
-
-- um preâmbulo antes da resposta (`"Ótima pergunta — deixa eu ver isso."`)
-- cabeçalhos `##` sobre uma resposta de três linhas
-- justificativa que ninguém pediu, depois de a resposta já ter sido dada
-- narração da busca — quais arquivos foram lidos, em que ordem
-- um cardápio de quatro opções quando se queria uma recomendação
-- um aforismo de fechamento, porque o parágrafo pareceu pedir um pouso
-
-Nada disso é errado. Tudo isso fica entre você e a resposta.
-
-## O que ela faz
-
-A skill instala uma regra — **a resposta vem na primeira frase, e depois dela só
-o que muda uma decisão** — mais orçamentos explícitos por situação, uma lista de
-construções para sempre cortar, e uma lista mais curta para *nunca* cortar. O
-orçamento é por turno, não por assunto: cada bloco depois do primeiro se paga
-pelo que deixa a pessoa fazendo, e é isso que impede uma resposta que não quebra
-nenhuma regra sozinha de chegar três vezes maior do que devia.
-
-A segunda lista é a parte que importa. Compressão é fácil de exagerar, e uma
-resposta de uma linha que derrubou a ressalva sobre dados de produção é pior que
-a versão inchada. A skill afirma sem rodeio que notícia ruim, risco, caminho ou
-versão exatos, premissa falsa na pergunta e suposição não verificada sobrevivem
-todos à edição.
-
-Três regras correm no sentido contrário e *acrescentam* texto, porque o que
-faltava era informação e não palavras:
-
-- **Recomendação sempre sai com o custo dela.** Recomendação, ≤3 linhas de
-  motivo, ≤3 linhas do que piora ou do que se abre mão. Recomendação sem
-  desvantagem declarada ou tem uma que ninguém procurou ou está escondendo — e
-  do lado de quem lê, o campo vazio é indistinguível de "examinei e é barato".
-- **Quando a decisão é do usuário, as opções vão lado a lado**, e ainda assim
-  você recomenda uma e diz por que ela ganha *das outras especificamente*.
-  Decidir em silêncio uma questão de dinheiro ou risco é mais curto e não é seu.
-- **Desenhe o formato.** Quando a resposta é uma sequência ou uma bifurcação, um
-  diagrama ASCII de cinco linhas ganha do parágrafo que a pessoa teria que
-  montar na cabeça.
-
-A estrutura se julga pelo conteúdo, não pelo tamanho. Uma versão anterior
-cortava cabeçalho e bullet de qualquer resposta com menos de seis linhas; esse
-teste estava errado, porque media a resposta em vez do que há nela. A regra
-agora: separe o que é genuinamente separado — duas funções ganham dois blocos,
-comparação ganha tabela, caminho e termo técnico ganham code span — e nunca
-fatie um pensamento só. Se você consegue dizer para que serve cada bloco, a
-estrutura é real; se os blocos são "parte 1, parte 2", é enfeite.
-
-Ela também fixa o público. A skill é escrita para quem é dono do produto mas não
-é profundo na stack, e cada termo passa por duas perguntas, nesta ordem. **A
-pessoa vai esbarrar nele de qualquer jeito** — digitar, clicar, aprovar a
-mudança? Se não vai, a frase diz o que a coisa faz e não nomeia. Se vai, o termo
-fica e você paga por ele uma vez, explicando **pela consequência** e não pela
-definição — não "`timestamptz` é um tipo com fuso" e sim "a coluna guarda em
-UTC, então filtro montado no horário local pede uma janela que ainda não
-começou". Uma glosa por resposta é o teto: o segundo termo pedindo explicação é
-a resposta carregando o formato da investigação em vez do da resposta. E tirar
-um termo não é ficar vago — "a coluna guarda a hora em UTC" é exato sem ele;
-"tem uma questão de fuso" jogou a informação fora e manteve o tamanho. Resposta
-em que a pessoa não consegue agir não é concisa, é só curta.
-
-O mesmo parágrafo traça a linha para o outro lado. Nome tirado do fonte — uma
-tabela, um método interno, uma constante — não é termo técnico e não tem glosa
-para dar, então sai, a menos que quem lê vá abrir, rodar ou conferir aquele
-número. Cortar esses é a edição rara que deixa a frase mais clara ao mesmo
-tempo que a deixa mais curta.
-
-Veja [`examples/before-after.md`](examples/before-after.md): dez transformações
-reais. Quatro saem mais longas.
-
-## O que embarca
-
-| Peça | O que faz |
-|---|---|
-| Skill `respostas-curtas` | as regras completas, invocadas quando o turno pede |
-| Hook `SessionStart` | injeta o núcleo de ~47 linhas em toda sessão, mais a linha que diz o shell desta máquina; auto-atualiza o plugin |
-| Output style `respostas-curtas` | o mesmo núcleo no system prompt — sem shell, escolhido no `/config` |
-| `/respostas-curtas:reescrever` | reescreve um texto pronto pelas regras, sem perder nada |
-| `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
-| `/respostas-curtas:card` | rascunha o card que se sustenta sozinho; cria quando o destino é nomeado |
-| `/respostas-curtas:commit` | rascunha a mensagem de commit do staged — título na forma que o log do repo usa, corpo com o porquê |
-| `/respostas-curtas:comentario` | rascunha comentário de revisão, resposta em thread ou recado em card — a afirmação, e a linha que prova |
-| `/respostas-curtas:release` | rascunha a entrada de changelog e o corpo da release dos commits desde a última tag — o que quebra primeiro |
-| `/respostas-curtas:plano` | rascunha o plano para aprovação — passos que nomeiam arquivo ou comando, o risco, o que fica de fora |
-| `/respostas-curtas:decidir` | opções vivas lado a lado com os custos, e ainda uma recomendação |
-| `/respostas-curtas:desenhar` | desenha a forma em ASCII — um traço só, nada passando de 72 colunas; recusa quando o assunto não merece |
-| `/respostas-curtas:status` | escreve o update como delta desde o último, notícia ruim no topo |
-| `/respostas-curtas:passagem` | passa o trabalho adiante: estado completo, toda ressalva por inteiro, as armadilhas, o comando que retoma |
-| `/respostas-curtas:auditar` | roda o agente de auditoria num rascunho, arquivo ou corpo de PR e repassa o relatório |
-| Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
-| Desvio da PR para o comando | hook `PreToolUse` que barra o primeiro `gh pr create` da sessão para apontar o `/respostas-curtas:pr`; repetir a chamada segue |
-| Agente `auditar` | devolve só as violações de um rascunho — citação, regra, correção |
-| [`extras/stop-audit`](extras/stop-audit/README.md) | juiz de estilo por turno, opcional, instalado à mão |
-
-A skill é o produto; o resto a mantém aplicada — em toda sessão, no texto que
-já existe, e no que sai da conversa.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/brand/before-after-dark.pt-BR.svg">
+  <img alt="A mesma pergunta respondida sem e com a skill: oito linhas que nunca percebem que a premissa é falsa, contra três frases que abrem nela." src="docs/brand/before-after-light.pt-BR.svg" width="100%">
+</picture>
 
 ## Instalação
 
@@ -139,9 +40,15 @@ Dois comandos, digitados dentro de uma sessão aberta do Claude Code:
 /plugin install respostas-curtas@claude-skill-concise
 ```
 
+> [!IMPORTANT]
+> **Vale na próxima sessão, não nesta.** O estilo carrega no início da sessão,
+> evento que já passou naquela em que você digitou o install — reinicie o
+> Claude Code, ou rode `/reload-plugins`, e pergunte de novo. "Instalei e não
+> mudou nada" é quase sempre isso.
+
 **São comandos do Claude Code, não de shell.** Colados no PowerShell, bash ou
-zsh, falham com `command not found` — a `/` na frente entrega. De um terminal,
-use o CLI `claude`. Mesmo efeito, e igual no macOS, Linux e Windows:
+zsh, falham com `command not found` — a `/` na frente entrega. De um terminal, o
+CLI `claude` faz o mesmo no macOS, Linux e Windows:
 
 ```bash
 claude plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
@@ -151,22 +58,17 @@ claude plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
 claude plugin install respostas-curtas@claude-skill-concise
 ```
 
-**As duas formas valem na próxima sessão, não nesta.** O estilo carrega no
-início da sessão, evento que já passou naquela em que você digitou o install
-— então refaça a pergunta depois de reiniciar o Claude Code, ou rode
-`/reload-plugins` antes. "Instalei e não mudou nada" é quase sempre isso.
+Troque `respostas-curtas` por `concise` para o original em inglês — um ou
+outro, nunca os dois ([por quê](#idiomas)). Skill de plugin ganha o prefixo do
+plugin que a embarca, então esta registra como
+`/respostas-curtas:respostas-curtas`; `/plugin` → **Installed** mostra o nome
+exato que ela tomou.
 
-Troque `respostas-curtas` por `concise` para o original em inglês. Instale um,
-não os dois — veja [Idiomas](#idiomas).
+<details>
+<summary><b>Atualizando</b> — dois comandos, e por que só o primeiro não muda nada</summary>
+<br>
 
-Skill de plugin ganha o prefixo do plugin que a embarca, então esta registra
-como `/respostas-curtas:respostas-curtas`. Rode `/plugin` e abra a aba
-**Installed** para ver o nome exato que ela tomou.
-
-### Atualizando
-
-Dois comandos, não um — o primeiro atualiza o catálogo, o segundo move a
-cópia que de fato roda:
+O primeiro atualiza o catálogo, o segundo move a cópia que de fato roda:
 
 ```
 /plugin marketplace update claude-skill-concise
@@ -189,12 +91,15 @@ Marketplace de terceiro vem com auto-update desligado. Para dispensar o
 primeiro comando manual, ligue em `/plugin` → **Marketplaces** → **Enable
 auto-update**.
 
-### Auto-atualização
+</details>
 
-**O plugin roda esse par sozinho.** Um hook `SessionStart` checa uma vez por
-dia, em segundo plano, então uma cópia instalada segue o marketplace com uma
-sessão de atraso: a sessão que checa baixa a atualização, a seguinte roda com
-ela. O que isso implica:
+<details>
+<summary><b>Auto-atualização</b> — o plugin roda esse par sozinho, uma vez por dia</summary>
+<br>
+
+Um hook `SessionStart` checa uma vez por dia, em segundo plano, então uma cópia
+instalada segue o marketplace com uma sessão de atraso: a sessão que checa
+baixa a atualização, a seguinte roda com ela. O que isso implica:
 
 - Só move quando a release subiu a `version`, igual ao par manual — mudança
   sem bump na `main` nunca propaga.
@@ -213,7 +118,11 @@ ela. O que isso implica:
 - Para parar só isso: `touch ~/.claude/.respostas-curtas-no-self-update`. O
   estilo, os comandos e a guarda de crédito continuam.
 
-### Copiando o arquivo
+</details>
+
+<details>
+<summary><b>Copiando o arquivo</b> — sem plugin, cópia no projeto, ou outro agente</summary>
+<br>
 
 É um arquivo Markdown sem dependências, então copiar também funciona — e mantém
 o `/respostas-curtas` sem prefixo. Esse é o caminho que muda por plataforma.
@@ -248,55 +157,178 @@ arquivos `SKILL.md` — as regras viajam pelo [skills.sh](https://skills.sh):
 npx skills add RicardoAlbuquerquet/claude-skill-concise
 ```
 
-Só as regras viajam. O núcleo sempre-ligado, o auto-update, a guarda de
-crédito, os cinco comandos e o agente de auditoria são maquinaria de plugin
-do Claude Code; em outro agente você fica com o documento e invoca à mão.
+Só as regras viajam. O output style forçado, o núcleo, o lembrete por turno, o
+auto-update, as guardas, os doze comandos e o agente de auditoria são
+maquinaria de plugin do Claude Code; em outro agente você fica com o documento
+e invoca à mão.
 
 Confira que registrou digitando `/respostas-curtas` no Claude Code. Se não
 aparecer, cheque o caminho: copiar para um `skills/` que ainda não existe
 deixa o `SKILL.md` direto nele, um nível acima do certo, sem erro nenhum.
 
+</details>
+
+## O problema
+
+O registro padrão de escrita do Claude é expansivo. É um bom padrão numa janela
+de chat e um ruim num terminal, onde aparece como:
+
+- um preâmbulo antes da resposta — `"Ótima pergunta — deixa eu ver isso."`
+- cabeçalhos `##` sobre uma resposta de três linhas
+- justificativa que ninguém pediu, depois de a resposta já ter sido dada
+- narração da busca — quais arquivos foram lidos, em que ordem
+- um cardápio de quatro opções quando se queria uma recomendação
+- um aforismo de fechamento, porque o parágrafo pareceu pedir um pouso
+
+Nada disso é errado. Tudo isso fica entre você e a resposta.
+
+## O que ela faz
+
+A skill instala uma regra — **a resposta vem na primeira frase, e depois dela só
+o que muda uma decisão** — mais orçamentos por situação, uma lista de
+construções para sempre cortar, e uma lista mais curta para *nunca* cortar. O
+orçamento é por turno, não por assunto: cada bloco depois do primeiro se paga
+pelo que deixa a pessoa fazendo, e é isso que impede uma resposta que não quebra
+nenhuma regra sozinha de chegar três vezes maior do que devia.
+
+**A segunda lista é a parte que importa.** Compressão é fácil de exagerar, e uma
+resposta de uma linha que derrubou a ressalva sobre dados de produção é pior que
+a versão inchada. Notícia ruim, risco, caminho ou versão exatos, premissa falsa
+na pergunta e suposição não verificada sobrevivem todos à edição.
+
+Três regras correm no sentido contrário e *acrescentam* texto, porque o que
+faltava era informação e não palavras:
+
+- **Recomendação sempre sai com o custo dela.** Recomendação, ≤3 linhas de
+  motivo, ≤3 linhas do que piora ou do que se abre mão. Do lado de quem lê,
+  desvantagem ausente é indistinguível de "examinei e é barato".
+- **Quando a decisão é sua, as opções vão lado a lado** — e o Claude ainda
+  recomenda uma, dizendo por que ela ganha *das outras especificamente*. Decidir
+  em silêncio uma questão de dinheiro ou risco é mais curto e não cabe a ele.
+- **Desenhe o formato.** Quando a resposta é uma sequência ou uma bifurcação, um
+  diagrama ASCII de cinco linhas ganha do parágrafo que você teria que montar na
+  cabeça.
+
+<details>
+<summary><b>Estrutura, público e jargão</b> — como as regras decidem o que fica na página</summary>
+<br>
+
+**A estrutura se julga pelo conteúdo, não pelo tamanho.** Uma versão anterior
+cortava cabeçalho e bullet de qualquer resposta com menos de seis linhas; esse
+teste estava errado, porque media a resposta em vez do que há nela. A regra
+agora: separe o que é genuinamente separado — duas funções ganham dois blocos,
+comparação ganha tabela, caminho e termo técnico ganham code span — e nunca
+fatie um pensamento só. Se você consegue dizer para que serve cada bloco, a
+estrutura é real; se os blocos são "parte 1, parte 2", é enfeite.
+
+**Ela também fixa o público.** A skill é escrita para quem é dono do produto mas
+não é profundo na stack, e cada termo passa por duas perguntas, nesta ordem.
+*A pessoa vai esbarrar nele de qualquer jeito* — digitar, clicar, aprovar a
+mudança? Se não vai, a frase diz o que a coisa faz e não nomeia. Se vai, o termo
+fica e você paga por ele uma vez, explicando **pela consequência** e não pela
+definição — não "`timestamptz` é um tipo com fuso" e sim "a coluna guarda em
+UTC, então filtro montado no horário local pede uma janela que ainda não
+começou". Uma glosa por resposta é o teto: o segundo termo pedindo explicação é
+a resposta carregando o formato da investigação em vez do da resposta. E tirar
+um termo não é ficar vago — "a coluna guarda a hora em UTC" é exato sem ele;
+"tem uma questão de fuso" jogou a informação fora e manteve o tamanho. Resposta
+em que a pessoa não consegue agir não é concisa, é só curta.
+
+**O mesmo teste traça a linha para o outro lado.** Nome tirado do fonte — uma
+tabela, um método interno, uma constante — não é termo técnico e não tem glosa
+para dar, então sai, a menos que quem lê vá abrir, rodar ou conferir aquele
+número. Cortar esses é a edição rara que deixa a frase mais clara ao mesmo
+tempo que a deixa mais curta.
+
+</details>
+
+Veja [`examples/before-after.md`](examples/before-after.md): dez transformações
+reais. Quatro delas saem mais longas.
+
+## O que embarca
+
+| | Peça | O que faz |
+|---|---|---|
+| **O estilo** | Skill `respostas-curtas` | as regras completas, invocadas quando o turno pede |
+| | Hook `SessionStart` | injeta o núcleo de ~47 linhas em toda sessão, mais a linha que diz o shell desta máquina; auto-atualiza o plugin |
+| | Output style `respostas-curtas` | o mesmo núcleo no system prompt, forçado enquanto o plugin está ligado |
+| | Lembrete por turno | hook `UserPromptSubmit` que relembra o estilo em uma linha ao lado de cada mensagem |
+| **O que sai da conversa** | `/respostas-curtas:pr` | escreve a descrição da PR pelo diff real, teste no fim |
+| | `/respostas-curtas:commit` | rascunha a mensagem de commit do staged — título na forma que o log do repo usa, corpo com o porquê |
+| | `/respostas-curtas:card` | rascunha o card que se sustenta sozinho; cria quando o destino é nomeado |
+| | `/respostas-curtas:comentario` | rascunha comentário de revisão, resposta em thread ou recado em card — a afirmação, e a linha que prova |
+| | `/respostas-curtas:release` | rascunha a entrada de changelog e o corpo da release dos commits desde a última tag — o que quebra primeiro |
+| **Pensar em voz alta** | `/respostas-curtas:plano` | rascunha o plano para aprovação — passos que nomeiam arquivo ou comando, o risco, o que fica de fora |
+| | `/respostas-curtas:decidir` | opções vivas lado a lado com os custos, e ainda uma recomendação |
+| | `/respostas-curtas:desenhar` | desenha a forma em ASCII — um traço só, nada passando de 72 colunas; recusa quando o assunto não merece |
+| | `/respostas-curtas:status` | escreve o update como delta desde o último, notícia ruim no topo |
+| | `/respostas-curtas:passagem` | passa o trabalho adiante: estado completo, toda ressalva por inteiro, as armadilhas, o comando que retoma |
+| **Texto que já existe** | `/respostas-curtas:reescrever` | reescreve um texto pronto pelas regras, sem perder nada |
+| | `/respostas-curtas:auditar` | roda o agente de auditoria num rascunho, arquivo ou corpo de PR e repassa o relatório |
+| | Agente `auditar` | devolve só as violações de um rascunho — citação, regra, correção |
+| **Guardas** | Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
+| | Desvio da PR para o comando | hook `PreToolUse` que barra o primeiro `gh pr create` da sessão para apontar o `/respostas-curtas:pr`; repetir a chamada segue |
+| | [`extras/stop-audit`](extras/stop-audit/README.md) | juiz de estilo por turno, opcional, instalado à mão |
+
+A skill é o produto; o resto a mantém aplicada — em toda sessão, no texto que
+já existe, e no que sai da conversa.
+
 ## Sempre ligada
 
-**Uma skill sozinha não dispara em todo turno.** Skill é invocada — ou por você
+**Uma skill sozinha não dispara em todo turno.** Skill é invocada — por você
 digitando `/respostas-curtas`, ou pelo modelo decidindo que a `description`
 combina com a tarefa. Uma regra de *estilo* de resposta quer valer em todos,
 inclusive nos turnos em que nada na tarefa sugere "agora pense em brevidade".
 
-**Instalada como plugin, isso já vem resolvido.** Desde a 1.3.0 cada plugin
-embarca um hook `SessionStart` que imprime um núcleo de ~47 linhas do estilo no
-contexto a cada início de sessão — uns 360 tokens, gastos produza a sessão
-prosa ou não. O núcleo é a garantia; as regras completas continuam na skill,
-que o modelo invoca quando o turno pede mais que o núcleo. O que é injetado é
-um arquivo só:
-[`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md)
-([`hooks/core.md`](skills/concise/hooks/core.md) no port em inglês).
+**Instalada como plugin, o estilo vem forçado, em três camadas** — cada uma
+segura onde a anterior enfraquece:
 
-Para podar ou reescrever na sua máquina, não edite a cópia do cache — o
-auto-update sobrescreve na release seguinte. Escreva
+| Camada | Onde entra | Quando |
+|---|---|---|
+| **Output style**, forçado | o system prompt | toda request — e o Claude Code relembra o modelo do estilo ativo no meio da conversa |
+| **Núcleo**, por um hook `SessionStart` | o contexto da sessão | início da sessão, retomada, e de novo depois da compactação |
+| **Lembrete por turno**, por um hook `UserPromptSubmit` | ao lado da sua mensagem, fora do histórico visível | toda mensagem |
+
+O núcleo tem ~47 linhas, menos de mil tokens, e é um arquivo só:
+[`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md)
+([`hooks/core.md`](skills/concise/hooks/core.md) no port em inglês). O output
+style carrega o mesmo texto, e o CI falha quando os dois divergem. O lembrete é
+uma linha, uns 330 caracteres por turno. As regras completas continuam na skill,
+que o modelo invoca quando o turno pede mais que o núcleo.
+
+> [!WARNING]
+> **Forçar sobrescreve o seu próprio output style.** Com o plugin ligado, ele
+> substitui o que você escolheu — Explanatory, Learning, ou o seu — e se outro
+> plugin ligado também forçar um, vale o primeiro carregado. Desligar o plugin
+> é o caminho de volta; o lembrete por turno tem [a própria chave](#os-comandos-e-o-agente).
+
+> [!TIP]
+> **Para conferir que carregou mesmo**, pergunte numa sessão nova: *"que estilo
+> de resposta está ativo agora?"* A resposta nomeia as regras do núcleo —
+> resposta na primeira frase, corte preâmbulo, nunca corte notícia ruim —
+> quando o hook rodou, e não nomeia quando não rodou.
+
+<details>
+<summary><b>Reescrevendo o núcleo, rodando sem shell, e instalação por cópia</b></summary>
+<br>
+
+**Para podar ou reescrever o núcleo na sua máquina**, não edite a cópia do
+cache — o auto-update sobrescreve na release seguinte. Escreva
 `~/.claude/respostas-curtas-nucleo-override.md`
 (`~/.claude/concise-core-override.md` no port em inglês): quando esse arquivo
 existe, o hook injeta ele no lugar do núcleo embarcado, e ele sobrevive a toda
 atualização. Ele substitui o núcleo por inteiro — comece de uma cópia do
-arquivo embarcado e corte.
+arquivo embarcado e corte. Substitui só a cópia do hook: o output style forçado
+carrega o núcleo embarcado.
 
-Uma aresta de plataforma: no Windows o hook roda pelo Git Bash. Sem o Git for
-Windows instalado ele falha em silêncio e você volta ao só-por-invocação — as
-mesmas máquinas onde a própria ferramenta Bash do Claude Code não roda, então
-na prática o hook funciona onde o resto funciona.
-
-**Para conferir que carregou mesmo**, pergunte numa sessão nova: *"que estilo
-de resposta está ativo agora?"* — a resposta nomeia as regras do núcleo
-(resposta na primeira frase, corte preâmbulo, nunca corte notícia ruim)
-quando o hook rodou, e não nomeia quando não rodou. É essa a diferença entre
-a garantia e a esperança.
-
-**O caminho sem shell: o output style.** O mesmo núcleo também vem como
-output style do Claude Code, que vive no system prompt em vez de ser impresso
-por um hook — sem shell, sem Git Bash, e cacheado em vez de reenviado a cada
-sessão. Escolha em `/config` → **Output style** → `respostas-curtas`. É a
-resposta para quando o hook não roda, e custa uma seleção manual; o plugin
-não força, porque forçar sobrescreveria o output style que você escolheu.
+**Sem shell, o estilo continua de pé.** No Windows os hooks rodam pelo Git
+Bash, e sem o Git for Windows instalado eles falham em silêncio — o núcleo, o
+lembrete e as guardas ficam mudos, nas mesmas máquinas onde a própria
+ferramenta Bash do Claude Code não roda. O output style forçado não precisa de
+shell, então o estilo continua no system prompt ali. Um Claude Code antigo
+demais para conhecer o `force-for-plugin` ignora a chave; o estilo fica então a
+uma escolha de distância, em `/config` → **Output style** →
+`respostas-curtas:respostas-curtas`.
 
 **Instalada por cópia, o hook não vem junto** — `~/.claude/skills/` leva só a
 skill. Emparelhe com uma linha no `CLAUDE.md`, que é carregado no contexto a
@@ -313,16 +345,33 @@ mudaria o que eu faço.
 A skill guarda as regras completas; o hook ou a linha no `CLAUDE.md` guarda o
 ponteiro que garante que elas estão no contexto. Um não substitui o outro.
 
+</details>
+
 ## Os comandos e o agente
 
-Desde a 1.4.0 cada plugin também embarca comandos — a skill governa o que o
-Claude escreve a seguir; estes produzem um texto específico sob demanda, saia
-ele da conversa ou fique nela, ou agem sobre o que já está escrito:
+A skill governa o que o Claude escreve a seguir. Os comandos produzem um texto
+específico sob demanda — saia ele da conversa ou fique nela — ou agem sobre o
+que já está escrito. O núcleo injetado nomeia os comandos, para o Claude buscar
+um sem ninguém mandar; é empurrão disputando atenção com todo o resto do
+contexto, e o comando que você digita continua sendo a única garantia.
 
-Desde a 1.31.0 o núcleo injetado nomeia os cinco que saem da conversa, para o
-Claude buscar um sem ninguém mandar. É empurrão, não hook: ele disputa atenção
-com todo o resto do contexto, e o comando que você digita continua sendo a
-única garantia.
+**Tudo é rascunho por padrão.** Nada é publicado sem você dizer, na própria
+invocação:
+
+| Comando | Vai além do rascunho só quando |
+|---|---|
+| `/respostas-curtas:pr [base] [create]` | você digita `create` — abre a PR com exatamente o título e o corpo rascunhados |
+| `/respostas-curtas:commit [contexto] [run]` | você digita `run` — commita exatamente a mensagem rascunhada |
+| `/respostas-curtas:card <assunto>` | você nomeia um destino que uma ferramenta alcança — um board por MCP, um repo via `gh` |
+| `/respostas-curtas:comentario [assunto]` | você nomeia o destino *e* manda publicar |
+| `/respostas-curtas:release [versão]` | nunca — sem `gh release create`, sem tag empurrada |
+| `/respostas-curtas:status [onde]` · `/respostas-curtas:passagem [quem]` | nunca — nomear um canal ou uma pessoa não é permissão para enviar |
+| `/respostas-curtas:plano [assunto]` | nunca — não entra em plan mode nem começa o passo 1 |
+| `/respostas-curtas:reescrever` · `/respostas-curtas:decidir` · `/respostas-curtas:desenhar` · `/respostas-curtas:auditar` | nunca — só texto |
+
+<details>
+<summary><b>Cada comando por inteiro</b></summary>
+<br>
 
 - **`/respostas-curtas:reescrever <texto>`** reescreve um texto pronto — uma
   descrição de PR, um corpo de issue, um e-mail — pelas regras, sem perder
@@ -419,37 +468,37 @@ com todo o resto do contexto, e o comando que você digita continua sendo a
 Tudo isso vem só com a instalação por plugin; o caminho da cópia leva a skill
 sozinha.
 
+</details>
+
 **Uma guarda de crédito vem ligada.** Um hook `PreToolUse` nega a chamada de
 shell que publicaria crédito a agente de IA — `Co-Authored-By` de modelo,
-rodapé "generated with" — por comparação determinística de string, sem
-chamada de API. Ela transforma a regra mais dura da skill em regra de
-sistema: a chamada é barrada com o motivo, e o texto sai reescrito sem o
-rodapé.
-
-O que ela cobre: `git commit` (inclusive `git -C`), `gh pr create|edit`,
+rodapé "generated with" — por comparação determinística de string, sem chamada
+de API. A chamada é barrada com o motivo, e o texto sai reescrito sem o rodapé.
+Ela cobre `git commit` (inclusive `git -C`), `gh pr create|edit`,
 `gh issue create|comment`, `gh release create|edit` e `gh api`, pelas
-ferramentas `Bash` e `PowerShell`, em qualquer ponto de uma corrente, e
-dentro do arquivo quando a mensagem vem por `-F` / `--body-file`. Ela nomeia
-Claude, Copilot, Gemini, Cursor, Codex e o endereço de trailer
-`anthropic.com`.
-
-Duas saídas, porque guarda determinística tem falso positivo — escrever
-*sobre* a regra dispara ela, como este repo descobriu:
-
-- `export CONCISE_ALLOW_CREDIT=1` para um shell ou uma sessão.
-- `touch ~/.claude/.respostas-curtas-no-credit-guard` para desligar de vez,
-  sem mexer no estilo, nos comandos nem no auto-update.
+ferramentas `Bash` e `PowerShell`, em qualquer ponto de uma corrente, e dentro
+do arquivo quando a mensagem vem por `-F` / `--body-file`. Ela nomeia Claude,
+Copilot, Gemini, Cursor, Codex e o endereço de trailer `anthropic.com`.
 
 **Um segundo hook `PreToolUse` desvia a descrição de PR para o comando que a
 escreve.** O primeiro `gh pr create` — ou `gh pr edit --body` — da sessão é
 negado uma vez, com o motivo nomeando o `/respostas-curtas:pr`; repita a
-chamada e ela passa. Esse formato é de propósito: a falha que ele existe para
-pegar é descrição escrita de memória tendo um comando para ler o diff, o log
-e o template, e um hook que continuasse negando seria uma parede sem saída.
-Ele não enxerga PR aberta no navegador — nenhum plugin enxerga — então repo
-que abre PR pelo github.com põe essa linha no próprio `PULL_REQUEST_TEMPLATE`.
-As mesmas duas saídas: `CONCISE_NO_ROUTE_HINT=1`, ou
-`touch ~/.claude/.respostas-curtas-no-route-hint`.
+chamada e ela passa. Descrição escrita de memória tendo um comando para ler o
+diff, o log e o template é a falha que ele existe para pegar, e um hook que
+continuasse negando seria uma parede sem saída. Ele não enxerga PR aberta no
+navegador — nenhum plugin enxerga — então repo que abre PR pelo github.com põe
+essa linha no próprio `PULL_REQUEST_TEMPLATE`.
+
+Tudo em volta do estilo desliga sozinho, sem mexer nele — guarda determinística
+tem falso positivo, e escrever *sobre* a regra dispara ela, como este repo
+descobriu:
+
+| Para parar | Num shell ou numa sessão | De vez |
+|---|---|---|
+| o lembrete por turno | `export CONCISE_NO_TURN_REMINDER=1` | `touch ~/.claude/.respostas-curtas-no-turn-reminder` |
+| a guarda de crédito | `export CONCISE_ALLOW_CREDIT=1` | `touch ~/.claude/.respostas-curtas-no-credit-guard` |
+| o desvio da PR | `export CONCISE_NO_ROUTE_HINT=1` | `touch ~/.claude/.respostas-curtas-no-route-hint` |
+| o auto-update | — | `touch ~/.claude/.respostas-curtas-no-self-update` |
 
 Há também um **auditor de Stop opcional** em
 [`extras/stop-audit/`](extras/stop-audit/README.md): um hook que você instala
@@ -466,11 +515,11 @@ violação clara. Custa uma chamada de API por turno — por isso não vem ligad
 Instaladas por cópia em vez de plugin, invocam sem prefixo:
 `/respostas-curtas` e `/concise`.
 
-Instale um, não os dois — são o mesmo conjunto de regras e competiriam, e desde
-a 1.3.0 cada um embarca seu próprio hook, então os dois juntos injetam o núcleo
-no contexto duas vezes. As regras são sobre estrutura, não vocabulário, então
-uma tradução é um port fiel e não uma reescrita. Ports para outros idiomas são
-bem-vindos.
+**Instale um, não os dois.** São o mesmo conjunto de regras e competiriam, e
+cada um embarca seu próprio hook sempre-ligado, então os dois juntos injetam o
+núcleo no contexto duas vezes. As regras são sobre estrutura, não vocabulário,
+então uma tradução é um port fiel e não uma reescrita. Ports para outros
+idiomas são bem-vindos.
 
 ## Desinstalando
 
@@ -478,16 +527,16 @@ bem-vindos.
 /plugin uninstall respostas-curtas@claude-skill-concise
 ```
 
-Isso tira a skill, os comandos, o agente e os hooks. Quatro arquivos de
-estado ficam em `~/.claude` — inofensivos, e vale apagar se você quiser a
-boas-vindas de novo numa reinstalação:
+Isso tira a skill, os comandos, o agente e os hooks. Quatro arquivos de estado
+ficam em `~/.claude` — inofensivos, e vale apagar se você quiser a boas-vindas
+de novo numa reinstalação:
 
 ```bash
 rm -f ~/.claude/.respostas-curtas-welcomed ~/.claude/.respostas-curtas-update-stamp ~/.claude/.respostas-curtas-update-failed ~/.claude/.respostas-curtas-update-note
 ```
 
-O seu override do núcleo (`~/.claude/respostas-curtas-nucleo-override.md`) e
-as flags de opt-out são suas; a desinstalação não mexe nelas.
+O seu override do núcleo (`~/.claude/respostas-curtas-nucleo-override.md`) e as
+flags de opt-out são suas; a desinstalação não mexe nelas.
 
 ## O critério para uma regra
 
@@ -505,12 +554,18 @@ modelo. Por isso não está na skill.
 
 As regras também são medidas, não só argumentadas. O CI prende os dois ports à
 paridade estrutural e recusa mudança de plugin sem bump de versão;
-[`evals/`](evals/README.md) roda casos julgados contra as regras e
+[`evals/`](evals/README.md) roda casos julgados contra as regras — o que cada
+caso discrimina, e quando foi medido pela última vez, está no README dele — e
 [`scripts/test-hooks.sh`](scripts/test-hooks.sh) exercita todos os hooks sem
-tocar na rede. Os dois ports passam na suíte.
+tocar na rede.
 
 Veja [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licença
 
 MIT — veja [LICENSE](LICENSE).
+
+<br>
+<p align="center">
+  <a href="#readme"><img alt="concise." src="docs/brand/mark.svg" width="44"></a>
+</p>

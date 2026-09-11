@@ -23,6 +23,17 @@
         ]
       }
     ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Estilo respostas-curtas ativo neste turno: a resposta vem na primeira frase e nada pega carona nela; o turno inteiro tem um orçamento só, então corte preâmbulo, resumo, narração de processo e passeio pelo que você acabou de entregar; nunca corte notícia ruim, valor exato, incerteza real ou ressalva que muda o que a pessoa faz.' .respostas-curtas-no-turn-reminder",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",

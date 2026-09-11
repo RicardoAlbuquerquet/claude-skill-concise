@@ -1,133 +1,32 @@
-# concise
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/banner-dark.svg">
+    <img alt="concise. — The answer in the first sentence." src="docs/brand/banner-light.svg" width="100%">
+  </picture>
+</p>
 
-[![parity](https://github.com/RicardoAlbuquerquet/claude-skill-concise/actions/workflows/parity.yml/badge.svg)](https://github.com/RicardoAlbuquerquet/claude-skill-concise/actions/workflows/parity.yml)
-[![version](https://img.shields.io/badge/dynamic/json?label=version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRicardoAlbuquerquet%2Fclaude-skill-concise%2Fmain%2Fskills%2Fconcise%2F.claude-plugin%2Fplugin.json)](CHANGELOG.md)
-[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+<p align="center">
+  <a href="https://github.com/RicardoAlbuquerquet/claude-skill-concise/actions/workflows/parity.yml"><img alt="parity" src="https://img.shields.io/github/actions/workflow/status/RicardoAlbuquerquet/claude-skill-concise/parity.yml?branch=main&label=parity&style=flat-square&labelColor=24292f"></a>
+  <a href="CHANGELOG.md"><img alt="version" src="https://img.shields.io/badge/dynamic/json?label=version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRicardoAlbuquerquet%2Fclaude-skill-concise%2Fmain%2Fskills%2Fconcise%2F.claude-plugin%2Fplugin.json&style=flat-square&labelColor=24292f&color=ee4a1f"></a>
+  <a href="LICENSE"><img alt="license: MIT" src="https://img.shields.io/badge/license-MIT-57606a?style=flat-square&labelColor=24292f"></a>
+  <a href="README.pt-BR.md"><img alt="Leia em português" src="https://img.shields.io/badge/leia_em-português-57606a?style=flat-square&labelColor=24292f"></a>
+</p>
 
-**Português:** [README.pt-BR.md](README.pt-BR.md)
+<p align="center">
+  A Claude Code plugin that makes Claude answer in the register a terminal wants —<br>
+  <b>the answer first, nothing padding it, and every caveat that changes what you do kept.</b>
+</p>
 
-A Claude Code plugin that makes Claude answer in the register a terminal
-actually wants — the answer first, nothing padding it, no sacrifice in
-correctness — and that brings the tools to apply the same register to text
-that already exists.
+<p align="center">
+  <a href="#install">Install</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#what-it-does">What it does</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#what-ships">What ships</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#the-commands-and-the-agent">Commands</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#the-bar-for-a-rule">The bar for a rule</a>
+</p>
 
-![The same question answered without and with the skill](docs/before-after.svg)
+<br>
 
-Two commands inside a Claude Code session, and it applies from your next
-session on:
-
-```
-/plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
-```
-
-```
-/plugin install concise@claude-skill-concise
-```
-
-Full [install](#install) — including the terminal form and the copy-a-file
-path — is further down.
-
-## The problem
-
-Claude's default writing register is expansive. It's a good default for a chat
-window and a bad one in a terminal, where it shows up as:
-
-- a preamble before the answer (`"Great question — let me look at that."`)
-- `##` headers over a three-line reply
-- justification nobody asked for, after the answer was already given
-- narration of the search — which files were read, in what order
-- a menu of four options when one recommendation was wanted
-- a closing aphorism, because the paragraph felt like it needed a landing
-
-None of that is wrong. All of it is between you and the answer.
-
-## What it does
-
-The skill installs one rule — **the answer goes in the first sentence, and after
-it only what changes a decision** — plus explicit budgets per situation, a list
-of constructs to always cut, and a shorter list to *never* cut. The budgets are
-per turn, not per topic: each block after the first is paid for by what it
-leaves the reader doing, which is what stops a reply that breaks no single rule
-from arriving three times too long.
-
-That second list is the part that matters. Compression is easy to overdo, and a
-one-line answer that dropped the caveat about production data is worse than the
-bloated version. The skill states outright that bad news, a risk, an exact path
-or version, a false premise in the question, and an unverified assumption all
-survive the edit.
-
-Three rules run the other way and *add* text, because what was missing was
-information rather than words:
-
-- **A recommendation always ships with its cost.** Recommendation, ≤3 lines of
-  why, ≤3 lines of what gets worse or what you give up. A recommendation with no
-  stated downside either has one nobody looked for or is hiding it — and from the
-  reader's side, an empty slot is indistinguishable from "I examined it and it's
-  cheap".
-- **When the decision is the user's, the options go side by side**, then you
-  still recommend one and say why it beats *the others specifically*. Deciding a
-  money or risk question silently is shorter and not yours to do.
-- **Draw the shape.** When the answer is a sequence or a branch, a five-line
-  ASCII diagram beats the paragraph the reader would have to assemble in their
-  head.
-
-Structure is judged by content, not by length. An earlier version cut headers and
-bullets from any response under six lines; that test was wrong, because it
-measured the response instead of what's in it. The rule now: separate what is
-genuinely separate — two jobs get two blocks, comparisons get a table, paths and
-technical terms get code spans — and never fragment a single thought. If you can
-say what each block is *for*, the structure is real; if the blocks are "part one,
-part two", it's decoration.
-
-It also fixes the audience. The skill is written for a reader who owns the
-product but is not deep in the stack, and a term faces two questions in order.
-**Will they meet it anyway** — type it, click it, approve changing it? If not,
-the sentence says what the thing does and never names it. If yes, keep it and
-pay for it once by glossing it **through its consequence** rather than its
-definition — not "`timestamptz` is a timezone-aware type" but "the column
-stores UTC, so a filter built in local time asks for a window that hasn't
-started yet". One gloss per response is the ceiling: the second term wanting an
-explanation is the reply carrying the shape of the investigation instead of the
-answer. And dropping a term is not going vague — "the column stores the time in
-UTC" is exact without it; "there's a timezone thing" threw the information away
-and kept the length. An answer the reader can't act on isn't concise, it's just
-short.
-
-The same paragraph draws the line the other way. A name lifted out of the
-source — a table, an internal method, a constant — is not a technical term and
-has no gloss to give, so it goes unless the reader is going to open it, run it,
-or check that number. Cutting those is the rare edit that makes a sentence
-clearer at the same time as it makes it shorter.
-
-See [`examples/before-after.md`](examples/before-after.md) for ten real
-transformations. Four come out longer.
-
-## What ships
-
-| Piece | What it does |
-|---|---|
-| `concise` skill | the full ruleset, invoked when a turn needs it |
-| `SessionStart` hook | injects the ~50-line core every session, plus the line naming this machine's shell; self-updates the plugin |
-| `concise` output style | the same core in the system prompt — no shell needed, pick it in `/config` |
-| `/concise:rewrite` | rewrites a finished text to the rules, losing nothing |
-| `/concise:pr` | drafts the PR description from the real diff, test steps last |
-| `/concise:card` | drafts a task/issue card that stands alone; creates it when a destination is named |
-| `/concise:commit` | drafts the commit message for what is staged — title in the shape the repo log uses, body says why |
-| `/concise:comment` | drafts a review comment, a thread reply or a note on a card — the claim, then the line that proves it |
-| `/concise:release` | drafts the changelog entry and the release body from the commits since the last tag — what breaks first |
-| `/concise:plan` | drafts the plan for approval — steps that name a file or a command, the risk, what it leaves out |
-| `/concise:decide` | live options side by side with their costs, and still a recommendation |
-| `/concise:draw` | draws the shape in ASCII — one glyph set, nothing past 72 columns; refuses when the subject doesn't earn one |
-| `/concise:status` | writes the update as the delta since the last one, bad news on top |
-| `/concise:handoff` | hands the work over: the complete state, every standing caveat back in full, the traps, the resume command |
-| `/concise:audit` | runs the audit agent on a draft, a file, or a PR body and relays the report |
-| credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
-| PR route hint | `PreToolUse` hook that stops the session's first `gh pr create` to point at `/concise:pr`; repeat the call to go ahead |
-| `audit` agent | returns only the violations in a draft — quote, rule, fix |
-| [`extras/stop-audit`](extras/stop-audit/README.md) | opt-in per-turn style judge, installed by hand |
-
-The skill is the product; everything else keeps it applied — in every session,
-to text that already exists, and to what leaves the conversation.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/brand/before-after-dark.svg">
+  <img alt="The same question answered without and with concise: 74 words that never notice the premise is false, against three sentences that open on it." src="docs/brand/before-after-light.svg" width="100%">
+</picture>
 
 ## Install
 
@@ -141,10 +40,16 @@ Two commands, typed inside a running Claude Code session:
 /plugin install concise@claude-skill-concise
 ```
 
+> [!IMPORTANT]
+> **It takes effect in your next session, not this one.** The style loads at
+> session start, which already happened in the session where you typed the
+> install — restart Claude Code, or run `/reload-plugins`, then ask again.
+> "I installed it and nothing changed" is almost always this.
+
 **Those are Claude Code commands, not shell commands.** Pasted into PowerShell,
-bash, or zsh they fail with `command not found` — the leading `/` is the giveaway.
-From a terminal, use the `claude` CLI instead. Same effect, and the same on
-macOS, Linux, and Windows:
+bash or zsh they fail with `command not found` — the leading `/` is the
+giveaway. From a terminal, the `claude` CLI does the same on macOS, Linux and
+Windows:
 
 ```bash
 claude plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
@@ -154,23 +59,17 @@ claude plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
 claude plugin install concise@claude-skill-concise
 ```
 
-**Either form takes effect in your next session, not this one.** The style
-loads at session start, an event that already happened in the session where
-you typed the install — so ask the same question again after restarting
-Claude Code, or run `/reload-plugins` first. "I installed it and nothing
-changed" is almost always this.
+Swap `concise` for `respostas-curtas` to get the Portuguese port — one or the
+other, never both ([why](#languages)). Plugin skills are namespaced by the
+plugin that ships them, so this registers as `/concise:concise`; `/plugin` →
+**Installed** shows the exact name it took.
 
-Swap `concise` for `respostas-curtas` to get the Portuguese port. Install one,
-not both — see [Languages](#languages).
+<details>
+<summary><b>Updating</b> — two commands, and why the first one alone changes nothing</summary>
+<br>
 
-Plugin skills are namespaced by the plugin that ships them, so this registers as
-`/concise:concise`, not `/concise`. Run `/plugin` and open the **Installed** tab
-to see the exact name it took.
-
-### Updating
-
-Two commands, not one — the first refreshes the catalogue, the second moves
-the copy that actually runs:
+The first refreshes the catalogue, the second moves the copy that actually
+runs:
 
 ```
 /plugin marketplace update claude-skill-concise
@@ -192,12 +91,15 @@ Claude Code afterwards, or run `/reload-plugins`.
 Third-party marketplaces ship with auto-update off. To skip the first one by
 hand, turn it on in `/plugin` → **Marketplaces** → **Enable auto-update**.
 
-### Self-updating
+</details>
 
-**The plugin runs that pair itself.** A `SessionStart` hook checks once a day,
-in the background, so an installed copy follows the marketplace with one
-session of delay: the session that checks downloads the update, the next one
-runs it. What that implies:
+<details>
+<summary><b>Self-updating</b> — the plugin runs that pair itself, once a day</summary>
+<br>
+
+A `SessionStart` hook checks once a day, in the background, so an installed
+copy follows the marketplace with one session of delay: the session that checks
+downloads the update, the next one runs it. What that implies:
 
 - It moves only when the release bumped `version`, same as the manual pair —
   an unbumped change on `main` never propagates.
@@ -215,7 +117,11 @@ runs it. What that implies:
 - To stop just this: `touch ~/.claude/.concise-no-self-update`. The style,
   the commands and the credit guard keep working.
 
-### Copying the file instead
+</details>
+
+<details>
+<summary><b>Copying the file instead</b> — no plugin, a project-level copy, or another agent</summary>
+<br>
 
 It's one Markdown file with no dependencies, so copying it works too — and keeps
 the unprefixed `/concise`. This is the path that differs per platform.
@@ -250,60 +156,181 @@ Project-level instead, committed with the repo so your team shares it: create
 npx skills add RicardoAlbuquerquet/claude-skill-concise
 ```
 
-Only the ruleset travels. The always-on core, the self-update, the credit
-guard, the five commands and the audit agent are Claude Code plugin
-machinery; in another agent you get the document and invoke it yourself.
+Only the ruleset travels. The forced output style, the core, the turn reminder,
+the self-update, the guards, the twelve commands and the audit agent are Claude
+Code plugin machinery; in another agent you get the document and invoke it
+yourself.
 
 Verify it registered by typing `/concise` in Claude Code. If it doesn't appear,
 check the path: copying into a `skills/` directory that doesn't exist yet lands
 `SKILL.md` directly in it, one level too high, and reports no error.
 
+</details>
+
+## The problem
+
+Claude's default writing register is expansive. It's a good default for a chat
+window and a bad one in a terminal, where it shows up as:
+
+- a preamble before the answer — `"Great question — let me look at that."`
+- `##` headers over a three-line reply
+- justification nobody asked for, after the answer was already given
+- narration of the search — which files were read, in what order
+- a menu of four options when one recommendation was wanted
+- a closing aphorism, because the paragraph felt like it needed a landing
+
+None of that is wrong. All of it is between you and the answer.
+
+## What it does
+
+The skill installs one rule — **the answer goes in the first sentence, and after
+it only what changes a decision** — plus budgets per situation, a list of
+constructs to always cut, and a shorter list to *never* cut. The budget is per
+turn, not per topic: each block after the first is paid for by what it leaves
+the reader doing, which is what stops a reply that breaks no single rule from
+arriving three times too long.
+
+**That second list is the part that matters.** Compression is easy to overdo,
+and a one-line answer that dropped the caveat about production data is worse
+than the bloated version. Bad news, a risk, an exact path or version, a false
+premise in the question and an unverified assumption all survive the edit.
+
+Three rules run the other way and *add* text, because what was missing was
+information rather than words:
+
+- **A recommendation always ships with its cost.** Recommendation, ≤3 lines of
+  why, ≤3 lines of what gets worse or what you give up. From the reader's side,
+  a missing downside is indistinguishable from "I examined it and it's cheap".
+- **When the decision is yours, the options go side by side** — and Claude still
+  recommends one, saying why it beats *the others specifically*. Deciding a
+  money or risk question silently is shorter and not its call to make.
+- **Draw the shape.** When the answer is a sequence or a branch, a five-line
+  ASCII diagram beats the paragraph you would have to assemble in your head.
+
+<details>
+<summary><b>Structure, audience and jargon</b> — how the rules decide what stays on the page</summary>
+<br>
+
+**Structure is judged by content, not by length.** An earlier version cut
+headers and bullets from any response under six lines; that test was wrong,
+because it measured the response instead of what's in it. The rule now:
+separate what is genuinely separate — two jobs get two blocks, comparisons get
+a table, paths and technical terms get code spans — and never fragment a single
+thought. If you can say what each block is *for*, the structure is real; if the
+blocks are "part one, part two", it's decoration.
+
+**It also fixes the audience.** The skill is written for a reader who owns the
+product but is not deep in the stack, and a term faces two questions in order.
+*Will they meet it anyway* — type it, click it, approve changing it? If not,
+the sentence says what the thing does and never names it. If yes, keep it and
+pay for it once by glossing it **through its consequence** rather than its
+definition — not "`timestamptz` is a timezone-aware type" but "the column
+stores UTC, so a filter built in local time asks for a window that hasn't
+started yet". One gloss per response is the ceiling: the second term wanting an
+explanation is the reply carrying the shape of the investigation instead of the
+answer. And dropping a term is not going vague — "the column stores the time in
+UTC" is exact without it; "there's a timezone thing" threw the information away
+and kept the length. An answer the reader can't act on isn't concise, it's just
+short.
+
+**The same test draws the line the other way.** A name lifted out of the
+source — a table, an internal method, a constant — is not a technical term and
+has no gloss to give, so it goes unless the reader is going to open it, run it,
+or check that number. Cutting those is the rare edit that makes a sentence
+clearer at the same time as it makes it shorter.
+
+</details>
+
+See [`examples/before-after.md`](examples/before-after.md) for ten real
+transformations. Four of them come out longer.
+
+## What ships
+
+| | Piece | What it does |
+|---|---|---|
+| **The style** | `concise` skill | the full ruleset, invoked when a turn needs it |
+| | `SessionStart` hook | injects the ~50-line core every session, plus the line naming this machine's shell; self-updates the plugin |
+| | `concise` output style | the same core in the system prompt, forced on while the plugin is enabled |
+| | turn reminder | `UserPromptSubmit` hook that restates the style in one line beside every prompt |
+| **What leaves the conversation** | `/concise:pr` | drafts the PR description from the real diff, test steps last |
+| | `/concise:commit` | drafts the commit message for what is staged — title in the shape the repo log uses, body says why |
+| | `/concise:card` | drafts a task/issue card that stands alone; creates it when a destination is named |
+| | `/concise:comment` | drafts a review comment, a thread reply or a note on a card — the claim, then the line that proves it |
+| | `/concise:release` | drafts the changelog entry and the release body from the commits since the last tag — what breaks first |
+| **Thinking out loud** | `/concise:plan` | drafts the plan for approval — steps that name a file or a command, the risk, what it leaves out |
+| | `/concise:decide` | live options side by side with their costs, and still a recommendation |
+| | `/concise:draw` | draws the shape in ASCII — one glyph set, nothing past 72 columns; refuses when the subject doesn't earn one |
+| | `/concise:status` | writes the update as the delta since the last one, bad news on top |
+| | `/concise:handoff` | hands the work over: the complete state, every standing caveat back in full, the traps, the resume command |
+| **Text that already exists** | `/concise:rewrite` | rewrites a finished text to the rules, losing nothing |
+| | `/concise:audit` | runs the audit agent on a draft, a file, or a PR body and relays the report |
+| | `audit` agent | returns only the violations in a draft — quote, rule, fix |
+| **Guards** | credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
+| | PR route hint | `PreToolUse` hook that stops the session's first `gh pr create` to point at `/concise:pr`; repeat the call to go ahead |
+| | [`extras/stop-audit`](extras/stop-audit/README.md) | opt-in per-turn style judge, installed by hand |
+
+The skill is the product; everything else keeps it applied — in every session,
+to text that already exists, and to what leaves the conversation.
+
 ## Making it always-on
 
-**A skill alone will not fire on every turn.** Skills are invoked — either by you
+**A skill alone will not fire on every turn.** Skills are invoked — by you
 typing `/concise`, or by the model deciding the `description` matches the task.
 A response-*style* rule wants to apply to all of them, including the turns where
 nothing about the task suggests "now think about brevity".
 
-**Installed as a plugin, this is handled for you.** Since 1.3.0 each plugin
-ships a `SessionStart` hook that prints a ~50-line core of the style into
-context at every session start — about 360 tokens, spent whether or not the
-session produces prose. The core is the guarantee; the full ruleset still
-lives in the skill, which the model invokes when a turn needs more than the
-core. What gets injected is one file:
+**Installed as a plugin, the style is forced on, in three layers** — each one
+holds where the one before it fades:
+
+| Layer | Where it lands | When |
+|---|---|---|
+| **Output style**, forced | the system prompt | every request — and Claude Code reminds the model of an active style mid-conversation |
+| **Core**, from a `SessionStart` hook | the session's context | session start, resume, and again after compaction |
+| **Turn reminder**, from a `UserPromptSubmit` hook | beside your message, unseen in the transcript | every prompt |
+
+The core is ~50 lines, under a thousand tokens, and it is one file:
 [`hooks/core.md`](skills/concise/hooks/core.md)
 ([`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md) in the PT port).
+The output style carries the same text, and CI fails when the two drift. The
+reminder is one line, about 330 characters a turn. The full ruleset still lives
+in the skill, which the model invokes when a turn needs more than the core.
 
-To prune or rewrite it on your machine, don't edit the cached copy — the
-self-update overwrites it on the next release. Write
+> [!WARNING]
+> **Forcing overrides your own output style.** While the plugin is enabled it
+> replaces the one you picked — Explanatory, Learning, or your own — and if
+> another enabled plugin also forces one, the first loaded wins. Disabling the
+> plugin is the way back; the turn reminder has [its own switch](#the-commands-and-the-agent).
+
+> [!TIP]
+> **To check it actually loaded**, ask in a fresh session: *"what response style
+> is active right now?"* The answer names the core's rules — answer in the first
+> sentence, cut preamble, never cut bad news — when the hook ran, and doesn't
+> when it didn't.
+
+<details>
+<summary><b>Rewriting the core, running without a shell, and installs by copy</b></summary>
+<br>
+
+**To prune or rewrite the core on your machine**, don't edit the cached copy —
+the self-update overwrites it on the next release. Write
 `~/.claude/concise-core-override.md` instead
 (`~/.claude/respostas-curtas-nucleo-override.md` for the PT port): when that
 file exists the hook injects it in place of the shipped core, and it survives
-every update. It replaces the core wholesale — start from a copy of the
-shipped file and cut.
+every update. It replaces the core wholesale — start from a copy of the shipped
+file and cut. It replaces the hook's copy only: the forced output style carries
+the shipped core.
 
-One platform edge: the hook runs through Git Bash on Windows. Without Git for
-Windows installed it fails silently and you're back to invocation-only — same
-machines where Claude Code's own Bash tool doesn't run, so in practice the
-hook works wherever the rest does.
-
-**To check it actually loaded**, ask in a fresh session: *"what response
-style is active right now?"* — the answer names the core's rules (answer in
-the first sentence, cut preamble, never cut bad news) when the hook ran, and
-doesn't when it didn't. That is the whole difference between the guarantee
-and a hope.
-
-**The shell-free path: the output style.** The same core also ships as a
-Claude Code output style, which lives in the system prompt instead of being
-printed by a hook — no shell, no Git Bash, and it is cached rather than
-re-sent every session. Pick it in `/config` → **Output style** →
-`concise`. It is the answer when the hook can't run, and it costs one manual
-selection; the plugin does not force it, because that would override the
-output style you chose yourself.
+**Without a shell, the style still holds.** The hooks run through Git Bash on
+Windows, and without Git for Windows installed they fail silently — the core,
+the reminder and the guards go quiet, on the same machines where Claude Code's
+own Bash tool doesn't run. The forced output style needs no shell, so the style
+stays in the system prompt there. A Claude Code too old to know
+`force-for-plugin` ignores the key; the style is then one pick away, in
+`/config` → **Output style** → `concise:concise`.
 
 **Installed by copy, the hook doesn't come along** — `~/.claude/skills/` takes
-only the skill. Pair it with a line in `CLAUDE.md`, which is loaded into
-context every session:
+only the skill. Pair it with a line in `CLAUDE.md`, which is loaded into context
+every session:
 
 ```markdown
 ## Writing style
@@ -315,16 +342,34 @@ cut preamble and process narration, keep any caveat that would change what I do.
 The skill holds the full ruleset; the hook or the `CLAUDE.md` line holds the
 pointer that guarantees it's in context. Neither one replaces the other.
 
+</details>
+
 ## The commands and the agent
 
-Since 1.4.0 each plugin also ships commands — the skill governs what Claude
-writes next; these produce one specific piece of writing on demand, whether it
-leaves the conversation or stays in it, or act on what is already written:
+The skill governs what Claude writes next. The commands produce one specific
+piece of writing on demand — whether it leaves the conversation or stays in it —
+or act on what is already written. The injected core names them, so Claude
+reaches for one without being told to; that is a nudge competing for attention
+with everything else in context, and a command you type is still the only
+guarantee.
 
-Since 1.31.0 the injected core names the five that leave the conversation, so
-Claude reaches for one without being told to. It is a nudge, not a hook: it
-competes for attention with everything else in context, and a command you type
-yourself is still the only guarantee.
+**Everything drafts by default.** Nothing is published unless you say so, in
+the invocation itself:
+
+| Command | Acts beyond the draft only when |
+|---|---|
+| `/concise:pr [base] [create]` | you type `create` — it opens the PR with exactly the drafted title and body |
+| `/concise:commit [context] [run]` | you type `run` — it commits exactly the drafted message |
+| `/concise:card <subject>` | you name a destination a tool can reach — an MCP board, a `gh` repo |
+| `/concise:comment [subject]` | you name a destination *and* say to post |
+| `/concise:release [version]` | never — no `gh release create`, no tag pushed |
+| `/concise:status [where]` · `/concise:handoff [who]` | never — naming a channel or a person is not permission to send |
+| `/concise:plan [subject]` | never — it doesn't enter plan mode or start step 1 |
+| `/concise:rewrite` · `/concise:decide` · `/concise:draw` · `/concise:audit` | never — text only |
+
+<details>
+<summary><b>Every command in full</b></summary>
+<br>
 
 - **`/concise:rewrite <text>`** rewrites a finished text — a PR description,
   an issue body, an e-mail — to the ruleset without losing information: every
@@ -421,41 +466,43 @@ yourself is still the only guarantee.
 All of these ship only with the plugin install; the copy-the-file path takes
 the skill alone.
 
+</details>
+
 **A credit guard ships enabled.** A `PreToolUse` hook denies a shell call that
 would publish credit to an AI agent — a model `Co-Authored-By`, a "generated
-with" footer — by deterministic string match, no API call. It turns the
-ruleset's hardest rule into a system rule: the call is blocked with the
-reason, and the text gets rewritten without the trailer.
-
-What it covers: `git commit` (including `git -C`), `gh pr create|edit`,
+with" footer — by deterministic string match, no API call. The call is blocked
+with the reason, and the text gets rewritten without the trailer. It covers
+`git commit` (including `git -C`), `gh pr create|edit`,
 `gh issue create|comment`, `gh release create|edit` and `gh api`, through the
-`Bash` and `PowerShell` tools, anywhere in a command chain, and inside the
-file when the message is passed with `-F` / `--body-file`. It names Claude,
-Copilot, Gemini, Cursor, Codex and the `anthropic.com` trailer address.
-
-Two escapes, because a deterministic guard has false positives — writing
-*about* the rule trips it, as this repo found out:
-
-- `export CONCISE_ALLOW_CREDIT=1` for one shell or one session.
-- `touch ~/.claude/.concise-no-credit-guard` to switch it off for good, with
-  the style, the commands and the self-update untouched.
+`Bash` and `PowerShell` tools, anywhere in a command chain, and inside the file
+when the message is passed with `-F` / `--body-file`. It names Claude, Copilot,
+Gemini, Cursor, Codex and the `anthropic.com` trailer address.
 
 **A second `PreToolUse` hook routes PR descriptions through the command that
-writes them.** The first `gh pr create` — or `gh pr edit --body` — of a
-session is denied once, with a reason naming `/concise:pr`; repeat the call
-and it goes through. That shape is deliberate: the failure it exists for is a
-description written from memory when a command was there to read the diff,
-the log and the template, and a hook that kept denying would be a wall the
-session could not leave. It cannot see a PR opened in the browser — nothing
-in a plugin can — so a repo whose PRs are opened on github.com puts the line
-in its own `PULL_REQUEST_TEMPLATE` instead. Same two escapes:
-`CONCISE_NO_ROUTE_HINT=1`, or `touch ~/.claude/.concise-no-route-hint`.
+writes them.** The first `gh pr create` — or `gh pr edit --body` — of a session
+is denied once, with a reason naming `/concise:pr`; repeat the call and it goes
+through. A description written from memory when a command was there to read the
+diff, the log and the template is the failure it exists for, and a hook that
+kept denying would be a wall the session could not leave. It cannot see a PR
+opened in the browser — nothing in a plugin can — so a repo whose PRs are opened
+on github.com puts the line in its own `PULL_REQUEST_TEMPLATE` instead.
+
+Everything around the style switches off on its own, without touching it — a
+deterministic guard has false positives, and writing *about* the rule trips it,
+as this repo found out:
+
+| To stop | For one shell or session | For good |
+|---|---|---|
+| the turn reminder | `export CONCISE_NO_TURN_REMINDER=1` | `touch ~/.claude/.concise-no-turn-reminder` |
+| the credit guard | `export CONCISE_ALLOW_CREDIT=1` | `touch ~/.claude/.concise-no-credit-guard` |
+| the PR route hint | `export CONCISE_NO_ROUTE_HINT=1` | `touch ~/.claude/.concise-no-route-hint` |
+| the self-update | — | `touch ~/.claude/.concise-no-self-update` |
 
 There is also an **opt-in Stop auditor** in
-[`extras/stop-audit/`](extras/stop-audit/README.md): a hook you install by
-hand that judges each turn's final response against the core and warns on
-clear violations. It costs one API call per turn, which is why it does not
-ship enabled.
+[`extras/stop-audit/`](extras/stop-audit/README.md): a hook you install by hand
+that judges each turn's final response against the core and warns on clear
+violations. It costs one API call per turn, which is why it does not ship
+enabled.
 
 ## Languages
 
@@ -467,11 +514,10 @@ ship enabled.
 Installed by copy rather than as a plugin, they invoke unprefixed: `/concise`
 and `/respostas-curtas`.
 
-Install one, not both — they're the same ruleset and would compete, and since
-1.3.0 each ships its own always-on hook, so both together inject the core into
-context twice. The rules are
-about structure, not vocabulary, so a translation is a faithful port rather than
-a rewrite. Ports to other languages are welcome.
+**Install one, not both.** They're the same ruleset and would compete, and each
+ships its own always-on hook, so both together inject the core into context
+twice. The rules are about structure, not vocabulary, so a translation is a
+faithful port rather than a rewrite. Ports to other languages are welcome.
 
 ## Uninstall
 
@@ -479,16 +525,16 @@ a rewrite. Ports to other languages are welcome.
 /plugin uninstall concise@claude-skill-concise
 ```
 
-That removes the skill, the commands, the agent and the hooks. Four state
-files stay behind in `~/.claude` — harmless, and worth deleting if you want
-the welcome note again on a reinstall:
+That removes the skill, the commands, the agent and the hooks. Four state files
+stay behind in `~/.claude` — harmless, and worth deleting if you want the
+welcome note again on a reinstall:
 
 ```bash
 rm -f ~/.claude/.concise-welcomed ~/.claude/.concise-update-stamp ~/.claude/.concise-update-failed ~/.claude/.concise-update-note
 ```
 
-Your core override (`~/.claude/concise-core-override.md`) and any opt-out
-flags are yours; the uninstall leaves them alone.
+Your core override (`~/.claude/concise-core-override.md`) and any opt-out flags
+are yours; the uninstall leaves them alone.
 
 ## The bar for a rule
 
@@ -497,7 +543,7 @@ that reads well and changes nothing. Every rule in it has to clear two tests:
 
 1. **Checkable.** A rule you can't verify against a finished response is
    decoration. `"one bold claim per block"` is checkable; `"be clear"` is not.
-2. **Names a real failure.** The rule should exist because a specific bad output
+2. **Names a real failure.** The rule exists because a specific bad output
    happens without it — ideally one you can quote.
 
 `"Be brief"` fails both and is already implicit in every model's instructions.
@@ -505,12 +551,18 @@ That's why it isn't in the skill.
 
 The rules are also measured, not only argued. CI holds the two ports to
 structural parity and refuses a plugin change that doesn't bump its version;
-[`evals/`](evals/README.md) runs judged cases against the ruleset and
+[`evals/`](evals/README.md) runs judged cases against the ruleset — what each
+case discriminates, and when it was last measured, is in its README — and
 [`scripts/test-hooks.sh`](scripts/test-hooks.sh) exercises every hook without
-touching the network. Both ports pass the suite.
+touching the network.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+<br>
+<p align="center">
+  <a href="#readme"><img alt="concise." src="docs/brand/mark.svg" width="44"></a>
+</p>

@@ -2,6 +2,7 @@
 name: respostas-curtas
 description: A resposta na primeira frase; sem enchimento; nunca às custas de uma ressalva que importa
 keep-coding-instructions: true
+force-for-plugin: true
 ---
 
 Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
