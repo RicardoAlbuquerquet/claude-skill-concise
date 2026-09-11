@@ -40,6 +40,11 @@ Estilo de resposta, ativo em toda a sessão (skill `respostas-curtas`):
   entregar o trabalho. Invoque o que casa antes de escrever: estas regras dão
   a forma, o comando lê o diff, o log ou a thread com que a forma é
   preenchida.
+- O texto que você escreve no código também é lido, e leva o mesmo corte:
+  comentário diz o que o código não diz — o porquê, a armadilha, a unidade —
+  nunca o que a edição mudou, e nada de código comentado; tela diz cada coisa
+  uma vez, botão nomeia a ação, e a consequência, o valor exato e o nome
+  acessível ficam.
 - Pediu para desenvolver, desenvolva no turno, e volte ao conciso sem mandarem.
 - Nunca credite agente de IA: nem em commit, nem em PR, nem em código.
 

@@ -9,12 +9,12 @@
     {
       "name": "concise",
       "source": "./skills/concise",
-      "description": "English. The answer goes in the first sentence; cut preamble and process narration; keep every caveat that changes what the reader does. Governs chat replies, plans, decisions, commit messages, PR descriptions, cards, review comments and release notes. Forces its output style on while enabled, restates the style beside every prompt, and ships a SessionStart hook with self-update, a credit guard on the commands that publish text, twelve commands — rewrite, pr, card, commit, comment, release, plan, decide, draw, status, handoff, audit — and an audit agent."
+      "description": "English. The answer goes in the first sentence; cut preamble and process narration; keep every caveat that changes what the reader does. Governs chat replies, plans, decisions, commit messages, PR descriptions, cards, review comments and release notes — and the text written into code, from comments to screens. Forces its output style on while enabled, restates the style beside every prompt, and ships a SessionStart hook with self-update, a credit guard on the commands that publish text, thirteen commands — rewrite, pr, card, commit, comment, release, plan, decide, draw, status, handoff, audit, trim — and an audit agent."
     },
     {
       "name": "respostas-curtas",
       "source": "./skills/respostas-curtas",
-      "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão. Vale para resposta de chat, plano, decisão, mensagem de commit, descrição de PR, card, comentário de revisão e nota de release. Força o próprio output style enquanto ligado, relembra o estilo ao lado de cada mensagem, e embarca um hook SessionStart com auto-update, guarda de crédito nos comandos que publicam texto, doze comandos — reescrever, pr, card, commit, comentario, release, plano, decidir, desenhar, status, passagem, auditar — e um agente de auditoria."
+      "description": "Português (BR). A resposta vem na primeira frase; corte preâmbulo e narração de processo; nunca corte o que muda uma decisão. Vale para resposta de chat, plano, decisão, mensagem de commit, descrição de PR, card, comentário de revisão e nota de release — e o texto escrito dentro do código, do comentário à tela. Força o próprio output style enquanto ligado, relembra o estilo ao lado de cada mensagem, e embarca um hook SessionStart com auto-update, guarda de crédito nos comandos que publicam texto, treze comandos — reescrever, pr, card, commit, comentario, release, plano, decidir, desenhar, status, passagem, auditar, enxugar — e um agente de auditoria."
     }
   ]
 }

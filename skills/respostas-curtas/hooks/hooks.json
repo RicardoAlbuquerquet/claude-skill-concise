@@ -17,7 +17,7 @@
           },
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/notices.sh\" respostas-curtas \"respostas-curtas ativo. Doze comandos, por destino: /respostas-curtas:pr, :card, :commit, :comentario, :release e :passagem escrevem o que sai da conversa; :plano, :decidir, :desenhar e :status dao forma ao que fica nela; :reescrever refaz um texto pronto e :auditar reporta as violacoes sem corrigir. Este aviso aparece uma vez.\" \"respostas-curtas: o auto-update falha ha mais de uma semana. Rode %s para ver o erro.\"",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/notices.sh\" respostas-curtas \"respostas-curtas ativo. Treze comandos, por destino: /respostas-curtas:pr, :card, :commit, :comentario, :release e :passagem escrevem o que sai da conversa; :plano, :decidir, :desenhar e :status dao forma ao que fica nela; :reescrever refaz um texto pronto, :enxugar tira o texto morto do codigo e da tela, e :auditar reporta as violacoes sem corrigir. Este aviso aparece uma vez.\" \"respostas-curtas: o auto-update falha ha mais de uma semana. Rode %s para ver o erro.\"",
             "timeout": 10
           }
         ]
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Estilo respostas-curtas ativo neste turno: a resposta vem na primeira frase e nada pega carona nela; o turno inteiro tem um orçamento só, então corte preâmbulo, resumo, narração de processo e passeio pelo que você acabou de entregar; nunca corte notícia ruim, valor exato, incerteza real ou ressalva que muda o que a pessoa faz.' .respostas-curtas-no-turn-reminder",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Estilo respostas-curtas ativo neste turno: a resposta vem na primeira frase e nada pega carona nela; o turno inteiro tem um orçamento só, então corte preâmbulo, resumo, narração de processo e passeio pelo que você acabou de entregar; no código que você escreve, comentário só diz o que o código não diz, e tela diz cada coisa uma vez; nunca corte notícia ruim, valor exato, incerteza real ou ressalva que muda o que a pessoa faz.' .respostas-curtas-no-turn-reminder",
             "timeout": 5
           }
         ]

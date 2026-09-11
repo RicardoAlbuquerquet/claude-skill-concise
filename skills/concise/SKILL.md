@@ -1,6 +1,6 @@
 ---
 name: concise
-description: Required response style for every message written to the user — the answer in the first sentence, no visual clutter, no information beyond what is needed. Applies to every turn that produces prose for the user, including status updates, and to what leaves the conversation: commit messages, pull request descriptions, tasks, issues, and release notes.
+description: Required response style for every message written to the user — the answer in the first sentence, no visual clutter, no information beyond what is needed. Applies to every turn that produces prose for the user, including status updates; to what leaves the conversation: commit messages, pull request descriptions, tasks, issues, and release notes; and to the text written into code: comments, messages, and what a screen says.
 ---
 
 # Concise
@@ -40,8 +40,12 @@ it.** After it, only what changes a decision.
 | Pull request description | what it solves, then what was done, then the exact test steps — none of it restating what the diff already shows, and about 25 lines of prose, the fenced commands not counted |
 | Task or issue | current behaviour, expected behaviour, exact values, how it closes |
 | Comment, reply, or message to a person | the claim plus the line that proves it — ≤3 lines and one is common, the shortest surface here; no greeting, no sign-off, no structure inside it |
+| Comment in code | what the code can't say — why, the trap, the unit; most lines need none |
+| Text on a screen | each thing said once, a verb on the button, and the value the person decides with kept |
 
-Code, commands, and diffs are exempt. Never shorten those.
+Code, commands, and diffs are exempt — never shorten what runs. The words
+inside the code are not: comments and the text a person reads follow **Text
+inside code and on screen**.
 
 The budgets are targets, not caps. When one collides with the **Never cut** list,
 the list wins — go a line over rather than drop the caveat, the exact value or
@@ -521,6 +525,45 @@ Neither of them is reading the diff.
 - **Exact references survive, and the version names the change that forced
   it** — the flag, the setting that moved, the old name the reader will grep
   for. "Breaking: `--fence` is now `--fence-style`" is the entry doing its job.
+
+## Text inside code and on screen
+
+What you write into an application is read by people who never saw this
+conversation: the next developer, in a comment, and whoever uses the product,
+on the screen — mid-task, and reading nothing twice. Both get the cut a reply
+gets.
+
+- **A comment says what the code can't** — why it is this way, the trap, the
+  unit: `// the bank rejects more than 2 decimals, so round before signing`.
+  One the next line already says goes (`// increment the counter`), and so
+  does a docstring that retells the signature in words.
+- **Nothing about the edit itself.** "Now uses the new client", "fixed the
+  race", "was 30" describe the diff, and the diff's home is the commit: after
+  the merge they point at a version nobody can see.
+- **No commented-out code, no banner splitting the file.** Git keeps the old
+  code, and the file's own comment density is the convention — a file with
+  none doesn't get one per function.
+- **A message names what failed, with the value, and what to do**:
+  `port "80a" in config.yaml is not a number`, never `Invalid configuration`.
+  On screen, the same in the user's words — no stack trace, no status code, no
+  "Oops".
+- **A screen says each thing once.** A subtitle repeating the title
+  (`Invoices` over `View and manage your invoices`), a placeholder repeating
+  the label, a tooltip repeating the button, a toast for a change the user just
+  watched happen: the same sentence, twice.
+- **A button is the verb of what it does** — `Save draft`, `Delete` — never
+  `OK` or `Click here`, and a confirmation asks with the consequence:
+  `Cancel the plan? Access ends on May 31.`
+- **Tone words go**: "please", "successfully", "simply", the exclamation mark,
+  the line welcoming someone to a page they already opened.
+
+Some text only looks cuttable, and stays: the consequence of an irreversible
+action, a value the person decides with (a price, a deadline, a file size),
+where a result lands when the screen can't show it, the one way out of an
+error, text a law or a contract requires, and the accessible name — an
+icon-only button keeps its `aria-label` when the visible word goes. A string
+that a test, a snapshot or another locale matches changes in all of them at
+once, or not at all.
 
 ## Always cut
 
