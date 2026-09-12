@@ -279,6 +279,7 @@ transformations. Four of them come out longer.
 | | `/concise:trim` | cuts the dead text out of code and screens — comments that repeat the code, copy that repeats the screen |
 | | `/concise:audit` | runs the audit agent on a draft, a file, or a PR body and relays the report |
 | | `audit` agent | returns only the violations in a draft — quote, rule, fix |
+| **Off the keyboard** | `/concise:woman` | answers a heavy vent from someone close: heard, not advised, no fix offered |
 | **Guards** | credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
 | | PR route hint | `PreToolUse` hook that stops the session's first `gh pr create` to point at `/concise:pr`; repeat the call to go ahead |
 | | [`extras/stop-audit`](extras/stop-audit/README.md) | opt-in per-turn style judge, installed by hand |

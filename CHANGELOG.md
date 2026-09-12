@@ -5,6 +5,24 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.64.0 — 2026-09-12
+
+The hardest message to answer is not a review comment. Someone close sends
+three paragraphs about being exhausted, broke and humiliated, and every
+instinct on the receiving end — fix it, put it in perspective, compare it to
+something harder — makes it land worse. The rules invert there: nothing gets
+solved, and the shortest reply is the coldest one.
+
+- **`/concise:woman`, `/respostas-curtas:mulher`**: answers a heavy vent in
+  two or three sendable blocks and ends on presence instead of advice. It
+  never offers money, never ties what someone feels to a cycle or to
+  hormones, and never claims to have understood.
+- **Each port carries its own voice rules** rather than a translation of the
+  other's: half of what keeps a draft from reading like a machine is specific
+  to the language it is written in.
+- **It drops the style and names a crisis line** when a message goes past
+  exhaustion into not wanting to be here.
+
 ## 1.63.0 — 2026-09-12
 
 A PR description written from these rules came out correct and unreadable. The

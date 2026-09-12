@@ -280,6 +280,7 @@ reais. Quatro delas saem mais longas.
 | | `/respostas-curtas:enxugar` | tira o texto morto do código e da tela — comentário que repete o código, texto que repete a tela |
 | | `/respostas-curtas:auditar` | roda o agente de auditoria num rascunho, arquivo ou corpo de PR e repassa o relatório |
 | | Agente `auditar` | devolve só as violações de um rascunho — citação, regra, correção |
+| **Fora do trabalho** | `/respostas-curtas:mulher` | responde ao desabafo de alguém próximo: ouvida, não aconselhada, sem solução oferecida |
 | **Guardas** | Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
 | | Desvio da PR para o comando | hook `PreToolUse` que barra o primeiro `gh pr create` da sessão para apontar o `/respostas-curtas:pr`; repetir a chamada segue |
 | | [`extras/stop-audit`](extras/stop-audit/README.md) | juiz de estilo por turno, opcional, instalado à mão |
