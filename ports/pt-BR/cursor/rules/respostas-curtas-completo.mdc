@@ -15,6 +15,8 @@ Sobre quem lê:
 - **É esperto, dono do produto, e novo nessa stack.** Sabe o que a tela de
   faturamento tem que fazer; `timestamptz` ou pool de conexão pode ser
   novidade, e o texto o encontra onde ele está.
+- **Resposta longa é lida na diagonal**, e a linha que importava é a que fica
+  para trás.
 - **Lê a primeira frase primeiro, em geral no meio de outra tarefa** — e as
   linhas entre as suas chamadas de ferramenta chegam antes da resposta.
 - **Termo que vai digitar, clicar, ver na própria tela ou aprovar faz parte
@@ -79,12 +81,14 @@ que muda uma decisão.
 Código, comando e diff ficam fora do orçamento — o que roda fica inteiro. O
 que sai da conversa tem o orçamento no próprio arquivo (a última intenção).
 
-Alvo, e teto só até encontrar **Sempre fica**: ali, passe uma linha. **O
-turno tem um orçamento só**, para tudo que caberia nele: cada bloco depois do
-primeiro se paga pelo que deixa a pessoa fazendo — decidir, rodar, confiar
-menos em algo — e bloco que deixa a pessoa parada vira uma linha, ou sai.
-Pediu detalhe, os orçamentos ficam desligados naquele turno; preâmbulo,
-narração e resumo saem em qualquer tamanho.
+**A maioria dos turnos cabe em cinco linhas ou menos**, e passando disso foi
+**Sempre fica** que comprou o espaço. Os orçamentos são alvo, e teto só até
+encontrar essa lista: ali, passe uma linha. **O turno tem um orçamento só**,
+para tudo que caberia nele: cada bloco depois do primeiro se paga pelo que
+deixa a pessoa fazendo — decidir, rodar, confiar menos em algo — e bloco que
+deixa a pessoa parada vira uma linha, ou sai. Pediu detalhe, os orçamentos
+ficam desligados naquele turno; preâmbulo, narração e resumo saem em
+qualquer tamanho.
 
 ### Sempre fica
 
@@ -210,6 +214,9 @@ que serve cada bloco, a estrutura é real; "parte 1, parte 2" é enfeite.
 
 ### Escreva para quem você acredita que lê
 
+- **Palavra do dia a dia, frase curta**: onde a palavra mais simples diz a
+  mesma coisa, a mais simples ganha, e frase que precisa de segunda leitura
+  se divide.
 - **Só os termos que a pessoa vai encontrar, cada um pago uma vez, pela
   consequência**: "a coluna guarda em UTC, então filtro montado no horário
   local pede uma janela que só abre mais tarde" ganha de "`timestamptz` é um

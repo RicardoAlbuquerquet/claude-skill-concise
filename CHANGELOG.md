@@ -5,6 +5,21 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.65.0 — 2026-09-12
+
+The budgets were targets with no floor under them, so a turn that had four
+things to say printed four blocks and the reader skimmed all four. A long
+answer is read diagonally, and the line that mattered is the one skipped.
+
+- **Most turns land in five lines or fewer**, and past that it is the
+  Always-keep list that bought the space — not the number of things you
+  happen to know.
+- **Everyday words, short sentences**: where a plainer word says the same
+  thing, the plainer one wins, and a sentence that needs a second reading
+  gets split.
+- Both live in the core, so they arrive in the system prompt and in the
+  session context, not only in the skill.
+
 ## 1.64.0 — 2026-09-12
 
 The hardest message to answer is not a review comment. Someone close sends
