@@ -185,7 +185,7 @@ None of that is wrong. All of it is between you and the answer.
 
 The skill installs one rule — **the answer goes in the first sentence, and after
 it only what changes a decision** — plus budgets per situation, a list of
-constructs to always cut, and a shorter list to *never* cut. The budget is per
+constructs to always cut, and a shorter list to *always keep*. The budget is per
 turn, not per topic: each block after the first is paid for by what it leaves
 the reader doing, which is what stops a reply that breaks no single rule from
 arriving three times too long.
@@ -275,7 +275,7 @@ transformations. Four of them come out longer.
 | | `/concise:draw` | draws the shape in ASCII — one glyph set, nothing past 72 columns; refuses when the subject doesn't earn one |
 | | `/concise:status` | writes the update as the delta since the last one, bad news on top |
 | | `/concise:handoff` | hands the work over: the complete state, every standing caveat back in full, the traps, the resume command |
-| **Text that already exists** | `/concise:rewrite` | rewrites a finished text to the rules, losing nothing |
+| **Text that already exists** | `/concise:rewrite` | rewrites a finished text to the rules, keeping every fact |
 | | `/concise:trim` | cuts the dead text out of code and screens — comments that repeat the code, copy that repeats the screen |
 | | `/concise:audit` | runs the audit agent on a draft, a file, or a PR body and relays the report |
 | | `audit` agent | returns only the violations in a draft — quote, rule, fix |
@@ -319,7 +319,7 @@ the model invokes when a turn needs more than the core.
 > [!TIP]
 > **To check it actually loaded**, ask in a fresh session: *"what response style
 > is active right now?"* The answer names the core's rules — answer in the first
-> sentence, cut preamble, never cut bad news — when the hook ran, and doesn't
+> sentence, cut preamble, always keep bad news — when the hook ran, and doesn't
 > when it didn't.
 
 <details>
@@ -400,8 +400,8 @@ the invocation itself:
   the tone words. Empty arguments target the files the branch changed. A
   visible string changes together with the tests, snapshots and locales that
   match it, or stays and is reported; directives, license headers and
-  accessible names are never cut. It runs the repo's checks and never
-  commits. PT: `/respostas-curtas:enxugar`.
+  accessible names always stay. It runs the repo's checks and leaves the
+  commit to you. PT: `/respostas-curtas:enxugar`.
 - **`/concise:pr [base] [create]`** drafts the pull request description for
   the current branch from the real diff against `origin/main` (or the base
   you name): what is being solved, what was done, how to test it, with the

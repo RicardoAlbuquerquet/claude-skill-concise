@@ -5,6 +5,27 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.62.0 — 2026-09-11
+
+Most rules were written as prohibitions — "never cut", "don't", "no header
+over a lone paragraph" — and a model follows a positive instruction more
+reliably than a negated one: the negation names the thing to avoid and leaves
+the model to work out what to do instead. Every negation has an affirmative
+form with the same truth value, and the plugin now uses that form.
+
+- **"Never cut" is now "Always keep"** (PT: "Sempre fica") — in `SKILL.md`,
+  the core, the turn reminder, and every command and reference that cites it.
+- **The AI-credit ban is an authorship rule**: authorship of every artifact
+  and every git action belongs to the user alone, so the commit, the PR, the
+  task and the code carry the user's name only. The credit guard's deny
+  message says the same.
+- **Every prompt-facing file is written in affirmative commands** — the
+  skill, the core, the six references, the thirteen commands, the audit agent
+  and the hook strings, both ports. Quoted examples of bad output keep their
+  wording, since they are data, and so do labels inside the drawings.
+- **The handoff's trailing label is `Unknown:`** in EN and `Em aberto:` in
+  PT, where it was `Não sei:`.
+
 ## 1.61.0 — 2026-09-11
 
 Two eval cases kept failing the same way after the split. A PR body put its

@@ -61,7 +61,7 @@ you change a rule here, change the rubric that tests it.
 | Answer in the first sentence; no preamble | 01, and every other rubric | no |
 | Completed work ≤5 lines, gate result | 02 | no |
 | Investigation: finding + consequence | 03 | no |
-| Never cut: caveat that changes what the user does | 04 | no |
+| Always keep: caveat that changes what the user does | 04 | no |
 | Recommendation carries its cost | 05 | no |
 | The user's choice: options side by side + a recommendation | 06 | **yes** |
 | A runnable command gets its own `bash` fence | 07 | **yes** |
@@ -188,7 +188,7 @@ the judge will make differently every run.
 cuts a tour of the artifact you just delivered was written with the exemption
 "what the artifact cannot say about itself" — and the artifact could say it:
 the unrun test step was named inside the step. One run in three dropped it
-from the reply, correctly by that wording and wrongly by the **Never cut**
+from the reply, correctly by that wording and wrongly by the **Always keep**
 list. The exemption is now what the reader *would get wrong by not opening
 it*, which keeps the unverified part in the reply even when the PR body also
 carries it. An exemption phrased around the artifact will lose to one phrased

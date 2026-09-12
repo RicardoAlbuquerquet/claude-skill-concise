@@ -1,41 +1,41 @@
 ---
 description: Rascunha a mensagem de commit do que está staged — `run` commita
-argument-hint: "[`run` para commitar, contexto extra que o diff não mostra]"
+argument-hint: "[`run` para commitar, contexto além do diff]"
 ---
 
 Rascunhe uma mensagem de commit para o que está staged agora. Leia
 `${CLAUDE_PLUGIN_ROOT}/referencias/commit.md` antes: as regras moram lá, e
 aqui só o procedimento.
 
-Contexto opcional de quem chamou — restrições ou motivos que o diff não
-mostra. A palavra literal `run` em qualquer ponto é a permissão para commitar:
+Contexto opcional de quem chamou — restrições ou motivos além do diff. A
+palavra literal `run` em qualquer ponto é a permissão para commitar:
 
 $ARGUMENTS
 
 Como:
 
-1. `git diff --staged --stat`, depois o diff staged em si. Nada staged: diga
-   isso e pare — nunca rascunhe a partir da árvore de trabalho.
+1. `git diff --staged --stat`, depois o diff staged em si. Com o stage vazio,
+   diga isso e pare — o rascunho vem só do stage.
 2. `git log --oneline -15` pela forma que os títulos compartilham — prefixo,
    código de ticket, idioma, caixa — e uma config de commitlint
-   (`.commitlintrc*`, `commitlint.config.*`), onde o prefixo não é
-   preferência. Quando o log carrega tickets, o nome da branch em geral tem
-   este (`ABC-123-…`); nunca invente um.
+   (`.commitlintrc*`, `commitlint.config.*`), onde o prefixo é exigência.
+   Quando o log carrega tickets, o nome da branch em geral tem este
+   (`ABC-123-…`); ticket entra só quando a branch ou quem chamou deu.
 3. Que área os caminhos staged tocam, quando o repo tem mais de uma, e como o
    log escreve isso (`fix(faturas):`, um `faturas:` seco, código de ticket).
-   Uma área só: sem prefixo inventado para repo cujo log não tem.
+   Uma área só: o título fica seco em repo cujo log é seco.
 4. Escreva como a referência diz; conte as linhas do corpo antes de entregar.
-5. Duas mudanças sem relação staged: diga isso, rascunhe a mensagem da
+5. Duas mudanças independentes staged: diga isso, rascunhe a mensagem da
    dominante, e dê o `git restore --staged <caminhos>` exato que separa a
    outra.
 
 Entregue a mensagem num bloco de código, pronta para o editor ou para
 `git commit -m` — título, linha em branco, corpo.
 
-Rascunho por padrão: `git commit` não roda. A única exceção é a palavra
-literal `run` na invocação — aí você entrega a mensagem como sempre, commita
-exatamente ela, e reporta o sha curto. A palavra tem que ser digitada;
-mudanças staged esperando não são permissão, nem um commit que você fez
-antes. Se o passo 5 achou duas mudanças sem relação, você para e dá o
-`git restore --staged` em vez de commitar uma mensagem que descreve metade
-do que entra.
+Rascunho por padrão: `git commit` roda só com a palavra literal `run` na
+invocação — aí você entrega a mensagem como sempre, commita exatamente ela, e
+reporta o sha curto. A palavra tem que ser digitada; mudanças staged
+esperando, ou um commit que você fez antes, contam como contexto, e só a
+palavra conta como permissão. Se o passo 5 achou duas mudanças
+independentes, você para e dá o `git restore --staged`, e o commit espera uma
+mensagem que descreva tudo que entra.
