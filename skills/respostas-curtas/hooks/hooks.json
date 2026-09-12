@@ -17,7 +17,7 @@
           },
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/notices.sh\" respostas-curtas \"respostas-curtas ativo. Treze comandos, por destino: /respostas-curtas:pr, :card, :commit, :comentario, :release e :passagem escrevem o que sai da conversa; :plano, :decidir, :desenhar e :status dao forma ao que fica nela; :reescrever refaz um texto pronto, :enxugar tira o texto morto do codigo e da tela, e :auditar reporta as violacoes para o :reescrever corrigir. Este aviso aparece uma vez.\" \"respostas-curtas: o auto-update falha ha mais de uma semana. Rode %s para ver o erro.\"",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/notices.sh\" respostas-curtas \"respostas-curtas ativo. Catorze comandos, por destino: /respostas-curtas:pr, :card, :commit, :comentario, :release e :passagem escrevem o que sai da conversa; :plano, :decidir, :desenhar e :status dao forma ao que fica nela; :reescrever refaz um texto pronto, :enxugar tira o texto morto do codigo e da tela, e :auditar reporta as violacoes para o :reescrever corrigir; :mulher escreve a resposta a um desabafo pesado de alguem proximo. Este aviso aparece uma vez.\" \"respostas-curtas: o auto-update falha ha mais de uma semana. Rode %s para ver o erro.\"",
             "timeout": 10
           }
         ]
