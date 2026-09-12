@@ -5,6 +5,19 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.63.0 — 2026-09-12
+
+A PR description written from these rules came out correct and unreadable. The
+reference governed the shape — three sections, a bold label on every item, one
+screenful — and left the vocabulary free, so the body filled up with names that
+exist only inside the repo. The reviewer asked for the version in ordinary
+words, and rewriting it by hand was the only way to get one.
+
+- **The PR reference governs the words too**: a name that lives only inside
+  the repo becomes what it does, and what the reviewer will run, open or
+  approve keeps its name.
+- Case `39-pr-body-speaks-plainly` measures it.
+
 ## 1.62.0 — 2026-09-11
 
 Most rules were written as prohibitions — "never cut", "don't", "no header

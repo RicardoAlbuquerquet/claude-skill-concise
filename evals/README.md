@@ -1,6 +1,6 @@
 # Evals
 
-Thirty-seven cases, eight at a time. Each gives the model the facts it would have discovered, sends
+Thirty-eight cases, eight at a time. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -95,6 +95,7 @@ you change a rule here, change the rubric that tests it.
 | The delivered artifact is the answer; no tour of it, no praise for the tooling | 35 | not measured |
 | A comment says only what the code can't; no docstring retelling the signature, no banner | 36 | not measured |
 | A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | not measured |
+| PR description: the words are the reviewer's, and a name only the repo knows becomes what it does | 39 | weakly |
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18
@@ -206,6 +207,21 @@ screen — a case that passes without the rule cannot show the rule working.
 The current drafts leave the model room to add text: a new file with no
 convention to copy, and a settings page with four switches and a toast in
 reach.
+
+**Case 39 measures the rule that put plain words in a PR body, and it fires
+rarely.** With no style at all the body arrives wearing the repo's own
+vocabulary and fails 0 of 3 on exactly that. Against the skill without the
+rule it still passes 2 of 3 — the core already asks that a name out of the
+code earn its place — and the run it drops, it drops to the same two internal
+names left sitting in the body. With the rule it passes 3 of 3.
+
+Two things the case cost before it measured anything. Its rubric started out
+grading *where* the unverified note sits, which belongs to another rule, and
+every early failure came from that item rather than from the vocabulary one.
+And the rule's first draft ran seven lines inside a reference that asks for a
+description of twenty-five: case 31 fell from 3 of 3 to 2 of 3 in two samples
+while it was in, and came back to 3 of 3 once the rule was three lines long. A
+rule that spends the budget it polices pays for itself twice.
 
 ## Adding one
 
