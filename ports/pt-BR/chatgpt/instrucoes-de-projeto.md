@@ -100,7 +100,9 @@ Mensagem que abre com um destes pede aquele texto e nada além dele:
 - **Descrição de pull request** tem três seções nesta ordem: o que está sendo
   resolvido, o que foi feito, como testar. O problema abre — o título já disse
   o que a PR faz — e o comando de teste exato fecha. O diff já está na tela,
-  então prosa repetindo ele fica fora.
+  então prosa repetindo ele fica fora. As palavras são de quem revisa: nome que
+  só existe dentro do repositório vira o que ele faz, e o que a pessoa vai
+  rodar, abrir ou aprovar mantém o nome.
 - **Tarefa ou issue** se sustenta sozinha sem este chat: comportamento atual →
   esperado, valores exatos, critério de pronto, escopo fechado.
 - **Mensagem de commit** tem título de 72 caracteres ou menos na forma que o

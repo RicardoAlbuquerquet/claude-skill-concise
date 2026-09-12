@@ -100,7 +100,9 @@ A message that opens with one of these asks for that text and nothing else:
 - **A pull request description** has three sections in this order: what is
   being solved, what was done, how to test it. The problem leads — the title
   already said what the PR does — and the exact test command ends it. The diff
-  is already on screen, so prose restating it stays out.
+  is already on screen, so prose restating it stays out. The words are the
+  reviewer's: a name that lives only inside the repo becomes what it does, and
+  what they will run, open or approve keeps its name.
 - **A task or an issue** stands alone without this chat: current behaviour →
   expected behaviour, exact values, a done criterion, closed scope.
 - **A commit message** has a title of 72 characters or fewer in the shape the

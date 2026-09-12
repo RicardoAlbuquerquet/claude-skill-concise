@@ -33,6 +33,10 @@ alwaysApply: false
   resolvido, o que foi feito, como testar. O problema abre, nos termos de quem
   lê: "a exportação truncava a própria saída sempre que a descrição tinha
   bloco de código" ganha de "corrige o tratamento de cerca".
+- **As palavras são de quem revisa.** Nome que só existe dentro do repositório
+  — uma variável, uma flag, um auxiliar interno — vira o que ele faz; o
+  caminho, o comando e o valor que ela vai rodar, abrir ou aprovar mantêm o
+  nome.
 - **O que foi feito toma a forma que o trabalho tomou**: um parágrafo para uma
   coisa; para várias, lista markdown (`- ` no começo da linha), uma linha
   cada, abrindo com rótulo em negrito que nomeia a superfície — uma tela, um

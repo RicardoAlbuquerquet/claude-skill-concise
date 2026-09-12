@@ -32,6 +32,9 @@ alwaysApply: false
   what was done, how to test it. The problem opens, in the reader's terms:
   "the export truncated its own output whenever the description contained a
   code block" beats "fixes the fence handling".
+- **The words are the reviewer's.** A name that lives only inside the repo — a
+  variable, a flag, an internal helper — becomes what it does; the path, the
+  command and the value they will run, open or approve keep their names.
 - **What was done takes the shape the work took**: a paragraph for one thing;
   for several, a markdown list (`- ` at the start of the line), one line each,
   opening with a bold label naming the surface — a screen, an endpoint, a
