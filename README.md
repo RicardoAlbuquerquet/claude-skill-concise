@@ -282,6 +282,7 @@ transformations. Four of them come out longer.
 | **Guards** | credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
 | | PR route hint | `PreToolUse` hook that stops the session's first `gh pr create` to point at `/concise:pr`; repeat the call to go ahead |
 | | [`extras/stop-audit`](extras/stop-audit/README.md) | opt-in per-turn style judge, installed by hand |
+| **Extras** | [`extras/desabafo`](extras/desabafo/README.md) | answers a vent from someone close: heard, not advised — pt-BR, installed by hand |
 
 The skill is the product; everything else keeps it applied — in every session,
 to text that already exists, and to what leaves the conversation.

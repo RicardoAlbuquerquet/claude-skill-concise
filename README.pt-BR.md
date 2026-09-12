@@ -283,6 +283,7 @@ reais. Quatro delas saem mais longas.
 | **Guardas** | Guarda de crédito | hook `PreToolUse` que nega `git commit` / `gh pr create` com crédito de IA |
 | | Desvio da PR para o comando | hook `PreToolUse` que barra o primeiro `gh pr create` da sessão para apontar o `/respostas-curtas:pr`; repetir a chamada segue |
 | | [`extras/stop-audit`](extras/stop-audit/README.md) | juiz de estilo por turno, opcional, instalado à mão |
+| **Extras** | [`extras/desabafo`](extras/desabafo/README.md) | responde ao desabafo de alguém próximo: ouvida, não aconselhada — em pt-BR, instalado à mão |
 
 A skill é o produto; o resto a mantém aplicada — em toda sessão, no texto que
 já existe, e no que sai da conversa.
