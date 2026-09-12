@@ -337,6 +337,25 @@ else
   printf '%-46s ok\n' 'no plugin syntax left in ports/'
 fi
 
+# Cursor reads a rule's frontmatter and drops the rule when it cannot parse
+# it, with nothing on screen. Every description here carries a colon, which
+# ends a bare YAML scalar, so the quotes are load-bearing and checked.
+badmdc=""
+while read -r rel; do
+  case $rel in *.mdc) ;; *) continue ;; esac
+  head -4 "$TMP/ports/$rel" | awk '
+    NR==1 && $0 != "---"                             { bad=1 }
+    NR==2 && $0 !~ /^description: "[^"]+"$/          { bad=1 }
+    NR==3 && $0 !~ /^alwaysApply: (true|false)$/     { bad=1 }
+    NR==4 && $0 != "---"                             { bad=1 }
+    END { exit bad+0 }' || badmdc="$badmdc $rel"
+done < "$EXPECTED"
+if [ -n "$badmdc" ]; then
+  printf 'UNPARSEABLE frontmatter in:%s\n' "$badmdc"; fail=1
+else
+  printf '%-46s ok\n' 'every .mdc frontmatter parses'
+fi
+
 # A box that rejects the paste is a port that does not work, so the size is a
 # gate rather than a note. The numbers are ChatGPT's own: 1,500 characters for
 # the custom-instructions field, 8,000 for a project or a custom GPT.
