@@ -1,1 +1,5 @@
 *.sh text eol=lf
+
+# ports/ is generated, and a build run on Windows would otherwise commit the
+# whole tree again with CRLF — a diff of 58 files saying nothing.
+ports/** text eol=lf

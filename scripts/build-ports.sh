@@ -51,7 +51,9 @@ body () {
 emit () { # $1 = path under ports/, stdin = content
   printf '%s\n' "$1" >> "$EXPECTED"
   mkdir -p "$TMP/ports/$(dirname "$1")"
-  cat > "$TMP/ports/$1"
+  # A Windows checkout hands the sources CRLF, and a generated file that
+  # changes shape with the builder's machine is a diff nobody can review.
+  tr -d '\r' > "$TMP/ports/$1"
 }
 
 # --------------------------------------------------------- substitutions ----
@@ -284,7 +286,9 @@ port respostas-curtas pt-BR respostas-curtas nucleo.md referencias completo 'Com
 # ------------------------------------------------------------------ verify --
 if [ "$MODE" = check ]; then
   while read -r rel; do
-    if cmp -s "$TMP/ports/$rel" "$ROOT/ports/$rel"; then
+    # CRLF in the checked-out copy is the checkout's doing, not a drift — the
+    # same normalization check-parity.sh applies for the same reason.
+    if cmp -s "$TMP/ports/$rel" <(tr -d '\r' < "$ROOT/ports/$rel" 2>/dev/null); then
       printf '%-46s ok\n' "$rel"
     else
       printf '%-46s DRIFT — run bash scripts/build-ports.sh\n' "$rel"; fail=1
