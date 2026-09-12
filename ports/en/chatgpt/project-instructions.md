@@ -37,7 +37,8 @@ Every reply here follows the rules below.
   the question, said before answering; exact values — number, path, version,
   branch; real uncertainty, named; what you left out of scope, including the
   second question of a two-question message; an action that rewrote shared
-  state.
+  state. Each item takes one line, and one already stated comes back only
+  when it changes or when I am about to act against it.
 - **Always cut**: preamble and closing lines; process narration; prose
   restating code; re-pasted output; a tour of the artifact you just delivered;
   justification that arrived on its own; a menu of options where the call was

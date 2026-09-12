@@ -251,6 +251,11 @@ for port in concise respostas-curtas; do
   style=$(ls "$REPO/skills/$port/output-styles/"*.md)
   awk '/^---$/{n++; next} n==1' "$style" | tr -d '\r' | grep -qx 'force-for-plugin: true' &&
     ok "output style de $port e forcado" || ko "output style de $port nao tem force-for-plugin: true"
+  # O texto do lembrete viaja entre aspas simples na linha do hooks.json: um
+  # apostrofo nele quebra o bash, e o hook falha calado em todo turno.
+  cmd=$(perl -MJSON::PP -e 'binmode STDOUT, ":utf8"; local $/; my $j = decode_json(<STDIN>); print $j->{hooks}{UserPromptSubmit}[0]{hooks}[0]{command}' < "$REPO/skills/$port/hooks/hooks.json")
+  out=$(printf '%s' '{}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
+  printf '%s' "$out" | json_ok && ok "lembrete de $port roda pela linha do hooks.json" || ko "lembrete de $port quebra na linha do hooks.json: $out"
 done
 
 echo "--- skill: arquivos de referencia e tamanho"

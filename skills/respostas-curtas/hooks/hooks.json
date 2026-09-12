@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Estilo respostas-curtas, neste turno: a resposta na primeira frase; um orçamento só, então preâmbulo, resumo, narração e passeio pelo que você entregou saem todos; no código, comentário só diz o que o código deixa por dizer; sempre fica notícia ruim, valor exato, incerteza real e ressalva que muda o que a pessoa faz.' .respostas-curtas-no-turn-reminder",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Estilo respostas-curtas, neste turno: a resposta na primeira frase; pergunta, explicação ou atualização de status cabe em cinco linhas no máximo; escolha que é da pessoa mantém as opções lado a lado, e relato de trabalho mantém uma linha por entrega; sempre fica notícia ruim, valor exato e incerteza real, cada um dito uma vez; preâmbulo, resumo, narração, o plano das próximas chamadas de ferramenta, risco ou pendência já dita, e o passeio pelo que você entregou saem todos; no código, comentário só diz o que o código deixa por dizer.' .respostas-curtas-no-turn-reminder",
             "timeout": 5
           }
         ]
