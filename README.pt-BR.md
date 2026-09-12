@@ -320,7 +320,7 @@ modelo invoca quando o turno pede mais que o núcleo.
 > [!TIP]
 > **Para conferir que carregou mesmo**, pergunte numa sessão nova: *"que estilo
 > de resposta está ativo agora?"* A resposta nomeia as regras do núcleo —
-> resposta na primeira frase, corte preâmbulo, nunca corte notícia ruim —
+> resposta na primeira frase, corte preâmbulo, sempre fica notícia ruim —
 > quando o hook rodou, e não nomeia quando não rodou.
 
 <details>

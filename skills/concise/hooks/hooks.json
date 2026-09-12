@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/inject-core.sh\" concise-core-override.md core.md 'This session runs on Windows: a command the user may paste goes in a `powershell` fence, one command per fence — `&&` is a parse error in Windows PowerShell 5.1, and `bash` typed there is the WSL stub, not Git Bash. Give the Git Bash long form when the tool is POSIX-only.' 'This session runs on macOS: a command the user may paste goes in a `bash` fence, one per fence. BSD `sed`, `date` and `readlink` take different flags from the GNU ones — prefer the portable form.' 'This session runs on Linux: a command the user may paste goes in a `bash` fence, one command per fence.'",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/inject-core.sh\" concise-core-override.md core.md 'This session runs on Windows: a command the user may paste goes in a `powershell` fence, one command per fence — `&&` is a parse error in Windows PowerShell 5.1, and `bash` typed there is the WSL stub. Give the Git Bash long form when the tool is POSIX-only.' 'This session runs on macOS: a command the user may paste goes in a `bash` fence, one per fence. BSD `sed`, `date` and `readlink` take different flags from the GNU ones — prefer the portable form.' 'This session runs on Linux: a command the user may paste goes in a `bash` fence, one command per fence.'",
             "statusMessage": "Loading the concise style",
             "timeout": 10
           },
@@ -17,7 +17,7 @@
           },
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/notices.sh\" concise \"concise is on. Thirteen commands, by destination: /concise:pr, :card, :commit, :comment, :release and :handoff write what leaves the conversation; :plan, :decide, :draw and :status shape what stays in it; :rewrite retrofits a finished text, :trim cuts the dead text out of code and screens, and :audit reports its violations without fixing them. This note shows once.\" \"concise: self-update has been failing for over a week. Run %s to see the error.\"",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/notices.sh\" concise \"concise is on. Thirteen commands, by destination: /concise:pr, :card, :commit, :comment, :release and :handoff write what leaves the conversation; :plan, :decide, :draw and :status shape what stays in it; :rewrite retrofits a finished text, :trim cuts the dead text out of code and screens, and :audit reports its violations for :rewrite to fix. This note shows once.\" \"concise: self-update has been failing for over a week. Run %s to see the error.\"",
             "timeout": 10
           }
         ]
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Style concise, this turn: the answer in the first sentence; one budget for the turn, so no preamble, recap, narration or tour of what you delivered; in code, a comment says only what the code cannot; never cut bad news, exact values, real uncertainty or a caveat that changes what the reader does.' .concise-no-turn-reminder",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Style concise, this turn: the answer in the first sentence; one budget for the turn, so preamble, recap, narration and the tour of what you delivered all go; in code, a comment says only what the code leaves unsaid; always keep bad news, exact values, real uncertainty and any caveat that changes what the reader does.' .concise-no-turn-reminder",
             "timeout": 5
           }
         ]
@@ -40,12 +40,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. The concise rule bans crediting an AI agent in commits, PRs, issues and releases - rewrite without it.\" .concise-no-credit-guard",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. Authorship of every commit, PR, issue and release belongs to the user alone - rewrite it with the user as the only author.\" .concise-no-credit-guard",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"The description this call publishes is what /concise:pr writes: it reads the diff, the repo log and the PR template, and it ends with the exact test step. Run /concise:pr first - the word create in the invocation opens the PR - or repeat this call to go ahead without it.\" .concise-no-route-hint",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"The description this call publishes is what /concise:pr writes: it reads the diff, the repo log and the PR template, and it ends with the exact test step. Run /concise:pr first - the word create in the invocation opens the PR - or repeat this call to go ahead as is.\" .concise-no-route-hint",
             "timeout": 10
           }
         ]
@@ -55,12 +55,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. The concise rule bans crediting an AI agent in commits, PRs, issues and releases - rewrite without it.\" .concise-no-credit-guard",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. Authorship of every commit, PR, issue and release belongs to the user alone - rewrite it with the user as the only author.\" .concise-no-credit-guard",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"The description this call publishes is what /concise:pr writes: it reads the diff, the repo log and the PR template, and it ends with the exact test step. Run /concise:pr first - the word create in the invocation opens the PR - or repeat this call to go ahead without it.\" .concise-no-route-hint",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"The description this call publishes is what /concise:pr writes: it reads the diff, the repo log and the PR template, and it ends with the exact test step. Run /concise:pr first - the word create in the invocation opens the PR - or repeat this call to go ahead as is.\" .concise-no-route-hint",
             "timeout": 10
           }
         ]

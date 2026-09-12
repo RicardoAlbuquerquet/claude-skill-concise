@@ -23,7 +23,13 @@ a comment, text in code — goes in that surface's file under `references/`.
 `SKILL.md` keeps only what applies to every reply, as beliefs, desires and
 intentions, and stays under 500 lines: `test-hooks.sh` fails past that, and
 after compaction Claude Code brings back only the first 5,000 tokens of a skill
-— which is why Never cut and Always cut sit right after the budgets.
+— which is why Always keep and Always cut sit right after the budgets.
+
+**Affirmative wording.** Every rule is written as what to do — "always
+keep", "a header only where a second block follows" — since a model follows
+a positive instruction more reliably than a negated one. A negation has an
+affirmative form with the same truth value; write that form. Quoted examples
+of bad output keep their wording: they are data.
 
 ## How long a command may get
 

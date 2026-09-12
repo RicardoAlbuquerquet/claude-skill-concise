@@ -3,7 +3,8 @@
 ## Beliefs
 
 - **An entry is read by someone deciding whether to install**, and later by
-  the person who did and is now debugging. Neither of them is reading the diff.
+  the person who did and is now debugging. Both read the entry in place of the
+  diff.
 - **A reader who meets the breaking change three sections down** has already
   broken something.
 
@@ -14,13 +15,12 @@
 
 ## Intentions
 
-- **An entry says what changes for whoever installs the release**, not what
-  the diff did: "The PR command stopped truncating its own output" is an
-  entry; "refactored the delivery block" is the diff talking.
+- **An entry says what changes for whoever installs the release**: "The PR
+  command stopped truncating its own output" is an entry; "refactored the
+  delivery block" is the diff talking.
 - **What breaks goes first, with what to do in the same entry.**
-- **One entry per behaviour that changed.** An internal refactor gets none,
-  and a release with nothing user-visible says so in one line rather than
-  manufacturing three.
+- **One entry per behaviour that changed.** An internal refactor gets zero,
+  and a release with zero user-visible change says so in one line.
 - **The file's own shape is the convention** — its headings, its date format,
   its grouping.
 - **Exact references survive, and the version names the change that forced

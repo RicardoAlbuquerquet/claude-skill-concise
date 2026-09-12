@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/inject-core.sh\" respostas-curtas-nucleo-override.md nucleo.md 'Esta sessão roda no Windows: comando que a pessoa pode colar vai num bloco `powershell`, um comando por bloco — `&&` é erro de parser no Windows PowerShell 5.1, e `bash` digitado ali é o stub do WSL, não o Git Bash. Dê a forma longa do Git Bash quando a ferramenta só existir em POSIX.' 'Esta sessão roda no macOS: comando que a pessoa pode colar vai em bloco `bash`, um por bloco. `sed`, `date` e `readlink` do BSD têm flags diferentes das do GNU — prefira a forma portável.' 'Esta sessão roda no Linux: comando que a pessoa pode colar vai em bloco `bash`, um comando por bloco.'",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/inject-core.sh\" respostas-curtas-nucleo-override.md nucleo.md 'Esta sessão roda no Windows: comando que a pessoa pode colar vai num bloco `powershell`, um comando por bloco — `&&` é erro de parser no Windows PowerShell 5.1, e `bash` digitado ali é o stub do WSL. Dê a forma longa do Git Bash quando a ferramenta só existir em POSIX.' 'Esta sessão roda no macOS: comando que a pessoa pode colar vai em bloco `bash`, um por bloco. `sed`, `date` e `readlink` do BSD têm flags diferentes das do GNU — prefira a forma portável.' 'Esta sessão roda no Linux: comando que a pessoa pode colar vai em bloco `bash`, um comando por bloco.'",
             "statusMessage": "Carregando o estilo respostas-curtas",
             "timeout": 10
           },
@@ -17,7 +17,7 @@
           },
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/notices.sh\" respostas-curtas \"respostas-curtas ativo. Treze comandos, por destino: /respostas-curtas:pr, :card, :commit, :comentario, :release e :passagem escrevem o que sai da conversa; :plano, :decidir, :desenhar e :status dao forma ao que fica nela; :reescrever refaz um texto pronto, :enxugar tira o texto morto do codigo e da tela, e :auditar reporta as violacoes sem corrigir. Este aviso aparece uma vez.\" \"respostas-curtas: o auto-update falha ha mais de uma semana. Rode %s para ver o erro.\"",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/notices.sh\" respostas-curtas \"respostas-curtas ativo. Treze comandos, por destino: /respostas-curtas:pr, :card, :commit, :comentario, :release e :passagem escrevem o que sai da conversa; :plano, :decidir, :desenhar e :status dao forma ao que fica nela; :reescrever refaz um texto pronto, :enxugar tira o texto morto do codigo e da tela, e :auditar reporta as violacoes para o :reescrever corrigir. Este aviso aparece uma vez.\" \"respostas-curtas: o auto-update falha ha mais de uma semana. Rode %s para ver o erro.\"",
             "timeout": 10
           }
         ]
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Estilo respostas-curtas, neste turno: a resposta na primeira frase; um orçamento só, então sem preâmbulo, resumo, narração ou passeio pelo que você entregou; no código, comentário só diz o que o código não diz; nunca corte notícia ruim, valor exato, incerteza real ou ressalva que muda o que a pessoa faz.' .respostas-curtas-no-turn-reminder",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Estilo respostas-curtas, neste turno: a resposta na primeira frase; um orçamento só, então preâmbulo, resumo, narração e passeio pelo que você entregou saem todos; no código, comentário só diz o que o código deixa por dizer; sempre fica notícia ruim, valor exato, incerteza real e ressalva que muda o que a pessoa faz.' .respostas-curtas-no-turn-reminder",
             "timeout": 5
           }
         ]
@@ -40,12 +40,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"Credito de IA no texto. A regra de respostas-curtas proibe creditar agente de IA em commit, PR, issue e release - reescreva sem isso.\" .respostas-curtas-no-credit-guard",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"Credito de IA no texto. A autoria de todo commit, PR, issue e release e so do usuario - reescreva com o usuario como unico autor.\" .respostas-curtas-no-credit-guard",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"A descricao que essa chamada publica e o que o /respostas-curtas:pr escreve: ele le o diff, o log do repo e o template de PR, e termina no passo de teste exato. Rode /respostas-curtas:pr antes - a palavra create na invocacao abre a PR - ou repita esta chamada para seguir sem ele.\" .respostas-curtas-no-route-hint",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"A descricao que essa chamada publica e o que o /respostas-curtas:pr escreve: ele le o diff, o log do repo e o template de PR, e termina no passo de teste exato. Rode /respostas-curtas:pr antes - a palavra create na invocacao abre a PR - ou repita esta chamada para seguir como esta.\" .respostas-curtas-no-route-hint",
             "timeout": 10
           }
         ]
@@ -55,12 +55,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"Credito de IA no texto. A regra de respostas-curtas proibe creditar agente de IA em commit, PR, issue e release - reescreva sem isso.\" .respostas-curtas-no-credit-guard",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"Credito de IA no texto. A autoria de todo commit, PR, issue e release e so do usuario - reescreva com o usuario como unico autor.\" .respostas-curtas-no-credit-guard",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"A descricao que essa chamada publica e o que o /respostas-curtas:pr escreve: ele le o diff, o log do repo e o template de PR, e termina no passo de teste exato. Rode /respostas-curtas:pr antes - a palavra create na invocacao abre a PR - ou repita esta chamada para seguir sem ele.\" .respostas-curtas-no-route-hint",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"A descricao que essa chamada publica e o que o /respostas-curtas:pr escreve: ele le o diff, o log do repo e o template de PR, e termina no passo de teste exato. Rode /respostas-curtas:pr antes - a palavra create na invocacao abre a PR - ou repita esta chamada para seguir como esta.\" .respostas-curtas-no-route-hint",
             "timeout": 10
           }
         ]

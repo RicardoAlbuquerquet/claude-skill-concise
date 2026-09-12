@@ -1,7 +1,7 @@
 # Before / after
 
 Nine transformations. Four come out *longer* after the edit — the point of the
-"never cut" list, of the rule that a recommendation ships with its cost, and of
+"always keep" list, of the rule that a recommendation ships with its cost, and of
 the rule that an answer the reader can't act on isn't concise, just short.
 
 ---
@@ -132,7 +132,7 @@ unsure; don't hedge as a verbal tic.
 
 **Why this direction:** brevity is measured against the information the user
 needs, not against the character count. The four-word version is shorter and
-costs the user their entire logged-in userbase. Everything on the "never cut"
+costs the user their entire logged-in userbase. Everything on the "always keep"
 list looks like padding right up until it doesn't.
 
 ---
@@ -200,7 +200,7 @@ scale"); the "after" version spends them on the two facts that make this a
 decision instead of a preference, plus the bill.
 
 **Note the fourth line:** the cost block runs one line past the three-line budget.
-That is the budget yielding to the "never cut" list, which is the order the skill
+That is the budget yielding to the "always keep" list, which is the order the skill
 states — cutting to fit would have dropped the fail-open/fail-closed choice.
 
 ---
