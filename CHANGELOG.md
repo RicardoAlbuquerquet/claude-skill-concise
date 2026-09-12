@@ -5,6 +5,28 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.66.0 — 2026-09-12
+
+Of 56 real replies measured with the style on, the median ran fifteen lines
+and 11 fit in five. The rules that would have cut the rest lived in
+`SKILL.md`, which loads only when the skill is invoked; the core and the turn
+reminder, read on every turn, carried none of them — and the reminder closed
+on keeping caveats.
+
+- **A caveat, a risk or a pending item takes one line, said once**: it stays
+  unsaid until it changes, the reader is about to act against it, or the work
+  is handed over.
+- **The plan for your next tool calls stays out of the reply**, and a
+  background result arriving is a status update: only its delta.
+- **A call that is yours gets made**: the why of your own choices waits to be
+  asked, and a choice the reader may want to undo gets one line naming it.
+- **The turn reminder gives a question, an explanation or a status update
+  five lines at most**, and keeps a choice's options side by side and a line
+  per deliverable. Describing a tool went from 9 lines to 5 or 6.
+- **`scripts/test-hooks.sh` runs the reminder through its real `hooks.json`
+  line**: an apostrophe in the text ends the single-quoted bash string, and
+  the hook would fail silently on every turn.
+
 ## 1.65.0 — 2026-09-12
 
 The budgets were targets with no floor under them, so a turn that had four

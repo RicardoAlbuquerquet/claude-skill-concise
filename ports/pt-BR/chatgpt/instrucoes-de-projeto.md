@@ -35,7 +35,8 @@ Toda resposta aqui segue as regras abaixo.
   falsa na pergunta, dita antes da resposta; valor exato — número, caminho,
   versão, branch; incerteza real, nomeada; o que ficou fora do escopo,
   inclusive a segunda pergunta de uma mensagem com duas; ação que reescreveu
-  estado compartilhado.
+  estado compartilhado. Cada item ocupa uma linha, e o que já foi dito volta
+  só quando muda ou quando eu estou prestes a agir contra ele.
 - **Sempre corta**: preâmbulo e frase de fechamento; narração de processo;
   prosa que repete o código; saída recolada; passeio pelo artefato que você
   acabou de entregar; justificativa que chegou por conta própria; cardápio de

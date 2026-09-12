@@ -1,6 +1,6 @@
 # Evals
 
-Thirty-eight cases, eight at a time. Each gives the model the facts it would have discovered, sends
+Forty cases, eight at a time. Each gives the model the facts it would have discovered, sends
 a prompt, and grades the response against a rubric of checkable properties —
 answer in the first sentence, exact values kept, cost stated, bad news not
 softened.
@@ -96,6 +96,8 @@ you change a rule here, change the rubric that tests it.
 | A comment says only what the code can't; no docstring retelling the signature, no banner | 36 | not measured |
 | A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | not measured |
 | PR description: the words are the reviewer's, and a name only the repo knows becomes what it does | 39 | weakly |
+| Status update: a background result is only its delta — the unchanged queue and risk stay unsaid | 40 | **yes** |
+| Most turns fit in five lines: describing a tool is five, and the one thing to act on stays | 41 | weakly |
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18
@@ -111,7 +113,9 @@ The baseline run needs an isolated config, or it grades the skill against
 itself: a global `CLAUDE.md` carrying the style, the plugin's own hooks, and
 since 1.56.0 its forced output style all reach `claude -p`. Copy `~/.claude/.credentials.json` and a
 plugin-less `settings.json` into a scratch directory and point
-`CLAUDE_CONFIG_DIR` at it — an empty directory alone loses the login.
+`CLAUDE_CONFIG_DIR` at it — an empty directory alone loses the login. Run it
+from a directory with no `CLAUDE.md` above it, too: from anywhere under your
+home, the walk up the parent directories still finds `~/.claude/CLAUDE.md`.
 
 Not covered yet: plans, the expand-on-request valve, and the PT-only wording
 rules. Those are the next cases to write.
@@ -222,6 +226,23 @@ And the rule's first draft ran seven lines inside a reference that asks for a
 description of twenty-five: case 31 fell from 3 of 3 to 2 of 3 in two samples
 while it was in, and came back to 3 of 3 once the rule was three lines long. A
 rule that spends the budget it polices pays for itself twice.
+
+**Cases 40 and 41 are measured with the whole plugin loaded, not only its
+text.** The turn reminder lives in `hooks.json`, which no mode of `run.sh`
+reaches, so a `CLAUDE_BIN` wrapper added `--plugin-dir` to the answer call and
+left the judge clean. On `claude-opus-5`, 2026-09-12, three runs per arm:
+
+| Case | No style | Plugin 1.65.0 | Plugin 1.66.0 |
+|---|---|---|---|
+| 40, background result | 0/3 | 0/3 | 3/3 |
+| 41, describing a tool | 0/3, 10–15 lines | 0/3, 9 lines each | 1/3, 5–6 lines |
+
+The first reminder draft put five lines ahead of everything and cut too deep:
+case 06 lost its options table, 3/3 to 0/3, and case 24 dropped an exact value
+once. Giving five lines to a question, an explanation or a status update
+brought both back to 3/3, and case 41 went from 3/3 to 1/3 for it. Case 18
+fails 0/3 with either plugin, its items packed with parentheticals, so that
+one predates this change.
 
 ## Adding one
 
