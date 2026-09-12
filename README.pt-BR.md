@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <a href="#instalação">Instalação</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#o-que-ela-faz">O que ela faz</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#o-que-embarca">O que embarca</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#os-comandos-e-o-agente">Comandos</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#o-critério-para-uma-regra">O critério para uma regra</a>
+  <a href="#instalação">Instalação</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#o-que-ela-faz">O que ela faz</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#o-que-embarca">O que embarca</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#os-comandos-e-o-agente">Comandos</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#cursor-chatgpt-e-os-outros">Outras ferramentas</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#o-critério-para-uma-regra">O critério para uma regra</a>
 </p>
 
 <br>
@@ -528,6 +528,38 @@ Há também um **auditor de Stop opcional** em
 [`extras/stop-audit/`](extras/stop-audit/README.md): um hook que você instala
 à mão e que julga a resposta final de cada turno contra o núcleo, avisando em
 violação clara. Custa uma chamada de API por turno — por isso não vem ligado.
+
+## Cursor, ChatGPT e os outros
+
+O plugin é do Claude Code. As mesmas regras saem para as outras ferramentas em
+[`ports/`](ports/README.pt-BR.md), geradas dos mesmos arquivos que o plugin
+usa, então uma regra editada uma vez chega em todas — e o CI falha quando um
+arquivo gerado fica para trás.
+
+| Ferramenta | O que você copia | O que ganha |
+|---|---|---|
+| **Cursor** | `ports/pt-BR/cursor/rules/` e `ports/pt-BR/cursor/commands/` | o núcleo em toda request pelo `alwaysApply: true`, as regras completas e as seis superfícies puxadas quando casam, e os treze comandos no `/` |
+| **Codex, Copilot, Zed, Gemini CLI, Windsurf, Aider, Jules** | `ports/pt-BR/AGENTS.md` e a pasta `respostas-curtas/` do lado | o núcleo sempre ligado, e uma tabela nomeando o arquivo a ler para qualquer coisa maior |
+| **ChatGPT** | um arquivo nas instruções personalizadas, outro num projeto ou GPT personalizado | o estilo em toda resposta, e os comandos como gatilhos digitados |
+
+**Os comandos vão junto**, sem o prefixo do plugin: `/pr`, `/card`, `/commit`,
+`/comentario`, `/release`, `/plano`, `/decidir`, `/desenhar`, `/status`,
+`/passagem`, `/reescrever`, `/enxugar` e `/auditar` — os mesmos treze descritos
+acima, como arquivos que o Cursor lista quando você digita `/`, e como
+gatilhos que as instruções do ChatGPT definem.
+
+**Três formatos em vez de um, porque os destinos diferem.** O Cursor lê um
+`.mdc` por regra e um arquivo por comando, e a caixa de instruções
+personalizadas do ChatGPT para em 1.500 caracteres contra os 35.000 das regras
+— então essa caixa recebe uma compressão escrita à mão, e as ferramentas que
+leem um arquivo inteiro recebem o arquivo inteiro. A fonte continua uma só:
+`skills/`, e `bash scripts/build-ports.sh`.
+
+O que fica para trás é a maquinaria do Claude Code — o output style forçado, o
+lembrete por turno, a guarda de crédito, o desvio da PR, a auto-atualização
+diária e o subagente `auditar`.
+[`ports/README.pt-BR.md`](ports/README.pt-BR.md) traz os comandos de cópia e o
+que substitui cada uma delas.
 
 ## Idiomas
 

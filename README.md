@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <a href="#install">Install</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#what-it-does">What it does</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#what-ships">What ships</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#the-commands-and-the-agent">Commands</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#the-bar-for-a-rule">The bar for a rule</a>
+  <a href="#install">Install</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#what-it-does">What it does</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#what-ships">What ships</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#the-commands-and-the-agent">Commands</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#cursor-chatgpt-and-the-rest">Other tools</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#the-bar-for-a-rule">The bar for a rule</a>
 </p>
 
 <br>
@@ -528,6 +528,36 @@ There is also an **opt-in Stop auditor** in
 that judges each turn's final response against the core and warns on clear
 violations. It costs one API call per turn, which is why it does not ship
 enabled.
+
+## Cursor, ChatGPT and the rest
+
+The plugin is Claude Code's. The same rules ship for the other tools in
+[`ports/`](ports/README.md), generated from the very files the plugin uses, so
+a rule edited once reaches all of them — and CI fails when a generated file
+falls behind.
+
+| Tool | What you copy | What it gives you |
+|---|---|---|
+| **Cursor** | `ports/en/cursor/rules/` and `ports/en/cursor/commands/` | the core in every request through `alwaysApply: true`, the full ruleset and the six surfaces pulled in when they match, and the thirteen commands under `/` |
+| **Codex, Copilot, Zed, Gemini CLI, Windsurf, Aider, Jules** | `ports/en/AGENTS.md` and the `concise/` folder beside it | the core always on, and a table naming the file to read for anything longer |
+| **ChatGPT** | one file into custom instructions, one into a project or a custom GPT | the style on every reply, and the commands as typed triggers |
+
+**The commands travel with them**, minus the plugin prefix: `/pr`, `/card`,
+`/commit`, `/comment`, `/release`, `/plan`, `/decide`, `/draw`, `/status`,
+`/handoff`, `/rewrite`, `/trim` and `/audit` — the same thirteen described
+above, as files Cursor lists when you type `/`, and as triggers the ChatGPT
+instructions define.
+
+**Three shapes rather than one, because the targets differ.** Cursor reads one
+`.mdc` per rule and one file per command, and ChatGPT's custom-instructions box
+stops at 1,500 characters against the ruleset's 35,000 — so that box gets a
+compression written by hand, and the tools that read a whole file get the whole
+file. The source stays single: `skills/`, and `bash scripts/build-ports.sh`.
+
+What stays behind is the Claude Code machinery — the forced output style, the
+turn reminder, the credit guard, the PR route hint, the daily self-update and
+the `audit` subagent. [`ports/README.md`](ports/README.md) carries the copy
+commands and what replaces each of them.
 
 ## Languages
 

@@ -30,6 +30,14 @@ jobs:
       - uses: actions/checkout@v4
       - run: bash scripts/test-hooks.sh
 
+  # A rule edited in the skill and not rebuilt leaves Cursor and ChatGPT on
+  # the old text, which is worse than having no port at all.
+  ports:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/build-ports.sh --check
+
   bump:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest

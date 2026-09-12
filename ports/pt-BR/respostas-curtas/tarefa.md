@@ -1,0 +1,77 @@
+# Tarefa e issue
+
+## Crenças
+
+- **Quem vai ler estava longe da conversa.** Tarefa criada por MCP ou issue no
+  GitHub é lida semanas depois, por outra pessoa, com a conversa fora de
+  alcance — então o que ficou estabelecido aqui tem que viajar dentro do card.
+- **A coluna mostra só o título, cortado por volta de 300px**, e a primeira
+  palavra é a que o olho varre; o corpo é lido na visão de detalhe que o
+  clique abre.
+- **Campo preenchido repetido no corpo é uma cópia que envelhece** assim que
+  alguém mexe no campo. O motivo é diferente — "o prazo é dia 28 porque o
+  faturamento roda no 29" é um fato que só o corpo guarda.
+- **Duplicata custa triagem duas vezes** e divide a discussão.
+- **O histórico engorda o card** — como você chegou ali, o que descartou — e
+  deixa igual o que a pessoa vai fazer.
+
+## Desejos
+
+- Daqui a três semanas, só com o card na mão, alguém sabe o que muda, por que
+  agora e como saber que acabou — e consegue agir.
+
+## Intenções
+
+Todo card carrega:
+
+- **Título que diz o que muda, localizado**: a área primeiro quando o board
+  tem mais de uma — "Documentos: negrito aparece com asteriscos" — depois o
+  sintoma quando quem lê reconhece, ou o verbo da ação nos outros casos
+  ("Arquivados: esconder a página de quem está fora do acesso"). O título
+  sempre carrega a mudança: "Filtro de faturas" sozinho é rótulo. E só o que
+  os campos do card deixam por dizer — um prefixo `fix(...)` ao lado de uma
+  etiqueta `bugfix` vermelha gasta duas vezes os caracteres varridos.
+- **Comportamento atual, depois o esperado**, duas frases cada: a distância
+  entre os dois é o trabalho.
+- **Valor exato no lugar da descrição** — caminho, comando, linha do erro,
+  número, ambiente, versão: "`/auth/refresh` demora 2,1 s em produção" diz o
+  que "o login está lento" deixa de fora.
+- **Critério de pronto, em uma linha** — o passo de teste da PR na forma
+  curta.
+- **Escopo fechado**, que cabe numa entrega: "e também" são dois cards, e o
+  que este card deixa para outro é dito quando alguém poderia ampliar.
+
+E quando o caso pedir: **como reproduzir**, em passos numerados, com a
+frequência quando é intermitente; **impacto com quem sente** — quantos
+usuários, qual cliente, o que acontece se ficar parado, já que é isso que
+decide prioridade onde "urgente" no título decide zero; **dependência e
+bloqueio com link**; **anexo que prova** — print, log, payload, ID do trace.
+
+O layout, para um corpo lido na visão de detalhe:
+
+- **Dois parágrafos, depois linhas com rótulo.** Comportamento atual, linha em
+  branco, comportamento esperado; depois cada campo recorrente em negrito na
+  própria linha — **Onde:** para os arquivos e ajustes tocados, **Feito
+  quando:**, **Fora de escopo:**, **Reproduzir:** encabeçando os passos
+  numerados, **Impacto:**, **Reverte:**. Um rótulo por linha, e a frase
+  depois dele em texto liso.
+- **Dois code spans por parágrafo de prosa, e parêntese de um nível só.** O
+  valor que a pessoa vai abrir ou digitar fica na frase; os outros ponteiros
+  vão para **Onde:**, que fica fora dessa conta.
+- **Cabeçalho quando o corpo passa de quinze linhas** e carrega três blocos
+  com funções diferentes; abaixo disso, `## O problema` sobre duas linhas é
+  enfeite.
+- **Tabela a partir de três linhas por três colunas** com valor em toda
+  célula; menor que isso é lista, e destino que renderiza estreito ou em
+  texto puro recebe a tabela num documento linkado.
+- **Quinze linhas já é um card longo**, e o corpo se sustenta sozinho: "como
+  conversamos" e "aquele problema que você mencionou" apontam para uma
+  conversa que quem lê perdeu, então o fato em si entra.
+
+Criando por ferramenta: o que a conversa definiu — prioridade, responsável,
+etiqueta — entra no campo, no lugar do texto e do default. O template de
+issue do próprio tracker é contrato: escolha o formulário que casa e preencha
+neste registro. Procure antes o card que já existe, e aponte para um
+candidato provável — linke, comente nele — no lugar de um card do lado. O
+histórico fica de fora: o card descreve o que falta, e o percurso até
+descobrir fica na conversa.

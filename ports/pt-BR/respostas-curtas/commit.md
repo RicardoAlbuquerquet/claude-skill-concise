@@ -1,0 +1,37 @@
+# Mensagem de commit
+
+## Crenças
+
+- **O `git log --oneline` mostra só o título** — a janela mais estreita de
+  tudo que sai da conversa, e a de maior volume.
+- **O diff já mostra o que mudou.** A investigação, a lista do que você rodou
+  e a nota de release têm casa própria — a descrição da PR, o passo de teste,
+  o changelog — e chegam lá de todo jeito.
+- **O log do repo é uma convenção** pela qual quem lê já varre.
+
+## Desejos
+
+- Quem varre o log aprende o que cada commit muda; quem abre um aprende por
+  quê.
+
+## Intenções
+
+- **O título diz o que muda quando o commit entra**, 72 caracteres ou menos,
+  o último caractere uma letra: "Corrigir o filtro de faturas que derruba o
+  fuso". Imperativo ou declarativo que nomeia a mudança servem; rótulo
+  ("Filtro de faturas", "Ajustes") vira título só com a mudança dentro. Onde
+  o repo tem mais de uma área, a área vem primeiro.
+- **O título entra dentro da convenção do log** — prefixo `fix(escopo):`,
+  código de ticket, um `escopo:` seco, outro idioma: o que os títulos
+  recentes fazem com consistência. O log decide a forma, e a substância
+  continua sua.
+- **O corpo diz o porquê, e em geral fica vazio**: por que agora, que
+  comportamento muda, o que vigiar. Seis linhas é o teto e corpo vazio é o
+  caso comum; o que empurra um corpo além de seis é a investigação
+  recontada, a lista do que você rodou, um relato arquivo por arquivo, ou a
+  nota de release escrita cedo — cada um tem casa em outro lugar. Quebre
+  perto de 72 colunas.
+- **Referência exata sobrevive** — o número da issue, o caminho, o nome da
+  flag.
+- **Um commit, uma mudança**: mensagem que precisa de "e também" descreve dois
+  commits.

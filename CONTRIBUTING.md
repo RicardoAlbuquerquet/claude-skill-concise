@@ -116,6 +116,31 @@ workflow fails the PR on any drift. It
 counts structure, not meaning: a translation that keeps the bullet count but
 drops the rule still gets through, so the by-eye check above stays.
 
+## Keeping the ports in sync
+
+[`ports/`](../ports/README.md) carries the same rules for Cursor, for ChatGPT
+and for every tool that reads `AGENTS.md`. Everything there except the two
+READMEs and the four ChatGPT files is generated, so a rule edited in the skill
+reaches all of them through one command:
+
+```bash
+bash scripts/build-ports.sh
+```
+
+Commit what it rewrites. `bash scripts/build-ports.sh --check` fails when a
+generated file is behind, and the `parity` workflow runs it on every PR. It
+also fails when the plugin's own names — `${CLAUDE_PLUGIN_ROOT}`, the
+`/concise:` prefix, `$ARGUMENTS` — survive into a file whose reader has none
+of them, since each one is an instruction that reader cannot follow.
+
+The four ChatGPT files are written by hand: a 1,500-character box holds a
+compression of the core rather than the core itself, and the wording differs
+because the medium does — no shell to paste into, no diff on screen. A rule
+that changes the core changes them too, and the build holds each to its cap.
+
+`ports/` changes nothing inside a plugin, so it carries no version bump of its
+own.
+
 ## Bumping the version
 
 Every PR that changes anything inside a plugin — `SKILL.md`, the hook core,

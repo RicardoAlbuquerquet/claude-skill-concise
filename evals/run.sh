@@ -8,6 +8,7 @@
 #   ONLY=03 bash evals/run.sh                  # one case, by filename fragment
 #   CLAUDE_BIN=./stub bash evals/run.sh        # swap the CLI (used in testing)
 #   CORE=1 bash evals/run.sh                   # judge the always-on core, not the skill
+#   STYLE_FILE=ports/en/AGENTS.md bash evals/run.sh   # judge one port's own text
 #   BASELINE=1 bash evals/run.sh               # no style at all — what the model does raw
 #   RUNS=3 bash evals/run.sh                   # N attempts per case, pass rate reported
 #   MODEL=claude-sonnet-5 bash evals/run.sh    # pin the model so runs compare
@@ -24,11 +25,19 @@ CORE_FILE="$ROOT/skills/$SKILL/hooks/core.md"
 [ -f "$CORE_FILE" ] || CORE_FILE="$ROOT/skills/$SKILL/hooks/nucleo.md"
 [ -f "$SKILL_FILE" ] || { echo "no such skill: $SKILL_FILE" >&2; exit 2; }
 
-# What the model is given: the full ruleset (default), only the ~20-line core
-# the hook injects into every session, or nothing at all — the baseline that
-# says whether a case measures the rules or the model's own habits.
+# What the model is given: the full ruleset (default), only the ~60-line core
+# the forced output style carries, one port's own text — what a Cursor or
+# ChatGPT user actually pastes, which is the only way that text gets measured
+# at all — or nothing, the baseline that says whether a case measures the
+# rules or the model's own habits.
 if [ -n "${BASELINE:-}" ]; then
   STYLE=""; MODE=baseline
+elif [ -n "${STYLE_FILE:-}" ]; then
+  # An unreadable path would hand every case an empty style and report the
+  # model's own habits as a pass, so it stops here instead.
+  f="$STYLE_FILE"; [ -f "$f" ] || f="$ROOT/$STYLE_FILE"
+  [ -f "$f" ] || { echo "no such style file: $STYLE_FILE" >&2; exit 2; }
+  STYLE=$(cat "$f"); MODE=port
 elif [ -n "${CORE:-}" ]; then
   STYLE=$(cat "$CORE_FILE"); MODE=core
 else

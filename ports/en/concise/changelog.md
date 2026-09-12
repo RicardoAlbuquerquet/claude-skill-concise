@@ -1,0 +1,28 @@
+# Changelog and release notes
+
+## Beliefs
+
+- **An entry is read by someone deciding whether to install**, and later by
+  the person who did and is now debugging. Both read the entry in place of the
+  diff.
+- **A reader who meets the breaking change three sections down** has already
+  broken something.
+
+## Desires
+
+- Each reader learns what changes for them, what breaks first, and what to do
+  about it.
+
+## Intentions
+
+- **An entry says what changes for whoever installs the release**: "The PR
+  command stopped truncating its own output" is an entry; "refactored the
+  delivery block" is the diff talking.
+- **What breaks goes first, with what to do in the same entry.**
+- **One entry per behaviour that changed.** An internal refactor gets zero,
+  and a release with zero user-visible change says so in one line.
+- **The file's own shape is the convention** — its headings, its date format,
+  its grouping.
+- **Exact references survive, and the version names the change that forced
+  it** — the flag, the setting that moved, the old name the reader will grep
+  for: "Breaking: `--fence` is now `--fence-style`".

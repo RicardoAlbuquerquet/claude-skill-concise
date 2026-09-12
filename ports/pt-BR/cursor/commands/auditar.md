@@ -1,0 +1,84 @@
+Audite um texto pronto contra o checklist de `respostas-curtas` e reporte o
+que uma reescrita teria de corrigir. Isto reporta; a reescrita é
+`/reescrever`.
+
+Resolva o alvo pelo argumento abaixo, nesta ordem: caminho para um arquivo que
+existe é lido e auditado; referência de PR ou issue que uma ferramenta alcança
+(`gh`, um board MCP) tem o corpo buscado e auditado — o corpo, no lugar do
+diff; qualquer outra coisa é o próprio texto; vazio mira sua própria resposta
+anterior nesta conversa.
+
+(Seus argumentos: o que você digitou depois do nome do comando, quando houver.)
+
+Você audita um texto contra o checklist de estilo de `respostas-curtas`. Quem
+chamou entrega o texto inline ou um caminho de arquivo — leia o arquivo se vier caminho. Você reporta o que uma reescrita teria que corrigir; a reescrita em
+si é outro comando.
+
+Primeiro nomeie o destino — resposta de chat, descrição de PR, card de
+tarefa/issue, ou mensagem de commit — porque ele muda quais checagens valem.
+Com o destino por dizer e por deduzir do texto, audite como resposta de chat
+e diga que assumiu isso.
+
+Depois cheque, nesta ordem:
+
+1. **A primeira frase.** Ela responde, ou algo está na frente da resposta —
+   cabeçalho, preâmbulo, repetição da pergunta?
+2. **Itens do "corte sempre" presentes:** preâmbulo, fechamento, narração de
+   processo ("li X, depois rodei Y"), prosa repetindo código citado, saída de
+   ferramenta recolada, justificativa que chegou por conta própria, menu de
+   opções onde a decisão era de quem escreveu, frase de efeito, autocorreção
+   no meio do texto, hedge grudado em fato confirmado, qualquer assinatura
+   além da do usuário.
+3. **Estrutura, as duas falhas.** Inflação: cabeçalho sobre parágrafo único,
+   bullets de uma oração dentro da mesma ideia, item passando de duas linhas
+   com detalhe empilhado em parênteses, negrito que está fora dos dois papéis
+   — afirmação do bloco e rótulo de item —, crase em palavra comum, emoji
+   decorativo. E compressão: um bloco corrido cobrindo vários assuntos,
+   comparação em prosa que é linha-e-coluna por natureza, bloco que mistura o
+   que a pessoa tem que decidir com o que só informa.
+   E desenhos: seta nua, linha passando de setenta e duas colunas, dois
+   conjuntos de traços na mesma figura, rótulo flutuando entre duas caixas em
+   vez de pendurado numa, caixa nomeada por algo que quem lê vai deixar
+   fechado, desenho repetindo a frase de cima, legenda explicando um traço,
+   rota de falha dividindo a linha principal com o caminho feliz, e caixas
+   iguais repetidas onde um `×N` daria conta. Bloco mermaid é violação onde o
+   destino mostra a fonte no lugar da figura, e onde o ASCII teria carregado a
+   mesma corrente.
+4. **Recomendações.** Cada uma carrega motivo (≤3 linhas) e custo (≤3 linhas).
+   Campo de custo vazio é violação mesmo quando o texto lê bem.
+5. **Escolhas que são do leitor** — dinheiro, risco, irreversível: opções lado
+   a lado *e* ainda assim uma recomendação, argumentada contra as alternativas
+   especificamente.
+6. **Buracos do "sempre fica".** Notícia ruim, valor exato (número descrito
+   no lugar de dado), incerteza real, o que ficou fora do escopo, ação que
+   reescreveu estado compartilhado. Esses normalmente faltam em vez de ter
+   citação — reporte como buracos.
+7. **Extras do destino.** Descrição de PR tem três seções nesta ordem — o que
+   está sendo resolvido, o que foi feito, como testar — com os cabeçalhos
+   delas. Abrir com o que a PR faz é a violação, seja qual for a forma: o
+   título já disse isso, e o problema é a única coisa que quem revisa precisa
+   ouvir. Termina com o comando de teste exato, o que aparece se estiver
+   certo, e o que provaria que quebrou. Prosa repetindo o diff, mapa arquivo
+   por arquivo e contagem do que mudou são enchimento aqui. Card tem: o que
+   muda no título, com a área primeiro quando o board tem mais de uma,
+   comportamento atual → esperado, valor exato, critério de pronto, escopo
+   fechado — e estrutura que o conteúdo ganhou: cabeçalho só passando de
+   quinze linhas com três blocos de funções diferentes, tabela só a partir de
+   três linhas por três colunas de valores, negrito só como rótulo de item.
+   Mensagem de commit tem título de 72 caracteres ou menos, o último
+   caractere uma letra, que nomeia o que muda, e corpo que diz o porquê em
+   vez de recontar o diff. Em card e em commit vale também o teste do corpo
+   autônomo: qualquer "como conversamos", "aquele problema que você
+   mencionou" ou referência a esta conversa é violação, porque quem lê perdeu
+   isso.
+8. **Forma das frases.** Oração que anuncia ("vale notar que…") e ator
+   escondido ("é feita uma validação") — aponte só os casos claros.
+
+Formato do relatório — seu texto final é o relatório, e quem chamou repassa:
+
+- Primeira linha: o veredito. `N violações, M buracos` ou `limpo`.
+- Depois uma lista numerada, um item por violação: a citação mais curta que
+  identifica o ponto, a regra quebrada, a correção em uma linha.
+- Depois os buracos, se houver, cada um abrindo com **Faltou:**.
+- Esse é o relatório inteiro: o veredito, a lista, os buracos. Se o texto
+  está limpo, a linha do veredito é o relatório inteiro.
