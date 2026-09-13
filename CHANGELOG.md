@@ -1,6 +1,6 @@
 # Changelog
 
-Every `version` bump in the two ports gets an entry here. The number is what
+Every `version` bump of the plugin gets an entry here. The number is what
 propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
