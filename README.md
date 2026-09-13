@@ -6,10 +6,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/RicardoAlbuquerquet/concise/actions/workflows/parity.yml"><img alt="parity" src="https://img.shields.io/github/actions/workflow/status/RicardoAlbuquerquet/concise/parity.yml?branch=main&label=parity&style=flat-square&labelColor=24292f"></a>
+  <a href="https://github.com/RicardoAlbuquerquet/concise/actions/workflows/checks.yml"><img alt="checks" src="https://img.shields.io/github/actions/workflow/status/RicardoAlbuquerquet/concise/checks.yml?branch=main&label=checks&style=flat-square&labelColor=24292f"></a>
   <a href="CHANGELOG.md"><img alt="version" src="https://img.shields.io/badge/dynamic/json?label=version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRicardoAlbuquerquet%2Fconcise%2Fmain%2Fskills%2Fconcise%2F.claude-plugin%2Fplugin.json&style=flat-square&labelColor=24292f&color=ee4a1f"></a>
   <a href="LICENSE"><img alt="license: MIT" src="https://img.shields.io/badge/license-MIT-57606a?style=flat-square&labelColor=24292f"></a>
-  <a href="README.pt-BR.md"><img alt="Leia em português" src="https://img.shields.io/badge/leia_em-português-57606a?style=flat-square&labelColor=24292f"></a>
 </p>
 
 <p align="center">
@@ -59,8 +58,7 @@ claude plugin marketplace add RicardoAlbuquerquet/concise
 claude plugin install concise@claude-skill-concise
 ```
 
-Swap `concise` for `respostas-curtas` to get the Portuguese port — one or the
-other, never both ([why](#languages)). Plugin skills are namespaced by the
+It replies in the language you write in. Plugin skills are namespaced by the
 plugin that ships them, so this registers as `/concise:concise`; `/plugin` →
 **Installed** shows the exact name it took.
 
@@ -157,7 +155,7 @@ npx skills add RicardoAlbuquerquet/concise
 ```
 
 Only the ruleset travels. The forced output style, the core, the turn reminder,
-the self-update, the guards, the thirteen commands and the audit agent are Claude
+the self-update, the guards, the fourteen commands and the audit agent are Claude
 Code plugin machinery; in another agent you get the document and invoke it
 yourself.
 
@@ -302,10 +300,9 @@ holds where the first fades:
 | **Output style**, forced | the system prompt | every request — and Claude Code reminds the model of an active style mid-conversation |
 | **Turn reminder**, from a `UserPromptSubmit` hook | beside your message, unseen in the transcript | every prompt |
 
-The output style carries the ~60-line core, about 1,150 tokens, from one
-file: [`hooks/core.md`](skills/concise/hooks/core.md)
-([`hooks/nucleo.md`](skills/respostas-curtas/hooks/nucleo.md) in the PT port);
-CI fails when the two drift. The reminder is one line, about 300 characters a
+The output style carries the ~95-line core, about 950 tokens, from one
+file: [`hooks/core.md`](skills/concise/hooks/core.md); CI fails when the two
+drift. The reminder is one line, about 750 characters a
 turn. A `SessionStart` hook adds only the line naming your shell, and your core
 override when you wrote one. The full ruleset still lives in the skill, which
 the model invokes when a turn needs more than the core.
@@ -329,9 +326,7 @@ the model invokes when a turn needs more than the core.
 
 **To prune or rewrite the core on your machine**, don't edit the cached copy —
 the self-update overwrites it on the next release. Write
-`~/.claude/concise-core-override.md` instead
-(`~/.claude/respostas-curtas-nucleo-override.md` for the PT port): when that
-file exists the hook injects it at every session start, and it survives every
+`~/.claude/concise-core-override.md` instead: when that file exists the hook injects it at every session start, and it survives every
 update. The forced output style still carries the shipped core, so the override
 lands on top of it — write the rules you change, and say which shipped rule
 each one replaces.
@@ -394,7 +389,7 @@ the invocation itself:
   exact value and caveat survives, and anything the original *owed* (a
   missing cost, a missing test step) is either filled from the original or
   reported as a hole, never invented. Empty arguments target Claude's own
-  previous reply. PT: `/respostas-curtas:reescrever`.
+  previous reply.
 - **`/concise:trim [paths]`** cuts the dead text out of code — the comment
   that repeats the line under it or describes the edit, commented-out code,
   and on screen the second saying of the same thing, the button with no verb,
@@ -402,7 +397,7 @@ the invocation itself:
   visible string changes together with the tests, snapshots and locales that
   match it, or stays and is reported; directives, license headers and
   accessible names always stay. It runs the repo's checks and leaves the
-  commit to you. PT: `/respostas-curtas:enxugar`.
+  commit to you.
 - **`/concise:pr [base] [create]`** drafts the pull request description for
   the current branch from the real diff against `origin/main` (or the base
   you name): what is being solved, what was done, how to test it, with the
@@ -411,46 +406,43 @@ the invocation itself:
   card or issue that motivated the branch when one is known or findable —
   never invented — and delivers the title alongside the body. Draft only,
   unless you type the word `create`: that opens the PR with exactly the
-  drafted title and body and reports the URL. PT: `/respostas-curtas:pr`.
+  drafted title and body and reports the URL.
 - **`/concise:card <subject>`** drafts a task/issue card whose body stands
   alone — current → expected behaviour, exact values, a done criterion — and
   creates it when you name a destination a tool can reach (an MCP board, a
   `gh` repo). Creating, it checks for an existing duplicate first, honours
   the tracker's issue template, sets the destination's fields instead of
-  restating them in the body, and links named blockers. PT:
-  `/respostas-curtas:card`.
+  restating them in the body, and links named blockers.
 - **`/concise:commit [context] [run]`** drafts the commit message for what is
   staged — a title of 72 characters or fewer, in whatever shape the repo log
   already uses, with the area first when the repo holds more than one, and a
   body saying why rather than retelling the diff. Draft only, unless you type
   the word `run`: that commits exactly the drafted message and reports the
-  short sha. PT: `/respostas-curtas:commit`.
+  short sha.
 - **`/concise:comment [subject]`** drafts a review comment, a reply in a
   thread, a note on someone's card, or a message to a person: the claim
   first, then the `path:line` that proves it, whether it blocks stated inside
   the comment, and one point per comment — several points come back as
   several blocks. It reads the line or the thread before writing, and stops
   rather than guess when it can't. Draft only unless you name a destination
-  *and* say to post. PT: `/respostas-curtas:comentario`.
+  *and* say to post.
 - **`/concise:release [version]`** drafts the changelog entry — and the
   release body when you're cutting one — for the commits since the last tag:
   what changes for whoever installs it, what breaks first with the migration
   in the same entry, and the version number alongside the single change that
   forces it. It reads the existing changelog for the shape that file already
-  uses, and never runs `gh release create` or pushes a tag. PT:
-  `/respostas-curtas:release`.
+  uses, and never runs `gh release create` or pushes a tag.
 - **`/concise:plan [subject]`** drafts the plan you are proposing: numbered
   steps that each name the file they touch or the command they run, the risk
   named, what it leaves out, and what it needs from you before step 1 in a
   block of its own. It reads the files the steps point at and marks the ones
   it could not verify. Text only — it does not enter plan mode and does not
-  start step 1. PT: `/respostas-curtas:plano`.
+  start step 1.
 - **`/concise:decide [decision]`** lays out a call that is yours — money,
   risk, anything irreversible — as the live options side by side with what
   each one costs, then still recommends one, argued against the alternatives
   specifically, plus the condition that would flip the recommendation. A cost
   it could not verify comes back marked as unverified rather than rounded off.
-  PT: `/respostas-curtas:decidir`.
 - **`/concise:draw [subject]`** draws the shape in ASCII — arrows labelled
   with what flows and what it costs, boxes labelled by what they do rather
   than by their internal name — after reading the source for every hop. It
@@ -461,13 +453,11 @@ the invocation itself:
   is genuinely two-dimensional. It refuses when the subject does not earn a
   drawing (one function, a three-item list, a picture of a sentence already
   on screen) and says so instead of drawing it anyway.
-  PT: `/respostas-curtas:desenhar`.
 - **`/concise:status [where]`** writes the update: only the delta since the
   last one, bad news on top, whatever is waiting on you in its own block, and
   when the next update lands. It finds the previous update and checks what
   actually moved — `git log`, the CI run — instead of recalling it. Draft
-  only; naming a channel is not permission to post. PT:
-  `/respostas-curtas:status`.
+  only; naming a channel is not permission to post.
 - **`/concise:handoff [who]`** hands the work over — the exact opposite of a
   status update, which is why it is a separate command. Where a status drops
   what the reader already has, a handoff assumes they have nothing: the
@@ -476,14 +466,13 @@ the invocation itself:
   full** rather than referred to; the traps that only you can name; what was
   decided and why; and the exact command that resumes the work. It reads
   `git status`, the log and the open PRs instead of recalling them. Draft
-  only; naming who picks it up is not permission to send it. PT:
-  `/respostas-curtas:passagem`.
+  only; naming who picks it up is not permission to send it.
 - **`/concise:audit [target]`** runs the audit agent on a draft, a file path,
   or a PR or issue body it fetches, and relays the report as it comes back —
   verdict line, numbered violations, holes — followed by one line with the
   `/concise:rewrite` call that would fix them. It never rewrites, never edits
-  the file, and never posts a correction. PT: `/respostas-curtas:auditar`.
-- **The `audit` agent** (PT: `auditar`) checks a draft against the checklist
+  the file, and never posts a correction.
+- **The `audit` agent** checks a draft against the checklist
   and returns only the violations — quoted line, rule, one-line fix — plus
   required content that is missing. It never rewrites; ask for it when you
   want the diagnosis without the surgery: *"run the audit agent on this
@@ -539,15 +528,15 @@ falls behind.
 
 | Tool | What you copy | What it gives you |
 |---|---|---|
-| **Cursor** | `ports/en/cursor/rules/` and `ports/en/cursor/commands/` | the core in every request through `alwaysApply: true`, the full ruleset and the six surfaces pulled in when they match, and the thirteen commands under `/` |
+| **Cursor** | `ports/en/cursor/rules/` and `ports/en/cursor/commands/` | the core in every request through `alwaysApply: true`, the full ruleset and the six surfaces pulled in when they match, and the fourteen commands under `/` |
 | **Codex, Copilot, Zed, Gemini CLI, Windsurf, Aider, Jules** | `ports/en/AGENTS.md` and the `concise/` folder beside it | the core always on, and a table naming the file to read for anything longer |
 | **ChatGPT** | one file into custom instructions, one into a project or a custom GPT | the style on every reply, and the commands as typed triggers |
 
 **The commands travel with them**, minus the plugin prefix: `/pr`, `/card`,
 `/commit`, `/comment`, `/release`, `/plan`, `/decide`, `/draw`, `/status`,
-`/handoff`, `/rewrite`, `/trim` and `/audit` — the same thirteen described
-above, as files Cursor lists when you type `/`, and as triggers the ChatGPT
-instructions define.
+`/handoff`, `/rewrite`, `/trim`, `/audit` and `/woman` — the same fourteen
+described above, as files Cursor lists when you type `/`, and, all but
+`/woman`, as triggers the ChatGPT instructions define.
 
 **Three shapes rather than one, because the targets differ.** Cursor reads one
 `.mdc` per rule and one file per command, and ChatGPT's custom-instructions box
@@ -562,18 +551,9 @@ commands and what replaces each of them.
 
 ## Languages
 
-| Skill | Language | Plugin name | Invoke |
-|---|---|---|---|
-| [`skills/concise`](skills/concise/SKILL.md) | English | `concise` | `/concise:concise` |
-| [`skills/respostas-curtas`](skills/respostas-curtas/SKILL.md) | Portuguese (BR) | `respostas-curtas` | `/respostas-curtas:respostas-curtas` |
-
-Installed by copy rather than as a plugin, they invoke unprefixed: `/concise`
-and `/respostas-curtas`.
-
-**Install one, not both.** They're the same ruleset and would compete, and each
-ships its own always-on hook, so both together inject the core into context
-twice. The rules are about structure, not vocabulary, so a translation is a
-faithful port rather than a rewrite. Ports to other languages are welcome.
+The plugin ships in English and replies in the language you write in: the
+rules shape a reply, and a shape needs no translation. Installed by copy
+rather than as a plugin, it invokes unprefixed: `/concise`.
 
 ## Uninstall
 
@@ -605,8 +585,8 @@ that reads well and changes nothing. Every rule in it has to clear two tests:
 `"Be brief"` fails both and is already implicit in every model's instructions.
 That's why it isn't in the skill.
 
-The rules are also measured, not only argued. CI holds the two ports to
-structural parity and refuses a plugin change that doesn't bump its version;
+The rules are also measured, not only argued. CI refuses a plugin change that
+doesn't bump its version;
 [`evals/`](evals/README.md) runs judged cases against the ruleset — what each
 case discriminates, and when it was last measured, is in its README — and
 [`scripts/test-hooks.sh`](scripts/test-hooks.sh) exercises every hook without

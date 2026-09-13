@@ -4,7 +4,6 @@
 # Two API calls per case.
 #
 #   bash evals/run.sh                          # all cases, EN skill
-#   SKILL=respostas-curtas bash evals/run.sh   # the PT port
 #   ONLY=03 bash evals/run.sh                  # one case, by filename fragment
 #   CLAUDE_BIN=./stub bash evals/run.sh        # swap the CLI (used in testing)
 #   CORE=1 bash evals/run.sh                   # judge the always-on core, not the skill
@@ -22,7 +21,6 @@ BIN="${CLAUDE_BIN:-claude}"
 RUNS="${RUNS:-1}"
 SKILL_FILE="$ROOT/skills/$SKILL/SKILL.md"
 CORE_FILE="$ROOT/skills/$SKILL/hooks/core.md"
-[ -f "$CORE_FILE" ] || CORE_FILE="$ROOT/skills/$SKILL/hooks/nucleo.md"
 [ -f "$SKILL_FILE" ] || { echo "no such skill: $SKILL_FILE" >&2; exit 2; }
 
 # What the model is given: the full ruleset (default), only the ~60-line core
@@ -103,7 +101,7 @@ run_case () {
   while [ "$attempt" -le "$RUNS" ]; do
 
   # The style and the facts used to travel on the command line, which Windows
-  # caps at 32767 characters. The PT skill reached 31 KB and the suite began
+  # caps at 32767 characters. A skill reached 31 KB and the suite began
   # dying with "Argument list too long" partway through — a ceiling that moves
   # closer every time a rule lands. A file has no such limit.
   printf '%s\n\n%s\n\n%s\n' "$STYLE" \

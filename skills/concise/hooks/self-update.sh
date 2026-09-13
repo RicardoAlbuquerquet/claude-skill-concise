@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Keeps the installed copy following the marketplace — at most one check per
 # day, one at a time, and never twice for the same failure.
-#   $1 = plugin name (concise | respostas-curtas)
+#   $1 = plugin name (concise)
 # Opt out with ~/.claude/.<plugin>-no-self-update.
 plugin="$1"
 dir="$HOME/.claude"
