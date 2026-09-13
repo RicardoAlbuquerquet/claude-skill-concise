@@ -1,4 +1,4 @@
-name: parity
+name: checks
 
 on:
   pull_request:
@@ -6,12 +6,6 @@ on:
     branches: [main]
 
 jobs:
-  parity:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: bash scripts/check-parity.sh
-
   json:
     runs-on: ubuntu-latest
     steps:

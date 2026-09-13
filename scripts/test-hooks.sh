@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Exercises the hook scripts outside a session, with a fake $HOME and a
 # fake `claude` on PATH — no API calls, no writes outside the temp dir.
-# Runs the EN copies; the PT ones are byte-identical (check-parity enforces).
 cd "$(dirname "$0")/.." || exit 1
 REPO=$PWD
 G="$REPO/skills/concise/hooks/credit-guard.sh"
@@ -158,7 +157,7 @@ echo "--- boas-vindas cita todo comando"
 # O texto de boas-vindas do notices.sh e um mapa do plugin, e ele envelheceu
 # calado quando o :handoff entrou. Todo arquivo em commands/ tem que aparecer
 # nele, entao um comando novo quebra este teste em vez de sair do mapa.
-for port in concise respostas-curtas; do
+for port in concise; do
   hj="$REPO/skills/$port/hooks/hooks.json"
   faltando=""
   for cmd in "$REPO/skills/$port/commands/"*.md; do
@@ -172,7 +171,7 @@ echo "--- comando aponta para secao que existe"
 # Comando diz "siga a secao X das regras". Quando a secao e renomeada, a
 # referencia envelhece calada e o comando manda ler o que nao existe mais —
 # aconteceu tres vezes entre 1.32.0 e 1.41.0.
-for port in concise respostas-curtas; do
+for port in concise; do
   secoes="$FH/secoes-$port.txt"
   sed -n 's/^###* //p' "$REPO/skills/$port/SKILL.md" | tr -d '\r' > "$secoes"
   mortas=""
@@ -192,7 +191,7 @@ echo "--- frontmatter de comando parseia"
 # abrindo item e token reservado: o parser desiste e o comando carrega com
 # metadata vazia — sem descricao e sem dica de argumento na lista de comandos,
 # calado. Foi assim que /concise:pr e :commit ficaram sem descricao.
-for port in concise respostas-curtas; do
+for port in concise; do
   cruas=$(grep -l -E '^(description|argument-hint): \[' "$REPO/skills/$port/commands/"*.md 2>/dev/null | while read -r f; do basename "$f"; done | tr '\n' ' ')
   [ -z "$cruas" ] && { pass=$((pass+1)); echo "ok    frontmatter de $port sem sequencia crua"; } || { fail=$((fail+1)); echo "FALHA frontmatter nao citado em $port: $cruas"; }
 done
@@ -244,13 +243,23 @@ rm "$FH/.claude/.concise-no-turn-reminder"
 out=$(printf '%s' '{}' | HOME="$FH" CONCISE_NO_TURN_REMINDER=1 bash "$TR" "X" .concise-no-turn-reminder)
 [ -z "$out" ] && ok "lembrete: opt-out pela variavel de ambiente" || ko "lembrete ignorou a variavel"
 
-for port in concise respostas-curtas; do
+for port in concise; do
   grep -q '"UserPromptSubmit"' "$REPO/skills/$port/hooks/hooks.json" &&
     grep -q 'hooks/turn-reminder.sh' "$REPO/skills/$port/hooks/hooks.json" &&
     ok "hooks.json de $port registra o lembrete" || ko "hooks.json de $port sem o lembrete"
   style=$(ls "$REPO/skills/$port/output-styles/"*.md)
   awk '/^---$/{n++; next} n==1' "$style" | tr -d '\r' | grep -qx 'force-for-plugin: true' &&
     ok "output style de $port e forcado" || ko "output style de $port nao tem force-for-plugin: true"
+  # O output style e o hooks/core.md levam o mesmo nucleo por dois caminhos:
+  # divergindo, a sessao segue um e a skill audita pelo outro.
+  tr -d '\r' < "$style" | awk 'BEGIN{n=0} /^---$/{n++; next} n>=2' | sed '/./,$!d' |
+    diff -q - <(tr -d '\r' < "$REPO/skills/$port/hooks/core.md") >/dev/null &&
+    ok "output style de $port igual ao hooks/core.md" || ko "output style de $port difere do hooks/core.md"
+  # O card do marketplace e o que se le antes de instalar, e ja ficou para tras
+  # da descricao do proprio plugin sem ninguem notar.
+  mkt=$(perl -MJSON::PP -e 'binmode STDOUT, ":utf8"; local $/; my $j = decode_json(<STDIN>); print map { $_->{description} } grep { $_->{name} eq $ARGV[0] } @{$j->{plugins}}' "$port" < "$REPO/.claude-plugin/marketplace.json")
+  plg=$(perl -MJSON::PP -e 'binmode STDOUT, ":utf8"; local $/; print decode_json(<STDIN>)->{description}' < "$REPO/skills/$port/.claude-plugin/plugin.json")
+  [ -n "$mkt" ] && [ "$mkt" = "$plg" ] && ok "descricao do marketplace igual a do plugin $port" || ko "descricao do marketplace difere da do plugin $port"
   # O texto do lembrete viaja entre aspas simples na linha do hooks.json: um
   # apostrofo nele quebra o bash, e o hook falha calado em todo turno.
   cmd=$(perl -MJSON::PP -e 'binmode STDOUT, ":utf8"; local $/; my $j = decode_json(<STDIN>); print $j->{hooks}{UserPromptSubmit}[0]{hooks}[0]{command}' < "$REPO/skills/$port/hooks/hooks.json")
@@ -263,7 +272,7 @@ echo "--- skill: arquivos de referencia e tamanho"
 # os comandos citam. Nome errado deixa o comando sem regra, calado. E o
 # SKILL.md chegou a 696 linhas: acima de 500 a recomendacao e dividir, e
 # depois da compactacao so os primeiros 5.000 tokens da skill voltam.
-for port in concise respostas-curtas; do
+for port in concise; do
   dir="$REPO/skills/$port"
   faltando=""
   for ref in $(grep -oh 'refer[a-z]*/[a-z-]*\.md' "$dir/SKILL.md" "$dir/commands/"*.md "$dir/agents/"*.md | sort -u); do

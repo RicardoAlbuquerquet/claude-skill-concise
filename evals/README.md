@@ -21,7 +21,6 @@ the long form works:
 
 | Variable | What it does |
 |---|---|
-| `SKILL=respostas-curtas` | runs the PT port (rubrics check structure, not language) |
 | `CORE=1` | judges the ~60-line core the output style carries, not the full skill |
 | `BASELINE=1` | no style at all — see below |
 | `RUNS=3` | three attempts per case; anything short of all-pass reports `FLAKY` |
@@ -117,8 +116,8 @@ plugin-less `settings.json` into a scratch directory and point
 from a directory with no `CLAUDE.md` above it, too: from anywhere under your
 home, the walk up the parent directories still finds `~/.claude/CLAUDE.md`.
 
-Not covered yet: plans, the expand-on-request valve, and the PT-only wording
-rules. Those are the next cases to write.
+Not covered yet: plans and the expand-on-request valve. Those are the next
+cases to write.
 
 **Case 33 found a rule that was missing rather than a rubric to loosen.** Its
 facts dangle praise the reviewer genuinely means, and two runs in three the

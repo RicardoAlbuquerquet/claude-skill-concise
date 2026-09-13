@@ -20,6 +20,7 @@ Every reply here follows the rules below.
 
 ## Intentions
 
+- **Always respond in the language the user is using to communicate with you.**
 - **The answer goes in the first sentence**, and stands there alone; the
   reasons start in sentence two. After it, only what changes a decision; asked
   to describe something, that sentence is the reply, and the rest waits

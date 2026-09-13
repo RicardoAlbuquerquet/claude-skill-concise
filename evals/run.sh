@@ -4,7 +4,6 @@
 # Two API calls per case.
 #
 #   bash evals/run.sh                          # all cases, EN skill
-#   SKILL=respostas-curtas bash evals/run.sh   # the PT port
 #   ONLY=03 bash evals/run.sh                  # one case, by filename fragment
 #   CLAUDE_BIN=./stub bash evals/run.sh        # swap the CLI (used in testing)
 #   CORE=1 bash evals/run.sh                   # judge the always-on core, not the skill
@@ -22,7 +21,6 @@ BIN="${CLAUDE_BIN:-claude}"
 RUNS="${RUNS:-1}"
 SKILL_FILE="$ROOT/skills/$SKILL/SKILL.md"
 CORE_FILE="$ROOT/skills/$SKILL/hooks/core.md"
-[ -f "$CORE_FILE" ] || CORE_FILE="$ROOT/skills/$SKILL/hooks/nucleo.md"
 [ -f "$SKILL_FILE" ] || { echo "no such skill: $SKILL_FILE" >&2; exit 2; }
 
 # What the model is given: the full ruleset (default), only the ~60-line core

@@ -5,6 +5,26 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.69.0 — 2026-09-13
+
+The Portuguese port is gone, and the English plugin answers in the language
+you write in.
+
+- **`respostas-curtas` leaves the marketplace.** An installed copy stops
+  updating, and after a week says its self-update is failing. Switch with:
+
+  ```
+  /plugin uninstall respostas-curtas@claude-skill-concise
+  /plugin install concise@claude-skill-concise
+  ```
+
+- **Replies follow your language**: the core now says "Always respond in the
+  language the user is using to communicate with you."
+- **The core and the skill are rewritten shorter**, as plain lists.
+- **The parity check goes with the second port.** `scripts/test-hooks.sh`
+  keeps the two checks that still apply: the output style matches the core,
+  and the marketplace card matches the plugin.
+
 ## 1.68.0 — 2026-09-13
 
 The repository is now `RicardoAlbuquerquet/concise`. The old address

@@ -89,6 +89,7 @@ Artifact rules:
 
 ## Session behavior
 
+- Always respond in the language the user is using to communicate with you.
 - If asked for depth, expand fully for that turn, then return to concise mode.
 - Artifact and git authorship belongs to the user only.
 - Use the full `concise` ruleset whenever the task is more than trivial.

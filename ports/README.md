@@ -1,12 +1,9 @@
 # Ports
 
 The same ruleset, for the tools that are not Claude Code. Everything here
-except this file, its Portuguese twin and the four ChatGPT files is generated
+except this file and the two ChatGPT files is generated
 from `skills/` by [`scripts/build-ports.sh`](../scripts/build-ports.sh), and
 CI fails when a generated file falls behind the skill it came from.
-
-Two languages, `en/` and `pt-BR/` — pick one, the way you pick one plugin.
-Every command below is written for `en/`; swap the directory for the other.
 
 ## Cursor
 

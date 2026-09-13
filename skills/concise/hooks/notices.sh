@@ -3,7 +3,7 @@
 # installed, the version the self-update just applied, and a weekly warning
 # when that update has been failing. Emits systemMessage JSON, so it lands on
 # the user's screen instead of in the model's context.
-#   $1 = plugin name (concise | respostas-curtas)
+#   $1 = plugin name (concise)
 #   $2 = welcome text, shown once
 #   $3 = weekly warning text, "%s" replaced by the update command
 plugin="$1"
