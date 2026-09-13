@@ -99,4 +99,4 @@ deste:
 
 Com esses arquivos ausentes, as intenções acima continuam valendo.
 
-Fonte, e o plugin de Claude Code de onde isto é gerado: https://github.com/RicardoAlbuquerquet/claude-skill-concise
+Fonte, e o plugin de Claude Code de onde isto é gerado: https://github.com/RicardoAlbuquerquet/concise

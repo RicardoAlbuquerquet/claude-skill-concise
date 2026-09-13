@@ -96,4 +96,4 @@ every surface that leaves the conversation, has its own file next to this one:
 
 With those files absent, the intentions above still govern.
 
-Source, and the Claude Code plugin these are generated from: https://github.com/RicardoAlbuquerquet/claude-skill-concise
+Source, and the Claude Code plugin these are generated from: https://github.com/RicardoAlbuquerquet/concise

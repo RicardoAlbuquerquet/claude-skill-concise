@@ -14,7 +14,7 @@ set -u
 
 cd "$(dirname "$0")/.." || exit 1
 ROOT=$PWD
-URL=https://github.com/RicardoAlbuquerquet/claude-skill-concise
+URL=https://github.com/RicardoAlbuquerquet/concise
 
 MODE=write
 [ "${1:-}" = "--check" ] && MODE=check

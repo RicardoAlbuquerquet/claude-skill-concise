@@ -6,8 +6,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/RicardoAlbuquerquet/claude-skill-concise/actions/workflows/parity.yml"><img alt="parity" src="https://img.shields.io/github/actions/workflow/status/RicardoAlbuquerquet/claude-skill-concise/parity.yml?branch=main&label=parity&style=flat-square&labelColor=24292f"></a>
-  <a href="CHANGELOG.md"><img alt="version" src="https://img.shields.io/badge/dynamic/json?label=version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRicardoAlbuquerquet%2Fclaude-skill-concise%2Fmain%2Fskills%2Fconcise%2F.claude-plugin%2Fplugin.json&style=flat-square&labelColor=24292f&color=ee4a1f"></a>
+  <a href="https://github.com/RicardoAlbuquerquet/concise/actions/workflows/parity.yml"><img alt="parity" src="https://img.shields.io/github/actions/workflow/status/RicardoAlbuquerquet/concise/parity.yml?branch=main&label=parity&style=flat-square&labelColor=24292f"></a>
+  <a href="CHANGELOG.md"><img alt="version" src="https://img.shields.io/badge/dynamic/json?label=version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRicardoAlbuquerquet%2Fconcise%2Fmain%2Fskills%2Fconcise%2F.claude-plugin%2Fplugin.json&style=flat-square&labelColor=24292f&color=ee4a1f"></a>
   <a href="LICENSE"><img alt="license: MIT" src="https://img.shields.io/badge/license-MIT-57606a?style=flat-square&labelColor=24292f"></a>
   <a href="README.pt-BR.md"><img alt="Leia em português" src="https://img.shields.io/badge/leia_em-português-57606a?style=flat-square&labelColor=24292f"></a>
 </p>
@@ -33,7 +33,7 @@
 Two commands, typed inside a running Claude Code session:
 
 ```
-/plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
+/plugin marketplace add RicardoAlbuquerquet/concise
 ```
 
 ```
@@ -52,7 +52,7 @@ giveaway. From a terminal, the `claude` CLI does the same on macOS, Linux and
 Windows:
 
 ```bash
-claude plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
+claude plugin marketplace add RicardoAlbuquerquet/concise
 ```
 
 ```bash
@@ -129,21 +129,21 @@ and keeps the unprefixed `/concise`. This is the path that differs per platform.
 Clone first, on any of the three:
 
 ```bash
-git clone https://github.com/RicardoAlbuquerquet/claude-skill-concise.git
+git clone https://github.com/RicardoAlbuquerquet/concise.git
 ```
 
 **macOS and Linux** — also Git Bash or WSL on Windows:
 
 ```bash
 mkdir -p ~/.claude/skills
-cp -r claude-skill-concise/skills/concise ~/.claude/skills/
+cp -r concise/skills/concise ~/.claude/skills/
 ```
 
 **Windows**, in PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force -Path $HOME\.claude\skills | Out-Null
-Copy-Item -Recurse claude-skill-concise\skills\concise $HOME\.claude\skills\
+Copy-Item -Recurse concise\skills\concise $HOME\.claude\skills\
 ```
 
 Project-level instead, committed with the repo so your team shares it: create
@@ -153,7 +153,7 @@ Project-level instead, committed with the repo so your team shares it: create
 `SKILL.md` files — the ruleset travels through [skills.sh](https://skills.sh):
 
 ```bash
-npx skills add RicardoAlbuquerquet/claude-skill-concise
+npx skills add RicardoAlbuquerquet/concise
 ```
 
 Only the ruleset travels. The forced output style, the core, the turn reminder,

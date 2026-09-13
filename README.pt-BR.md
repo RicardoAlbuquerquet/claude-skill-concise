@@ -6,8 +6,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/RicardoAlbuquerquet/claude-skill-concise/actions/workflows/parity.yml"><img alt="paridade" src="https://img.shields.io/github/actions/workflow/status/RicardoAlbuquerquet/claude-skill-concise/parity.yml?branch=main&label=paridade&style=flat-square&labelColor=24292f"></a>
-  <a href="CHANGELOG.md"><img alt="versão" src="https://img.shields.io/badge/dynamic/json?label=vers%C3%A3o&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRicardoAlbuquerquet%2Fclaude-skill-concise%2Fmain%2Fskills%2Frespostas-curtas%2F.claude-plugin%2Fplugin.json&style=flat-square&labelColor=24292f&color=ee4a1f"></a>
+  <a href="https://github.com/RicardoAlbuquerquet/concise/actions/workflows/parity.yml"><img alt="paridade" src="https://img.shields.io/github/actions/workflow/status/RicardoAlbuquerquet/concise/parity.yml?branch=main&label=paridade&style=flat-square&labelColor=24292f"></a>
+  <a href="CHANGELOG.md"><img alt="versão" src="https://img.shields.io/badge/dynamic/json?label=vers%C3%A3o&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2FRicardoAlbuquerquet%2Fconcise%2Fmain%2Fskills%2Frespostas-curtas%2F.claude-plugin%2Fplugin.json&style=flat-square&labelColor=24292f&color=ee4a1f"></a>
   <a href="LICENSE"><img alt="licença: MIT" src="https://img.shields.io/badge/licen%C3%A7a-MIT-57606a?style=flat-square&labelColor=24292f"></a>
   <a href="README.md"><img alt="Read in English" src="https://img.shields.io/badge/read_in-English-57606a?style=flat-square&labelColor=24292f"></a>
 </p>
@@ -33,7 +33,7 @@
 Dois comandos, digitados dentro de uma sessão aberta do Claude Code:
 
 ```
-/plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
+/plugin marketplace add RicardoAlbuquerquet/concise
 ```
 
 ```
@@ -51,7 +51,7 @@ zsh, falham com `command not found` — a `/` na frente entrega. De um terminal,
 CLI `claude` faz o mesmo no macOS, Linux e Windows:
 
 ```bash
-claude plugin marketplace add RicardoAlbuquerquet/claude-skill-concise
+claude plugin marketplace add RicardoAlbuquerquet/concise
 ```
 
 ```bash
@@ -130,21 +130,21 @@ o `/respostas-curtas` sem prefixo. Esse é o caminho que muda por plataforma.
 Clone primeiro, em qualquer uma das três:
 
 ```bash
-git clone https://github.com/RicardoAlbuquerquet/claude-skill-concise.git
+git clone https://github.com/RicardoAlbuquerquet/concise.git
 ```
 
 **macOS e Linux** — também Git Bash ou WSL no Windows:
 
 ```bash
 mkdir -p ~/.claude/skills
-cp -r claude-skill-concise/skills/respostas-curtas ~/.claude/skills/
+cp -r concise/skills/respostas-curtas ~/.claude/skills/
 ```
 
 **Windows**, no PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force -Path $HOME\.claude\skills | Out-Null
-Copy-Item -Recurse claude-skill-concise\skills\respostas-curtas $HOME\.claude\skills\
+Copy-Item -Recurse concise\skills\respostas-curtas $HOME\.claude\skills\
 ```
 
 Em nível de projeto, versionado com o repositório para o time compartilhar:
@@ -154,7 +154,7 @@ crie `.claude/skills/` na raiz do projeto e copie para dentro.
 arquivos `SKILL.md` — as regras viajam pelo [skills.sh](https://skills.sh):
 
 ```bash
-npx skills add RicardoAlbuquerquet/claude-skill-concise
+npx skills add RicardoAlbuquerquet/concise
 ```
 
 Só as regras viajam. O output style forçado, o núcleo, o lembrete por turno, o

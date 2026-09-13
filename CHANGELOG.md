@@ -5,6 +5,17 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.68.0 — 2026-09-13
+
+The repository is now `RicardoAlbuquerquet/concise`. The old address
+redirects, so an installed copy keeps updating, and nothing in the plugin
+changes name: it still installs as `concise@claude-skill-concise`.
+
+- **Links point at the new address**: both READMEs, `homepage` and
+  `repository` in both `plugin.json`, and the generated `AGENTS.md`.
+- **The manual install copies from `concise/`**, the folder `git clone` now
+  creates.
+
 ## 1.67.0 — 2026-09-12
 
 Asked to describe something, the reply still came back with the right
