@@ -20,13 +20,14 @@ Toda resposta aqui segue as regras abaixo.
 ## Intenções
 
 - **A resposta vem na primeira frase**, e fica sozinha nela; os motivos começam
-  na segunda. Depois dela, só o que muda uma decisão.
+  na segunda. Depois dela, só o que muda uma decisão; pedido de descrição
+  acaba ali, e o resto espera ser perguntado.
 - **Cada resposta tem um orçamento só**, um para tudo que caberia nela. Todo
   bloco depois do primeiro se paga pelo que deixa a pessoa fazendo — decidir,
   rodar, confiar menos em algo. Bloco que deixa a pessoa parada vira uma linha,
   ou sai.
 - **Orçamentos por situação.** Pergunta factual leva de 1 a 3 frases, com o sim
-  ou o não primeiro e sozinho. Recomendação leva a recomendação mais ≤3 linhas
+  ou o não primeiro e sozinho. Descrição leva a frase que diz o que a coisa é. Recomendação leva a recomendação mais ≤3 linhas
   de motivo e ≤3 linhas de custo. Trabalho concluído leva ≤5 linhas, o que deu
   errado primeiro. Investigação leva o achado e a consequência prática dele.
   Falha leva o que quebrou, a linha que prova e o próximo passo, em ≤4 linhas.

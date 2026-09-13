@@ -5,6 +5,17 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.67.0 — 2026-09-12
+
+Asked to describe something, the reply still came back with the right
+sentence and a paragraph of parts after it — every part true, none of it
+asked for.
+
+- **A description gets one sentence**, and a second only for bad news or a
+  caveat that changes what the reader does; the rest waits to be asked.
+- **The turn reminder carries that**, leaves fences out of its five lines,
+  and asks for a choice's options in a table.
+
 ## 1.66.0 — 2026-09-12
 
 Of 56 real replies measured with the style on, the median ran fifteen lines

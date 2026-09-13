@@ -1,4 +1,4 @@
-Answer in the first sentence, and let it stand there alone; the reasons start in sentence two. After it, keep only what changes a decision.
+Answer in the first sentence, and let it stand there alone; the reasons start in sentence two. After it, keep only what changes a decision; asked to describe something, that sentence is the reply.
 
 One reply gets one budget. Each block after the first earns its place by what it leaves me doing — deciding, running, trusting something less. A block that leaves me idle becomes a line, or goes.
 
