@@ -21,8 +21,10 @@ the long form works:
 
 | Variable | What it does |
 |---|---|
-| `CORE=1` | judges the ~60-line core the output style carries, not the full skill |
+| `CORE=1` | judges only the core the output style carries, not the full skill |
 | `BASELINE=1` | no style at all — see below |
+| `PLUGIN=1` | the plugin as an install delivers it: output style, turn reminder, hooks — see below |
+| `RESPONSES=out` | keeps every answer in `out/`, one file per case and attempt |
 | `RUNS=3` | three attempts per case; anything short of all-pass reports `FLAKY` |
 | `MODEL=claude-sonnet-5` | pins the model, so two runs are comparable |
 | `JOBS=1` | serial, for a rate limit or a log you want to read as it goes |
@@ -40,63 +42,126 @@ measures the model's own habits, not the rules, and proves nothing when it
 passes with the skill. Its exit code is always 0 — the pass count is the
 signal, and a *low* one is the good news.
 
+**`PLUGIN=1` measures what an install delivers.** The other modes paste text
+into the system prompt; this one loads `skills/concise` with `--plugin-dir` on
+the answer call, so the forced output style, the turn reminder and the
+SessionStart line all run, and the judge runs without them. The hooks get a
+scratch `HOME`, and the mode refuses to start without the isolated
+`CLAUDE_CONFIG_DIR` that the baseline needs too — see
+[the last full measurement](#last-full-measurement).
+
 The style and the facts reach the CLI through `--append-system-prompt-file`,
   not the command line. That is not a detail: Windows caps a command line at
 32767 characters, a skill past 31 KB made the full run die
 at case 17 with "Argument list too long" before the switch. A CLI old enough
 to lack the flag still works and says so.
 
-**Cost:** two API calls per case per run, so the default suite is 70 calls
+**Cost:** two API calls per case per run, so the default suite is 80 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
 ## Rule → case
 
 The map is what makes an edited rule regress instead of silently drifting: if
-you change a rule here, change the rubric that tests it.
+you change a rule here, change the rubric that tests it. The two scores come
+from [the last full measurement](#last-full-measurement): a case that passes
+with no style measures the model's own habits, and a plugin score in bold is
+lower than no style's.
 
-| Rule (`SKILL.md` or its reference file) | Case | Discriminates |
+| Rule (`SKILL.md` or its reference file) | Case | No style | Plugin |
+|---|---|---|---|
+| Answer in the first sentence; no preamble | 01, and every other rubric | 1/3 | 3/3 |
+| Completed work ≤5 lines, gate result | 02 | 0/3 | 3/3 |
+| Investigation: finding + consequence | 03 | 3/3 | 3/3 |
+| Always keep: caveat that changes what the user does | 04 | 3/3 | 3/3 |
+| Recommendation carries its cost | 05 | 3/3 | 3/3 |
+| The user's choice: options side by side + a recommendation | 06 | 0/3 | 3/3 |
+| A runnable command gets its own `bash` fence | 07 | 3/3 | 3/3 |
+| Overloaded opening: verdict first, support second | 08 | 3/3 | 3/3 |
+| Commit message: title says what changes, body says why | 09 | 2/3 | 3/3 |
+| PR description: test steps, unverified named | 10 | 0/3 | 0/3 |
+| Card: stands alone, narrow-panel structure | 11 | 0/3 | 0/3 |
+| Status update: only the delta | 12 | 3/3 | 3/3 |
+| Bad news; the second question in a two-question message | 13 | 3/3 | 3/3 |
+| Draw the shape; gloss by consequence | 14 | 0/3 | 0/3 |
+| Correcting yourself: no story of the mistake, no re-announcing | 15 | 1/3 | 2/3 |
+| Commit lands inside the repo log's convention | 16 | 3/3 | 3/3 |
+| Several deliverables read as a markdown list | 17 | 0/3 | 0/3 |
+| A list item stays an item, not a packed paragraph | 18 | 2/3 | **0/3** |
+| What waits on the reader sits apart from what informs them | 19 | 2/3 | **1/3** |
+| A name out of the code stays only if the reader will use it | 20 | 0/3 | 0/3 |
+| A fence is tagged for the shell the reader will paste into | 21 | 3/3 | 3/3 |
+| The outcome, not the itinerary of the work | 22 | 2/3 | **1/3** |
+| A table column with one repeated value is not a column | 23 | 0/3 | 3/3 |
+| The reader's choice still gets a recommendation, at the end of a long report | 24 | 1/3 | 3/3 |
+| A note on a card is the summary of the summary | 25 | 3/3 | 3/3 |
+| PR title: the area first, the state after the merge | 26 | 3/3 | **1/3** |
+| Drawing craft: one glyph set, nothing wraps, labels hang off their box | 27 | 0/3 | 0/3 |
+| One hanging note, and it sits on the finding | 28 | 0/3 | 0/3 |
+| One gloss per response; the rest of the terms become what they do | 29 | 2/3 | 2/3 |
+| One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | 0/3 | 3/3 |
+| PR description inside a screenful, and the cut comes out of what repeats | 31 | 0/3 | 0/3 |
+| Commit body: six lines at most, no investigation, no list of what was run | 32 | 2/3 | 3/3 |
+| Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | 0/3 | 0/3 |
+| Card layout: two paragraphs, then labelled lines, spans off the prose | 34 | 0/3 | 0/3 |
+| The delivered artifact is the answer; no tour of it, no praise for the tooling | 35 | 0/3 | 2/3 |
+| A comment says only what the code can't; no docstring retelling the signature, no banner | 36 | 0/3 | 3/3 |
+| A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | 0/3 | 2/3 |
+| PR description: the words are the reviewer's, and a name only the repo knows becomes what it does | 39 | 0/3 | 0/3 |
+| Status update: a background result is only its delta — the unchanged queue and risk stay unsaid | 40 | 0/3 | 1/3 |
+| A description is one sentence, plus the one thing the reader acts on | 41 | 0/3 | 3/3 |
+
+## Last full measurement
+
+Version 1.69.0 on 2026-09-13: `claude-opus-5` answering, `claude-haiku-4-5`
+judging, three runs per case in each arm — 480 calls.
+
+Both arms need an isolated config, or the plugin gets graded against itself: a
+global `CLAUDE.md` carrying the style, an installed copy's hooks and its forced
+output style all reach `claude -p`. Copy `~/.claude/.credentials.json` and a
+plugin-less `settings.json` into a scratch directory such as `~/.claude-eval`
+— an empty directory alone loses the login. Run from a directory with no
+`CLAUDE.md` above it, such as `/tmp`: from anywhere under your home, the walk
+up the parent directories still finds `~/.claude/CLAUDE.md`. On Windows that
+rules out Git Bash's `/tmp`, which lives inside your profile; a folder outside
+`C:\Users` works.
+
+```bash
+CLAUDE_CONFIG_DIR=~/.claude-eval BASELINE=1 RUNS=3 MODEL=claude-opus-5 RESPONSES=out/none bash ~/concise/evals/run.sh
+```
+
+```bash
+CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=3 MODEL=claude-opus-5 RESPONSES=out/plugin bash ~/concise/evals/run.sh
+```
+
+| | No style | Plugin |
 |---|---|---|
-| Answer in the first sentence; no preamble | 01, and every other rubric | no |
-| Completed work ≤5 lines, gate result | 02 | no |
-| Investigation: finding + consequence | 03 | no |
-| Always keep: caveat that changes what the user does | 04 | no |
-| Recommendation carries its cost | 05 | no |
-| The user's choice: options side by side + a recommendation | 06 | **yes** |
-| A runnable command gets its own `bash` fence | 07 | **yes** |
-| Overloaded opening: verdict first, support second | 08 | no |
-| Commit message: title says what changes, body says why | 09 | **yes** |
-| PR description: test steps, unverified named | 10 | no |
-| Card: stands alone, narrow-panel structure | 11 | **yes** |
-| Status update: only the delta | 12 | no |
-| Bad news; the second question in a two-question message | 13 | no |
-| Draw the shape; gloss by consequence | 14 | **yes** |
-| Correcting yourself: no story of the mistake, no re-announcing | 15 | no |
-| Commit lands inside the repo log's convention | 16 | no |
-| Several deliverables read as a markdown list | 17 | **yes** |
-| A list item stays an item, not a packed paragraph | 18 | **yes** |
-| What waits on the reader sits apart from what informs them | 19 | **yes** |
-| A name out of the code stays only if the reader will use it | 20 | **yes** |
-| A fence is tagged for the shell the reader will paste into | 21 | **yes** |
-| The outcome, not the itinerary of the work | 22 | weakly |
-| A table column with one repeated value is not a column | 23 | **yes** |
-| The reader's choice still gets a recommendation, at the end of a long report | 24 | weakly |
-| A note on a card is the summary of the summary | 25 | not measured |
-| PR title: the area first, the state after the merge | 26 | not measured |
-| Drawing craft: one glyph set, nothing wraps, labels hang off their box | 27 | not measured |
-| One hanging note, and it sits on the finding | 28 | not measured |
-| One gloss per response; the rest of the terms become what they do | 29 | not measured |
-| One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | not measured |
-| PR description inside a screenful, and the cut comes out of what repeats | 31 | not measured |
-| Commit body: six lines at most, no investigation, no list of what was run | 32 | not measured |
-| Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | not measured |
-| Card layout: two paragraphs, then labelled lines, spans off the prose | 34 | not measured |
-| The delivered artifact is the answer; no tour of it, no praise for the tooling | 35 | not measured |
-| A comment says only what the code can't; no docstring retelling the signature, no banner | 36 | not measured |
-| A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | not measured |
-| PR description: the words are the reviewer's, and a name only the repo knows becomes what it does | 39 | weakly |
-| Status update: a background result is only its delta — the unchanged queue and risk stay unsaid | 40 | **yes** |
-| A description is one sentence, plus the one thing the reader acts on | 41 | **yes** |
+| Runs that pass their rubric | 48 of 120 | 72 of 120 |
+| Cases that pass all three runs | 11 of 40 | 20 of 40 |
+| Words per answer, median / mean | 165 / 178 | 70 / 94 |
+
+Words are counted on the saved answers, the way `wc -w` counts them, and every
+case averaged fewer with the plugin.
+
+**The plugin wins 14 cases, ties 22 and loses 4.** Cases 19 and 22 lose by one
+run, which three runs and a model judge can't tell from noise. Cases 18 and 26
+lose by cutting what the rules keep: 18 dropped exact values from its report
+in two runs, and 26 left the `invoices:` area off a PR title in two, calling
+it a repeat of what the PR list shows.
+
+**Eleven cases fail every run in both arms.** Nine ask for a PR (10, 17, 31,
+39), a card (11, 34), a comment (33) or a drawing (27, 28), and their rules
+arrive with the command that writes each; a case has no tools to run one, so
+this mode measures them without their rules. The other two are plain replies:
+14 named a signature check without saying what it protects, and 20 named a
+table the reader will never open.
+
+**Case 40 went from 3 of 3 on 1.66.0, on 2026-09-12, to 1 of 3.** Both
+failing runs repeat the pending switch, the PR and the load-test risk, none of
+which had changed. It is the first case to re-measure after the next change to
+the core.
+
+## Earlier measurements
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18
@@ -107,14 +172,6 @@ already has by default, and would keep passing if the rule vanished. They are
 not worthless — a default can regress, and a rule that matches the default
 still documents it — but the suite's discriminating power is those ten, and a
 new case should aim to fail at baseline.
-
-The baseline run needs an isolated config, or it grades the skill against
-itself: a global `CLAUDE.md` carrying the style, the plugin's own hooks, and
-since 1.56.0 its forced output style all reach `claude -p`. Copy `~/.claude/.credentials.json` and a
-plugin-less `settings.json` into a scratch directory and point
-`CLAUDE_CONFIG_DIR` at it — an empty directory alone loses the login. Run it
-from a directory with no `CLAUDE.md` above it, too: from anywhere under your
-home, the walk up the parent directories still finds `~/.claude/CLAUDE.md`.
 
 Not covered yet: plans and the expand-on-request valve. Those are the next
 cases to write.
