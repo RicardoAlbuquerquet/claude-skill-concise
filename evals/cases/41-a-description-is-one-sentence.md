@@ -1,4 +1,4 @@
-# How something works — describing a tool fits in five lines
+# Description — what a tool is fits in one sentence
 
 ## Facts
 
@@ -25,10 +25,9 @@ descreva a nossa ferramenta pgshift
 - The first sentence says what `pgshift` does — copies a table into a new
   schema in batches and moves reads over — with no header, list or table
   before it.
-- The response is five lines or fewer, counting every table row and every
-  list item as a line.
-- The stale `pgshift verify` entry in `--help` is there, since it is the one
-  thing the reader would act on.
-- Tests, docs, platforms, the version and the config defaults take one clause
-  between them at most.
+- The response is two sentences at most: what `pgshift` does, and the stale
+  `pgshift verify` entry in `--help`.
+- The stale entry is there, since it is the one thing the reader would act on.
+- No list of commands, and nothing about tests, docs, platforms, the current
+  version or config defaults. The release that removed `verify` may be named.
 - No header and no closing offer.

@@ -62,6 +62,7 @@ que muda uma decisão.
 | Situação | Tamanho |
 |---|---|
 | Pergunta de fato | 1–3 frases; sim ou não primeiro e sozinho, os motivos a partir da segunda frase — premissa falsa ou incerteza real abrem no lugar |
+| Descrição de algo | a frase que diz o que é; uma segunda só para notícia ruim ou ressalva que muda o que a pessoa faz; o resto espera ser perguntado |
 | Recomendação (decisão sua) | recomendação + ≤3 linhas de motivo + ≤3 linhas de custo |
 | Escolha que é do usuário | opções lado a lado + recomendação + ≤3 linhas do porquê ela ganha |
 | Trabalho concluído | o que mudou, onde, gate verde ou vermelho — ≤5 linhas quando é uma coisa só; várias entregas são vários itens, cada um mantido como item mesmo passando de cinco; o que deu errado vem primeiro |

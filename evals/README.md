@@ -97,7 +97,7 @@ you change a rule here, change the rubric that tests it.
 | A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | not measured |
 | PR description: the words are the reviewer's, and a name only the repo knows becomes what it does | 39 | weakly |
 | Status update: a background result is only its delta — the unchanged queue and risk stay unsaid | 40 | **yes** |
-| Most turns fit in five lines: describing a tool is five, and the one thing to act on stays | 41 | weakly |
+| A description is one sentence, plus the one thing the reader acts on | 41 | **yes** |
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18
@@ -235,14 +235,16 @@ left the judge clean. On `claude-opus-5`, 2026-09-12, three runs per arm:
 | Case | No style | Plugin 1.65.0 | Plugin 1.66.0 |
 |---|---|---|---|
 | 40, background result | 0/3 | 0/3 | 3/3 |
-| 41, describing a tool | 0/3, 10–15 lines | 0/3, 9 lines each | 1/3, 5–6 lines |
+| 41, describing a tool | 0/3, 10–15 lines | 0/3, 9 lines each | 2/3, 2 lines each |
 
-The first reminder draft put five lines ahead of everything and cut too deep:
-case 06 lost its options table, 3/3 to 0/3, and case 24 dropped an exact value
-once. Giving five lines to a question, an explanation or a status update
-brought both back to 3/3, and case 41 went from 3/3 to 1/3 for it. Case 18
-fails 0/3 with either plugin, its items packed with parentheticals, so that
-one predates this change.
+The reminder took eight drafts, and the suite is what told them apart. Five
+lines ahead of everything cost case 06 its options table, 3/3 to 0/3, and case
+24 an exact value. One sentence for every question cost 06 the table again and
+case 14 its drawing, so the one sentence went to descriptions alone and a
+choice asks for its table by name. Saying a description's numbers wait dropped
+24's value once more; it now says the rest waits. The last draft re-ran 24
+and 41 only, the one before it 06, and 40 last ran on the third. Cases 18
+and 20 fail 0/3 with either plugin, so both predate this change.
 
 ## Adding one
 

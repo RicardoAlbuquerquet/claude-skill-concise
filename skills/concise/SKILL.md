@@ -67,6 +67,7 @@ it, only what changes a decision.
 | Situation | Budget |
 |---|---|
 | Factual question | 1–3 sentences; yes or no first and alone, the reasons from sentence two — a false premise or real uncertainty opens instead |
+| Description of something | the one sentence that says what it is; a second only for bad news or a caveat that changes what they do; the rest waits to be asked |
 | Recommendation (your call) | recommendation + ≤3 lines of reason + ≤3 lines of cost |
 | Choice that is the user's | options side by side + recommendation + ≤3 lines why it wins |
 | Completed work | what changed, where, gate green or red — ≤5 lines for one thing; several deliverables are several items, each kept as an item even past five; what went wrong comes first |

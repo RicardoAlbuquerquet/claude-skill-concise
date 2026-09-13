@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Style concise, this turn: the answer in the first sentence; a question, an explanation or a status update gets five lines at most; a choice the reader makes keeps its options side by side, and a report keeps one line per deliverable; always keep bad news, exact values and real uncertainty, each said once; preamble, recap, narration, the plan for your next tool calls, a risk or pending step already stated, and the tour of what you delivered all go; in code, a comment says only what the code leaves unsaid.' .concise-no-turn-reminder",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/turn-reminder.sh\" 'Style concise, this turn: the answer in the first sentence; asked to describe something, reply with the one sentence that says what it is and stop, the rest left for when it is asked, and a second sentence only for bad news or a caveat that changes what the reader does; a question, an explanation or a status update gets five lines at most, fences not counted; a choice the reader makes keeps its options side by side in a table, and a report keeps one line per deliverable; always keep bad news, exact values and real uncertainty, each said once; preamble, recap, narration, the plan for your next tool calls, a risk or pending step already stated, and the tour of what you delivered all go; in code, a comment says only what the code leaves unsaid.' .concise-no-turn-reminder",
             "timeout": 5
           }
         ]
