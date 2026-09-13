@@ -252,7 +252,7 @@ for port in concise; do
     ok "output style de $port e forcado" || ko "output style de $port nao tem force-for-plugin: true"
   # O output style e o hooks/core.md levam o mesmo nucleo por dois caminhos:
   # divergindo, a sessao segue um e a skill audita pelo outro.
-  tr -d '\r' < "$style" | awk 'BEGIN{n=0} /^---$/{n++; next} n>=2' | sed '/./,$!d' |
+  tr -d '\r' < "$style" | awk 'n<2 && /^---$/{n++; next} n>=2' | sed '/./,$!d' |
     diff -q - <(tr -d '\r' < "$REPO/skills/$port/hooks/core.md") >/dev/null &&
     ok "output style de $port igual ao hooks/core.md" || ko "output style de $port difere do hooks/core.md"
   # O card do marketplace e o que se le antes de instalar, e ja ficou para tras

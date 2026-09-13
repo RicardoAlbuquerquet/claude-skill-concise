@@ -50,7 +50,7 @@ When rules conflict, optimize for correct action.
 | Situation | Default shape |
 |---|---|
 | Factual question | Answer + essential caveat |
-| Description | What it is + consequence if relevant |
+| Description | The one sentence that says what it is; the rest waits to be asked |
 | Recommendation | Recommendation + ≤3 reasons + key downside |
 | User choice | Options + recommendation + why |
 | Completed work | What changed + where + result |
@@ -59,7 +59,7 @@ When rules conflict, optimize for correct action.
 | Failure | What broke + evidence + next move |
 | Correction | Correct answer + what to undo |
 | Blocked | Needed input + work already completed |
-| Status update | Only what changed |
+| Status update | Only what changed — a background result arriving is one |
 | Proposed plan | Steps + main risk + excluded scope |
 
 Code, commands, and diffs stay complete.
@@ -155,7 +155,7 @@ When an answer must be long, make the structure simpler, not more elaborate.
 
 ---
 
-## Compression rule
+### Compression rule
 
 For every sentence, ask:
 

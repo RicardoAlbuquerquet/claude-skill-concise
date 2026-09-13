@@ -155,7 +155,7 @@ npx skills add RicardoAlbuquerquet/concise
 ```
 
 Only the ruleset travels. The forced output style, the core, the turn reminder,
-the self-update, the guards, the thirteen commands and the audit agent are Claude
+the self-update, the guards, the fourteen commands and the audit agent are Claude
 Code plugin machinery; in another agent you get the document and invoke it
 yourself.
 
@@ -300,9 +300,9 @@ holds where the first fades:
 | **Output style**, forced | the system prompt | every request — and Claude Code reminds the model of an active style mid-conversation |
 | **Turn reminder**, from a `UserPromptSubmit` hook | beside your message, unseen in the transcript | every prompt |
 
-The output style carries the ~60-line core, about 1,150 tokens, from one
+The output style carries the ~95-line core, about 950 tokens, from one
 file: [`hooks/core.md`](skills/concise/hooks/core.md); CI fails when the two
-drift. The reminder is one line, about 300 characters a
+drift. The reminder is one line, about 750 characters a
 turn. A `SessionStart` hook adds only the line naming your shell, and your core
 override when you wrote one. The full ruleset still lives in the skill, which
 the model invokes when a turn needs more than the core.
@@ -472,7 +472,7 @@ the invocation itself:
   verdict line, numbered violations, holes — followed by one line with the
   `/concise:rewrite` call that would fix them. It never rewrites, never edits
   the file, and never posts a correction.
-- **The `audit` agent** (PT: `auditar`) checks a draft against the checklist
+- **The `audit` agent** checks a draft against the checklist
   and returns only the violations — quoted line, rule, one-line fix — plus
   required content that is missing. It never rewrites; ask for it when you
   want the diagnosis without the surgery: *"run the audit agent on this
@@ -528,15 +528,15 @@ falls behind.
 
 | Tool | What you copy | What it gives you |
 |---|---|---|
-| **Cursor** | `ports/en/cursor/rules/` and `ports/en/cursor/commands/` | the core in every request through `alwaysApply: true`, the full ruleset and the six surfaces pulled in when they match, and the thirteen commands under `/` |
+| **Cursor** | `ports/en/cursor/rules/` and `ports/en/cursor/commands/` | the core in every request through `alwaysApply: true`, the full ruleset and the six surfaces pulled in when they match, and the fourteen commands under `/` |
 | **Codex, Copilot, Zed, Gemini CLI, Windsurf, Aider, Jules** | `ports/en/AGENTS.md` and the `concise/` folder beside it | the core always on, and a table naming the file to read for anything longer |
 | **ChatGPT** | one file into custom instructions, one into a project or a custom GPT | the style on every reply, and the commands as typed triggers |
 
 **The commands travel with them**, minus the plugin prefix: `/pr`, `/card`,
 `/commit`, `/comment`, `/release`, `/plan`, `/decide`, `/draw`, `/status`,
-`/handoff`, `/rewrite`, `/trim` and `/audit` — the same thirteen described
-above, as files Cursor lists when you type `/`, and as triggers the ChatGPT
-instructions define.
+`/handoff`, `/rewrite`, `/trim`, `/audit` and `/woman` — the same fourteen
+described above, as files Cursor lists when you type `/`, and, all but
+`/woman`, as triggers the ChatGPT instructions define.
 
 **Three shapes rather than one, because the targets differ.** Cursor reads one
 `.mdc` per rule and one file per command, and ChatGPT's custom-instructions box

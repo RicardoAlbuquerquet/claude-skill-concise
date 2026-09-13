@@ -3,7 +3,7 @@ description: Write the update — only the delta, bad news first
 argument-hint: "[who reads it and where it goes — optional]"
 ---
 
-Write one status update, following the "Status update mid-work" budget and the
+Write one status update, following the "Status update" row of the budgets and the
 "Always keep" list of the `concise` ruleset. Invoke the skill first if the
 full ruleset is absent from the context.
 

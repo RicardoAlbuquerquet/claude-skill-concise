@@ -21,9 +21,10 @@ for their description to match what you are doing: `concise-full.mdc` for the
 whole ruleset, and one file per surface that leaves the conversation
 (`concise-pull-request.mdc`, `concise-commit.mdc`, and four more).
 
-The thirteen commands appear when you type `/` in the chat input, under their
+The fourteen commands appear when you type `/` in the chat input, under their
 bare names: `/pr`, `/card`, `/commit`, `/comment`, `/release`, `/plan`,
-`/decide`, `/draw`, `/status`, `/handoff`, `/rewrite`, `/trim`, `/audit`.
+`/decide`, `/draw`, `/status`, `/handoff`, `/rewrite`, `/trim`, `/audit`,
+`/woman`.
 
 Cursor also reads `AGENTS.md`, so the section below works there as a lighter
 install — rules and commands are the fuller one.

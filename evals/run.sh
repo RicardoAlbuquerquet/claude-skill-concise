@@ -101,7 +101,7 @@ run_case () {
   while [ "$attempt" -le "$RUNS" ]; do
 
   # The style and the facts used to travel on the command line, which Windows
-  # caps at 32767 characters. The PT skill reached 31 KB and the suite began
+  # caps at 32767 characters. A skill reached 31 KB and the suite began
   # dying with "Argument list too long" partway through — a ceiling that moves
   # closer every time a rule lands. A file has no such limit.
   printf '%s\n\n%s\n\n%s\n' "$STYLE" \

@@ -42,7 +42,7 @@ signal, and a *low* one is the good news.
 
 The style and the facts reach the CLI through `--append-system-prompt-file`,
   not the command line. That is not a detail: Windows caps a command line at
-32767 characters, the PT skill is already past 31 KB, and the full PT run died
+32767 characters, a skill past 31 KB made the full run die
 at case 17 with "Argument list too long" before the switch. A CLI old enough
 to lack the flag still works and says so.
 
