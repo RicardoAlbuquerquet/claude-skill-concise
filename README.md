@@ -29,27 +29,34 @@
 
 ## Measured
 
-The forty cases in [`evals/`](evals/README.md#last-full-measurement), each
-answered three times by `claude-opus-5` with no style and three times with the
-plugin installed, then graded against its rubric by `claude-haiku-4-5`.
-Version 1.69.0, on 2026-09-13:
+Claude (`claude-opus-5`) got the same 40 everyday requests — a question, a
+status update, a commit message, a PR description and so on — three times
+without the plugin and three times with it. Another model (`claude-haiku-4-5`)
+then checked each answer against a list of what a good answer to that request
+has to do.
 
-| | No style | With the plugin |
+| | Without the plugin | With the plugin |
 |---|---|---|
-| Words per answer, median | 165 | 70 |
-| Runs that pass their rubric | 48 of 120 | 72 of 120 |
-| Cases that pass all three runs | 11 of 40 | 20 of 40 |
+| Length of a typical answer | 165 words | 70 words |
+| Answers that did everything on the list | 48 of 120 (40%) | 72 of 120 (60%) |
 
-**Every case came out shorter, and four came out worse.** Re-run five times,
-one of the four holds: case 18 drops exact values from a report, and did on
-1.68.0 too. Case 26 passed five of five on the re-run, and 19 and 22
-lose by a single run, which three runs can't tell from noise.
+**Answers came out less than half as long, and more of them did what the
+request needed.** Measured on version 1.69.0, on 2026-09-13.
 
-Eleven cases fail every run either way, and nine of them ask for a PR, a card,
-a comment or a drawing, whose rules load with the command that writes it — a
-case can't run a command. The cases were also written to catch what the rules
-forbid, so the pass rates lean toward the plugin by design; the word count is
-the number no rubric shapes.
+What to keep in mind:
+
+- **It did worse on 4 of the 40 requests.** The clear one is a report of
+  finished work that left out exact numbers. The other three look like chance:
+  one passed five times out of five when tested again, and two differ by a
+  single answer.
+- **Requests for a PR, a card, a comment or a drawing were made without the
+  command that writes each one**, so most of them fail with or without the
+  plugin.
+- **The lists were written with these rules in mind**, so they favour the
+  plugin. The word count doesn't depend on them.
+
+The result of each request, and how to run the test yourself:
+[`evals/README.md`](evals/README.md#last-full-measurement).
 
 ## Install
 
