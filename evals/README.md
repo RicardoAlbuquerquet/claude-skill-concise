@@ -32,6 +32,7 @@ the long form works:
 | `ONLY=07` | one case by number or filename fragment; `ONLY=10,18,26` for several |
 | `MIN_RUNS=2` | with `RUNS=5`, stops a case at two runs that agree, and agree with `COMPARE` |
 | `COMPARE=evals/baseline/claude-opus-5.tsv` | better, same or worse per case against a saved run, each case stopping once its verdict is settled; exits 1 when one got worse |
+| `WORSE_ONLY=1` | with `COMPARE`, only whether a case got worse; skips the cases whose saved side passes under 40% |
 | `RESULTS=file` | saves passes and runs per case; cases that didn't run keep their line |
 | `CLAUDE_BIN=./stub` | swaps the CLI — how the harness itself is tested, free |
 
@@ -78,16 +79,20 @@ described in [the last full measurement](#last-full-measurement).
    CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 ONLY=10,18,26 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
    ```
 
-2. Before a release, the same over every case. A case stops as soon as the
-   runs left can no longer change its verdict — 0 of 2 against a saved 5 of 5
-   is worse whatever comes next — or after two runs that agree with each other
-   and with the saved side, within one run. Simulated over every order the
-   1.71.0 passes could have come in, that is about 214 calls; the two-run stop
-   alone was 274.
+2. Before a release, ask only whether any case got worse. `WORSE_ONLY=1`
+   skips the cases whose saved side passes under 40% — they have no room for a
+   two-run drop — and stops every other case as soon as "worse" is settled
+   either way. Simulated over every order the 1.71.0 passes could have come
+   in, that is about 84 calls.
 
    ```bash
-   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 WORSE_ONLY=1 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
    ```
+
+   The README numbers need better and same as well: the same command without
+   `WORSE_ONLY`, about 214 calls. There a case stops once the runs left can no
+   longer change its verdict — 0 of 2 against a saved 5 of 5 is worse whatever
+   comes next — or after two runs that agree with the saved side, within one.
 
 3. Measure the saved side again only when the model changes, or for the one
    case whose rubric changed — `RESULTS` rewrites that case's line and keeps
