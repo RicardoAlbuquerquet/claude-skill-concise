@@ -5,6 +5,20 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.71.0 — 2026-09-14
+
+Five rule changes that came out of measuring every eval case five times, with
+and without the plugin. The plugin now does better than no style on 21 of the
+40 cases and worse on one, the report of finished work.
+
+- **The first sentence carries the result**, not a bare "yes" or a count of
+  the steps it took; the turn reminder says the same.
+- **What waits on the reader's decision gets its own block**, now among the
+  first rules, and a check that was not run is said as not run.
+- **A PR title keeps the area prefix the log uses**, and a PR description gets
+  three sections under headers; a commit title follows the log's shape again.
+- **Two things joined by and, a semicolon or parentheses are two list items.**
+
 ## 1.70.0 — 2026-09-13
 
 A background job that finishes and changes nothing else gets one line again,

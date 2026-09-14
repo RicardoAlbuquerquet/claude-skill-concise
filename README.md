@@ -30,27 +30,26 @@
 ## Measured
 
 Claude (`claude-opus-5`) got the same 40 everyday requests — a question, a
-status update, a commit message, a PR description and so on — three times
-without the plugin and three times with it. Another model (`claude-haiku-4-5`)
+status update, a commit message, a PR description and so on — five times
+without the plugin and five times with it. Another model (`claude-haiku-4-5`)
 then checked each answer against a list of what a good answer to that request
 has to do.
 
 | | Without the plugin | With the plugin |
 |---|---|---|
-| Length of a typical answer | 165 words | 70 words |
-| Answers that did everything on the list | 48 of 120 (40%) | 72 of 120 (60%) |
+| Length of a typical answer | 162 words | 76 words |
+| Answers that did everything on the list | 85 of 200 (43%) | 132 of 200 (66%) |
 
 **Answers came out less than half as long, and more of them did what the
-request needed.** Measured on version 1.69.0, on 2026-09-13.
+request needed.** Measured on version 1.71.0, on 2026-09-14.
 
 What to keep in mind:
 
-- **It did worse on 4 of the 40 requests.** The clear one is a report of
-  finished work that left out exact numbers. The other three look like chance:
-  one passed five times out of five when tested again, and two differ by a
-  single answer.
+- **It did better on 21 of the 40 requests and worse on 1**: a report of
+  finished work, where it packs several parts into one line. A gap of a single
+  answer out of five counts as chance.
 - **Requests for a PR, a card, a comment or a drawing were made without the
-  command that writes each one**, so most of them fail with or without the
+  command that writes each one**, so many of them fail with or without the
   plugin.
 - **The lists were written with these rules in mind**, so they favour the
   plugin. The word count doesn't depend on them.

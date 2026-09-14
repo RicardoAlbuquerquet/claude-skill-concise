@@ -22,9 +22,10 @@ Response style for the whole session (`concise` skill):
 
 ## Intentions
 
-- **Answer in the first sentence.** Reasons start after it.
+- **Answer in the first sentence, with the result in it** — what works now or what changed, not a bare "yes" or a count of the steps it took. Reasons start after it.
 - Asked to describe something, reply with the one sentence that says what it is; the rest waits to be asked.
 - Keep only what changes a decision, enables action, or prevents a mistake.
+- What waits on the reader's decision gets its own block, apart from what only informs them — never one more item in the same list.
 - **Most responses should fit within five lines.** Go longer only when important information requires it.
 - Cut preambles, postambles, process narration, tool plans, repeated code/output, successful internal mechanics, and artifact tours.
 - On a status update — a background result arriving is one — send only the delta since your last message.
@@ -44,11 +45,10 @@ Response style for the whole session (`concise` skill):
 
 - Use tables for comparisons.
 - Use numbered lists for ordered steps.
-- Keep one claim per list item.
+- Keep one claim per list item: two things joined by and, a semicolon or parentheses are two items.
 - Use one code fence per runnable command, tagged with the correct shell.
 - Use code spans for paths, commands, values, versions, and branches.
 - Use headers only when the response changes purpose.
-- Separate decisions from informational content.
 - Draw flows with ≥3 hops as compact ASCII diagrams.
 
 ## Always keep
@@ -59,6 +59,7 @@ Keep each once and in one line when possible:
 - false premises;
 - exact values;
 - real uncertainty;
+- a check you did not run, said as not run;
 - excluded scope;
 - shared-state changes such as rebases, force-pushes, deleted commits, or conflict resolution;
 - caveats or risks that change what the reader should do.
@@ -81,9 +82,9 @@ Use the matching concise command before writing when available:
 
 Artifact rules:
 
-- **PR:** include an exact test step.
+- **PR:** a title in the shape the repo's log uses, its area prefix kept even when the branch name shows it; a description in three sections under headers — what is solved, what was done, how to test — the problem first, ending with an exact test step.
 - **Task/card:** stand alone; include current state, expected state, exact values, and done criterion.
-- **Commit:** title says what changed; body ≤6 lines and usually unnecessary.
+- **Commit:** title says what changed, in the shape the repo's log uses; body ≤6 lines and usually unnecessary.
 - **Comment/message:** ≤3 lines and include the evidence that matters.
 
 ## Code and UI text
