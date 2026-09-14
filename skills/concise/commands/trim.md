@@ -4,43 +4,47 @@ argument-hint: "[paths — empty targets the files this branch changed]"
 ---
 
 Cut the text that carries zero out of the code: comments, docstrings, log and
-error messages, and the strings a person reads on screen. Read
-`${CLAUDE_PLUGIN_ROOT}/references/code.md` first: it holds the rules, and
-this file only the procedure.
+error messages, and the strings a person reads on screen. The rules live in
+`${CLAUDE_PLUGIN_ROOT}/references/code.md` — read it first.
 
 $ARGUMENTS
 
-How:
+## Beliefs
 
-1. **The target.** Paths in the argument, when there are any — a directory
-   means the source files under it. Empty, the files this branch changed:
-   `git diff --name-only origin/main...HEAD` plus what is uncommitted. When
-   both come up empty, say so and stop. Generated code, vendored code,
-   lockfiles and database migrations stay out of the target.
-2. **Read before cutting.** Each file whole, and the convention around it: how
-   densely its neighbours comment, where the strings live — inline, or in a
-   catalog like `locales/` or `messages/` — and which tests assert on text.
-3. **Cut what the file cuts**: the comment the next line already says, the
-   comment about an edit, commented-out code, banners, the docstring retelling
-   its signature; on screen, the second saying of the same thing, the button
-   with a bare `OK`, the tone words, the toast for a change the user watched
-   happen.
-4. **Keep what the file keeps, and what only looks dead**: a directive inside
-   a comment (`eslint-disable`, `@ts-expect-error`, `# type: ignore`), a
-   license header, a docstring a documentation generator publishes, and JSDoc
-   that carries the types in a JavaScript project.
-5. **A string moves with everything that matches it.** Before changing a
-   visible string, search the repo for it — a test, a snapshot, another
-   locale, a client that parses an error message — and change them together.
-   When one of them has to stay — a locale you would translate poorly, a
-   message another system parses — leave the string as it was and report it.
-6. **Run the repo's own checks** on what you touched — the test and lint
-   scripts it defines — and keep the line that proves the result.
+- Code that runs stays as it is: a name, a condition or a structure is out of
+  scope even when it reads badly.
+- A visible string lives in more than one place — a test, a snapshot, another
+  locale, a client that parses it.
+- Some text only looks dead: a directive in a comment, a license header, a
+  published docstring.
+- The commit is the user's.
 
-The commit is the user's, and code that runs stays as it is: a name, a
-condition or a structure stays out of scope even when it reads badly.
+## Desires
 
-Deliver it as completed work: the files changed and the line from the checks —
-and ahead of both, when there is any, what you left in place on purpose, one
-line each, with the reason. The diff shows the strings that changed; the
-delivery leaves the count and the before/after to it.
+- The file loses the text that carries nothing and keeps every consequence.
+
+## Intentions
+
+- Take the target from the paths in the argument, a directory meaning the
+  source under it. Empty, take the files this branch changed —
+  `git diff --name-only origin/main...HEAD` plus what is uncommitted — and
+  with both empty, say so and stop. Generated code, vendored code, lockfiles
+  and database migrations stay out.
+- Read each file whole before cutting, with the convention around it: how
+  densely its neighbours comment, where the strings live — inline or in a
+  catalog like `locales/` — and which tests assert on text.
+- Cut what the file cuts: the comment the next line already says, the comment
+  about an edit, commented-out code, banners, the docstring retelling its
+  signature; on screen, the second saying of the same thing, the bare `OK`
+  button, the tone words, the toast for a change the user watched happen.
+- Keep what only looks dead: `eslint-disable`, `@ts-expect-error`,
+  `# type: ignore`, a license header, a docstring a generator publishes, and
+  JSDoc carrying the types in a JavaScript project.
+- Search the repo for a visible string before changing it and change every
+  match together; where one has to stay — a locale you would translate
+  poorly, a message another system parses — leave the string and report it.
+- Run the repo's own test and lint scripts on what you touched, and keep the
+  line that proves the result.
+- Deliver it as completed work: what you left in place on purpose first, one
+  line each with the reason, then the files changed and the line from the
+  checks. The diff shows the strings; the delivery leaves them to it.

@@ -1,32 +1,34 @@
-Rewrite one finished text so it complies with the `concise` ruleset. If the
-full ruleset is absent from the context, read `.cursor/rules/concise-full.mdc` first.
+Rewrite one finished text so it complies with the `concise` ruleset. Invoke
+the `concise` skill first if the full ruleset is absent from the context.
 
-The target is the text below. When the whole argument is a path to a file
-that exists, read that file and rewrite its contents; when it is empty, the
-target is your own previous response in this conversation; otherwise the
-argument itself is the text.
+The target is the text below: a path to a file that exists is read and its
+contents rewritten; empty targets your own previous response; anything else is
+the text itself:
 
 (Your arguments: whatever you typed after the command name, when there was any.)
 
-Rules of the rewrite:
+## Beliefs
 
-- **Same facts, same commitments.** Rewriting keeps every fact: every exact
-  value, caveat, piece of bad news, and scope note in the original survives.
-  The **Always keep** list applies to what the original *said*.
-- **You may add what the original owed** — a missing cost on a recommendation,
-  a missing test step on a PR description — only when the original contains
-  the information to fill it; otherwise report the hole. Every value, number
-  and result comes from the original.
-- **Pick the register by destination.** A PR description, a card, a commit
-  message, a changelog entry, a comment or text in code follows its own file
-  under `.cursor/rules/` — read it first; a chat reply
-  follows the budgets table.
+- Rewriting keeps every fact the original said: each exact value, caveat,
+  piece of bad news and scope note survives.
+- What the original owed can be added only when the original holds the
+  information to fill it; otherwise it is a hole to report.
+- The destination decides the register.
+- The file itself changes only when the user asks.
 
-Deliver the rewritten text first. Put it in a fenced block when it is destined
-for another surface — PR, issue, commit message, e-mail — so it can be copied
-whole, with four backticks when the text carries a fence of its own; leave it
-as prose when it is a chat reply. A file target is delivered the same way —
-the file itself changes only when the user asks. After it, only if the
-original was missing something the ruleset requires, add one line per hole,
-each opening with **Missing:**. That is the whole delivery; word counts and
-commentary on the cuts stay out.
+## Desires
+
+- The text arrives ready to paste, carrying everything the original carried.
+
+## Intentions
+
+- Read the file under `.cursor/rules/` that matches the
+  destination — PR description, card, commit message, changelog entry, comment
+  or text in code; a chat reply follows the budgets table.
+- Take every value, number and result from the original.
+- Deliver the rewritten text first: a fenced block when it is destined for
+  another surface — PR, issue, commit message, e-mail — with four backticks
+  when it carries a fence; prose when it is a chat reply.
+- Close with one line per thing the ruleset requires and the original lacked,
+  each opening with **Missing:**.
+- Leave out the word count and the commentary on what you cut.

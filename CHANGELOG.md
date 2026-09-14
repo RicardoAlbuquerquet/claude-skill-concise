@@ -5,6 +5,22 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.77.0 — 2026-09-14
+
+Os oito comandos que faltavam passam a dizer o que acreditam antes do que
+fazem, como `/concise:commit`, `:pr`, `:card` e `:comment` já faziam.
+
+- **`:status`, `:handoff`, `:decide`, `:plan`, `:trim`, `:audit`,
+  `:release` e `:rewrite`** ganham crenças, desejos e intenções, e somam 39
+  linhas a menos.
+- **A regra que trava a ação sobe para o começo de cada um**: destino nomeado
+  não autoriza avisar ninguém, código que roda fica como está, publicar a
+  release é do usuário, e o passo 1 do plano espera aprovação.
+- **Nenhuma regra sai** — cada comando manteve o que já pedia, incluindo as
+  linhas **Missing:** e **Unknown:**.
+- `:draw` e `:woman` ficam fora: são longos por causa dos exemplos, e cortar
+  ali é outro trabalho.
+
 ## 1.76.0 — 2026-09-14
 
 `/concise:comment` entra na série: crenças, desejos e intenções, de 47 para 47
