@@ -12,7 +12,13 @@ failed="$dir/.$plugin-update-failed"
 note="$dir/.$plugin-update-note"
 
 [ -f "$dir/.$plugin-no-self-update" ] && exit 0
-command -v claude >/dev/null 2>&1 || exit 0
+
+# With no CLI on the PATH nothing can update, and a silent exit leaves the
+# copy stale forever. The failure mark is what the weekly warning reads.
+if ! command -v claude >/dev/null 2>&1; then
+  [ -f "$failed" ] || date +%s > "$failed"
+  exit 0
+fi
 
 now=$(date +%s)
 hours=$(cat "$dir/.$plugin-update-hours" 2>/dev/null)
