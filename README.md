@@ -29,8 +29,8 @@
 
 ## Measured
 
-**Say less, get more right.** Answers shrink from 162 words to 76, and the
-share that did everything the request needed jumps from 43% to 66%.
+**Say less, get more right.** Answers get 53% shorter, from 162 words to 76,
+and the share that did everything the request needed jumps from 43% to 66%.
 
 | | Without the plugin | With the plugin |
 |---|---|---|
