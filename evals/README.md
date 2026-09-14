@@ -151,11 +151,11 @@ were re-run five times, on 1.68.0 and on 1.69.0:
   came from two runs that left the `invoices:` area off the title as a repeat
   of the branch name.
 - **Case 18 holds, and predates the core rewrite**: 0 of 5 on both versions.
-  Most failing runs pack the whole library into one table row, its details in
-  parentheses — the reminder's one line per deliverable is the likely pull —
-  and some drop the exact values. Its rubric also misfires: the judge grades
-  the opening "Pronto, nada commitado ainda" as a preamble, when it answers
-  the question.
+  Most failing runs drop exact values, the smoke test's 120 rows and 6 pages
+  most often, and several pack the whole library into one table row with its
+  details in parentheses. Its rubric misfired too, grading the opening
+  "Pronto, nada commitado ainda" as a preamble and "~1,5 MB" as a lost value;
+  it now says both are fine, and re-graded with it, case 18's scores hold.
 
 **Eleven cases fail every run in both arms.** Nine ask for a PR (10, 17, 31,
 39), a card (11, 34), a comment (33) or a drawing (27, 28), and their rules
@@ -167,10 +167,18 @@ table the reader will never open.
 **Case 40 slid with the core rewrite in 1.69.0**: 4 of 5 on 1.66.0, 3 of 5 on
 1.68.0 and 1 of 5 on 1.69.0, five runs each. The failing runs add that the
 read-path switch and the PR still wait, and that the load-test risk hasn't
-changed. Putting back the 1.68.0 wording for a pending item already stated
-scored 0 of 5; adding the 1.68.0 test for a block that leaves the reader idle,
-1 of 5; dropping risks from the always-keep list instead, 0 of 5. The cause is
-elsewhere in the rewrite.
+changed. The cause is the status sentence: the rewrite's "only what changed
+since the previous update" lets the steps still waiting count as a change.
+
+| Core | Case 40 |
+|---|---|
+| 1.69.0 with three other sentences put back, one at a time | 0, 1 and 0 of 5 |
+| 1.69.0's beliefs, desires and intentions alone | 0 of 5 |
+| 1.68.0 with 1.69.0's sections from Structure down | 4 of 5 |
+| 1.69.0 with 1.68.0's "send only the delta since your last message" | 7 of 10 |
+
+Case 12, the other status case, passes 5 of 5 with either sentence. The fix
+is [#100](https://github.com/RicardoAlbuquerquet/concise/pull/100), for 1.70.0.
 
 ## Earlier measurements
 

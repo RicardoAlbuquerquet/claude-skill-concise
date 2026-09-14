@@ -41,8 +41,8 @@ Version 1.69.0, on 2026-09-13:
 | Cases that pass all three runs | 11 of 40 | 20 of 40 |
 
 **Every case came out shorter, and four came out worse.** Re-run five times,
-one of the four holds: case 18 packs a whole library into one table row, and
-did on 1.68.0 too. Case 26 passed five of five on the re-run, and 19 and 22
+one of the four holds: case 18 drops exact values from a report, and did on
+1.68.0 too. Case 26 passed five of five on the re-run, and 19 and 22
 lose by a single run, which three runs can't tell from noise.
 
 Eleven cases fail every run either way, and nine of them ask for a PR, a card,
