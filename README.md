@@ -34,7 +34,7 @@
 ```text
 answer gets shorter      [########--------]   53% shorter: 162 words to 77
 answer is more complete  [###########-----]   65% more than with no style
-request improves         [######----------]   16 of the 40, 23 unchanged
+request improves         [######----------]   40% of them, 57.5% unchanged
 ```
 
 One of the 40 requests came out worse.
