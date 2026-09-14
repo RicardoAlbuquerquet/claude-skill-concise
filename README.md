@@ -32,12 +32,12 @@
 **Say less, get more right.** Answers get 53% shorter — about half the tokens.
 
 ```text
-answer gets shorter   [########--------]   53%   162 words to 77
-answer is complete    [###########-----]   71%   43% with no style
-request improves      [######----------]   40%   16 of the 40
+answer gets shorter   [########--------]   53% shorter: 162 words to 77
+answer is complete    [###########-----]   +28 points: 43% to 71%
+request improves      [######----------]   16 of the 40, 23 unchanged
 ```
 
-The other 23 requests came out the same, and one came out worse.
+One of the 40 requests came out worse.
 
 How it was measured: `claude-opus-5` answered 40 everyday requests — a
 question, a status update, a commit message, a PR description — on 2026-09-14,
