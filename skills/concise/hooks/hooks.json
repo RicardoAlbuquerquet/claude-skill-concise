@@ -40,7 +40,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. Authorship of every commit, PR, issue and release belongs to the user alone - rewrite it with the user as the only author.\" .concise-no-credit-guard",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. Authorship of every commit, PR, issue, card, release and file belongs to the user alone - rewrite it with the user as the only author.\" .concise-no-credit-guard",
             "timeout": 10
           },
           {
@@ -55,12 +55,32 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. Authorship of every commit, PR, issue and release belongs to the user alone - rewrite it with the user as the only author.\" .concise-no-credit-guard",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. Authorship of every commit, PR, issue, card, release and file belongs to the user alone - rewrite it with the user as the only author.\" .concise-no-credit-guard",
             "timeout": 10
           },
           {
             "type": "command",
             "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/route-hint.sh\" \"The description this call publishes is what /concise:pr writes: it reads the diff, the repo log and the PR template, and it ends with the exact test step. Run /concise:pr first - the word create in the invocation opens the PR - or repeat this call to go ahead as is.\" .concise-no-route-hint",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. Authorship of every commit, PR, issue, card, release and file belongs to the user alone - rewrite it with the user as the only author.\" .concise-no-credit-guard",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/credit-guard.sh\" \"AI credit found in the text. Authorship of every commit, PR, issue, card, release and file belongs to the user alone - rewrite it with the user as the only author.\" .concise-no-credit-guard",
             "timeout": 10
           }
         ]

@@ -137,6 +137,28 @@ rm -f "$FH/.claude/.concise-update-stamp" "$FH/calls.log"; touch "$FH/.claude/.c
 HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise
 [ ! -s "$FH/calls.log" ] && { pass=$((pass+1)); echo "ok    opt-out do self-update"; } || { fail=$((fail+1)); echo "FALHA opt-out self-update"; }
 
+echo "--- guarda de credito em arquivo e quadro"
+CG="$REPO/skills/concise/hooks/credit-guard.sh"
+cg () { printf '%s' "$1" | HOME="$FH" bash "$CG" "RAZAO" .concise-no-credit-guard; }
+
+# assinatura no fim de um arquivo: bloqueia
+payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"Write",tool_input:{file_path:"a.md",content:"fix: x\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\n"}}))')
+case "$(cg "$payload")" in *deny*) pass=$((pass+1)); echo "ok    credito em arquivo e barrado";; *) fail=$((fail+1)); echo "FALHA credito em arquivo passou";; esac
+
+# a regra citada em prosa continua passando: este repo documenta o formato
+payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"Write",tool_input:{file_path:"CONTRIBUTING.md",content:"A regra proibe co-authored-by de modelo na mensagem."}}))')
+[ -z "$(cg "$payload")" ] && { pass=$((pass+1)); echo "ok    texto sobre a regra passa"; } || { fail=$((fail+1)); echo "FALHA texto sobre a regra foi barrado"; }
+
+# o mesmo credito indo para um card do quadro: bloqueia
+payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"mcp__vx-work__vx_create_activity",tool_input:{title:"x",description:"feito\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)"}}))')
+case "$(cg "$payload")" in *deny*) pass=$((pass+1)); echo "ok    credito em card do quadro e barrado";; *) fail=$((fail+1)); echo "FALHA credito em card passou";; esac
+
+# e o hooks.json registra o guarda nas ferramentas de escrita e do quadro
+for port in concise; do
+  m=$(perl -MJSON::PP -e 'local $/; my $j = decode_json(<STDIN>); print join ",", map { $_->{matcher} } grep { grep { $_->{command} =~ /credit-guard/ } @{$_->{hooks}} } @{$j->{hooks}{PreToolUse}}' < "$REPO/skills/$port/hooks/hooks.json")
+  case "$m" in *Write*) case "$m" in *mcp__*) pass=$((pass+1)); echo "ok    guarda de $port cobre escrita e quadro";; *) fail=$((fail+1)); echo "FALHA guarda de $port sem o quadro: $m";; esac;; *) fail=$((fail+1)); echo "FALHA guarda de $port sem escrita: $m";; esac
+done
+
 echo "--- stop-audit (extra, opt-in)"
 SA="$REPO/extras/stop-audit/stop-audit.sh"
 SAD="$FH/sa"; mkdir -p "$SAD/bin"
