@@ -8,8 +8,8 @@ without an entry tells nobody what it brought.
 ## 1.71.0 — 2026-09-14
 
 Five rule changes that came out of measuring every eval case five times, with
-and without the plugin. The plugin now does better than no style on 21 of the
-40 cases and worse on one, the report of finished work.
+and without the plugin. The plugin now does better than no style on 13 of the
+40 cases, the same on 26, and worse on one, the report of finished work.
 
 - **The first sentence carries the result**, not a bare "yes" or a count of
   the steps it took; the turn reminder says the same.

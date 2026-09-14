@@ -142,9 +142,9 @@ CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MODEL=claude-opus-5 RESPONSES=o
 
 **A case counts as worse when the plugin fails at least two more runs of
 five**; one run apart is noise, and the rule was set before the plugin arm
-ran. By it, the plugin is better on 21 cases and worse on one: case 18,
-1 of 5 against 5 of 5, which still packs several helpers into one item. Case 16
-is one run behind.
+ran, and the same two runs make a case better. By it, the plugin is better on
+13 cases and worse on one — case 18, 1 of 5 against 5 of 5, which still packs
+several helpers into one item — and the other 26 are within one run.
 
 What changed in 1.71.0, each tried on its own cases before this run: the first
 sentence carries the result rather than a bare "yes" or a count of steps (22);
