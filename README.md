@@ -29,8 +29,7 @@
 
 ## Measured
 
-**Say less, get more right.** Answers get 53% shorter — about half the tokens —
-and 66% more of them do everything the request needed.
+**Say less, get more right.** Answers get 53% shorter — about half the tokens.
 
 | | Without the plugin | With the plugin |
 |---|---|---|
