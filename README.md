@@ -32,9 +32,9 @@
 **Say less, get more right.** Answers get 53% shorter — about half the tokens.
 
 ```text
-answer gets shorter      [########--------]   53% shorter
-answer is more complete  [###########-----]   65% more
-answer quality improves  [######----------]   40% of requests
+answer gets shorter      [########--------]   53% 
+answer is more complete  [###########-----]   65%
+answer quality improves  [######----------]   40%
 ```
 
 Answers ran 162 words with no style and 77 with the plugin. Of the 40
