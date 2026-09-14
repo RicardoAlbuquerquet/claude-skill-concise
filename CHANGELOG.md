@@ -5,6 +5,19 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.76.0 — 2026-09-14
+
+`/concise:comment` entra na série: crenças, desejos e intenções, de 47 para 47
+linhas, com a regra de postar no topo em vez do último parágrafo.
+
+- **Comentar uma linha que você não leu é palpite com `path:line` no crachá.**
+- **Um destino nomeado só diz para onde o comentário iria**; quem publica é a
+  palavra do usuário nesta conversa.
+- **Nenhuma regra sai**: leitura do que se comenta, parada quando a linha está
+  fora de alcance, tipo assumido como comentário de revisão, o que cada tipo
+  acrescenta, contagem de três linhas, entrega com quatro crases e âncora
+  acima de cada bloco, e as linhas **Missing:**.
+
 ## 1.75.0 — 2026-09-14
 
 `/concise:card` fecha a série com `/concise:commit` e `/concise:pr`: crenças,
