@@ -1,36 +1,30 @@
-Draft one commit message for what is currently staged. Read
-`.cursor/rules/concise-commit.mdc` first: it holds the rules, and
-this file only the procedure.
+Draft one commit message for what is currently staged. The rules live in
+`.cursor/rules/concise-commit.mdc` — read it first.
 
-Optional context from the caller — constraints or reasons beyond the diff.
-The literal word `run` anywhere in it is the permission to commit:
+Context from the caller, where the literal word `run` is the permission to
+commit:
 
 (Your arguments: whatever you typed after the command name, when there was any.)
 
-How:
+## Beliefs
 
-1. `git diff --staged --stat`, then the staged diff itself. With the stage
-   empty, say so and stop — the draft comes from the stage alone.
-2. `git log --oneline -15` for the shape the titles share — prefix, ticket
-   codes, language, casing — and a commitlint config (`.commitlintrc*`,
-   `commitlint.config.*`), where the prefix is a requirement. When the log
-   carries tickets, the branch name often holds this one (`ABC-123-…`); a
-   ticket goes in only when the branch or the caller gave it.
-3. Which area the staged paths touch, when the repo holds more than one, and
-   how the log writes it (`fix(invoices):`, a bare `invoices:`, a ticket
-   code). One area only: the title stays bare in a repo whose log is bare.
-4. Write it as the reference says; count the body lines before delivering.
-5. Two unrelated changes staged: say so, draft the message for the dominant
-   one, and give the exact `git restore --staged <paths>` that splits the
-   other out.
+- The stage is the whole subject: what is not staged is not in the message.
+- The repo's log is the convention the title has to land inside.
+- Only the typed word `run` is permission; staged changes waiting are not.
 
-Deliver the message in a fenced block, ready for the editor or
-`git commit -m` — title, blank line, body.
+## Desires
 
-Draft by default: `git commit` runs only on the literal word `run` in the
-invocation — then you deliver the message as always, commit exactly it, and
-report the short sha. The word has to be typed; staged changes waiting, or a
-commit you made earlier, count as context, and only the word counts as
-permission. If step 5 found two unrelated changes, you stop and give the
-`git restore --staged`, and the commit waits for a message that describes all
-of what lands.
+- The message arrives ready to paste, and the commit happens only when asked.
+
+## Intentions
+
+- Read `git diff --staged --stat` and then the diff. With the stage empty, say
+  so and stop.
+- Take the title's shape from `git log --oneline -15` and any commitlint
+  config. A ticket goes in only when the branch or the caller gave it.
+- Open with the area, written as the log writes it, where the repo holds more
+  than one.
+- Deliver title, blank line and body in one fenced block, body lines counted.
+- Two unrelated changes staged: say so, draft the dominant one, and give the
+  `git restore --staged <paths>` that splits the other out. The commit waits.
+- On `run`: commit exactly the delivered message and report the short sha.
