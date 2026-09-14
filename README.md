@@ -29,8 +29,8 @@
 
 ## Measured
 
-**With the plugin, answers came out less than half as long, and 66% of them
-did everything the request needed — against 43% without it.**
+**Say less, get more right.** Answers shrink from 162 words to 76, and the
+share that did everything the request needed jumps from 43% to 66%.
 
 | | Without the plugin | With the plugin |
 |---|---|---|
