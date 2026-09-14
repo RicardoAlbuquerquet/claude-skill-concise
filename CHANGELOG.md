@@ -8,7 +8,7 @@ without an entry tells nobody what it brought.
 ## 1.70.0 — 2026-09-13
 
 A background job that finishes and changes nothing else gets one line again,
-without the plan and the risk restated beside it.
+and a report on finished work keeps its exact values.
 
 - **The core's status rule is back to its 1.68.0 words**: "send only the
   delta since your last message". The 1.69.0 rewrite said "only what changed
@@ -17,6 +17,13 @@ without the plan and the risk restated beside it.
   on 1.69.0, and 7 of 10 with the old sentence back; case 12, the other status
   case, passes 5 of 5 either way.
 - **`SKILL.md` says the same** in its status row.
+- **The turn reminder lets a report in the chat pass five lines** when its
+  deliverables need them, keeps every exact value, and splits a line that
+  names three parts. Eval case 18, a finished PDF stack, went from 0 of 8 runs
+  to 3 of 5, every answer keeping the version, the size and the test counts.
+  Case 37, the text of a settings screen, went from 4 of 8 to 1 of 5, which
+  five runs can't separate from noise; worded without the "in the chat" limit,
+  the same reminder took it to 0 of 8.
 
 ## 1.69.0 — 2026-09-13
 

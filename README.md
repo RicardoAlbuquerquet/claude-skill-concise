@@ -302,7 +302,7 @@ holds where the first fades:
 
 The output style carries the ~95-line core, about 950 tokens, from one
 file: [`hooks/core.md`](skills/concise/hooks/core.md); CI fails when the two
-drift. The reminder is one line, about 750 characters a
+drift. The reminder is one line, about 900 characters a
 turn. A `SessionStart` hook adds only the line naming your shell, and your core
 override when you wrote one. The full ruleset still lives in the skill, which
 the model invokes when a turn needs more than the core.
