@@ -29,7 +29,10 @@ the long form works:
 | `MODEL=claude-sonnet-5` | pins the model, so two runs are comparable |
 | `JOBS=1` | serial, for a rate limit or a log you want to read as it goes |
 | `JUDGE_MODEL=` | judges with `MODEL` instead of the fast default |
-| `ONLY=07` | a single case, by filename fragment |
+| `ONLY=07` | one case by number or filename fragment; `ONLY=10,18,26` for several |
+| `MIN_RUNS=2` | with `RUNS=5`, stops a case at two runs that agree, and agree with `COMPARE` |
+| `COMPARE=evals/baseline/claude-opus-5.tsv` | better, same or worse per case against a saved run; exits 1 when one got worse |
+| `RESULTS=file` | saves passes and runs per case; cases that didn't run keep their line |
 | `CLAUDE_BIN=./stub` | swaps the CLI — how the harness itself is tested, free |
 
 In skill mode the harness appends every file in `references/` after `SKILL.md`:
@@ -59,6 +62,42 @@ to lack the flag still works and says so.
 **Cost:** two API calls per case per run, so the default suite is 80 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
+
+## Measuring a change without 800 calls
+
+The side with no style depends on the model, not on the plugin, so it runs
+once and stays saved: [`baseline/claude-opus-5.tsv`](baseline/claude-opus-5.tsv),
+five runs per case on 2026-09-14. A plugin run compares against it instead of
+running it again. The commands need the isolated config and the directory
+described in [the last full measurement](#last-full-measurement).
+
+1. While changing a rule, run only the cases the map below ties to it —
+   about 30 calls for three cases:
+
+   ```bash
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 ONLY=10,18,26 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   ```
+
+2. Before a release, the same over every case. A case stops after two runs
+   that agree with each other and with the saved side, within one run; only
+   the cases where the sides differ pay for five. On the 1.71.0 numbers that
+   is about 290 calls.
+
+   ```bash
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   ```
+
+3. Measure the saved side again only when the model changes, or for the one
+   case whose rubric changed — `RESULTS` rewrites that case's line and keeps
+   the others:
+
+   ```bash
+   CLAUDE_CONFIG_DIR=~/.claude-eval BASELINE=1 RUNS=5 ONLY=18 RESULTS=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   ```
+
+The price of stopping at two runs: a case that passes two runs and would have
+failed the next three reads as the same. The full count still runs wherever
+the two sides disagree.
 
 ## Rule → case
 

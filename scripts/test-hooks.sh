@@ -323,5 +323,29 @@ PLUGIN=1 CLAUDE_CONFIG_DIR="$FH/cfg" ONLY=01 RESPONSES="$EV/respostas" CLAUDE_BI
 env -u CLAUDE_CONFIG_DIR PLUGIN=1 ONLY=01 CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" >/dev/null 2>&1
 [ "$?" -eq 2 ] && ok "PLUGIN=1 recusa rodar sem config isolada" || ko "PLUGIN=1 rodou sem config isolada"
 
+# Rodada barata: ONLY com varios numeros, MIN_RUNS que para quando as tentativas
+# concordam com a rodada salva, RESULTS que so reescreve as linhas que rodaram,
+# e COMPARE que roda tudo e sai com 1 quando um caso piora.
+obtido=$(ONLY=1,03 CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" 2>/dev/null | sed -n 's/^PASS  //p' | tr '\n' ' ')
+[ "$obtido" = "01-factual-question 03-false-premise " ] && ok "ONLY aceita varios numeros" || ko "ONLY com varios numeros: $obtido"
+cat > "$EV/conta" <<EOF
+#!/usr/bin/env bash
+if [ "\$1" = "--help" ]; then echo "--append-system-prompt-file"; exit 0; fi
+case " \$* " in *" --append-system-prompt-file "*) echo resposta >> "$EV/contadas" ;; esac
+echo resposta
+echo "\${VEREDITO:-PASS}"
+EOF
+chmod +x "$EV/conta"
+printf '01-factual-question\t5\t5\nzz-outro\t1\t5\n' > "$EV/salvo.tsv"
+: > "$EV/contadas"
+RUNS=5 MIN_RUNS=2 ONLY=01 COMPARE="$EV/salvo.tsv" RESULTS="$EV/salvo.tsv" CLAUDE_BIN="$EV/conta" bash "$REPO/evals/run.sh" >/dev/null 2>&1
+[ "$(grep -c . "$EV/contadas")" = 2 ] && ok "MIN_RUNS para em 2 quando concorda com a rodada salva" || ko "MIN_RUNS nao parou: $(grep -c . "$EV/contadas") respostas"
+[ "$(tr '\t\n' ' ;' < "$EV/salvo.tsv")" = "01-factual-question 2 2;zz-outro 1 5;" ] && ok "RESULTS reescreve so as linhas que rodaram" || ko "RESULTS: $(tr '\t\n' ' ;' < "$EV/salvo.tsv")"
+printf '01-factual-question\t5\t5\n' > "$EV/salvo.tsv"
+: > "$EV/contadas"
+saida=$(RUNS=5 MIN_RUNS=2 ONLY=01 COMPARE="$EV/salvo.tsv" VEREDITO=FAIL CLAUDE_BIN="$EV/conta" bash "$REPO/evals/run.sh" 2>/dev/null); rc=$?
+[ "$rc" -eq 1 ] && printf '%s\n' "$saida" | grep -q "^worse   01-factual-question  5/5 -> 0/5" && [ "$(grep -c . "$EV/contadas")" = 5 ] &&
+  ok "COMPARE marca a piora, roda as cinco e sai com 1" || ko "COMPARE com piora: rc=$rc, $(grep -c . "$EV/contadas") respostas"
+
 echo "===== $pass ok, $fail falhas"
 [ "$fail" -eq 0 ]
