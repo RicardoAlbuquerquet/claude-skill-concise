@@ -32,6 +32,8 @@ the long form works:
 | `ONLY=07` | one case by number or filename fragment; `ONLY=10,18,26` for several |
 | `MIN_RUNS=2` | with `RUNS=5`, stops a case at two runs that agree, and agree with `COMPARE` |
 | `COMPARE=evals/baseline/claude-opus-5.tsv` | better, same or worse per case against a saved run, each case stopping once its verdict is settled; exits 1 when one got worse |
+| `WORSE_ONLY=1` | with `COMPARE`, only whether a case got worse; skips the cases whose saved side passes under 40% |
+| `SET=core` | the cases listed in `evals/sets/core.txt` — the daily ten |
 | `RESULTS=file` | saves passes and runs per case; cases that didn't run keep their line |
 | `CLAUDE_BIN=./stub` | swaps the CLI — how the harness itself is tested, free |
 
@@ -71,25 +73,39 @@ five runs per case on 2026-09-14. A plugin run compares against it instead of
 running it again. The commands need the isolated config and the directory
 described in [the last full measurement](#last-full-measurement).
 
-1. While changing a rule, run only the cases the map below ties to it —
+1. Every day, the ten cases in [`sets/core.txt`](sets/core.txt) — three
+   simple, three medium, four complex: about 22 calls to ask whether any got
+   worse, or about 56 for better, same and worse. The rules the other thirty
+   cases test wait for a release, and ten cases put the overall pass rate
+   within about 14 points instead of 7.
+
+   ```bash
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 SET=core WORSE_ONLY=1 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   ```
+
+2. While changing a rule, run only the cases the map below ties to it —
    about 30 calls for three cases:
 
    ```bash
    CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 ONLY=10,18,26 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
    ```
 
-2. Before a release, the same over every case. A case stops as soon as the
-   runs left can no longer change its verdict — 0 of 2 against a saved 5 of 5
-   is worse whatever comes next — or after two runs that agree with each other
-   and with the saved side, within one run. Simulated over every order the
-   1.71.0 passes could have come in, that is about 214 calls; the two-run stop
-   alone was 274.
+3. Before a release, ask only whether any case got worse. `WORSE_ONLY=1`
+   skips the cases whose saved side passes under 40% — they have no room for a
+   two-run drop — and stops every other case as soon as "worse" is settled
+   either way. Simulated over every order the 1.71.0 passes could have come
+   in, that is about 84 calls.
 
    ```bash
-   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 WORSE_ONLY=1 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
    ```
 
-3. Measure the saved side again only when the model changes, or for the one
+   The README numbers need better and same as well: the same command without
+   `WORSE_ONLY`, about 214 calls. There a case stops once the runs left can no
+   longer change its verdict — 0 of 2 against a saved 5 of 5 is worse whatever
+   comes next — or after two runs that agree with the saved side, within one.
+
+4. Measure the saved side again only when the model changes, or for the one
    case whose rubric changed — `RESULTS` rewrites that case's line and keeps
    the others:
 

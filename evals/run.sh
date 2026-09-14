@@ -6,6 +6,7 @@
 #   bash evals/run.sh                          # all cases, EN skill
 #   ONLY=03 bash evals/run.sh                  # one case, by number or filename fragment
 #   ONLY=10,18,26 bash evals/run.sh            # several — the cases a rule change touches
+#   SET=core bash evals/run.sh                 # a named list in evals/sets/ — core is the daily ten
 #   CLAUDE_BIN=./stub bash evals/run.sh        # swap the CLI (used in testing)
 #   CORE=1 bash evals/run.sh                   # judge the always-on core, not the skill
 #   STYLE_FILE=ports/en/AGENTS.md bash evals/run.sh   # judge one port's own text
@@ -16,6 +17,7 @@
 #   RUNS=5 MIN_RUNS=2 bash evals/run.sh        # stop at 2 when they agree, and agree with COMPARE
 #   RESULTS=evals/baseline/claude-opus-5.tsv   # save passes per case; other cases' lines stay
 #   COMPARE=evals/baseline/claude-opus-5.tsv   # better/same/worse per case against a saved run
+#   WORSE_ONLY=1 COMPARE=...                   # only "did any case get worse?" — the release gate
 #   MODEL=claude-sonnet-5 bash evals/run.sh    # pin the model so runs compare
 #   JOBS=1 bash evals/run.sh                   # serial, for a rate limit or a clean log
 #   JUDGE_MODEL= bash evals/run.sh             # judge with MODEL instead of the fast default
@@ -27,10 +29,27 @@ BIN="${CLAUDE_BIN:-claude}"
 RUNS="${RUNS:-1}"
 MIN_RUNS="${MIN_RUNS:-$RUNS}"
 [ -z "${COMPARE:-}" ] || [ -f "$COMPARE" ] || { echo "no such saved run: $COMPARE" >&2; exit 2; }
+[ -z "${WORSE_ONLY:-}" ] || [ -n "${COMPARE:-}" ] || {
+  echo "WORSE_ONLY=1 needs COMPARE: it asks whether a case got worse than a saved run" >&2; exit 2; }
+
+# SET names a list of case numbers in evals/sets/, one per line, # for notes.
+# It becomes ONLY, so the two can't both be given.
+if [ -n "${SET:-}" ]; then
+  set_file="$ROOT/evals/sets/$SET.txt"
+  [ -f "$set_file" ] || { echo "no such set: $set_file" >&2; exit 2; }
+  [ -z "${ONLY:-}" ] || { echo "SET and ONLY both pick cases — give one" >&2; exit 2; }
+  ONLY=$(sed 's/#.*//' "$set_file" | tr -d '\r' | tr -s ' \n' ',' | sed 's/^,//; s/,$//')
+fi
 
 # Better or worse means pass rates 40 points apart — two runs in five. One run
-# apart is noise, and it counts as the same in both directions.
-verdict () { if [ "$1" -le -40 ]; then echo worse; elif [ "$1" -ge 40 ]; then echo better; else echo same; fi; }
+# apart is noise, and it counts as the same in both directions. WORSE_ONLY
+# folds better into the same, so a case stops as soon as "worse" is settled.
+verdict () {
+  if [ "$1" -le -40 ]; then echo worse
+  elif [ -n "${WORSE_ONLY:-}" ] || [ "$1" -lt 40 ]; then echo same
+  else echo better; fi
+}
+saved () { awk -F'\t' -v n="$1" '{sub(/\r$/,"")} $1==n{print $2" "$3}' "$COMPARE"; }
 SKILL_FILE="$ROOT/skills/$SKILL/SKILL.md"
 CORE_FILE="$ROOT/skills/$SKILL/hooks/core.md"
 [ -f "$SKILL_FILE" ] || { echo "no such skill: $SKILL_FILE" >&2; exit 2; }
@@ -131,7 +150,7 @@ run_case () {
 
   # The saved run's passes and runs for this case, when COMPARE names one.
   base=""
-  [ -n "${COMPARE:-}" ] && base=$(awk -F'\t' -v n="$name" '{sub(/\r$/,"")} $1==n{print $2" "$3}' "$COMPARE")
+  [ -n "${COMPARE:-}" ] && base=$(saved "$name")
   ok=0
   attempt=1
   while [ "$attempt" -le "$RUNS" ]; do
@@ -248,10 +267,19 @@ matches () {
   done
   return 1
 }
-selected=""
+selected="" skipped=0
 for case_file in "$ROOT"/evals/cases/*.md; do
   name=$(basename "$case_file" .md)
   matches "$name" || continue
+  # Worse takes a drop of 40 points, so a case whose saved side passes under
+  # 40% has no room for one — nearly half the suite, skipped at no risk.
+  if [ -n "${WORSE_ONLY:-}" ]; then
+    b=$(saved "$name")
+    if [ -n "$b" ]; then
+      read -r bp br <<< "$b"
+      [ $((100*bp/br)) -lt 40 ] && { skipped=$((skipped+1)); continue; }
+    fi
+  fi
   selected="$selected $case_file"
   while [ "$(jobs -pr | wc -l)" -ge "$JOBS" ]; do wait -n 2>/dev/null || break; done
   run_case "$case_file" &
@@ -280,7 +308,7 @@ done
 
 echo "----"
 echo "$pass passed, $failn failed  (mode=$MODE)"
-[ $((pass + failn)) -gt 0 ] || { echo "no case matched ONLY=${ONLY:-}" >&2; exit 2; }
+[ $((pass + failn + skipped)) -gt 0 ] || { echo "no case matched ONLY=${ONLY:-}" >&2; exit 2; }
 
 # RESULTS keeps "case, passes, runs" per line. A run over a few cases rewrites
 # their lines and keeps the rest, so one rubric's fix doesn't cost a full sweep.
@@ -303,7 +331,7 @@ if [ -n "${COMPARE:-}" ]; then
   for case_file in $selected; do
     name=$(basename "$case_file" .md)
     read -r p r < "$WORK/$name.count"
-    b=$(awk -F'\t' -v n="$name" '{sub(/\r$/,"")} $1==n{print $2" "$3}' "$COMPARE")
+    b=$(saved "$name")
     if [ -z "$b" ]; then echo "new     $name  $p/$r"; new=$((new+1)); continue; fi
     read -r bp br <<< "$b"
     case $(verdict $(( 100*p/r - 100*bp/br ))) in
@@ -312,7 +340,11 @@ if [ -n "${COMPARE:-}" ]; then
       *) same=$((same+1)) ;;
     esac
   done
-  echo "$better better, $same same, $worse worse$([ "$new" -gt 0 ] && echo ", $new without a saved result")"
+  if [ -n "${WORSE_ONLY:-}" ]; then
+    echo "$worse worse, $same not worse, $skipped skipped as unable to get worse$([ "$new" -gt 0 ] && echo ", $new without a saved result")"
+  else
+    echo "$better better, $same same, $worse worse$([ "$new" -gt 0 ] && echo ", $new without a saved result")"
+  fi
   [ "$worse" -eq 0 ]; exit $?
 fi
 
