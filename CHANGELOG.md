@@ -5,6 +5,28 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.83.0 — 2026-09-14
+
+O guarda de crédito passa a ler a mensagem que vem de arquivo em qualquer
+forma, o `/concise:pr create` abre a PR sem ser barrado, e o lembrete para de
+puxar regra por palavra dentro de outra.
+
+- **Arquivo entre aspas é lido.** `git commit -F "msg.txt"` e
+  `gh pr create --body-file 'b.md'` passavam com a assinatura dentro, porque
+  só o caminho sem aspas era aberto. Também são lidos `$(cat msg.txt)`,
+  `Get-Content msg.txt` e todos os arquivos da chamada, não só o primeiro.
+- **`gh pr merge` é checado**, porque a mensagem do squash vai para o
+  histórico da `main`.
+- **O `/concise:pr create` passa direto.** O comando abre a PR com o próprio
+  `gh pr create`, e o aviso negava essa chamada mandando rodar o comando em
+  que a sessão já estava.
+- **As marcas do aviso de PR com mais de um dia são apagadas.** Ficava uma
+  por sessão na pasta temporária, para sempre.
+- **Card, issue e review casam a palavra inteira:** "discard" e
+  "cardinalidade" não puxam mais a regra do card, nem "preview" a do
+  comentário. "PRs" passa a puxar a regra da PR.
+- Dezoito testes novos, e catorze deles falham no código anterior.
+
 ## 1.82.0 — 2026-09-14
 
 A regra de artefato do lembrete passa a entrar só quando o pedido fala do
