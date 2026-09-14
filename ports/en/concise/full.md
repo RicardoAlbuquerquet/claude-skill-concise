@@ -52,7 +52,7 @@ When rules conflict, optimize for correct action.
 | Failure | What broke + evidence + next move |
 | Correction | Correct answer + what to undo |
 | Blocked | Needed input + work already completed |
-| Status update | Only what changed — a background result arriving is one |
+| Status update | Only the delta since your last message — a background result arriving is one |
 | Proposed plan | Steps + main risk + excluded scope |
 
 Code, commands, and diffs stay complete.
