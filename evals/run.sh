@@ -4,7 +4,8 @@
 # Two API calls per case.
 #
 #   bash evals/run.sh                          # all cases, EN skill
-#   ONLY=03 bash evals/run.sh                  # one case, by filename fragment
+#   ONLY=03 bash evals/run.sh                  # one case, by number or filename fragment
+#   ONLY=10,18,26 bash evals/run.sh            # several — the cases a rule change touches
 #   CLAUDE_BIN=./stub bash evals/run.sh        # swap the CLI (used in testing)
 #   CORE=1 bash evals/run.sh                   # judge the always-on core, not the skill
 #   STYLE_FILE=ports/en/AGENTS.md bash evals/run.sh   # judge one port's own text
@@ -12,6 +13,9 @@
 #   PLUGIN=1 bash evals/run.sh                 # the plugin as installed: output style, reminder, hooks
 #   RESPONSES=out bash evals/run.sh            # keep every answer, one file per case and attempt
 #   RUNS=3 bash evals/run.sh                   # N attempts per case, pass rate reported
+#   RUNS=5 MIN_RUNS=2 bash evals/run.sh        # stop at 2 when they agree, and agree with COMPARE
+#   RESULTS=evals/baseline/claude-opus-5.tsv   # save passes per case; other cases' lines stay
+#   COMPARE=evals/baseline/claude-opus-5.tsv   # better/same/worse per case against a saved run
 #   MODEL=claude-sonnet-5 bash evals/run.sh    # pin the model so runs compare
 #   JOBS=1 bash evals/run.sh                   # serial, for a rate limit or a clean log
 #   JUDGE_MODEL= bash evals/run.sh             # judge with MODEL instead of the fast default
@@ -21,6 +25,8 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SKILL="${SKILL:-concise}"
 BIN="${CLAUDE_BIN:-claude}"
 RUNS="${RUNS:-1}"
+MIN_RUNS="${MIN_RUNS:-$RUNS}"
+[ -z "${COMPARE:-}" ] || [ -f "$COMPARE" ] || { echo "no such saved run: $COMPARE" >&2; exit 2; }
 SKILL_FILE="$ROOT/skills/$SKILL/SKILL.md"
 CORE_FILE="$ROOT/skills/$SKILL/hooks/core.md"
 [ -f "$SKILL_FILE" ] || { echo "no such skill: $SKILL_FILE" >&2; exit 2; }
@@ -119,6 +125,9 @@ run_case () {
   [ -n "$prompt" ] && [ -n "$rubric" ] || {
     echo "$name: no '## Prompt' or '## Rubric' section" > "$WORK/$name.abort"; return 3; }
 
+  # The saved run's passes and runs for this case, when COMPARE names one.
+  base=""
+  [ -n "${COMPARE:-}" ] && base=$(awk -F'\t' -v n="$name" '{sub(/\r$/,"")} $1==n{print $2" "$3}' "$COMPARE")
   ok=0
   attempt=1
   while [ "$attempt" -le "$RUNS" ]; do
@@ -180,13 +189,29 @@ $rubric")
     lastverdict=$verdict
   fi
   attempt=$((attempt+1))
-  done
 
-  if [ "$ok" -eq "$RUNS" ]; then
+  # Most cases pass every run or fail every run, and the runs past MIN_RUNS
+  # only repeat that. They stop there when the runs so far agree with each
+  # other and, under COMPARE, with the saved run to within one run — a case
+  # where the two sides disagree is the one that needs the full count.
+  done_n=$((attempt-1))
+  if [ "$done_n" -ge "$MIN_RUNS" ] && [ "$done_n" -lt "$RUNS" ]; then
+    if [ "$ok" -eq "$done_n" ] || [ "$ok" -eq 0 ]; then
+      [ -z "$base" ] && break
+      read -r bpass bruns <<< "$base"
+      [ "$ok" -eq "$done_n" ] && [ "$bpass" -ge $((bruns-1)) ] && break
+      [ "$ok" -eq 0 ] && [ "$bpass" -le 1 ] && break
+    fi
+  fi
+  done
+  ran=$((attempt-1))
+  echo "$ok $ran" > "$WORK/$name.count"
+
+  if [ "$ok" -eq "$ran" ]; then
     echo "PASS  $name" >> "$out"; echo pass > "$WORK/$name.status"
   elif [ "$ok" -gt 0 ]; then
     # Flaky is a finding, not a pass: the rule holds sometimes.
-    echo "FLAKY $name  ($ok/$RUNS)" >> "$out"; echo fail > "$WORK/$name.status"
+    echo "FLAKY $name  ($ok/$ran)" >> "$out"; echo fail > "$WORK/$name.status"
     printf '%s\n' "$lastverdict" | sed 's/^/      /' >> "$out"
   else
     echo "FAIL  $name" >> "$out"; echo fail > "$WORK/$name.status"
@@ -196,10 +221,24 @@ $rubric")
 
 # Fan out, then report in filename order — a parallel run must read exactly
 # like a serial one, or a diff between two runs is unreadable.
+#
+# ONLY takes several fragments, split on commas or spaces. A fragment of digits
+# alone is a case number, so ONLY=1 means case 01 and not every name with a 1.
+matches () {
+  [ -n "${ONLY:-}" ] || return 0
+  for frag in $(printf '%s' "$ONLY" | tr ',' ' '); do
+    case "$frag" in
+      *[!0-9]*) case "$1" in *"$frag"*) return 0 ;; esac ;;
+      ?) case "$1" in "0$frag"-*) return 0 ;; esac ;;
+      *) case "$1" in "$frag"-*) return 0 ;; esac ;;
+    esac
+  done
+  return 1
+}
 selected=""
 for case_file in "$ROOT"/evals/cases/*.md; do
   name=$(basename "$case_file" .md)
-  case "$name" in *"${ONLY:-}"*) ;; *) continue ;; esac
+  matches "$name" || continue
   selected="$selected $case_file"
   while [ "$(jobs -pr | wc -l)" -ge "$JOBS" ]; do wait -n 2>/dev/null || break; done
   run_case "$case_file" &
@@ -229,6 +268,41 @@ done
 echo "----"
 echo "$pass passed, $failn failed  (mode=$MODE)"
 [ $((pass + failn)) -gt 0 ] || { echo "no case matched ONLY=${ONLY:-}" >&2; exit 2; }
+
+# RESULTS keeps "case, passes, runs" per line. A run over a few cases rewrites
+# their lines and keeps the rest, so one rubric's fix doesn't cost a full sweep.
+if [ -n "${RESULTS:-}" ]; then
+  for case_file in $selected; do
+    name=$(basename "$case_file" .md)
+    read -r p r < "$WORK/$name.count"
+    printf '%s\t%s\t%s\n' "$name" "$p" "$r"
+  done > "$WORK/results.new"
+  [ -f "$RESULTS" ] && awk -F'\t' 'NR==FNR{ran[$1]=1; next} {sub(/\r$/,"")} !($1 in ran)' "$WORK/results.new" "$RESULTS" > "$WORK/results.kept"
+  cat "$WORK/results.new" "$WORK/results.kept" 2>/dev/null | sort > "$WORK/results.all"
+  mkdir -p "$(dirname "$RESULTS")" && cp "$WORK/results.all" "$RESULTS"
+fi
+
+# Better or worse means pass rates 40 points apart — two runs in five. One run
+# apart is noise, and it counts as the same in both directions. Under COMPARE
+# the exit code says whether any case got worse, whatever else failed.
+if [ -n "${COMPARE:-}" ]; then
+  echo "---- against $COMPARE"
+  better=0 same=0 worse=0 new=0
+  for case_file in $selected; do
+    name=$(basename "$case_file" .md)
+    read -r p r < "$WORK/$name.count"
+    b=$(awk -F'\t' -v n="$name" '{sub(/\r$/,"")} $1==n{print $2" "$3}' "$COMPARE")
+    if [ -z "$b" ]; then echo "new     $name  $p/$r"; new=$((new+1)); continue; fi
+    read -r bp br <<< "$b"
+    d=$(( 100*p/r - 100*bp/br ))
+    if [ "$d" -le -40 ]; then echo "worse   $name  $bp/$br -> $p/$r"; worse=$((worse+1))
+    elif [ "$d" -ge 40 ]; then echo "better  $name  $bp/$br -> $p/$r"; better=$((better+1))
+    else same=$((same+1)); fi
+  done
+  echo "$better better, $same same, $worse worse$([ "$new" -gt 0 ] && echo ", $new without a saved result")"
+  [ "$worse" -eq 0 ]; exit $?
+fi
+
 # In baseline mode a pass is not good news — it means the case measures the
 # model's own habits, not the rules — so the exit code is informational.
 [ "$MODE" = baseline ] && exit 0

@@ -3,3 +3,7 @@
 # ports/ is generated, and a build run on Windows would otherwise commit the
 # whole tree again with CRLF — a diff of 58 files saying nothing.
 ports/** text eol=lf
+
+# The saved eval results are read line by line with a tab split; a CRLF
+# checkout would glue a carriage return to the run count.
+evals/baseline/*.tsv text eol=lf
