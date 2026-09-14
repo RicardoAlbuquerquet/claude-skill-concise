@@ -8,7 +8,8 @@ without an entry tells nobody what it brought.
 ## 1.83.0 — 2026-09-14
 
 O guarda de crédito passa a ler a mensagem que vem de arquivo em qualquer
-forma, e o `/concise:pr create` abre a PR sem ser barrado.
+forma, o `/concise:pr create` abre a PR sem ser barrado, e o lembrete para de
+puxar regra por palavra dentro de outra.
 
 - **Arquivo entre aspas é lido.** `git commit -F "msg.txt"` e
   `gh pr create --body-file 'b.md'` passavam com a assinatura dentro, porque
@@ -21,7 +22,10 @@ forma, e o `/concise:pr create` abre a PR sem ser barrado.
   que a sessão já estava.
 - **As marcas do aviso de PR com mais de um dia são apagadas.** Ficava uma
   por sessão na pasta temporária, para sempre.
-- Treze testes novos, e nove deles falham no código anterior.
+- **Card, issue e review casam a palavra inteira:** "discard" e
+  "cardinalidade" não puxam mais a regra do card, nem "preview" a do
+  comentário. "PRs" passa a puxar a regra da PR.
+- Dezoito testes novos, e catorze deles falham no código anterior.
 
 ## 1.82.0 — 2026-09-14
 

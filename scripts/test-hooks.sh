@@ -364,6 +364,14 @@ for port in concise; do
   # que o plugin carrega.
   out=$(printf '%s' '{"prompt":"escreva o card dessa mudanca"}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
   case "$out" in *"If this turn writes a card"*) ok "lembrete de $port leva a regra do card no pedido de card" ;; *) ko "lembrete de $port nao levou a regra do card: $out" ;; esac
+  # Palavra dentro de outra puxava regra alheia: discard levava a do card e
+  # preview a do comentario. E o plural de PR nao levava a da PR.
+  for p in "discard the changes" "que tissue" "abre o preview" "cardinalidade da tabela"; do
+    out=$(printf '{"prompt":"%s"}' "$p" | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
+    case "$out" in *"If this turn writes"*) ko "lembrete de $port puxou regra em \"$p\"" ;; *) ok "lembrete de $port sem regra em \"$p\"" ;; esac
+  done
+  out=$(printf '%s' '{"prompt":"abre as PRs e move os cards"}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
+  case "$out" in *"writes a card"*"writes a PR description"*) ok "lembrete de $port casa o plural de PR e de card" ;; *) ko "lembrete de $port perdeu o plural: $out" ;; esac
   # Cada artefato tem uma regra so: dois conjuntos quase iguais ja mandaram a
   # regra do desenho e a do comentario duas vezes no mesmo turno.
   out=$(printf '%s' '{"prompt":"desenhe o diagrama, faz o review do commit e abre a PR"}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
