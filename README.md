@@ -33,7 +33,7 @@
 
 ```text
 answer gets shorter      [########--------]   53% shorter: 162 words to 77
-answer is more complete  [###########-----]   +28 points over no style
+answer is more complete  [###########-----]   65% more than with no style
 request improves         [######----------]   16 of the 40, 23 unchanged
 ```
 
