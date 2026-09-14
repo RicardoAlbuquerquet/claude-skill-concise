@@ -66,55 +66,55 @@ The map is what makes an edited rule regress instead of silently drifting: if
 you change a rule here, change the rubric that tests it. The two scores come
 from [the last full measurement](#last-full-measurement): a case that passes
 with no style measures the model's own habits, and a plugin score in bold is
-lower than no style's.
+worse by the rule stated there.
 
 | Rule (`SKILL.md` or its reference file) | Case | No style | Plugin |
 |---|---|---|---|
-| Answer in the first sentence; no preamble | 01, and every other rubric | 1/3 | 3/3 |
-| Completed work ≤5 lines, gate result | 02 | 0/3 | 3/3 |
-| Investigation: finding + consequence | 03 | 3/3 | 3/3 |
-| Always keep: caveat that changes what the user does | 04 | 3/3 | 3/3 |
-| Recommendation carries its cost | 05 | 3/3 | 3/3 |
-| The user's choice: options side by side + a recommendation | 06 | 0/3 | 3/3 |
-| A runnable command gets its own `bash` fence | 07 | 3/3 | 3/3 |
-| Overloaded opening: verdict first, support second | 08 | 3/3 | 3/3 |
-| Commit message: title says what changes, body says why | 09 | 2/3 | 3/3 |
-| PR description: test steps, unverified named | 10 | 0/3 | 0/3 |
-| Card: stands alone, narrow-panel structure | 11 | 0/3 | 0/3 |
-| Status update: only the delta | 12 | 3/3 | 3/3 |
-| Bad news; the second question in a two-question message | 13 | 3/3 | 3/3 |
-| Draw the shape; gloss by consequence | 14 | 0/3 | 0/3 |
-| Correcting yourself: no story of the mistake, no re-announcing | 15 | 1/3 | 2/3 |
-| Commit lands inside the repo log's convention | 16 | 3/3 | 3/3 |
-| Several deliverables read as a markdown list | 17 | 0/3 | 0/3 |
-| A list item stays an item, not a packed paragraph | 18 | 2/3 | **0/3** |
-| What waits on the reader sits apart from what informs them | 19 | 2/3 | **1/3** |
-| A name out of the code stays only if the reader will use it | 20 | 0/3 | 0/3 |
-| A fence is tagged for the shell the reader will paste into | 21 | 3/3 | 3/3 |
-| The outcome, not the itinerary of the work | 22 | 2/3 | **1/3** |
-| A table column with one repeated value is not a column | 23 | 0/3 | 3/3 |
-| The reader's choice still gets a recommendation, at the end of a long report | 24 | 1/3 | 3/3 |
-| A note on a card is the summary of the summary | 25 | 3/3 | 3/3 |
-| PR title: the area first, the state after the merge | 26 | 3/3 | **1/3** |
-| Drawing craft: one glyph set, nothing wraps, labels hang off their box | 27 | 0/3 | 0/3 |
-| One hanging note, and it sits on the finding | 28 | 0/3 | 0/3 |
-| One gloss per response; the rest of the terms become what they do | 29 | 2/3 | 2/3 |
-| One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | 0/3 | 3/3 |
-| PR description inside a screenful, and the cut comes out of what repeats | 31 | 0/3 | 0/3 |
-| Commit body: six lines at most, no investigation, no list of what was run | 32 | 2/3 | 3/3 |
-| Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | 0/3 | 0/3 |
-| Card layout: two paragraphs, then labelled lines, spans off the prose | 34 | 0/3 | 0/3 |
-| The delivered artifact is the answer; no tour of it, no praise for the tooling | 35 | 0/3 | 2/3 |
-| A comment says only what the code can't; no docstring retelling the signature, no banner | 36 | 0/3 | 3/3 |
-| A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | 0/3 | 2/3 |
-| PR description: the words are the reviewer's, and a name only the repo knows becomes what it does | 39 | 0/3 | 0/3 |
-| Status update: a background result is only its delta — the unchanged queue and risk stay unsaid | 40 | 0/3 | 1/3 |
-| A description is one sentence, plus the one thing the reader acts on | 41 | 0/3 | 3/3 |
+| Answer in the first sentence; no preamble | 01, and every other rubric | 4/5 | 5/5 |
+| Completed work ≤5 lines, gate result | 02 | 1/5 | 5/5 |
+| Investigation: finding + consequence | 03 | 5/5 | 5/5 |
+| Always keep: caveat that changes what the user does | 04 | 5/5 | 5/5 |
+| Recommendation carries its cost | 05 | 5/5 | 5/5 |
+| The user's choice: options side by side + a recommendation | 06 | 0/5 | 5/5 |
+| A runnable command gets its own `bash` fence | 07 | 5/5 | 5/5 |
+| Overloaded opening: verdict first, support second | 08 | 5/5 | 5/5 |
+| Commit message: title says what changes, body says why | 09 | 4/5 | 5/5 |
+| PR description: test steps, unverified named | 10 | 3/5 | 5/5 |
+| Card: stands alone, narrow-panel structure | 11 | 0/5 | 0/5 |
+| Status update: only the delta | 12 | 5/5 | 5/5 |
+| Bad news; the second question in a two-question message | 13 | 5/5 | 5/5 |
+| Draw the shape; gloss by consequence | 14 | 0/5 | 1/5 |
+| Correcting yourself: no story of the mistake, no re-announcing | 15 | 2/5 | 3/5 |
+| Commit lands inside the repo log's convention | 16 | 5/5 | 4/5 |
+| Several deliverables read as a markdown list | 17 | 0/5 | 5/5 |
+| A list item stays an item, not a packed paragraph | 18 | 5/5 | **1/5** |
+| What waits on the reader sits apart from what informs them | 19 | 3/5 | 4/5 |
+| A name out of the code stays only if the reader will use it | 20 | 0/5 | 0/5 |
+| A fence is tagged for the shell the reader will paste into | 21 | 4/5 | 5/5 |
+| The outcome, not the itinerary of the work | 22 | 2/5 | 5/5 |
+| A table column with one repeated value is not a column | 23 | 0/5 | 4/5 |
+| The reader's choice still gets a recommendation, at the end of a long report | 24 | 2/5 | 5/5 |
+| A note on a card is the summary of the summary | 25 | 2/5 | 5/5 |
+| PR title: the area first, the state after the merge | 26 | 5/5 | 5/5 |
+| Drawing craft: one glyph set, nothing wraps, labels hang off their box | 27 | 0/5 | 0/5 |
+| One hanging note, and it sits on the finding | 28 | 0/5 | 0/5 |
+| One gloss per response; the rest of the terms become what they do | 29 | 3/5 | 3/5 |
+| One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | 1/5 | 3/5 |
+| PR description inside a screenful, and the cut comes out of what repeats | 31 | 0/5 | 0/5 |
+| Commit body: six lines at most, no investigation, no list of what was run | 32 | 3/5 | 4/5 |
+| Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | 0/5 | 0/5 |
+| Card layout: two paragraphs, then labelled lines, spans off the prose | 34 | 0/5 | 1/5 |
+| The delivered artifact is the answer; no tour of it, no praise for the tooling | 35 | 0/5 | 3/5 |
+| A comment says only what the code can't; no docstring retelling the signature, no banner | 36 | 0/5 | 3/5 |
+| A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | 1/5 | 1/5 |
+| PR description: the words are the reviewer's, and a name only the repo knows becomes what it does | 39 | 0/5 | 0/5 |
+| Status update: a background result is only its delta — the unchanged queue and risk stay unsaid | 40 | 0/5 | 2/5 |
+| A description is one sentence, plus the one thing the reader acts on | 41 | 0/5 | 5/5 |
 
 ## Last full measurement
 
-Version 1.69.0 on 2026-09-13: `claude-opus-5` answering, `claude-haiku-4-5`
-judging, three runs per case in each arm — 480 calls.
+Version 1.71.0 on 2026-09-14: `claude-opus-5` answering, `claude-haiku-4-5`
+judging, five runs per case in each arm — 800 calls.
 
 Both arms need an isolated config, or the plugin gets graded against itself: a
 global `CLAUDE.md` carrying the style, an installed copy's hooks and its forced
@@ -127,12 +127,36 @@ rules out Git Bash's `/tmp`, which lives inside your profile; a folder outside
 `C:\Users` works.
 
 ```bash
-CLAUDE_CONFIG_DIR=~/.claude-eval BASELINE=1 RUNS=3 MODEL=claude-opus-5 RESPONSES=out/none bash ~/concise/evals/run.sh
+CLAUDE_CONFIG_DIR=~/.claude-eval BASELINE=1 RUNS=5 MODEL=claude-opus-5 RESPONSES=out/none bash ~/concise/evals/run.sh
 ```
 
 ```bash
-CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=3 MODEL=claude-opus-5 RESPONSES=out/plugin bash ~/concise/evals/run.sh
+CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MODEL=claude-opus-5 RESPONSES=out/plugin bash ~/concise/evals/run.sh
 ```
+
+| | No style | Plugin |
+|---|---|---|
+| Runs that pass their rubric | 85 of 200 | 132 of 200 |
+| Cases that pass all five runs | 10 of 40 | 19 of 40 |
+| Words per answer, median / mean | 162 / 177 | 76 / 102 |
+
+**A case counts as worse when the plugin fails at least two more runs of
+five**; one run apart is noise, and the rule was set before the plugin arm
+ran. By it, the plugin is better on 21 cases and worse on one: case 18,
+1 of 5 against 5 of 5, which still packs several helpers into one item. Case 16
+is one run behind.
+
+What changed in 1.71.0, each tried on its own cases before this run: the first
+sentence carries the result rather than a bare "yes" or a count of steps (22);
+what waits on the reader's decision sits apart from the report, and a check
+not run is said as not run (19); a PR title keeps the log's area prefix and
+its description gets three sections under headers (10, 26); and two things
+joined by and, a semicolon or parentheses are two list items (18).
+
+## The 1.69.0 measurement, three runs per case
+
+Version 1.69.0 on 2026-09-13: `claude-opus-5` answering, `claude-haiku-4-5`
+judging, three runs per case in each arm — 480 calls.
 
 | | No style | Plugin |
 |---|---|---|
