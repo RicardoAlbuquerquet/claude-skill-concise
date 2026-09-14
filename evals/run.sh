@@ -6,6 +6,7 @@
 #   bash evals/run.sh                          # all cases, EN skill
 #   ONLY=03 bash evals/run.sh                  # one case, by number or filename fragment
 #   ONLY=10,18,26 bash evals/run.sh            # several — the cases a rule change touches
+#   SET=core bash evals/run.sh                 # a named list in evals/sets/ — core is the daily ten
 #   CLAUDE_BIN=./stub bash evals/run.sh        # swap the CLI (used in testing)
 #   CORE=1 bash evals/run.sh                   # judge the always-on core, not the skill
 #   STYLE_FILE=ports/en/AGENTS.md bash evals/run.sh   # judge one port's own text
@@ -30,6 +31,15 @@ MIN_RUNS="${MIN_RUNS:-$RUNS}"
 [ -z "${COMPARE:-}" ] || [ -f "$COMPARE" ] || { echo "no such saved run: $COMPARE" >&2; exit 2; }
 [ -z "${WORSE_ONLY:-}" ] || [ -n "${COMPARE:-}" ] || {
   echo "WORSE_ONLY=1 needs COMPARE: it asks whether a case got worse than a saved run" >&2; exit 2; }
+
+# SET names a list of case numbers in evals/sets/, one per line, # for notes.
+# It becomes ONLY, so the two can't both be given.
+if [ -n "${SET:-}" ]; then
+  set_file="$ROOT/evals/sets/$SET.txt"
+  [ -f "$set_file" ] || { echo "no such set: $set_file" >&2; exit 2; }
+  [ -z "${ONLY:-}" ] || { echo "SET and ONLY both pick cases — give one" >&2; exit 2; }
+  ONLY=$(sed 's/#.*//' "$set_file" | tr -d '\r' | tr -s ' \n' ',' | sed 's/^,//; s/,$//')
+fi
 
 # Better or worse means pass rates 40 points apart — two runs in five. One run
 # apart is noise, and it counts as the same in both directions. WORSE_ONLY

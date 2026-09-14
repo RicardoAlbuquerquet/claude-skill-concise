@@ -354,5 +354,15 @@ saida=$(RUNS=5 MIN_RUNS=2 ONLY=01,03 WORSE_ONLY=1 COMPARE="$EV/salvo.tsv" CLAUDE
 WORSE_ONLY=1 ONLY=01 CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" >/dev/null 2>&1
 [ "$?" -eq 2 ] && ok "WORSE_ONLY recusa rodar sem COMPARE" || ko "WORSE_ONLY rodou sem COMPARE"
 
+# Um conjunto em evals/sets/ vira ONLY; um numero sem caso sumiria calado.
+esperado=$(sed 's/#.*//' "$REPO/evals/sets/core.txt" | tr -d '\r' | grep -o '[0-9][0-9]' | sort | tr '\n' ' ')
+obtido=$(SET=core CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" 2>/dev/null | sed -n 's/^PASS  \([0-9][0-9]\)-.*/\1/p' | tr '\n' ' ')
+[ -n "$esperado" ] && [ "$esperado" = "$obtido" ] && ok "SET=core roda exatamente os casos da lista" || ko "SET=core: esperado [$esperado], obtido [$obtido]"
+faltando=""
+for n in $(sed 's/#.*//' "$REPO"/evals/sets/*.txt | tr -d '\r' | grep -o '[0-9][0-9]'); do
+  ls "$REPO"/evals/cases/"$n"-*.md >/dev/null 2>&1 || faltando="$faltando $n"
+done
+[ -z "$faltando" ] && ok "todo numero em evals/sets/ tem caso" || ko "numeros sem caso em evals/sets/:$faltando"
+
 echo "===== $pass ok, $fail falhas"
 [ "$fail" -eq 0 ]
