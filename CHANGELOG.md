@@ -5,6 +5,18 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.85.0 — 2026-09-14
+
+A atualização automática volta a checar logo depois de ser cortada, e uma
+checagem cortada passa a contar como falha.
+
+- **A trava dura dois minutos.** Uma sessão que termina antes da checagem a
+  mata no meio, e a trava ficava. Por uma hora, nenhuma checagem rodava. Um
+  `claude -p` que dura um segundo reproduz isso.
+- **Checagem cortada conta como falha.** Antes ela não gravava nada, e o aviso
+  semanal nunca aparecia.
+- Cinco testes novos, e dois deles falham no código anterior.
+
 ## 1.84.0 — 2026-09-14
 
 O lembrete de cada mensagem fica curto e em frases simples, e o relatório de

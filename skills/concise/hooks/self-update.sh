@@ -38,10 +38,16 @@ if [ "$in_repo" = 0 ]; then
   [ "$(( now - last ))" -lt "$(( hours * 3600 ))" ] && exit 0
 fi
 
-# A lock older than an hour belongs to a crashed run, not a live one.
-[ -d "$lock" ] && find "$lock" -maxdepth 0 -mmin +60 2>/dev/null | grep -q . && rmdir "$lock" 2>/dev/null
+# A session that ends before the check does kills it without running the trap
+# below — a headless `claude -p` ends in about a second. The hook's own limit
+# is 30 seconds, so a lock older than two minutes belongs to a killed run.
+[ -d "$lock" ] && find "$lock" -maxdepth 0 -mmin +2 2>/dev/null | grep -q . && rmdir "$lock" 2>/dev/null
 mkdir "$lock" 2>/dev/null || exit 0
 trap 'rmdir "$lock" 2>/dev/null' EXIT
+
+# Failed until it succeeds: a killed run records nothing else, and the weekly
+# warning reads this mark.
+[ -f "$failed" ] || printf '%s' "$now" > "$failed"
 
 if claude plugin marketplace update claude-skill-concise >/dev/null 2>&1; then
   out=$(claude plugin update "$plugin@claude-skill-concise" 2>&1)
@@ -60,9 +66,7 @@ case "$out" in
     rm -f "$failed"
     printf '%s' "$now" > "$stamp"
     ;;
-  *)
-    # The stamp stays where it was: a check that never reached the
-    # marketplace retries next session, in place of waiting out the window.
-    [ -f "$failed" ] || printf '%s' "$now" > "$failed"
-    ;;
+  # Anything else keeps the stamp and the failure mark: a check that never
+  # reached the marketplace retries next session, in place of waiting out the
+  # window.
 esac

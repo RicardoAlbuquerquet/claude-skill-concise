@@ -146,6 +146,25 @@ n6=$(wc -l < "$FH/calls.log" | tr -d ' ')
 rm -f "$FH/.claude/.concise-update-stamp" "$FH/calls.log"; touch "$FH/.claude/.concise-no-self-update"
 HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise
 [ ! -s "$FH/calls.log" ] && { pass=$((pass+1)); echo "ok    opt-out do self-update"; } || { fail=$((fail+1)); echo "FALHA opt-out self-update"; }
+rm -f "$FH/.claude/.concise-no-self-update"
+
+# Uma sessao que termina antes da checagem mata o hook sem rodar o trap: a
+# trava fica e nada mais e gravado. Um `claude -p` que dura um segundo fez isso
+# em todo merge, e a trava de uma hora segurava as checagens seguintes.
+mata () { printf '#!/usr/bin/env bash\necho chamada >> "%s/calls.log"\nkill -9 $PPID\n' "$FH" > "$FH/bin/claude"; chmod +x "$FH/bin/claude"; }
+atualiza () { printf '#!/usr/bin/env bash\necho chamada >> "%s/calls.log"\n[ "$1" = "plugin" ] && [ "$2" = "update" ] && echo "concise is already at the latest version (1.84.0)."\nexit 0\n' "$FH" > "$FH/bin/claude"; chmod +x "$FH/bin/claude"; }
+rm -f "$FH/.claude/.concise-update-stamp" "$FH/.claude/.concise-update-failed" "$FH/calls.log"
+mata
+( cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise; true ) 2>/dev/null
+[ -f "$FH/.claude/.concise-update-failed" ] && { pass=$((pass+1)); echo "ok    checagem morta no meio conta como falha"; } || { fail=$((fail+1)); echo "FALHA checagem morta no meio nao marcou falha"; }
+[ -d "$FH/.claude/.concise-update-lock" ] && { pass=$((pass+1)); echo "ok    checagem morta deixa a trava, como na sessao real"; } || { fail=$((fail+1)); echo "FALHA o teste nao reproduziu a trava deixada"; }
+atualiza
+(cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+[ -f "$FH/.claude/.concise-update-stamp" ] && { fail=$((fail+1)); echo "FALHA trava recente foi ignorada"; } || { pass=$((pass+1)); echo "ok    trava de agora ainda segura a checagem"; }
+perl -e '$t = time - 180; utime $t, $t, $ARGV[0]' "$FH/.claude/.concise-update-lock"
+(cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+[ -s "$FH/.claude/.concise-update-stamp" ] && { pass=$((pass+1)); echo "ok    trava de tres minutos nao segura mais a checagem"; } || { fail=$((fail+1)); echo "FALHA trava de tres minutos ainda segura a checagem"; }
+[ -f "$FH/.claude/.concise-update-failed" ] && { fail=$((fail+1)); echo "FALHA sucesso nao limpou a marca de falha"; } || { pass=$((pass+1)); echo "ok    sucesso limpa a marca de falha"; }
 
 echo "--- guarda de credito em arquivo e quadro"
 CG="$REPO/skills/concise/hooks/credit-guard.sh"
