@@ -5,6 +5,21 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.84.0 — 2026-09-14
+
+O lembrete de cada mensagem fica curto e em frases simples, e o relatório de
+trabalho feito também cabe em cinco linhas.
+
+- **Frases curtas.** O lembrete era uma frase só, de 196 palavras, e as
+  respostas copiavam o tom. Agora nenhuma frase passa de 20 palavras.
+- **Sem brecha para relatório.** Sai a exceção que deixava o relatório passar
+  de cinco linhas. Ele agrupa o trabalho, e os detalhes esperam ser pedidos.
+- **Linguagem simples a cada mensagem.** "Palavras simples" e "uma ideia por
+  frase" estavam só no núcleo, e agora vêm junto de cada pedido.
+- Dois testes novos quebram a suíte se a frase longa ou a brecha voltarem.
+- **Não medido:** os evals não rodaram. A exceção tinha entrado na 1.70.0
+  pelo caso 18, que pode voltar a cair.
+
 ## 1.83.0 — 2026-09-14
 
 O guarda de crédito passa a ler a mensagem que vem de arquivo em qualquer

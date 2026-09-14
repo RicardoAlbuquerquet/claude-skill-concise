@@ -360,6 +360,12 @@ for port in concise; do
   cmd=$(perl -MJSON::PP -e 'binmode STDOUT, ":utf8"; local $/; my $j = decode_json(<STDIN>); print $j->{hooks}{UserPromptSubmit}[0]{hooks}[0]{command}' < "$REPO/skills/$port/hooks/hooks.json")
   out=$(printf '%s' '{}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
   printf '%s' "$out" | json_ok && ok "lembrete de $port roda pela linha do hooks.json" || ko "lembrete de $port quebra na linha do hooks.json: $out"
+  # O lembrete era uma frase so, de mais de cem palavras, e a resposta copiava
+  # o tom. Frase longa volta a quebrar aqui.
+  longa=$(printf '%s' "$out" | perl -MJSON::PP -e 'local $/; my $t = decode_json(<STDIN>)->{hookSpecificOutput}{additionalContext}; for (split /(?<=\.)\s+/, $t) { my $n = () = /\S+/g; print "[$n] $_\n" if $n > 20 }')
+  [ -z "$longa" ] && ok "lembrete de $port sem frase de mais de 20 palavras" || ko "lembrete de $port com frase longa: $longa"
+  # E a brecha que deixava relatorio de trabalho feito passar de cinco linhas.
+  case "$out" in *"if it must"*) ko "lembrete de $port deixa relatorio passar de cinco linhas" ;; *"finished work fits in five lines"*) ok "lembrete de $port segura relatorio em cinco linhas" ;; *) ko "lembrete de $port sem limite para relatorio: $out" ;; esac
   # A regra do card so vale se a palavra do pedido real a dispara pela linha
   # que o plugin carrega.
   out=$(printf '%s' '{"prompt":"escreva o card dessa mudanca"}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
