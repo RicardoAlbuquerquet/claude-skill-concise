@@ -5,6 +5,21 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.78.0 — 2026-09-14
+
+As dez linhas negadas que as versões 1.73.0 a 1.77.0 trouxeram para os
+comandos voltam à forma afirmativa que o CONTRIBUTING pede.
+
+- **A permissão diz o que autoriza**: a palavra `run` é a permissão inteira de
+  commitar, e `create` a de abrir a PR.
+- **A crença diz o que vale**: o card é lido por quem chega de fora da
+  conversa, o palco é o assunto inteiro, um destino nomeado é endereço e quem
+  avisa alguém é a palavra do usuário.
+- **O portão entra no update depois de você conferir**, no lugar de dizer o
+  que custa não conferir.
+- `:draw` e `:woman` ficam fora: as negativas de `:woman` estão nos exemplos
+  citados, que são dados.
+
 ## 1.77.0 — 2026-09-14
 
 Os oito comandos que faltavam passam a dizer o que acreditam antes do que

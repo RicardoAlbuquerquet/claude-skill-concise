@@ -17,9 +17,9 @@ $ARGUMENTS
 
 - The reader already has the last update; restarting the story makes them
   re-read to find the two lines that moved.
-- A green build you did not check is the costliest failure here, because they
-  stop checking.
-- A named destination is an address, not permission to notify anyone.
+- A gate reaches the update after you check it: an assumed green costs the
+  reader their trust in every update after it.
+- A named destination is an address; the user's word is what notifies a person.
 
 ## Desires
 

@@ -8,8 +8,8 @@ of work in this conversation:
 
 ## Beliefs
 
-- The card is read by someone who was not in this conversation.
-- A value the conversation never gave is a hole, not something to invent.
+- The card is read by someone who arrives from outside this conversation.
+- A value the conversation left out is a hole, and the card names it as one.
 - Only a destination named in the invocation is permission to create.
 
 ## Desires

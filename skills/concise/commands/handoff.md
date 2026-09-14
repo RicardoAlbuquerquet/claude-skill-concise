@@ -33,7 +33,7 @@ $ARGUMENTS
 - Read the state from the repo: `git status`, `git log --oneline` on the
   branch and against its base, `gh pr list --head <branch>` or the tracker.
 - Say where it stands in exact values: the branch, the last short sha, the PR
-  number and its state, the card — the name itself, not "the feature branch".
+  number and its state, the card — each spelled out by its own name.
 - Separate done from left. Done means done and verified; something written and
   left unrun is open. What is left carries its done criterion.
 - Restate every standing caveat in full, with the assumptions the work rests

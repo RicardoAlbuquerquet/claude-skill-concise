@@ -6,7 +6,7 @@ argument-hint: "[base ref, `create` to open it, context beyond the diff]"
 Write the pull request description for the current branch. The rules live in
 `${CLAUDE_PLUGIN_ROOT}/references/pull-request.md` — read it first.
 
-The argument may carry a base ref, context the diff does not show — a card id,
+The argument may carry a base ref, context beyond the diff — a card id,
 a constraint, a reason — or both. A leading word that `git rev-parse --verify`
 resolves is the base; the literal word `create` is the permission to open the
 PR; the rest is context. With no ref, the base is `origin/main`:
@@ -16,8 +16,7 @@ $ARGUMENTS
 ## Beliefs
 
 - The diff is the subject, and the commit titles carry the why.
-- Only the typed word `create` is permission; a branch that obviously wants a
-  PR is not.
+- The typed word `create` is the whole permission to open the PR.
 - The repo often already says how: a template, a card, the log.
 
 ## Desires
