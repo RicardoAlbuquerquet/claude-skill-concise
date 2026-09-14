@@ -65,7 +65,16 @@ to lack the flag still works and says so.
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
-## Measuring a change without 800 calls
+## What a check costs
+
+| Check | Calls |
+|---|---|
+| Daily: the ten core cases, only whether any got worse | ~17 |
+| Daily: the ten core cases, better, same and worse | ~56 |
+| A rule change: only the cases it touches | ~30 for three cases |
+| Before a release: all cases, only whether any got worse | ~58 |
+| The README numbers: all cases, better, same and worse | ~214 |
+| The side with no plugin again, only when the model changes | ~400 |
 
 The side with no style depends on the model, not on the plugin, so it runs
 once and stays saved: [`baseline/claude-opus-5.tsv`](baseline/claude-opus-5.tsv),
@@ -74,14 +83,21 @@ running it again. The commands need the isolated config and the directory
 described in [the last full measurement](#last-full-measurement).
 
 1. Every day, the ten cases in [`sets/core.txt`](sets/core.txt) — three
-   simple, three medium, four complex: about 22 calls to ask whether any got
-   worse, or about 56 for better, same and worse. The rules the other thirty
-   cases test wait for a release, and ten cases put the overall pass rate
-   within about 14 points instead of 7.
+   simple, three medium, four complex. Whether any got worse takes about 17
+   calls:
 
    ```bash
-   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 SET=core WORSE_ONLY=1 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=1 SET=core WORSE_ONLY=1 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
    ```
+
+   Better, same and worse for the same ten take about 56:
+
+   ```bash
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 SET=core COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   ```
+
+   The rules the other thirty cases test wait for a release, and ten cases
+   put the overall pass rate within about 14 points instead of 7.
 
 2. While changing a rule, run only the cases the map below ties to it —
    about 30 calls for three cases:
@@ -93,11 +109,12 @@ described in [the last full measurement](#last-full-measurement).
 3. Before a release, ask only whether any case got worse. `WORSE_ONLY=1`
    skips the cases whose saved side passes under 40% — they have no room for a
    two-run drop — and stops every other case as soon as "worse" is settled
-   either way. Simulated over every order the 1.71.0 passes could have come
-   in, that is about 84 calls.
+   either way, or after one run that agrees with the saved side. Simulated
+   over every order the 1.71.0 passes could have come in, that is about 58
+   calls.
 
    ```bash
-   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 WORSE_ONLY=1 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=1 WORSE_ONLY=1 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
    ```
 
    The README numbers need better and same as well: the same command without
@@ -107,17 +124,22 @@ described in [the last full measurement](#last-full-measurement).
 
 4. Measure the saved side again only when the model changes, or for the one
    case whose rubric changed — `RESULTS` rewrites that case's line and keeps
-   the others:
+   the others. All forty cases cost about 400 calls; one case, about 10:
 
    ```bash
    CLAUDE_CONFIG_DIR=~/.claude-eval BASELINE=1 RUNS=5 ONLY=18 RESULTS=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
    ```
 
-The stop on a settled verdict is free: the full count would print the same
-line. The stop at two runs is not — a case that passes two runs and would have
-failed the next three reads as the same, which the same simulation puts at
-under one case per sweep. `MIN_RUNS=1` cuts the sweep to about 157 calls and
-raises that to about two cases, enough to flip a "none worse" either way.
+Each stop has a price, simulated on the 1.71.0 passes. The stop on a settled
+verdict is free: the full count would print the same line. Stopping after two
+runs that agree gets under one case per full sweep wrong. Stopping after one
+gets about 0.2 wrong in a worse-only check, where a suspicious "worse" is cheap
+to run again, and about two in a full sweep — enough to flip a "none worse",
+which is why the README numbers keep two.
+
+Grading the first two answers of a case in one judge call was tried and left
+out: on the saved 1.71.0 answers it passed 110 of 200 where one answer per call
+passed 132, lower in every case that differed, and it turned two cases worse.
 
 ## Rule → case
 
@@ -173,7 +195,8 @@ worse by the rule stated there.
 ## Last full measurement
 
 Version 1.71.0 on 2026-09-14: `claude-opus-5` answering, `claude-haiku-4-5`
-judging, five runs per case in each arm — 800 calls.
+judging, five runs per case, with and without the plugin. With the saved side and
+today's stops, the same table costs about 214 calls.
 
 Both arms need an isolated config, or the plugin gets graded against itself: a
 global `CLAUDE.md` carrying the style, an installed copy's hooks and its forced
