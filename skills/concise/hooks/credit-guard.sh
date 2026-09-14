@@ -18,10 +18,12 @@ body=$in
 
 case "$tool" in
   Bash|PowerShell|'')
-    # Only calls that publish text: a commit, a PR/issue body or comment, a
-    # squash merge, a release note, a raw API write.
+    # Only calls that publish text: a commit or an annotated tag, a PR, MR or
+    # issue body or comment, a squash merge, a release note, a raw API write —
+    # on GitHub or GitLab. Git takes options before the verb: `git -c k=v
+    # commit` is a commit too.
     printf '%s' "$in" |
-      grep -qE 'git( -C [^ ]+)? commit|gh (pr|issue) (create|edit|comment|review|merge)|gh release (create|edit)|gh api' ||
+      grep -qE 'git( +-[cC] +[^ ]+| +--[a-z-]+(=[^ ]+)?)* +(commit|tag)|gh (pr|issue) (create|edit|comment|review|merge)|gh release (create|edit)|gh api|glab (mr|issue) (create|update|note|merge)|glab release (create|update)|glab api' ||
       exit 0
 
     # A message passed as a file is invisible in the command string — read

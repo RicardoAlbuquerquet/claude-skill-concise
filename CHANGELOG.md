@@ -5,6 +5,18 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.86.0 — 2026-09-14
+
+O guarda de crédito deixava passar três jeitos comuns de publicar texto, e o
+self-update ficava calado quando não havia como atualizar.
+
+- **Um commit com opção antes do verbo, como `git -c k=v commit`, agora é
+  conferido.** Antes o guarda só reconhecia `git commit` e `git -C dir commit`.
+- **Tag anotada e GitLab entram**: `git tag -m`, e `glab` criando ou editando
+  MR, issue, nota ou release.
+- **Sem o `claude` no PATH, o self-update deixa a marca de falha**, e o aviso
+  semanal passa a dizer que a cópia não está atualizando.
+
 ## 1.85.0 — 2026-09-14
 
 A atualização automática volta a checar logo depois de ser cortada, e uma

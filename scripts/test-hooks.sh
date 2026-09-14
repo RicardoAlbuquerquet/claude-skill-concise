@@ -188,6 +188,24 @@ for port in concise; do
   case "$m" in *Write*) case "$m" in *mcp__*) pass=$((pass+1)); echo "ok    guarda de $port cobre escrita e quadro";; *) fail=$((fail+1)); echo "FALHA guarda de $port sem o quadro: $m";; esac;; *) fail=$((fail+1)); echo "FALHA guarda de $port sem escrita: $m";; esac
 done
 
+echo "--- lacunas do guarda e do self-update"
+CG="$REPO/skills/concise/hooks/credit-guard.sh"
+for caso in "git -c k=v commit" "git tag anotada" "glab mr create"; do
+  case "$caso" in
+    "git -c k=v commit") payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"Bash",tool_input:{command:process.argv[1]}}))' "git -c core.safecrlf=false commit -m \"fix: x\\n\\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\"") ;;
+    "git tag anotada")   payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"Bash",tool_input:{command:process.argv[1]}}))' "git tag -a v1 -m \"release\\n\\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\"") ;;
+    "glab mr create")    payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"Bash",tool_input:{command:process.argv[1]}}))' "glab mr create --title x --description \"feito\\n\\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\"") ;;
+  esac
+  out=$(printf '%s' "$payload" | HOME="$FH" bash "$CG" RAZAO .concise-no-credit-guard)
+  case "$out" in *deny*) pass=$((pass+1)); echo "ok    guarda barra credito em $caso";; *) fail=$((fail+1)); echo "FALHA guarda deixou passar $caso";; esac
+done
+
+# sem o CLI no PATH nada atualiza: a marca de falha e o que chega ao aviso semanal
+SU="$FH/sem-cli"; mkdir -p "$SU/.claude" "$SU/bin"
+for b in date find git mkdir rmdir cat grep sed head printf; do p=$(command -v "$b") && ln -sf "$p" "$SU/bin/$b" 2>/dev/null || cp "$p" "$SU/bin/" 2>/dev/null; done
+(cd "$SU" && HOME="$SU" PATH="$SU/bin" "$BASH" "$REPO/skills/concise/hooks/self-update.sh" concise)
+[ -f "$SU/.claude/.concise-update-failed" ] && { pass=$((pass+1)); echo "ok    self-update sem CLI deixa a marca de falha"; } || { fail=$((fail+1)); echo "FALHA self-update sem CLI saiu calado"; }
+
 echo "--- stop-audit (extra, opt-in)"
 SA="$REPO/extras/stop-audit/stop-audit.sh"
 SAD="$FH/sa"; mkdir -p "$SAD/bin"
