@@ -5,6 +5,16 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.80.0 — 2026-09-14
+
+O lembrete de todo turno passa a cobrar o que o núcleo já pedia: o nome que o
+leitor nunca vai digitar chega a ele como aquilo que faz.
+
+- **Uma linha nova no lembrete**, ao lado da primeira frase e dos valores
+  exatos, porque a regra no núcleo sozinha não estava pegando.
+- **O caso 20, que mede isso, sai de 0 de 5 para 2 de 3** em três tentativas;
+  06, 15, 22, 30 e 39 ficam dentro do ruído das mesmas três.
+
 ## 1.79.0 — 2026-09-14
 
 O self-update checa de seis em seis horas e volta a tentar depois de uma
