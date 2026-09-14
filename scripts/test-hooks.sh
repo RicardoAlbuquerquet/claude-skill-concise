@@ -37,6 +37,16 @@ t "git commit -F arquivo com credito"    deny  "{\"command\":\"git commit -F $FH
 printf 'fix limpo\n' > "$FH/ok.txt"
 t "git commit -F arquivo limpo"          allow "{\"command\":\"git commit -F $FH/ok.txt\"}"
 
+# o caminho entre aspas e a mensagem lida de volta com cat passavam sem leitura
+t "-F com caminho entre aspas duplas"    deny  "{\"command\":\"git commit -F \\\"$FH/msg.txt\\\"\"}"
+t "--body-file entre aspas simples"      deny  "{\"command\":\"gh pr create --title x --body-file '$FH/msg.txt'\"}"
+t "-m com \$(cat arquivo)"               deny  "{\"command\":\"git commit -m \\\"\$(cat $FH/msg.txt)\\\"\"}"
+t "PowerShell Get-Content -Raw"          deny  "{\"command\":\"git commit -m (Get-Content -Raw $FH/msg.txt)\"}"
+t "o segundo arquivo da chamada"         deny  "{\"command\":\"gh pr create --body-file $FH/ok.txt && git commit -F $FH/msg.txt\"}"
+t "arquivo limpo entre aspas"            allow "{\"command\":\"git commit -F \\\"$FH/ok.txt\\\"\"}"
+# o squash grava a mensagem no historico da main
+t "gh pr merge --body"                   deny  "{\"command\":\"gh pr merge 3 --squash --body '$CRED'\"}"
+
 # opt-out e escape hatch
 touch "$FH/.claude/.concise-no-credit-guard"
 t "opt-out por flag"                     allow "{\"command\":\"git commit -m '$CRED'\"}"
@@ -245,6 +255,19 @@ r "outra sessao avisa de novo"           deny  '{"session_id":"s2","command":"gh
 r "gh pr edit --body avisa"              deny  '{"session_id":"s3","command":"gh pr edit 77 --body-file b.md --body x"}'
 r "gh pr view nao avisa"                 allow '{"session_id":"s4","command":"gh pr view 77 --json body"}'
 r "git push nao avisa"                   allow '{"session_id":"s5","command":"git push -u origin minha-branch"}'
+# O /concise:pr create abre a PR com o proprio gh pr create: negar essa chamada
+# mandaria a sessao rodar o comando em que ela ja esta.
+printf '%s\n' '{"type":"user","message":{"role":"user","content":"<command-message>concise:pr</command-message>\n<command-name>/concise:pr</command-name>\n<command-args>create</command-args>"}}' > "$RT/com-pr.jsonl"
+printf '%s\n' '{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Skill","input":{"skill":"concise:pr","args":"create"}}]}}' > "$RT/skill-pr.jsonl"
+printf '%s\n' '{"type":"attachment","skills":["concise:plan","concise:pr"]}' '{"type":"user","message":{"role":"user","content":"abre a PR"}}' > "$RT/sem-pr.jsonl"
+r "depois de /concise:pr passa direto"   allow "{\"session_id\":\"s8\",\"transcript_path\":\"$RT/com-pr.jsonl\",\"command\":\"gh pr create --fill\"}"
+r "depois da skill concise:pr passa"     allow "{\"session_id\":\"s9\",\"transcript_path\":\"$RT/skill-pr.jsonl\",\"command\":\"gh pr create --fill\"}"
+r "lista de skills no transcript avisa"  deny  "{\"session_id\":\"s10\",\"transcript_path\":\"$RT/sem-pr.jsonl\",\"command\":\"gh pr create --fill\"}"
+# Uma marca por sessao e nada mais as apaga: a de mais de um dia sai.
+touch -t 202001010000 "$RT/concise-route-hint.velha"
+r "sessao nova ainda avisa"              deny  '{"session_id":"s11","command":"gh pr create --fill"}'
+[ -f "$RT/concise-route-hint.velha" ] && { fail=$((fail+1)); echo "FALHA marca de mais de um dia ficou"; } || { pass=$((pass+1)); echo "ok    marca de mais de um dia sai"; }
+[ -f "$RT/concise-route-hint.s11" ] && { pass=$((pass+1)); echo "ok    marca da sessao atual fica"; } || { fail=$((fail+1)); echo "FALHA marca da sessao atual sumiu"; }
 touch "$FH/.claude/.concise-no-route-hint"
 r "opt-out pelo arquivo de flag"         allow '{"session_id":"s6","command":"gh pr create --fill"}'
 rm "$FH/.claude/.concise-no-route-hint"

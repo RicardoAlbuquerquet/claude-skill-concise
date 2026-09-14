@@ -19,17 +19,23 @@ body=$in
 case "$tool" in
   Bash|PowerShell|'')
     # Only calls that publish text: a commit, a PR/issue body or comment, a
-    # release note, a raw API write.
+    # squash merge, a release note, a raw API write.
     printf '%s' "$in" |
-      grep -qE 'git( -C [^ ]+)? commit|gh (pr|issue) (create|edit|comment|review)|gh release (create|edit)|gh api' ||
+      grep -qE 'git( -C [^ ]+)? commit|gh (pr|issue) (create|edit|comment|review|merge)|gh release (create|edit)|gh api' ||
       exit 0
 
-    # A message passed as a file is invisible in the command string — read it.
-    file=$(printf '%s' "$in" |
-      grep -oE '(--body-file|--notes-file|--file|-F)[= ]+[^ "]+' |
-      head -1 | sed 's/^[^ =]*[= ]*//')
-    [ -n "$file" ] && [ -f "$file" ] && body="$in
-$(cat "$file")"
+    # A message passed as a file is invisible in the command string — read
+    # every file the call names, by flag or by `cat`, quoted or bare. Quotes
+    # arrive JSON-escaped, and single ones become double so one pattern holds.
+    files=$(printf '%s' "$in" | sed 's/\\"/"/g' | tr "'" '"' |
+      grep -oE '(--body-file|--notes-file|--file|-F|\$\(cat|Get-Content( -[A-Za-z]+)*)[= ]+("[^"]+"|[^ ")]+)' |
+      sed -E 's/^[^ =]+( -[A-Za-z]+)*[= ]+"?//; s/"$//')
+    while IFS= read -r f; do
+      [ -n "$f" ] && [ -f "$f" ] && body="$body
+$(cat "$f")"
+    done <<EOF
+$files
+EOF
 
     printf '%s' "$body" |
       grep -qiE 'co-authored-by:.{0,80}(claude|copilot|gemini|cursor|codex|anthropic\.com)|generated with.{0,80}(claude|copilot|gemini|cursor|codex)|co-authored-by:.{0,80}gpt' ||

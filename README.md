@@ -500,18 +500,20 @@ the skill alone.
 would publish credit to an AI agent — a model `Co-Authored-By`, a "generated
 with" footer — by deterministic string match, no API call. The call is blocked
 with the reason, and the text gets rewritten without the trailer. It covers
-`git commit` (including `git -C`), `gh pr create|edit`,
+`git commit` (including `git -C`), `gh pr create|edit|merge`,
 `gh issue create|comment`, `gh release create|edit` and `gh api`, through the
-`Bash` and `PowerShell` tools, anywhere in a command chain, and inside the file
-when the message is passed with `-F` / `--body-file`. It names Claude, Copilot,
+`Bash` and `PowerShell` tools, anywhere in a command chain, and inside every
+file the call reads the message from — `-F`, `--body-file`, `$(cat file)` or
+`Get-Content file`, quoted or not. It names Claude, Copilot,
 Gemini, Cursor, Codex and the `anthropic.com` trailer address.
 
 **A second `PreToolUse` hook routes PR descriptions through the command that
 writes them.** The first `gh pr create` — or `gh pr edit --body` — of a session
 is denied once, with a reason naming `/concise:pr`; repeat the call and it goes
-through. A description written from memory when a command was there to read the
-diff, the log and the template is the failure it exists for, and a hook that
-kept denying would be a wall the session could not leave. It cannot see a PR
+through, and a session that already ran `/concise:pr` goes through at once. A
+description written from memory when a command was there to read the diff, the
+log and the template is the failure it exists for, and a hook that kept denying
+would be a wall the session could not leave. It cannot see a PR
 opened in the browser — nothing in a plugin can — so a repo whose PRs are opened
 on github.com puts the line in its own `PULL_REQUEST_TEMPLATE` instead.
 
