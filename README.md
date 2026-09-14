@@ -43,16 +43,20 @@ has to do.
 **Answers came out less than half as long, and more of them did what the
 request needed.** Measured on version 1.71.0, on 2026-09-14.
 
-What to keep in mind:
+Compared with no plugin, each request came out:
 
-- **It did better on 21 of the 40 requests and worse on 1**: a report of
-  finished work, where it packs several parts into one line. A gap of a single
-  answer out of five counts as chance.
-- **Requests for a PR, a card, a comment or a drawing were made without the
-  command that writes each one**, so many of them fail with or without the
-  plugin.
-- **The lists were written with these rules in mind**, so they favour the
-  plugin. The word count doesn't depend on them.
+| Result | Share of the 40 requests |
+|---|---|
+| Better | 32.5% |
+| The same | 65% |
+| Worse | 2.5% |
+
+- **Better or worse means at least two more passing answers out of five.** One
+  answer apart counts as the same.
+- **The one worse request** is a report of finished work: the plugin packs
+  several parts into one line.
+- **The lists favour the plugin**, because they were written with these rules
+  in mind. The word count doesn't depend on them.
 
 The result of each request, and how to run the test yourself:
 [`evals/README.md`](evals/README.md#last-full-measurement).
