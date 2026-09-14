@@ -29,8 +29,8 @@
 
 ## Measured
 
-**Say less, get more right.** Answers get 53% shorter, and the share that did
-everything the request needed jumps from 43% to 66%.
+**Say less, get more right.** Answers get 53% shorter, and 55% more of them do
+everything the request needed.
 
 | | Without the plugin | With the plugin |
 |---|---|---|
