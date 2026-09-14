@@ -32,12 +32,13 @@
 **Say less, get more right.** Answers get 53% shorter — about half the tokens.
 
 ```text
-answer gets shorter      [########--------]   53% shorter: 162 words to 77
-answer is more complete  [###########-----]   65% more than with no style
-answer quality improves  [######----------]   40%
+answer gets shorter      [########--------]   53% shorter
+answer is more complete  [###########-----]   65% more
+answer quality improves  [######----------]   40% of requests
 ```
 
-Of the 40 requests, 57.5% came out the same and one came out worse.
+Answers ran 162 words with no style and 77 with the plugin. Of the 40
+requests, 57.5% came out the same and one came out worse.
 
 How it was measured: `claude-opus-5` answered 40 everyday requests — a
 question, a status update, a commit message, a PR description — on 2026-09-14,
