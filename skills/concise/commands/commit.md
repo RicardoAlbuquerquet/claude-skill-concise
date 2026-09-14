@@ -13,9 +13,9 @@ $ARGUMENTS
 
 ## Beliefs
 
-- The stage is the whole subject: what is not staged is not in the message.
+- The stage is the whole subject: the message describes what is staged.
 - The repo's log is the convention the title has to land inside.
-- Only the typed word `run` is permission; staged changes waiting are not.
+- The typed word `run` is the whole permission to commit.
 
 ## Desires
 

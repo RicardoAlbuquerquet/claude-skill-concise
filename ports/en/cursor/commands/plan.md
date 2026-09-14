@@ -11,7 +11,7 @@ discussion:
 
 - The reader is deciding whether to let you spend their time, and decides
   after reading — plan mode and step one stay off until they approve.
-- What you found out getting here belongs in your notes, not in the plan.
+- What you found out getting here belongs in your notes.
 - A step carrying "and then" is two steps.
 - A step pointing at a function that is missing gets found by the reader,
   after they approved it.
