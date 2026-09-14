@@ -5,6 +5,27 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.72.0 — 2026-09-14
+
+The rules of each artifact now ride on the turn that writes one, instead of
+sitting in the core where every other turn pays for them. Measured against no
+style at all, the plugin goes from 132 to about 141 passing answers of 200.
+
+- **The turn reminder carries the artifact rule the request asks for**: a card,
+  a review comment, a PR description, a commit message or a drawing. The words
+  of the prompt pick it, so a turn that writes none stays as short as before.
+- **A card opens with its area**, gives current and expected state, numbered
+  steps to reproduce a bug, the open question and a done criterion.
+- **A review comment is three lines in one paragraph**, with the full anchor
+  path and whether it blocks the merge, and no praise or sign-off.
+- **A PR description keeps every path the reviewer opens** and drops the names
+  they never type, each command in its own fence with the output it prints.
+- **A drawing names what it did not measure**, and hangs each cost off its box.
+
+The same rules were tried in the core first and left there four other cases
+worse, with the total unmoved at 132 — the measurement is in
+[`evals/README.md`](evals/README.md#last-full-measurement).
+
 ## 1.71.0 — 2026-09-14
 
 Five rule changes that came out of measuring every eval case five times, with

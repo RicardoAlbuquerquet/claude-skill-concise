@@ -29,25 +29,26 @@
 
 ## Measured
 
-**Say less, get more right.** Answers get 53% shorter, and 55% more of them do
-everything the request needed.
+**Say less, get more right.** Answers get 53% shorter — about half the tokens —
+and 66% more of them do everything the request needed.
 
 | | Without the plugin | With the plugin |
 |---|---|---|
-| Typical answer | 162 words | 76 words |
-| Answers that did everything the request needed | 43% | 66% |
-| Requests that came out better / the same / worse | — | 32.5% / 65% / 2.5% |
+| Typical answer | 162 words | 77 words |
+| Answers that did everything the request needed | 43% | 71% |
+| Requests that came out better / the same / worse | — | 40% / 57.5% / 2.5% |
 
 How it was measured: 40 everyday requests — a question, a status update, a
 commit message, a PR description and so on — answered five times without the
-plugin and five times with it, by `claude-opus-5` on version 1.71.0, on
-2026-09-14. A second model, `claude-haiku-4-5`, checked every answer against
+plugin, and with it until the verdict was settled, nineteen of them all five
+times, by `claude-opus-5` on version 1.72.0, on 2026-09-14. A second model, `claude-haiku-4-5`, checked every answer against
 a list of what a good answer to that request has to do.
 
 - **Better or worse** means at least two more passing answers out of five; one
   apart counts as the same.
-- **The one worse request** is a report of finished work, where the plugin
-  packs several parts into one line.
+- **The one worse request** is a list whose items each carry several helpers.
+- **The pass rate is within about 3 points**: most requests stopped as soon as
+  the verdict was settled, and nineteen of the forty ran all five times.
 - **The lists favour the plugin**, because they were written with these rules
   in mind. The word count doesn't depend on them.
 

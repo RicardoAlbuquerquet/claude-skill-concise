@@ -6,18 +6,34 @@
 # transcript does not.
 #   $1 = the reminder, one line
 #   $2 = opt-out flag file under ~/.claude
+#   $3.. = `word,word|rule`: the rule joins the reminder when the prompt holds
+#          one of the words, which are matched in lower case and have to be
+#          ASCII: the lowering here works byte by byte and mangles an accent.
+#          one of the words. Artifact rules cost attention on every other
+#          turn, so they ride along only on the turn that writes one.
 # Escape hatch: export CONCISE_NO_TURN_REMINDER=1, or touch the flag file.
 text="${1:-}"
 flag="${2:-}"
+shift 2 2>/dev/null
 
-# The prompt arrives on stdin; nothing in it changes the reminder. Drained with
-# builtins only: this runs before every prompt, and each process spawned is
-# latency the user feels on Windows.
-while IFS= read -r _; do :; done
+# The prompt arrives on stdin. Drained and matched with builtins only: this
+# runs before every prompt, and each process spawned is latency the user
+# feels on Windows.
+in=""
+while IFS= read -r line || [ -n "$line" ]; do in="$in $line"; done
+lc=${in,,}
 
 [ -n "$flag" ] && [ -f "$HOME/.claude/$flag" ] && exit 0
 [ -n "${CONCISE_NO_TURN_REMINDER:-}" ] && exit 0
 [ -n "$text" ] || exit 0
+
+for pair in "$@"; do
+  rule=${pair#*|}
+  IFS=, read -ra words <<< "${pair%%|*}"
+  for w in "${words[@]}"; do
+    case "$lc" in *"$w"*) text="$text $rule"; break ;; esac
+  done
+done
 
 esc=${text//\\/\\\\}
 esc=${esc//\"/\\\"}

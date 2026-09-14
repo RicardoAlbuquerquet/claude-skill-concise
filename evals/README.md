@@ -146,53 +146,82 @@ passed 132, lower in every case that differed, and it turned two cases worse.
 The map is what makes an edited rule regress instead of silently drifting: if
 you change a rule here, change the rubric that tests it. The two scores come
 from [the last full measurement](#last-full-measurement): a case that passes
-with no style measures the model's own habits, and a plugin score in bold is
-worse by the rule stated there.
+with no style measures the model's own habits. The no-style score is always
+out of five; the plugin score is out of the runs that case got, since a case
+stops as soon as the runs left cannot change its verdict.
 
 | Rule (`SKILL.md` or its reference file) | Case | No style | Plugin |
 |---|---|---|---|
 | Answer in the first sentence; no preamble | 01, and every other rubric | 4/5 | 5/5 |
-| Completed work ≤5 lines, gate result | 02 | 1/5 | 5/5 |
-| Investigation: finding + consequence | 03 | 5/5 | 5/5 |
-| Always keep: caveat that changes what the user does | 04 | 5/5 | 5/5 |
+| Completed work ≤5 lines, gate result | 02 | 1/5 | 3/3 |
+| Investigation: finding + consequence | 03 | 5/5 | 2/2 |
+| Always keep: caveat that changes what the user does | 04 | 5/5 | 2/2 |
 | Recommendation carries its cost | 05 | 5/5 | 5/5 |
-| The user's choice: options side by side + a recommendation | 06 | 0/5 | 5/5 |
-| A runnable command gets its own `bash` fence | 07 | 5/5 | 5/5 |
-| Overloaded opening: verdict first, support second | 08 | 5/5 | 5/5 |
+| The user's choice: options side by side + a recommendation | 06 | 0/5 | 4/5 |
+| A runnable command gets its own `bash` fence | 07 | 5/5 | 2/2 |
+| Overloaded opening: verdict first, support second | 08 | 5/5 | 2/2 |
 | Commit message: title says what changes, body says why | 09 | 4/5 | 5/5 |
 | PR description: test steps, unverified named | 10 | 3/5 | 5/5 |
-| Card: stands alone, narrow-panel structure | 11 | 0/5 | 0/5 |
-| Status update: only the delta | 12 | 5/5 | 5/5 |
+| Card: stands alone, narrow-panel structure | 11 | 0/5 | 5/5 |
+| Status update: only the delta | 12 | 5/5 | 2/2 |
 | Bad news; the second question in a two-question message | 13 | 5/5 | 5/5 |
-| Draw the shape; gloss by consequence | 14 | 0/5 | 1/5 |
-| Correcting yourself: no story of the mistake, no re-announcing | 15 | 2/5 | 3/5 |
+| Draw the shape; gloss by consequence | 14 | 0/5 | 2/4 |
+| Correcting yourself: no story of the mistake, no re-announcing | 15 | 2/5 | 2/5 |
 | Commit lands inside the repo log's convention | 16 | 5/5 | 4/5 |
-| Several deliverables read as a markdown list | 17 | 0/5 | 5/5 |
-| A list item stays an item, not a packed paragraph | 18 | 5/5 | **1/5** |
-| What waits on the reader sits apart from what informs them | 19 | 3/5 | 4/5 |
-| A name out of the code stays only if the reader will use it | 20 | 0/5 | 0/5 |
-| A fence is tagged for the shell the reader will paste into | 21 | 4/5 | 5/5 |
-| The outcome, not the itinerary of the work | 22 | 2/5 | 5/5 |
-| A table column with one repeated value is not a column | 23 | 0/5 | 4/5 |
-| The reader's choice still gets a recommendation, at the end of a long report | 24 | 2/5 | 5/5 |
-| A note on a card is the summary of the summary | 25 | 2/5 | 5/5 |
+| Several deliverables read as a markdown list | 17 | 0/5 | 3/5 |
+| A list item stays an item, not a packed paragraph | 18 | 5/5 | 2/4 |
+| What waits on the reader sits apart from what informs them | 19 | 3/5 | 3/5 |
+| A name out of the code stays only if the reader will use it | 20 | 0/5 | 0/2 |
+| A fence is tagged for the shell the reader will paste into | 21 | 4/5 | 2/2 |
+| The outcome, not the itinerary of the work | 22 | 2/5 | 1/5 |
+| A table column with one repeated value is not a column | 23 | 0/5 | 1/5 |
+| The reader's choice still gets a recommendation, at the end of a long report | 24 | 2/5 | 3/5 |
+| A note on a card is the summary of the summary | 25 | 2/5 | 4/4 |
 | PR title: the area first, the state after the merge | 26 | 5/5 | 5/5 |
-| Drawing craft: one glyph set, nothing wraps, labels hang off their box | 27 | 0/5 | 0/5 |
-| One hanging note, and it sits on the finding | 28 | 0/5 | 0/5 |
-| One gloss per response; the rest of the terms become what they do | 29 | 3/5 | 3/5 |
-| One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | 1/5 | 3/5 |
-| PR description inside a screenful, and the cut comes out of what repeats | 31 | 0/5 | 0/5 |
+| Drawing craft: one glyph set, nothing wraps, labels hang off their box | 27 | 0/5 | 0/2 |
+| One hanging note, and it sits on the finding | 28 | 0/5 | 2/3 |
+| One gloss per response; the rest of the terms become what they do | 29 | 3/5 | 5/5 |
+| One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | 1/5 | 3/3 |
+| PR description inside a screenful, and the cut comes out of what repeats | 31 | 0/5 | 2/3 |
 | Commit body: six lines at most, no investigation, no list of what was run | 32 | 3/5 | 4/5 |
-| Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | 0/5 | 0/5 |
-| Card layout: two paragraphs, then labelled lines, spans off the prose | 34 | 0/5 | 1/5 |
-| The delivered artifact is the answer; no tour of it, no praise for the tooling | 35 | 0/5 | 3/5 |
-| A comment says only what the code can't; no docstring retelling the signature, no banner | 36 | 0/5 | 3/5 |
-| A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | 1/5 | 1/5 |
-| PR description: the words are the reviewer's, and a name only the repo knows becomes what it does | 39 | 0/5 | 0/5 |
-| Status update: a background result is only its delta — the unchanged queue and risk stay unsaid | 40 | 0/5 | 2/5 |
+| Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | 0/5 | 4/5 |
+| Card layout: two paragraphs, then labelled lines, spans off the prose | 34 | 0/5 | 0/5 |
+| The delivered artifact is the answer; no tour of it, no praise for the tooling | 35 | 0/5 | 2/5 |
+| A comment says only what the code can't; no docstring retelling the signature, no banner | 36 | 0/5 | 2/3 |
+| A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | 1/5 | 2/5 |
+| PR description: the words are the reviewer's, and a name only the repo knows becomes what it does | 39 | 0/5 | 2/3 |
+| Status update: a background result is only its delta — the unchanged queue and risk stay unsaid | 40 | 0/5 | 2/2 |
 | A description is one sentence, plus the one thing the reader acts on | 41 | 0/5 | 5/5 |
 
 ## Last full measurement
+
+Version 1.72.0 on 2026-09-14: `claude-opus-5` answering, `claude-haiku-4-5`
+judging, the plugin arm run against the saved no-style side, so a case stops
+once the runs left cannot change its verdict. Twenty-two of the forty ran all
+five times, ten of them chosen at random among the cases that had stopped
+early and perfect, to price that stop: they came back 45 of 50, not 50.
+
+| | No style | Plugin |
+|---|---|---|
+| Runs that pass their rubric | 85 of 200 | about 141 of 200 |
+| Words per answer, median / mean | 162 / 177 | 77 / 108 |
+| Requests better / same / worse | — | 16 / 23 / 1 |
+
+**The plugin total is an estimate within about 5 points**: a case that stopped
+at 2 of 2 counts as 5 of 5, and the sample above says that costs about half a
+run per case. The 85 is exact — the no-style side ran five times everywhere.
+
+**A case counts as worse when the plugin fails at least two more runs of
+five**; one run apart is noise. The one worse is case 18, a list whose items
+each carry several helpers.
+
+What changed in 1.72.0: the turn reminder now carries the rules of the
+artifact being written — card, review comment, PR description, commit message,
+drawing — and only on the turn whose request names one. In the core those same
+rules cost more elsewhere than they won: tried there, the total stayed at 132
+of 200 while four other cases dropped.
+
+## The 1.71.0 measurement, five runs per case
 
 Version 1.71.0 on 2026-09-14: `claude-opus-5` answering, `claude-haiku-4-5`
 judging, five runs per case, with and without the plugin. With the saved side and
