@@ -43,14 +43,8 @@ five times with no style, and with version 1.72.0 until the result was clear,
 19 of the 40 all five times. `claude-haiku-4-5` graded each answer against a
 list of what that request needs.
 
-- **Better or worse**: two more of the five answers pass; one apart is noise.
-- **One request came out worse**: a list whose items each carry several helpers.
-- **The 71% is within about 5 points**, since most requests stopped early.
-- **The lists favour the plugin**, written with its rules in mind. The word
-  count is not.
-
-Every request's result, and how to run it yourself:
-[`evals/README.md`](evals/README.md#last-full-measurement).
+Every request's result, the one that came out worse, and how to run it
+yourself: [`evals/README.md`](evals/README.md#last-full-measurement).
 
 ## Install
 
