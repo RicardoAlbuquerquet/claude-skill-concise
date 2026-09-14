@@ -336,7 +336,7 @@ echo resposta
 echo "\${VEREDITO:-PASS}"
 EOF
 chmod +x "$EV/conta"
-printf '01-factual-question\t5\t5\nzz-outro\t1\t5\n' > "$EV/salvo.tsv"
+printf '01-factual-question\t5\t5\r\nzz-outro\t1\t5\r\n' > "$EV/salvo.tsv"
 : > "$EV/contadas"
 RUNS=5 MIN_RUNS=2 ONLY=01 COMPARE="$EV/salvo.tsv" RESULTS="$EV/salvo.tsv" CLAUDE_BIN="$EV/conta" bash "$REPO/evals/run.sh" >/dev/null 2>&1
 [ "$(grep -c . "$EV/contadas")" = 2 ] && ok "MIN_RUNS para em 2 quando concorda com a rodada salva" || ko "MIN_RUNS nao parou: $(grep -c . "$EV/contadas") respostas"

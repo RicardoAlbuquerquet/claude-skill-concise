@@ -127,7 +127,7 @@ run_case () {
 
   # The saved run's passes and runs for this case, when COMPARE names one.
   base=""
-  [ -n "${COMPARE:-}" ] && base=$(awk -F'\t' -v n="$name" '$1==n{print $2" "$3}' "$COMPARE")
+  [ -n "${COMPARE:-}" ] && base=$(awk -F'\t' -v n="$name" '{sub(/\r$/,"")} $1==n{print $2" "$3}' "$COMPARE")
   ok=0
   attempt=1
   while [ "$attempt" -le "$RUNS" ]; do
@@ -277,7 +277,7 @@ if [ -n "${RESULTS:-}" ]; then
     read -r p r < "$WORK/$name.count"
     printf '%s\t%s\t%s\n' "$name" "$p" "$r"
   done > "$WORK/results.new"
-  [ -f "$RESULTS" ] && awk -F'\t' 'NR==FNR{ran[$1]=1; next} !($1 in ran)' "$WORK/results.new" "$RESULTS" > "$WORK/results.kept"
+  [ -f "$RESULTS" ] && awk -F'\t' 'NR==FNR{ran[$1]=1; next} {sub(/\r$/,"")} !($1 in ran)' "$WORK/results.new" "$RESULTS" > "$WORK/results.kept"
   cat "$WORK/results.new" "$WORK/results.kept" 2>/dev/null | sort > "$WORK/results.all"
   mkdir -p "$(dirname "$RESULTS")" && cp "$WORK/results.all" "$RESULTS"
 fi
@@ -291,7 +291,7 @@ if [ -n "${COMPARE:-}" ]; then
   for case_file in $selected; do
     name=$(basename "$case_file" .md)
     read -r p r < "$WORK/$name.count"
-    b=$(awk -F'\t' -v n="$name" '$1==n{print $2" "$3}' "$COMPARE")
+    b=$(awk -F'\t' -v n="$name" '{sub(/\r$/,"")} $1==n{print $2" "$3}' "$COMPARE")
     if [ -z "$b" ]; then echo "new     $name  $p/$r"; new=$((new+1)); continue; fi
     read -r bp br <<< "$b"
     d=$(( 100*p/r - 100*bp/br ))
