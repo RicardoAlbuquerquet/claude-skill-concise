@@ -29,36 +29,29 @@
 
 ## Measured
 
-Claude (`claude-opus-5`) got the same 40 everyday requests — a question, a
-status update, a commit message, a PR description and so on — five times
-without the plugin and five times with it. Another model (`claude-haiku-4-5`)
-then checked each answer against a list of what a good answer to that request
-has to do.
+**With the plugin, answers came out less than half as long, and 66% of them
+did everything the request needed — against 43% without it.**
 
 | | Without the plugin | With the plugin |
 |---|---|---|
-| Length of a typical answer | 162 words | 76 words |
-| Answers that did everything on the list | 85 of 200 (43%) | 132 of 200 (66%) |
+| Typical answer | 162 words | 76 words |
+| Answers that did everything the request needed | 43% | 66% |
+| Requests that came out better / the same / worse | — | 32.5% / 65% / 2.5% |
 
-**Answers came out less than half as long, and more of them did what the
-request needed.** Measured on version 1.71.0, on 2026-09-14.
+How it was measured: 40 everyday requests — a question, a status update, a
+commit message, a PR description and so on — answered five times without the
+plugin and five times with it, by `claude-opus-5` on version 1.71.0, on
+2026-09-14. A second model, `claude-haiku-4-5`, checked every answer against
+a list of what a good answer to that request has to do.
 
-Compared with no plugin, each request came out:
-
-| Result | Share of the 40 requests |
-|---|---|
-| Better | 32.5% |
-| The same | 65% |
-| Worse | 2.5% |
-
-- **Better or worse means at least two more passing answers out of five.** One
-  answer apart counts as the same.
-- **The one worse request** is a report of finished work: the plugin packs
-  several parts into one line.
+- **Better or worse** means at least two more passing answers out of five; one
+  apart counts as the same.
+- **The one worse request** is a report of finished work, where the plugin
+  packs several parts into one line.
 - **The lists favour the plugin**, because they were written with these rules
   in mind. The word count doesn't depend on them.
 
-The result of each request, and how to run the test yourself:
+Each request's result, and how to run the test yourself:
 [`evals/README.md`](evals/README.md#last-full-measurement).
 
 ## Install
