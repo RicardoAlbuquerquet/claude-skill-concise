@@ -31,7 +31,7 @@ the long form works:
 | `JUDGE_MODEL=` | judges with `MODEL` instead of the fast default |
 | `ONLY=07` | one case by number or filename fragment; `ONLY=10,18,26` for several |
 | `MIN_RUNS=2` | with `RUNS=5`, stops a case at two runs that agree, and agree with `COMPARE` |
-| `COMPARE=evals/baseline/claude-opus-5.tsv` | better, same or worse per case against a saved run; exits 1 when one got worse |
+| `COMPARE=evals/baseline/claude-opus-5.tsv` | better, same or worse per case against a saved run, each case stopping once its verdict is settled; exits 1 when one got worse |
 | `RESULTS=file` | saves passes and runs per case; cases that didn't run keep their line |
 | `CLAUDE_BIN=./stub` | swaps the CLI — how the harness itself is tested, free |
 
@@ -78,10 +78,12 @@ described in [the last full measurement](#last-full-measurement).
    CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 ONLY=10,18,26 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
    ```
 
-2. Before a release, the same over every case. A case stops after two runs
-   that agree with each other and with the saved side, within one run; only
-   the cases where the sides differ pay for five. On the 1.71.0 numbers that
-   is about 290 calls.
+2. Before a release, the same over every case. A case stops as soon as the
+   runs left can no longer change its verdict — 0 of 2 against a saved 5 of 5
+   is worse whatever comes next — or after two runs that agree with each other
+   and with the saved side, within one run. Simulated over every order the
+   1.71.0 passes could have come in, that is about 214 calls; the two-run stop
+   alone was 274.
 
    ```bash
    CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
@@ -95,9 +97,11 @@ described in [the last full measurement](#last-full-measurement).
    CLAUDE_CONFIG_DIR=~/.claude-eval BASELINE=1 RUNS=5 ONLY=18 RESULTS=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
    ```
 
-The price of stopping at two runs: a case that passes two runs and would have
-failed the next three reads as the same. The full count still runs wherever
-the two sides disagree.
+The stop on a settled verdict is free: the full count would print the same
+line. The stop at two runs is not — a case that passes two runs and would have
+failed the next three reads as the same, which the same simulation puts at
+under one case per sweep. `MIN_RUNS=1` cuts the sweep to about 157 calls and
+raises that to about two cases, enough to flip a "none worse" either way.
 
 ## Rule → case
 
