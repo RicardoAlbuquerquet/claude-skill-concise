@@ -5,6 +5,21 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.75.0 — 2026-09-14
+
+`/concise:card` fecha a série com `/concise:commit` e `/concise:pr`: crenças,
+desejos e intenções, de 44 para 45 linhas, e a regra de criar sobe para o topo.
+
+- **Quem lê o card não estava na conversa**, e um valor que ela não deu é um
+  buraco, não algo a inventar.
+- **Só o destino nomeado na invocação autoriza criar** — antes isso só
+  aparecia na última linha.
+- **Nenhuma regra sai**: valores exatos, dois cards viram um rascunho do
+  primeiro, entrega com quatro crases quando o corpo traz bloco, busca no
+  destino antes de criar, formulário do `.github/ISSUE_TEMPLATE/`, campos do
+  destino, bloqueador ou pai ligado de verdade, e o relatório do que ficou no
+  padrão.
+
 ## 1.74.0 — 2026-09-14
 
 `/concise:pr` segue `/concise:commit` e passa a dizer o que acredita antes de
