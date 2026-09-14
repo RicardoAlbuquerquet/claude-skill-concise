@@ -5,6 +5,22 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.82.0 — 2026-09-14
+
+A regra de artefato do lembrete passa a entrar só quando o pedido fala do
+artefato, e não quando a pasta ou o nome do usuário contém a palavra.
+
+- **Só o texto do pedido é lido.** O evento também traz o caminho da conversa
+  e a pasta aberta, e quem se chama Ricardo recebia a regra do card em todo
+  turno, porque o nome contém "card".
+- **Cada artefato tem uma regra só.** Card, comentário, PR e desenho vinham
+  duas vezes, com texto quase igual, no mesmo turno.
+- **A palavra casa inteira:** PR não casa em "sempre", revisão não casa em
+  "previsão", e desenho não casa em "withdraw". "Mensagem" e "fluxo" saem da
+  lista, porque casavam em quase todo pedido.
+- Cinco testes novos cobrem o evento real, as aspas no pedido, a palavra
+  inteira e a regra repetida.
+
 ## 1.81.0 — 2026-09-14
 
 O guarda de crédito passa a valer também para arquivo escrito e card criado

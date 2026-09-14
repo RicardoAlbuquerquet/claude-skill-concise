@@ -7,20 +7,33 @@
 #   $1 = the reminder, one line
 #   $2 = opt-out flag file under ~/.claude
 #   $3.. = `word,word|rule`: the rule joins the reminder when the prompt holds
-#          one of the words, which are matched in lower case and have to be
-#          ASCII: the lowering here works byte by byte and mangles an accent.
 #          one of the words. Artifact rules cost attention on every other
-#          turn, so they ride along only on the turn that writes one.
+#          turn, so they ride along only on the turn that writes one. Words
+#          are ASCII, matched in lower case, with punctuation turned into
+#          spaces — ` pr ` is the word pr, not the end of `sempr`.
 # Escape hatch: export CONCISE_NO_TURN_REMINDER=1, or touch the flag file.
 text="${1:-}"
 flag="${2:-}"
 shift 2 2>/dev/null
 
-# The prompt arrives on stdin. One `tr` lowercases it: ${in,,} needs bash 4,
-# and macOS ships 3.2, where the whole hook dies on a bad substitution.
-in=""
-while IFS= read -r line || [ -n "$line" ]; do in="$in $line"; done
-lc=$(printf '%s' "$in" | tr '[:upper:]' '[:lower:]')
+# Only the prompt field is matched. The event also carries the transcript
+# path and the cwd, and a user named Ricardo got the card rule on every turn.
+in=$(cat)
+p=""
+case "$in" in
+  *'"prompt"'*)
+    p=${in#*\"prompt\"}
+    p=${p#*\"}
+    p=${p//\\\\/ }
+    p=${p//\\\"/ }
+    p=${p%%\"*}
+    p=${p//\\n/ }
+    p=${p//\\t/ }
+    ;;
+esac
+# ${p,,} needs bash 4, and macOS ships 3.2. In the C locale `tr` lowers ASCII
+# only and leaves the bytes of an accent alone, which is why words are ASCII.
+lc=$(printf ' %s ' "$p" | LC_ALL=C tr '[:upper:]' '[:lower:]' | LC_ALL=C tr -c 'a-z0-9\200-\377' ' ')
 
 [ -n "$flag" ] && [ -f "$HOME/.claude/$flag" ] && exit 0
 [ -n "${CONCISE_NO_TURN_REMINDER:-}" ] && exit 0

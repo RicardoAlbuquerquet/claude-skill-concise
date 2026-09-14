@@ -277,6 +277,19 @@ case "$out" in
 esac
 out=$(printf '%s' '{"prompt":"por que o total esta errado"}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder 'card,tarefa|REGRA DE CARD.')
 case "$out" in *"REGRA DE CARD."*) ko "lembrete levou regra de card num pedido sem card" ;; *) ok "lembrete sem regra de artefato quando o pedido nao pede um" ;; esac
+# O evento real traz o caminho do transcript e o cwd antes do prompt, e
+# "Ricardo" contem "card": casando o JSON inteiro, a regra do card entrava em
+# todo turno. So o campo prompt conta.
+out=$(printf '%s' '{"session_id":"s","transcript_path":"C:\\Users\\Ricardo\\.claude\\t.jsonl","cwd":"C:\\Users\\Ricardo\\drawings","hook_event_name":"UserPromptSubmit","prompt":"vamos ver os hooks"}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder 'card|REGRA DE CARD.' ' draw|REGRA DE DESENHO.')
+case "$out" in *REGRA*) ko "lembrete casou palavra no caminho, fora do prompt: $out" ;; *) ok "lembrete ignora caminho e cwd do evento" ;; esac
+out=$(printf '%s' '{"prompt":"diz \"oi\" antes","depois":"card"}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder 'card|REGRA DE CARD.' 'antes|REGRA DE ANTES.')
+case "$out" in *"REGRA DE CARD."*) ko "lembrete leu alem do fim do prompt: $out" ;; *"REGRA DE ANTES."*) ok "prompt termina na aspa que fecha, nao na escapada" ;; *) ko "lembrete perdeu o prompt com aspas escapadas: $out" ;; esac
+# Palavra com espaco nas pontas casa a palavra inteira: " pr " nao casa em
+# "sempre", " revis" nao casa em "previsao", e a PR no fim do pedido casa.
+out=$(printf '%s' '{"prompt":"sempre a previsao"}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder ' pr |REGRA DE PR.' ' revis|REGRA DE REVISAO.')
+case "$out" in *REGRA*) ko "palavra casou dentro de outra: $out" ;; *) ok "palavra com espaco nao casa dentro de outra" ;; esac
+out=$(printf '%s' '{"prompt":"abre a PR."}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder ' pr |REGRA DE PR.')
+case "$out" in *"REGRA DE PR."*) ok "palavra no fim do pedido, com pontuacao, casa" ;; *) ko "PR no fim do pedido nao casou: $out" ;; esac
 # A palavra-chave acentuada nunca casa: a minusculizacao do bash anda byte a
 # byte e quebra o acento. Toda palavra em hooks.json tem de ser ASCII.
 for port in concise; do
@@ -294,7 +307,6 @@ else
   ok "hooks de $port rodam em bash 3.2"
 fi
 done
-case "$out" in *"REGRA DE CARD."*) ko "lembrete levou regra de card num pedido sem card" ;; *) ok "lembrete sem regra de artefato quando o pedido nao pede um" ;; esac
 
 touch "$FH/.claude/.concise-no-turn-reminder"
 out=$(printf '%s' '{}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder)
@@ -328,7 +340,16 @@ for port in concise; do
   # A regra do card so vale se a palavra do pedido real a dispara pela linha
   # que o plugin carrega.
   out=$(printf '%s' '{"prompt":"escreva o card dessa mudanca"}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
-  case "$out" in *"A card stands alone"*) ok "lembrete de $port leva a regra do card no pedido de card" ;; *) ko "lembrete de $port nao levou a regra do card: $out" ;; esac
+  case "$out" in *"If this turn writes a card"*) ok "lembrete de $port leva a regra do card no pedido de card" ;; *) ko "lembrete de $port nao levou a regra do card: $out" ;; esac
+  # Cada artefato tem uma regra so: dois conjuntos quase iguais ja mandaram a
+  # regra do desenho e a do comentario duas vezes no mesmo turno.
+  out=$(printf '%s' '{"prompt":"desenhe o diagrama, faz o review do commit e abre a PR"}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
+  dup=""
+  for r in "no line past 72" "the anchor path in full" "three sections under headers" "six lines at most"; do
+    n=$(printf '%s' "$out" | grep -o "$r" | wc -l | tr -d ' ')
+    [ "$n" = 1 ] || dup="$dup [$r]=$n"
+  done
+  [ -z "$dup" ] && ok "lembrete de $port leva cada regra de artefato uma vez" || ko "lembrete de $port com regra repetida ou ausente:$dup"
 done
 
 echo "--- skill: arquivos de referencia e tamanho"
