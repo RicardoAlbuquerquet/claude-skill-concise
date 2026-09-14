@@ -5,6 +5,20 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.81.0 — 2026-09-14
+
+O guarda de crédito passa a valer também para arquivo escrito e card criado
+pelo quadro, e não só para o que sai pelo terminal.
+
+- **Escrever um arquivo com a assinatura de agente é barrado**, assim como
+  criar ou editar um card por uma ferramenta de quadro.
+- **Citar a regra em prosa continua passando**: no arquivo, só a forma de
+  assinatura é barrada — a linha de crédito abrindo a própria linha, ou o
+  selo com o emoji ou o link.
+- **A saída de emergência é a mesma**: `CONCISE_ALLOW_CREDIT=1` ou o arquivo
+  de flag em `~/.claude`.
+- Quatro testes novos cobrem arquivo, prosa, card e o registro do guarda.
+
 ## 1.80.0 — 2026-09-14
 
 O lembrete de todo turno passa a cobrar o que o núcleo já pedia: o nome que o
