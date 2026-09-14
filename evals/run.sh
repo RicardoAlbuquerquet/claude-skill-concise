@@ -27,6 +27,10 @@ BIN="${CLAUDE_BIN:-claude}"
 RUNS="${RUNS:-1}"
 MIN_RUNS="${MIN_RUNS:-$RUNS}"
 [ -z "${COMPARE:-}" ] || [ -f "$COMPARE" ] || { echo "no such saved run: $COMPARE" >&2; exit 2; }
+
+# Better or worse means pass rates 40 points apart — two runs in five. One run
+# apart is noise, and it counts as the same in both directions.
+verdict () { if [ "$1" -le -40 ]; then echo worse; elif [ "$1" -ge 40 ]; then echo better; else echo same; fi; }
 SKILL_FILE="$ROOT/skills/$SKILL/SKILL.md"
 CORE_FILE="$ROOT/skills/$SKILL/hooks/core.md"
 [ -f "$SKILL_FILE" ] || { echo "no such skill: $SKILL_FILE" >&2; exit 2; }
@@ -195,6 +199,15 @@ $rubric")
   # other and, under COMPARE, with the saved run to within one run — a case
   # where the two sides disagree is the one that needs the full count.
   done_n=$((attempt-1))
+  # Under COMPARE a case also stops once the runs left cannot change its
+  # verdict: 0 of 2 against a saved 5 of 5 is worse even if the other three
+  # pass. That stop costs nothing, since the full count would say the same.
+  if [ -n "$base" ] && [ "$done_n" -lt "$RUNS" ]; then
+    read -r bpass bruns <<< "$base"
+    bpct=$((100*bpass/bruns))
+    lo=$((100*ok/RUNS - bpct)); hi=$((100*(ok+RUNS-done_n)/RUNS - bpct))
+    [ "$(verdict "$lo")" = "$(verdict "$hi")" ] && break
+  fi
   if [ "$done_n" -ge "$MIN_RUNS" ] && [ "$done_n" -lt "$RUNS" ]; then
     if [ "$ok" -eq "$done_n" ] || [ "$ok" -eq 0 ]; then
       [ -z "$base" ] && break
@@ -282,9 +295,8 @@ if [ -n "${RESULTS:-}" ]; then
   mkdir -p "$(dirname "$RESULTS")" && cp "$WORK/results.all" "$RESULTS"
 fi
 
-# Better or worse means pass rates 40 points apart — two runs in five. One run
-# apart is noise, and it counts as the same in both directions. Under COMPARE
-# the exit code says whether any case got worse, whatever else failed.
+# Under COMPARE the exit code says whether any case got worse, whatever else
+# failed.
 if [ -n "${COMPARE:-}" ]; then
   echo "---- against $COMPARE"
   better=0 same=0 worse=0 new=0
@@ -294,10 +306,11 @@ if [ -n "${COMPARE:-}" ]; then
     b=$(awk -F'\t' -v n="$name" '{sub(/\r$/,"")} $1==n{print $2" "$3}' "$COMPARE")
     if [ -z "$b" ]; then echo "new     $name  $p/$r"; new=$((new+1)); continue; fi
     read -r bp br <<< "$b"
-    d=$(( 100*p/r - 100*bp/br ))
-    if [ "$d" -le -40 ]; then echo "worse   $name  $bp/$br -> $p/$r"; worse=$((worse+1))
-    elif [ "$d" -ge 40 ]; then echo "better  $name  $bp/$br -> $p/$r"; better=$((better+1))
-    else same=$((same+1)); fi
+    case $(verdict $(( 100*p/r - 100*bp/br ))) in
+      worse) echo "worse   $name  $bp/$br -> $p/$r"; worse=$((worse+1)) ;;
+      better) echo "better  $name  $bp/$br -> $p/$r"; better=$((better+1)) ;;
+      *) same=$((same+1)) ;;
+    esac
   done
   echo "$better better, $same same, $worse worse$([ "$new" -gt 0 ] && echo ", $new without a saved result")"
   [ "$worse" -eq 0 ]; exit $?

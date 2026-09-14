@@ -343,9 +343,9 @@ RUNS=5 MIN_RUNS=2 ONLY=01 COMPARE="$EV/salvo.tsv" RESULTS="$EV/salvo.tsv" CLAUDE
 [ "$(tr '\t\n' ' ;' < "$EV/salvo.tsv")" = "01-factual-question 2 2;zz-outro 1 5;" ] && ok "RESULTS reescreve so as linhas que rodaram" || ko "RESULTS: $(tr '\t\n' ' ;' < "$EV/salvo.tsv")"
 printf '01-factual-question\t5\t5\n' > "$EV/salvo.tsv"
 : > "$EV/contadas"
-saida=$(RUNS=5 MIN_RUNS=2 ONLY=01 COMPARE="$EV/salvo.tsv" VEREDITO=FAIL CLAUDE_BIN="$EV/conta" bash "$REPO/evals/run.sh" 2>/dev/null); rc=$?
-[ "$rc" -eq 1 ] && printf '%s\n' "$saida" | grep -q "^worse   01-factual-question  5/5 -> 0/5" && [ "$(grep -c . "$EV/contadas")" = 5 ] &&
-  ok "COMPARE marca a piora, roda as cinco e sai com 1" || ko "COMPARE com piora: rc=$rc, $(grep -c . "$EV/contadas") respostas"
+saida=$(RUNS=5 ONLY=01 COMPARE="$EV/salvo.tsv" VEREDITO=FAIL CLAUDE_BIN="$EV/conta" bash "$REPO/evals/run.sh" 2>/dev/null); rc=$?
+[ "$rc" -eq 1 ] && printf '%s\n' "$saida" | grep -q "^worse   01-factual-question  5/5 -> 0/2" && [ "$(grep -c . "$EV/contadas")" = 2 ] &&
+  ok "COMPARE para quando o que falta nao muda o veredito, e sai com 1" || ko "COMPARE com piora: rc=$rc, $(grep -c . "$EV/contadas") respostas"
 
 echo "===== $pass ok, $fail falhas"
 [ "$fail" -eq 0 ]
