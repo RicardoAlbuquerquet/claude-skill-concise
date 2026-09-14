@@ -38,18 +38,18 @@
 | Requests that came out better / the same / worse | — | 40% / 57.5% / 2.5% |
 
 How it was measured: 40 everyday requests — a question, a status update, a
-commit message, a PR description and so on — answered five times without the
-plugin, and with it until the verdict was settled, nineteen of them all five
-times, by `claude-opus-5` on version 1.72.0, on 2026-09-14. A second model, `claude-haiku-4-5`, checked every answer against
-a list of what a good answer to that request has to do.
+commit message, a PR description — answered by `claude-opus-5` on version
+1.72.0, on 2026-09-14: five times with no style, and with the plugin until the
+result was clear, 19 of the 40 all five times. A second model,
+`claude-haiku-4-5`, graded every answer against a list of what that request
+needs.
 
-- **Better or worse** means at least two more passing answers out of five; one
-  apart counts as the same.
-- **The one worse request** is a list whose items each carry several helpers.
-- **The pass rate is within about 3 points**: most requests stopped as soon as
-  the verdict was settled, and nineteen of the forty ran all five times.
-- **The lists favour the plugin**, because they were written with these rules
-  in mind. The word count doesn't depend on them.
+- **A request is better or worse** when two more of its five answers pass; one
+  apart is noise.
+- **One request came out worse**: a list whose items each carry several helpers.
+- **The 71% is within about 5 points**, because most requests stopped early.
+- **The lists favour the plugin** — they were written with these rules in mind.
+  The word count does not depend on them.
 
 Each request's result, and how to run the test yourself:
 [`evals/README.md`](evals/README.md#last-full-measurement).
