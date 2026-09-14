@@ -37,17 +37,8 @@ answer is more complete  [###########-----]   65% more
 answer quality improves  [######----------]   40% of requests
 ```
 
-Answers ran 162 words with no style and 77 with the plugin. Of the 40
-requests, 57.5% came out the same and one came out worse.
-
-How it was measured: `claude-opus-5` answered 40 everyday requests — a
-question, a status update, a commit message, a PR description — on 2026-09-14,
-five times with no style, and with version 1.72.0 until the result was clear,
-19 of the 40 all five times. `claude-haiku-4-5` graded each answer against a
-list of what that request needs.
-
-Every request's result, the one that came out worse, and how to run it
-yourself: [`evals/README.md`](evals/README.md#last-full-measurement).
+How it was measured, every request's result, and the one that came out
+worse: [`evals/README.md`](evals/README.md#last-full-measurement).
 
 ## Install
 
