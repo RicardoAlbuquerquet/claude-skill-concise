@@ -34,11 +34,10 @@
 ```text
 answer gets shorter      [########--------]   53% shorter: 162 words to 77
 answer is more complete  [###########-----]   65% more than with no style
-request improves         [######----------]   40%
-request holds its ground [#########-------]   57.5%
+answer quality improves  [######----------]   40%
 ```
 
-One of the 40 requests came out worse.
+Of the 40 requests, 57.5% came out the same and one came out worse.
 
 How it was measured: `claude-opus-5` answered 40 everyday requests — a
 question, a status update, a commit message, a PR description — on 2026-09-14,
