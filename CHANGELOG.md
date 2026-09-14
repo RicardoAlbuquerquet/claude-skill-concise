@@ -5,6 +5,18 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.74.0 — 2026-09-14
+
+`/concise:pr` segue `/concise:commit` e passa a dizer o que acredita antes de
+listar o que faz, de 54 para 45 linhas.
+
+- **O comando tem crenças, desejos e intenções**, como as referências.
+- **A permissão sobe para o começo**: só a palavra `create` digitada abre a PR.
+- **Nenhuma regra sai**: base `origin/main` quando não vem ref, parada em zero
+  commits sobre a base, template e card procurados, passo de teste mesmo sem
+  tela, corte do que repete acima de vinte e cinco linhas, entrega cercada por
+  quatro crases com as linhas **Missing:**, e o que impede `gh pr create`.
+
 ## 1.73.0 — 2026-09-14
 
 `/concise:commit` passa a dizer o que acredita antes de listar o que faz, e
