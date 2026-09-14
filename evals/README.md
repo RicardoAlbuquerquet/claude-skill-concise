@@ -65,7 +65,16 @@ to lack the flag still works and says so.
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
 
-## Measuring a change without 800 calls
+## What a check costs
+
+| Check | Calls |
+|---|---|
+| Daily: the ten core cases, only whether any got worse | ~22 |
+| Daily: the ten core cases, better, same and worse | ~56 |
+| A rule change: only the cases it touches | ~30 for three cases |
+| Before a release: all cases, only whether any got worse | ~84 |
+| The README numbers: all cases, better, same and worse | ~214 |
+| The side with no plugin again, only when the model changes | ~400 |
 
 The side with no style depends on the model, not on the plugin, so it runs
 once and stays saved: [`baseline/claude-opus-5.tsv`](baseline/claude-opus-5.tsv),
@@ -107,7 +116,7 @@ described in [the last full measurement](#last-full-measurement).
 
 4. Measure the saved side again only when the model changes, or for the one
    case whose rubric changed — `RESULTS` rewrites that case's line and keeps
-   the others:
+   the others. All forty cases cost about 400 calls; one case, about 10:
 
    ```bash
    CLAUDE_CONFIG_DIR=~/.claude-eval BASELINE=1 RUNS=5 ONLY=18 RESULTS=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
@@ -173,7 +182,8 @@ worse by the rule stated there.
 ## Last full measurement
 
 Version 1.71.0 on 2026-09-14: `claude-opus-5` answering, `claude-haiku-4-5`
-judging, five runs per case in each arm — 800 calls.
+judging, five runs per case, with and without the plugin. With the saved side and
+today's stops, the same table costs about 214 calls.
 
 Both arms need an isolated config, or the plugin gets graded against itself: a
 global `CLAUDE.md` carrying the style, an installed copy's hooks and its forced
