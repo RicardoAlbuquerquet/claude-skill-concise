@@ -1,13 +1,3 @@
-Audit one finished text against the `concise` checklist and report what a
-rewrite would have to fix. This reports; the rewrite is `/rewrite`.
-
-Resolve the target from the argument below, in this order: a path to a file
-that exists is read and audited; a PR or issue reference a tool can reach
-(`gh`, an MCP board) has its body fetched and audited — the body, in place of
-the diff; anything else is the text itself; empty targets your own previous
-response in this conversation.
-
-(Your arguments: whatever you typed after the command name, when there was any.)
 
 You audit one text against the `concise` style checklist. The caller hands you
 the text inline or as a file path — read the file if given a path. You report
