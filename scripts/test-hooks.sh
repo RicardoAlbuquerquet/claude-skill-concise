@@ -236,6 +236,27 @@ case "$out" in *"Resposta na primeira frase."*) ok "lembrete leva o texto recebi
 out=$(printf '%s' '{}' | HOME="$FH" bash "$TR" 'aspas " e barra \ no texto' .concise-no-turn-reminder)
 printf '%s' "$out" | json_ok && ok "aspas e barra no texto nao quebram o JSON" || ko "texto com aspas quebrou o JSON: $out"
 
+# A regra de artefato custa atencao em todo turno que nao escreve um: ela so
+# entra quando a palavra dela aparece no pedido.
+out=$(printf '%s' '{"prompt":"escreva o card dessa mudanca"}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder 'card,tarefa|REGRA DE CARD.' 'desenh|REGRA DE DESENHO.')
+case "$out" in
+  *"REGRA DE CARD."*) case "$out" in *"REGRA DE DESENHO."*) ko "lembrete levou a regra de outro artefato" ;; *) ok "lembrete leva a regra do artefato pedido" ;; esac ;;
+  *) ko "lembrete nao levou a regra do card: $out" ;;
+esac
+out=$(printf '%s' '{"prompt":"por que o total esta errado"}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder 'card,tarefa|REGRA DE CARD.')
+case "$out" in *"REGRA DE CARD."*) ko "lembrete levou regra de card num pedido sem card" ;; *) ok "lembrete sem regra de artefato quando o pedido nao pede um" ;; esac
+# A palavra-chave acentuada nunca casa: a minusculizacao do bash anda byte a
+# byte e quebra o acento. Toda palavra em hooks.json tem de ser ASCII.
+for port in concise; do
+  kw=$(perl -MJSON::PP -e 'binmode STDOUT, ":utf8"; local $/; my $j = decode_json(<STDIN>); my $c = $j->{hooks}{UserPromptSubmit}[0]{hooks}[0]{command}; print join "", $c =~ /'"'"'([^|'"'"']*)|/g' < "$REPO/skills/$port/hooks/hooks.json")
+  if printf '%s' "$kw" | LC_ALL=C grep -q '[^ -~]'; then
+    ko "palavra-chave do lembrete de $port fora do ASCII: $kw"
+  else
+    ok "palavras-chave do lembrete de $port sao ASCII"
+  fi
+done
+case "$out" in *"REGRA DE CARD."*) ko "lembrete levou regra de card num pedido sem card" ;; *) ok "lembrete sem regra de artefato quando o pedido nao pede um" ;; esac
+
 touch "$FH/.claude/.concise-no-turn-reminder"
 out=$(printf '%s' '{}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder)
 [ -z "$out" ] && ok "lembrete: opt-out pelo arquivo de flag" || ko "lembrete ignorou a flag"
@@ -265,6 +286,10 @@ for port in concise; do
   cmd=$(perl -MJSON::PP -e 'binmode STDOUT, ":utf8"; local $/; my $j = decode_json(<STDIN>); print $j->{hooks}{UserPromptSubmit}[0]{hooks}[0]{command}' < "$REPO/skills/$port/hooks/hooks.json")
   out=$(printf '%s' '{}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
   printf '%s' "$out" | json_ok && ok "lembrete de $port roda pela linha do hooks.json" || ko "lembrete de $port quebra na linha do hooks.json: $out"
+  # A regra do card so vale se a palavra do pedido real a dispara pela linha
+  # que o plugin carrega.
+  out=$(printf '%s' '{"prompt":"escreva o card dessa mudanca"}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
+  case "$out" in *"A card stands alone"*) ok "lembrete de $port leva a regra do card no pedido de card" ;; *) ko "lembrete de $port nao levou a regra do card: $out" ;; esac
 done
 
 echo "--- skill: arquivos de referencia e tamanho"
