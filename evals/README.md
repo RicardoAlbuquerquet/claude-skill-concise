@@ -145,9 +145,17 @@ case averaged fewer with the plugin.
 
 **The plugin wins 14 cases, ties 22 and loses 4.** Cases 19 and 22 lose by one
 run, which three runs and a model judge can't tell from noise. Cases 18 and 26
-lose by cutting what the rules keep: 18 dropped exact values from its report
-in two runs, and 26 left the `invoices:` area off a PR title in two, calling
-it a repeat of what the PR list shows.
+were re-run five times, on 1.68.0 and on 1.69.0:
+
+- **Case 26 was noise.** It passed 5 of 5 on both versions; the 1 of 3 above
+  came from two runs that left the `invoices:` area off the title as a repeat
+  of the branch name.
+- **Case 18 holds, and predates the core rewrite**: 0 of 5 on both versions.
+  Most failing runs pack the whole library into one table row, its details in
+  parentheses — the reminder's one line per deliverable is the likely pull —
+  and some drop the exact values. Its rubric also misfires: the judge grades
+  the opening "Pronto, nada commitado ainda" as a preamble, when it answers
+  the question.
 
 **Eleven cases fail every run in both arms.** Nine ask for a PR (10, 17, 31,
 39), a card (11, 34), a comment (33) or a drawing (27, 28), and their rules
@@ -156,10 +164,13 @@ this mode measures them without their rules. The other two are plain replies:
 14 named a signature check without saying what it protects, and 20 named a
 table the reader will never open.
 
-**Case 40 went from 3 of 3 on 1.66.0, on 2026-09-12, to 1 of 3.** Both
-failing runs repeat the pending switch, the PR and the load-test risk, none of
-which had changed. It is the first case to re-measure after the next change to
-the core.
+**Case 40 slid with the core rewrite in 1.69.0**: 4 of 5 on 1.66.0, 3 of 5 on
+1.68.0 and 1 of 5 on 1.69.0, five runs each. The failing runs add that the
+read-path switch and the PR still wait, and that the load-test risk hasn't
+changed. Putting back the 1.68.0 wording for a pending item already stated
+scored 0 of 5; adding the 1.68.0 test for a block that leaves the reader idle,
+1 of 5; dropping risks from the always-keep list instead, 0 of 5. The cause is
+elsewhere in the rewrite.
 
 ## Earlier measurements
 
