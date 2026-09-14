@@ -5,6 +5,17 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.73.0 — 2026-09-14
+
+`/concise:commit` passa a dizer o que acredita antes de listar o que faz, e
+encolhe de 40 para 35 linhas sem perder regra nenhuma.
+
+- **O comando segue a forma das referências**: crenças, desejos e intenções.
+- **Nenhuma regra sai**: o palco vazio para o trabalho, a forma do título vinda
+  do log, o ticket só quando a branch ou quem chamou deu, a entrega em bloco
+  cercado, as duas mudanças sem relação com o `git restore --staged`, e o
+  commit só na palavra `run`.
+
 ## 1.72.0 — 2026-09-14
 
 The rules of each artifact now ride on the turn that writes one, instead of
