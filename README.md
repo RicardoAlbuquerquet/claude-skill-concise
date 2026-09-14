@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="#install">Install</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#what-it-does">What it does</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#what-ships">What ships</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#the-commands-and-the-agent">Commands</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#cursor-chatgpt-and-the-rest">Other tools</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#the-bar-for-a-rule">The bar for a rule</a>
+  <a href="#measured">Measured</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#install">Install</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#what-it-does">What it does</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#what-ships">What ships</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#the-commands-and-the-agent">Commands</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#cursor-chatgpt-and-the-rest">Other tools</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#the-bar-for-a-rule">The bar for a rule</a>
 </p>
 
 <br>
@@ -26,6 +26,30 @@
   <source media="(prefers-color-scheme: dark)" srcset="docs/brand/before-after-dark.svg">
   <img alt="The same question answered without and with concise: 74 words that never notice the premise is false, against three sentences that open on it." src="docs/brand/before-after-light.svg" width="100%">
 </picture>
+
+## Measured
+
+The forty cases in [`evals/`](evals/README.md#last-full-measurement), each
+answered three times by `claude-opus-5` with no style and three times with the
+plugin installed, then graded against its rubric by `claude-haiku-4-5`.
+Version 1.69.0, on 2026-09-13:
+
+| | No style | With the plugin |
+|---|---|---|
+| Words per answer, median | 165 | 70 |
+| Runs that pass their rubric | 48 of 120 | 72 of 120 |
+| Cases that pass all three runs | 11 of 40 | 20 of 40 |
+
+**Every case came out shorter, and four came out worse.** Re-run five times,
+one of the four holds: case 18 drops exact values from a report, and did on
+1.68.0 too. Case 26 passed five of five on the re-run, and 19 and 22
+lose by a single run, which three runs can't tell from noise.
+
+Eleven cases fail every run either way, and nine of them ask for a PR, a card,
+a comment or a drawing, whose rules load with the command that writes it — a
+case can't run a command. The cases were also written to catch what the rules
+forbid, so the pass rates lean toward the plugin by design; the word count is
+the number no rubric shapes.
 
 ## Install
 

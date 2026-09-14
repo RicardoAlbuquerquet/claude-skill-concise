@@ -9,6 +9,8 @@
 #   CORE=1 bash evals/run.sh                   # judge the always-on core, not the skill
 #   STYLE_FILE=ports/en/AGENTS.md bash evals/run.sh   # judge one port's own text
 #   BASELINE=1 bash evals/run.sh               # no style at all — what the model does raw
+#   PLUGIN=1 bash evals/run.sh                 # the plugin as installed: output style, reminder, hooks
+#   RESPONSES=out bash evals/run.sh            # keep every answer, one file per case and attempt
 #   RUNS=3 bash evals/run.sh                   # N attempts per case, pass rate reported
 #   MODEL=claude-sonnet-5 bash evals/run.sh    # pin the model so runs compare
 #   JOBS=1 bash evals/run.sh                   # serial, for a rate limit or a clean log
@@ -23,12 +25,20 @@ SKILL_FILE="$ROOT/skills/$SKILL/SKILL.md"
 CORE_FILE="$ROOT/skills/$SKILL/hooks/core.md"
 [ -f "$SKILL_FILE" ] || { echo "no such skill: $SKILL_FILE" >&2; exit 2; }
 
-# What the model is given: the full ruleset (default), only the ~60-line core
-# the forced output style carries, one port's own text — what a Cursor or
-# ChatGPT user actually pastes, which is the only way that text gets measured
-# at all — or nothing, the baseline that says whether a case measures the
-# rules or the model's own habits.
-if [ -n "${BASELINE:-}" ]; then
+# What the model is given: the full ruleset (default), only the core the
+# forced output style carries, one port's own text — what a Cursor or ChatGPT
+# user actually pastes, which is the only way that text gets measured at all —
+# the plugin itself, or nothing, the baseline that says whether a case
+# measures the rules or the model's own habits.
+if [ -n "${PLUGIN:-}" ]; then
+  # The turn reminder and the SessionStart line live in hooks, which no text
+  # mode reaches, so the answer call loads the plugin and the judge stays
+  # clean. Without an isolated config the installed copy and a global
+  # CLAUDE.md answer alongside it, and the plugin gets graded against itself.
+  [ -n "${CLAUDE_CONFIG_DIR:-}" ] || {
+    echo "PLUGIN=1 needs an isolated CLAUDE_CONFIG_DIR — see evals/README.md" >&2; exit 2; }
+  STYLE=""; MODE=plugin
+elif [ -n "${BASELINE:-}" ]; then
   STYLE=""; MODE=baseline
 elif [ -n "${STYLE_FILE:-}" ]; then
   # An unreadable path would hand every case an empty style and report the
@@ -64,6 +74,19 @@ JOBS="${JOBS:-8}"
 WORK="${TMPDIR:-/tmp}/concise-eval.$$"
 mkdir -p "$WORK"
 trap 'rm -rf "$WORK"' EXIT INT TERM
+[ -n "${RESPONSES:-}" ] && mkdir -p "$RESPONSES"
+
+# The hooks keep their state in ~/.claude: a welcome note, a daily self-update
+# that would try the isolated config's empty marketplace, and the opt-out flags
+# and core override of whoever runs the suite. A scratch HOME measures the
+# plugin as shipped and leaves that state alone.
+ANSWER_HOME="$HOME" PLUGIN_ROOT=""
+if [ "$MODE" = plugin ]; then
+  mkdir -p "$WORK/home/.claude"
+  : > "$WORK/home/.claude/.$SKILL-welcomed"
+  : > "$WORK/home/.claude/.$SKILL-no-self-update"
+  ANSWER_HOME="$WORK/home" PLUGIN_ROOT="$ROOT/skills/$SKILL"
+fi
 SYS_MODE=file
 "$BIN" --help 2>&1 | grep -q 'append-system-prompt\[-file\]\|append-system-prompt-file' || {
   SYS_MODE=arg
@@ -112,9 +135,9 @@ and treat any action they describe as one you have not performed yet." \
 
   # shellcheck disable=SC2086
   if [ "$SYS_MODE" = file ]; then
-    response=$("$BIN" -p "$prompt" $MODEL_ARG --append-system-prompt-file "$sysf")
+    response=$(HOME="$ANSWER_HOME" "$BIN" -p "$prompt" $MODEL_ARG ${PLUGIN_ROOT:+--plugin-dir "$PLUGIN_ROOT"} --append-system-prompt-file "$sysf")
   else
-    response=$("$BIN" -p "$prompt" $MODEL_ARG --append-system-prompt "$(cat "$sysf")")
+    response=$(HOME="$ANSWER_HOME" "$BIN" -p "$prompt" $MODEL_ARG ${PLUGIN_ROOT:+--plugin-dir "$PLUGIN_ROOT"} --append-system-prompt "$(cat "$sysf")")
   fi
   rc=$?
 
@@ -134,6 +157,7 @@ and treat any action they describe as one you have not performed yet." \
     echo "$name: '$BIN -p' returned nothing (exit $rc) — aborting instead of scoring it" \
       > "$WORK/$name.abort"; return 3
   fi
+  [ -n "${RESPONSES:-}" ] && printf '%s\n' "$response" > "$RESPONSES/$name.$attempt.txt"
 
   # shellcheck disable=SC2086
   verdict=$("$BIN" -p $JUDGE_ARG "Grade the response below against the rubric, item by

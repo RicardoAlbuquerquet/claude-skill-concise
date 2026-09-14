@@ -302,5 +302,26 @@ obtido=$(CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" 2>/dev/null | sed -n 's/^
 CLAUDE_BIN="$EV/vazio" bash "$REPO/evals/run.sh" >/dev/null 2>&1
 [ "$?" -eq 3 ] && { pass=$((pass+1)); echo "ok    evals abortam com CLI mudo"; } || { fail=$((fail+1)); echo "FALHA evals nao abortaram com CLI mudo"; }
 
+# PLUGIN=1 carrega o plugin so na resposta: um juiz com o plugin daria a nota
+# com a regra na mao. E o HOME de rascunho e o que impede os hooks de gravar
+# estado no ~/.claude de quem roda.
+cat > "$EV/grava" <<EOF
+#!/usr/bin/env bash
+if [ "\$1" = "--help" ]; then echo "--append-system-prompt-file"; exit 0; fi
+case " \$* " in *" --append-system-prompt-file "*) papel=resposta ;; *) papel=juiz ;; esac
+case " \$* " in *" --plugin-dir "*) com="com plugin" ;; *) com="sem plugin" ;; esac
+case "\$HOME" in "$HOME") casa="HOME real" ;; *) casa="HOME de rascunho" ;; esac
+echo "\$papel \$com, \$casa" >> "$EV/chamadas"
+echo resposta
+echo PASS
+EOF
+chmod +x "$EV/grava"
+PLUGIN=1 CLAUDE_CONFIG_DIR="$FH/cfg" ONLY=01 RESPONSES="$EV/respostas" CLAUDE_BIN="$EV/grava" bash "$REPO/evals/run.sh" >/dev/null 2>&1
+[ "$(sort -u "$EV/chamadas" 2>/dev/null | tr '\n' ';')" = "juiz sem plugin, HOME real;resposta com plugin, HOME de rascunho;" ] &&
+  ok "PLUGIN=1 carrega o plugin so na resposta, com HOME de rascunho" || ko "PLUGIN=1 vazou o plugin para o juiz ou o HOME real para a resposta"
+[ -s "$EV/respostas/01-factual-question.1.txt" ] && ok "RESPONSES guarda cada resposta" || ko "RESPONSES nao guardou a resposta"
+env -u CLAUDE_CONFIG_DIR PLUGIN=1 ONLY=01 CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" >/dev/null 2>&1
+[ "$?" -eq 2 ] && ok "PLUGIN=1 recusa rodar sem config isolada" || ko "PLUGIN=1 rodou sem config isolada"
+
 echo "===== $pass ok, $fail falhas"
 [ "$fail" -eq 0 ]
