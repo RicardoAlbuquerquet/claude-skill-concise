@@ -18,6 +18,9 @@ falha, no lugar de uma vez por dia com a falha carimbada junto.
   chegou ao marketplace.
 - **Os testes de hook passam a rodar no macOS além do Linux**, porque o hook
   usa as ferramentas que o usuário tiver.
+- **O lembrete por turno volta a funcionar no macOS**: ele minusculizava o
+  pedido com `${in,,}`, que é bash 4, e o bash 3.2 do macOS matava o hook
+  antes de qualquer regra de artefato entrar.
 
 ## 1.78.0 — 2026-09-14
 

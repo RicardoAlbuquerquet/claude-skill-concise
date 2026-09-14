@@ -16,12 +16,11 @@ text="${1:-}"
 flag="${2:-}"
 shift 2 2>/dev/null
 
-# The prompt arrives on stdin. Drained and matched with builtins only: this
-# runs before every prompt, and each process spawned is latency the user
-# feels on Windows.
+# The prompt arrives on stdin. One `tr` lowercases it: ${in,,} needs bash 4,
+# and macOS ships 3.2, where the whole hook dies on a bad substitution.
 in=""
 while IFS= read -r line || [ -n "$line" ]; do in="$in $line"; done
-lc=${in,,}
+lc=$(printf '%s' "$in" | tr '[:upper:]' '[:lower:]')
 
 [ -n "$flag" ] && [ -f "$HOME/.claude/$flag" ] && exit 0
 [ -n "${CONCISE_NO_TURN_REMINDER:-}" ] && exit 0

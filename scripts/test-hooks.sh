@@ -264,6 +264,13 @@ for port in concise; do
   else
     ok "palavras-chave do lembrete de $port sao ASCII"
   fi
+
+# macOS ainda traz bash 3.2: ${var,,} e mapfile matam o hook inteiro la.
+if grep -nE '${[A-Za-z_]+(,,|^^)}|mapfile|readarray|declare -A' "$REPO/skills/$port/hooks/"*.sh; then
+  ko "hook de $port usa recurso de bash 4"
+else
+  ok "hooks de $port rodam em bash 3.2"
+fi
 done
 case "$out" in *"REGRA DE CARD."*) ko "lembrete levou regra de card num pedido sem card" ;; *) ok "lembrete sem regra de artefato quando o pedido nao pede um" ;; esac
 
