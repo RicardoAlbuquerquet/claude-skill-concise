@@ -100,7 +100,7 @@ chmod +x "$FH/bin/claude"; rm -f "$FH/calls.log"
 n1=$(wc -l < "$FH/calls.log" 2>/dev/null | tr -d ' ')
 (cd "$FH" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
 n2=$(wc -l < "$FH/calls.log" | tr -d ' ')
-[ "$n1" = "2" ] && [ "$n2" = "2" ] && { pass=$((pass+1)); echo "ok    throttle diario (2 chamadas, 2a sessao zero)"; } || { fail=$((fail+1)); echo "FALHA throttle: n1=$n1 n2=$n2"; }
+[ "$n1" = "2" ] && [ "$n2" = "2" ] && { pass=$((pass+1)); echo "ok    throttle da janela (2 chamadas, 2a sessao zero)"; } || { fail=$((fail+1)); echo "FALHA throttle: n1=$n1 n2=$n2"; }
 # dentro do repo do proprio marketplace o carimbo do dia nao segura
 (cd "$REPO" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
 n3=$(wc -l < "$FH/calls.log" | tr -d ' ')
@@ -116,11 +116,21 @@ n4=$(wc -l < "$FH/calls.log" | tr -d ' ')
 [ "$n4" = "6" ] && { pass=$((pass+1)); echo "ok    fora do repo o carimbo continua valendo"; } || { fail=$((fail+1)); echo "FALHA carimbo fora do repo: n4=$n4"; }
 grep -q "1.13.0" "$FH/.claude/.concise-update-note" 2>/dev/null && { pass=$((pass+1)); echo "ok    grava nota de versao"; } || { fail=$((fail+1)); echo "FALHA nota de versao"; }
 [ -d "$FH/.claude/.concise-update-lock" ] && { fail=$((fail+1)); echo "FALHA lock ficou para tras"; } || { pass=$((pass+1)); echo "ok    lock liberado"; }
-# falha permanente: carimba mesmo assim (nao repete toda sessao)
+# janela configuravel: com 0 hora, a sessao seguinte checa de novo
+rm -f "$FH/calls.log"; printf '0' > "$FH/.claude/.concise-update-hours"
+(cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+n5=$(wc -l < "$FH/calls.log" | tr -d ' ')
+[ "$n5" = "2" ] && { pass=$((pass+1)); echo "ok    janela em horas e configuravel"; } || { fail=$((fail+1)); echo "FALHA janela configuravel: n5=$n5"; }
+rm -f "$FH/.claude/.concise-update-hours"
+
+# falha nao carimba: a sessao seguinte tenta de novo, sem esperar a janela
 rm -f "$FH/.claude/.concise-update-stamp" "$FH/calls.log"
 printf '#!/usr/bin/env bash\necho chamada >> "%s/calls.log"\nexit 1\n' "$FH" > "$FH/bin/claude"; chmod +x "$FH/bin/claude"
-HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise
-[ -s "$FH/.claude/.concise-update-stamp" ] && { pass=$((pass+1)); echo "ok    falha tambem carimba"; } || { fail=$((fail+1)); echo "FALHA falha nao carimbou"; }
+(cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+(cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+n6=$(wc -l < "$FH/calls.log" | tr -d ' ')
+[ -s "$FH/.claude/.concise-update-stamp" ] && { fail=$((fail+1)); echo "FALHA falha carimbou e segurou a janela"; } || { pass=$((pass+1)); echo "ok    falha deixa o carimbo como estava"; }
+[ "$n6" = "2" ] && { pass=$((pass+1)); echo "ok    falha tenta de novo na sessao seguinte"; } || { fail=$((fail+1)); echo "FALHA retry apos falha: n6=$n6"; }
 [ -s "$FH/.claude/.concise-update-failed" ] && { pass=$((pass+1)); echo "ok    marca falha para aviso semanal"; } || { fail=$((fail+1)); echo "FALHA marcador de falha"; }
 # opt-out do self-update
 rm -f "$FH/.claude/.concise-update-stamp" "$FH/calls.log"; touch "$FH/.claude/.concise-no-self-update"
@@ -254,6 +264,13 @@ for port in concise; do
   else
     ok "palavras-chave do lembrete de $port sao ASCII"
   fi
+
+# macOS ainda traz bash 3.2: ${var,,} e mapfile matam o hook inteiro la.
+if grep -nE '${[A-Za-z_]+(,,|^^)}|mapfile|readarray|declare -A' "$REPO/skills/$port/hooks/"*.sh; then
+  ko "hook de $port usa recurso de bash 4"
+else
+  ok "hooks de $port rodam em bash 3.2"
+fi
 done
 case "$out" in *"REGRA DE CARD."*) ko "lembrete levou regra de card num pedido sem card" ;; *) ok "lembrete sem regra de artefato quando o pedido nao pede um" ;; esac
 
