@@ -18,8 +18,12 @@ jobs:
             jq empty "$f" && echo "ok  $f"
           done
 
+  # The hooks run on whatever the user has: BSD tools on macOS, GNU on Linux.
   hooks:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
       - run: bash scripts/test-hooks.sh

@@ -5,6 +5,20 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.79.0 — 2026-09-14
+
+O self-update checa de seis em seis horas e volta a tentar depois de uma
+falha, no lugar de uma vez por dia com a falha carimbada junto.
+
+- **A janela vira seis horas**, e `~/.claude/.concise-update-hours` troca esse
+  número. Sete versões saíram num dia e quem checou de manhã ficava na
+  primeira até o dia seguinte.
+- **A falha deixa o carimbo como estava**: a sessão seguinte tenta de novo, em
+  vez de esperar a janela inteira com a marca de uma tentativa que nunca
+  chegou ao marketplace.
+- **Os testes de hook passam a rodar no macOS além do Linux**, porque o hook
+  usa as ferramentas que o usuário tiver.
+
 ## 1.78.0 — 2026-09-14
 
 As dez linhas negadas que as versões 1.73.0 a 1.77.0 trouxeram para os
