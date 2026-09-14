@@ -5,6 +5,19 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.70.0 — 2026-09-13
+
+A background job that finishes and changes nothing else gets one line again,
+without the plan and the risk restated beside it.
+
+- **The core's status rule is back to its 1.68.0 words**: "send only the
+  delta since your last message". The 1.69.0 rewrite said "only what changed
+  since the previous update", and the model counted the steps still waiting
+  as a change. Eval case 40 passed 7 of 10 runs on 1.66.0 and 1.68.0, 1 of 5
+  on 1.69.0, and 7 of 10 with the old sentence back; case 12, the other status
+  case, passes 5 of 5 either way.
+- **`SKILL.md` says the same** in its status row.
+
 ## 1.69.0 — 2026-09-13
 
 The Portuguese port is gone, and the English plugin answers in the language
