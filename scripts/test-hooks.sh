@@ -226,6 +226,40 @@ LISTA
 # a mesma resolucao nao inventa credito numa mensagem limpa
 case "$(cgv Bash "W=\"$VD\"; git commit -F \"\$W/limpo.txt\"")" in *deny*) fail=$((fail+1)); echo "FALHA guarda barrou mensagem limpa por variavel";; *) pass=$((pass+1)); echo "ok    mensagem limpa por variavel passa";; esac
 
+echo "--- codex: o mesmo plugin, sem estilo de saida"
+HK="$REPO/skills/concise/hooks"
+CX="$FH/codex"; mkdir -p "$CX/.claude"
+cx () { HOME="$CX" PLUGIN_ROOT="$REPO/skills/concise" CLAUDE_PLUGIN_ROOT="$REPO/skills/concise" "$@"; }
+
+# sem estilo de saida forcado, o nucleo entra inteiro como additionalContext
+out=$(cx bash "$HK/inject-core.sh" concise-core-override.md core.md WIN MAC LINUX)
+printf '%s' "$out" | perl -MJSON::PP -e 'local $/; my $j = decode_json(<STDIN>); my $c = $j->{hookSpecificOutput}{additionalContext}; exit(($j->{hookSpecificOutput}{hookEventName} eq "SessionStart" && $c =~ /first sentence/ && $c =~ /(WIN|MAC|LINUX)$/) ? 0 : 1)' &&
+  { pass=$((pass+1)); echo "ok    codex recebe o nucleo e a linha do shell no inicio"; } || { fail=$((fail+1)); echo "FALHA codex sem nucleo no inicio: ${out:0:120}"; }
+
+# o override do usuario vence o nucleo embarcado tambem no codex
+printf 'NUCLEO DO USUARIO\n' > "$CX/.claude/concise-core-override.md"
+out=$(cx bash "$HK/inject-core.sh" concise-core-override.md core.md WIN MAC LINUX)
+case "$out" in *"NUCLEO DO USUARIO"*) case "$out" in *"first sentence"*) fail=$((fail+1)); echo "FALHA codex juntou override e nucleo";; *) pass=$((pass+1)); echo "ok    codex usa o override do usuario";; esac;; *) fail=$((fail+1)); echo "FALHA codex ignorou o override";; esac
+rm -f "$CX/.claude/concise-core-override.md"
+
+# no Claude Code nada muda: sem override, so a linha do shell
+out=$(HOME="$CX" CLAUDE_PLUGIN_ROOT="$REPO/skills/concise" CONCISE_OS=macos bash "$HK/inject-core.sh" concise-core-override.md core.md WIN MAC LINUX)
+[ "$out" = "MAC" ] && { pass=$((pass+1)); echo "ok    claude segue recebendo so a linha do shell"; } || { fail=$((fail+1)); echo "FALHA claude mudou no inicio: $out"; }
+
+# self-update, aviso de /concise:pr e notas falam de Claude Code: no codex, silencio
+mkdir -p "$CX/bin"; printf '#!/usr/bin/env bash\necho chamada >> "%s/calls.log"\n' "$CX" > "$CX/bin/claude"; chmod +x "$CX/bin/claude"
+(cd "$CX" && cx env PATH="$CX/bin:$PATH" bash "$HK/self-update.sh" concise)
+[ ! -f "$CX/calls.log" ] && [ ! -f "$CX/.claude/.concise-update-failed" ] && { pass=$((pass+1)); echo "ok    codex nao roda o self-update do claude"; } || { fail=$((fail+1)); echo "FALHA self-update rodou no codex"; }
+out=$(printf '{"tool_name":"Bash","session_id":"cx","tool_input":{"command":"gh pr create --title x --body y"}}' | cx bash "$HK/route-hint.sh" "RAZAO" .concise-no-route-hint)
+[ -z "$out" ] && { pass=$((pass+1)); echo "ok    codex nao manda para /concise:pr"; } || { fail=$((fail+1)); echo "FALHA route-hint negou no codex: $out"; }
+out=$(cx bash "$HK/notices.sh" concise "BEM-VINDO" "AVISO %s")
+[ -z "$out" ] && { pass=$((pass+1)); echo "ok    codex nao mostra as notas do claude"; } || { fail=$((fail+1)); echo "FALHA notices falou no codex: $out"; }
+
+# o manifesto do codex acompanha o do claude em nome e versao
+cm="$REPO/skills/concise/.codex-plugin/plugin.json"; lm="$REPO/skills/concise/.claude-plugin/plugin.json"
+nv () { perl -MJSON::PP -e 'local $/; my $j = decode_json(<STDIN>); print "$j->{name} $j->{version}"' < "$1"; }
+[ -f "$cm" ] && [ "$(nv "$cm")" = "$(nv "$lm")" ] && { pass=$((pass+1)); echo "ok    manifesto do codex com o mesmo nome e versao"; } || { fail=$((fail+1)); echo "FALHA manifesto do codex: $(nv "$cm" 2>/dev/null) contra $(nv "$lm")"; }
+
 echo "--- stop-audit (extra, opt-in)"
 SA="$REPO/extras/stop-audit/stop-audit.sh"
 SAD="$FH/sa"; mkdir -p "$SAD/bin"

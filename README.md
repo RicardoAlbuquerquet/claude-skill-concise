@@ -544,7 +544,8 @@ falls behind.
 | Tool | What you copy | What it gives you |
 |---|---|---|
 | **Cursor** | `ports/en/cursor/rules/` and `ports/en/cursor/commands/` | the core in every request through `alwaysApply: true`, the full ruleset and the six surfaces pulled in when they match, and the fourteen commands under `/` |
-| **Codex, Copilot, Zed, Gemini CLI, Windsurf, Aider, Jules** | `ports/en/AGENTS.md` and the `concise/` folder beside it | the core always on, and a table naming the file to read for anything longer |
+| **Codex** | nothing: the plugin itself, from this marketplace | the core at session start, the style beside every prompt with the rule of the artifact being written, and the credit guard — no commands, no self-update |
+| **Copilot, Zed, Gemini CLI, Windsurf, Aider, Jules** | `ports/en/AGENTS.md` and the `concise/` folder beside it | the core always on, and a table naming the file to read for anything longer |
 | **ChatGPT** | one file into custom instructions, one into a project or a custom GPT | the style on every reply, and the commands as typed triggers |
 
 **The commands travel with them**, minus the plugin prefix: `/pr`, `/card`,

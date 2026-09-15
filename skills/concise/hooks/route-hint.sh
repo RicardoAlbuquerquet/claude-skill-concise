@@ -12,6 +12,11 @@ flag="${2:-}"
 [ -n "$flag" ] && [ -f "$HOME/.claude/$flag" ] && exit 0
 [ -n "${CONCISE_NO_ROUTE_HINT:-}" ] && exit 0
 
+# The hint names /concise:pr, and a Codex plugin ships skills, not commands:
+# there the denial would send the session to something it cannot run.
+. "${0%/*}/host.sh"
+[ "$(concise_host)" = codex ] && exit 0
+
 in=$(cat)
 
 # Only the calls that publish a description.

@@ -13,6 +13,11 @@ note="$dir/.$plugin-update-note"
 
 [ -f "$dir/.$plugin-no-self-update" ] && exit 0
 
+# Codex updates a plugin through its own marketplace, and the `claude` CLI
+# this script drives may not exist there at all.
+. "${0%/*}/host.sh"
+[ "$(concise_host)" = codex ] && exit 0
+
 # With no CLI on the PATH nothing can update, and a silent exit leaves the
 # copy stale forever. The failure mark is what the weekly warning reads.
 if ! command -v claude >/dev/null 2>&1; then

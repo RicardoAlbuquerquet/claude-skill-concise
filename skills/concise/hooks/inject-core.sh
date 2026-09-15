@@ -4,6 +4,8 @@
 # one exists, and one line naming the shell the reader will paste into — a
 # fence tagged for the wrong shell does not run: `&&` is a parse error in
 # Windows PowerShell 5.1, and `bash` typed there is the WSL stub.
+# Codex has no output style to carry the core, so there the core itself goes
+# in, as the additionalContext Codex reads from a SessionStart hook.
 #   $1 = override file name under ~/.claude
 #   $2 = shipped core file name under the plugin's hooks/, printed only with
 #        CONCISE_INJECT_CORE=1 — for a Claude Code that ignores
@@ -11,14 +13,15 @@
 #   $3 = the Windows line   $4 = the macOS line   $5 = the Linux line
 # CONCISE_OS=windows|macos|linux overrides detection, for a terminal that is
 # not the host's default — Git Bash or WSL on a Windows machine.
+. "${0%/*}/host.sh"
+host=$(concise_host)
+
 override="$HOME/.claude/$1"
-printed=""
+core=""
 if [ -f "$override" ]; then
-  cat "$override"
-  printed=1
-elif [ -n "${CONCISE_INJECT_CORE:-}" ]; then
-  cat "$CLAUDE_PLUGIN_ROOT/hooks/$2"
-  printed=1
+  core=$(cat "$override")
+elif [ -n "${CONCISE_INJECT_CORE:-}" ] || [ "$host" = codex ]; then
+  core=$(cat "${CLAUDE_PLUGIN_ROOT:-${0%/*}/..}/hooks/$2")
 fi
 
 os="${CONCISE_OS:-}"
@@ -34,8 +37,16 @@ case "$os" in
   macos)   line="${4:-}" ;;
   *)       line="${5:-}" ;;
 esac
-if [ -n "$line" ]; then
-  [ -n "$printed" ] && printf '\n'
-  printf '%s\n' "$line"
+
+text="$core"
+[ -n "$line" ] && text="${text:+$text
+
+}$line"
+
+if [ "$host" = codex ]; then
+  [ -n "$text" ] &&
+    printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}\n' "$(concise_json "$text")"
+else
+  [ -n "$text" ] && printf '%s\n' "$text"
 fi
 exit 0

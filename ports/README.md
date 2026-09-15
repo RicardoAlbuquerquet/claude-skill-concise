@@ -29,9 +29,34 @@ bare names: `/pr`, `/card`, `/commit`, `/comment`, `/release`, `/plan`,
 Cursor also reads `AGENTS.md`, so the section below works there as a lighter
 install — rules and commands are the fuller one.
 
+## Codex
+
+Codex loads this same plugin, hooks included, from the marketplace in this
+repository:
+
+```bash
+codex plugin marketplace add RicardoAlbuquerquet/concise
+```
+
+Then `/plugins` inside Codex, and install `concise`.
+
+| In Claude Code | In Codex |
+|---|---|
+| the core rides the forced output style | the session-start hook hands Codex the core itself |
+| the style beside every prompt | the same hook, the same rules |
+| the credit guard on shell, file and board writes | the same guard |
+| self-update, the welcome note, the nudge to `/concise:pr` | skipped: Codex updates plugins itself and has no plugin commands |
+| fourteen commands and the audit agent | not shipped yet |
+
+The hooks tell the two apart by `PLUGIN_ROOT`, which Codex sets and Claude
+Code does not; `CONCISE_HOST=codex` forces it. None of this has run under a
+real Codex yet: it follows the Codex hook and plugin documentation, and the
+tests in `scripts/test-hooks.sh` only simulate it. On Windows, Codex may run a
+hook through a shell that leaves `$CLAUDE_PLUGIN_ROOT` unexpanded.
+
 ## AGENTS.md
 
-Read by Codex, Copilot's coding agent, Zed, Gemini CLI, Windsurf, Aider, Jules
+Read by Copilot's coding agent, Zed, Gemini CLI, Windsurf, Aider, Jules
 and the rest of the `AGENTS.md` family, and by Cursor:
 
 ```bash
