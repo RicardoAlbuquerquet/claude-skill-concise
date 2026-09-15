@@ -74,9 +74,10 @@ EOF
     # A file write or a board call carries the text itself, and a repo that
     # documents the rule quotes the credit in prose. Only the signature shape
     # is denied here: the trailer opening its own line, or the badge with its
-    # emoji or its link.
+    # emoji or its link. Codex edits files through a patch, where an added line
+    # opens with "+".
     printf '%s' "$body" |
-      grep -qiE '(\\n|^)[[:space:]]*co-authored-by:[[:space:]]{0,4}[^"]{0,80}(claude|copilot|gemini|cursor|codex|gpt|anthropic\.com)|🤖[^"]{0,40}generated with|generated with[^"]{0,40}\[(claude|copilot|gemini|cursor|codex)' ||
+      grep -qiE '(\\n|^)[+[:space:]]*co-authored-by:[[:space:]]{0,4}[^"]{0,80}(claude|copilot|gemini|cursor|codex|gpt|anthropic\.com)|🤖[^"]{0,40}generated with|generated with[^"]{0,40}\[(claude|copilot|gemini|cursor|codex)' ||
       exit 0
     ;;
 esac

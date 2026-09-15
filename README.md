@@ -71,6 +71,16 @@ claude plugin marketplace add RicardoAlbuquerquet/concise
 claude plugin install concise@claude-skill-concise
 ```
 
+**In Codex**, the same plugin loads with its hooks — the core, the turn
+reminder and the credit guard; the commands stay in Claude Code:
+
+```bash
+codex plugin marketplace add RicardoAlbuquerquet/concise
+```
+
+Then type `/plugins` inside Codex, install `concise`, and open a new session.
+What differs from Claude Code: [`ports/README.md`](ports/README.md#codex).
+
 It replies in the language you write in. Plugin skills are namespaced by the
 plugin that ships them, so this registers as `/concise:concise`; `/plugin` →
 **Installed** shows the exact name it took.
@@ -105,24 +115,25 @@ hand, turn it on in `/plugin` → **Marketplaces** → **Enable auto-update**.
 </details>
 
 <details>
-<summary><b>Self-updating</b> — the plugin runs that pair itself, once a day</summary>
+<summary><b>Self-updating</b> — the plugin runs that pair itself, every six hours</summary>
 <br>
 
-A `SessionStart` hook checks once a day, in the background, so an installed
-copy follows the marketplace with one session of delay: the session that checks
-downloads the update, the next one runs it. What that implies:
+A `SessionStart` hook checks every six hours, in the background, so an
+installed copy follows the marketplace with one session of delay: the session
+that checks downloads the update, the next one runs it. What that implies:
 
 - It moves only when the release bumped `version`, same as the manual pair —
   an unbumped change on `main` never propagates.
-- The check is stamped in `~/.claude` before it runs, so a failure retries
-  tomorrow rather than at every session start forever. After a week of
-  failures the plugin says so on screen, with the command that shows the
-  error; until then it stays quiet.
+- A check is stamped in `~/.claude` only once it reaches the marketplace, so
+  a failure retries at the next session. After a week of failures — or with no
+  `claude` on the PATH — the plugin says so on screen, with the command that
+  shows the error; until then it stays quiet.
+- `~/.claude/.concise-update-hours` holds a different number of hours.
 - When an update lands, the next session names the version it moved to.
-- **Inside this repo the daily stamp is ignored** and the check runs every
-  session. Whoever ships the versions is the one person who outpaces once a
-  day, and a stale marketplace cache is also what greys out the update button
-  in the client. Everywhere else, one check a day stands.
+- **Inside this repo the stamp is ignored** and the check runs every session.
+  Whoever ships the versions is the one person who outpaces the window, and a
+  stale marketplace cache is also what greys out the update button in the
+  client.
 - Copies on 1.3.0 or earlier have no hook at all: reaching a version that
   self-updates takes one manual update, or the marketplace toggle above.
 - To stop just this: `touch ~/.claude/.concise-no-self-update`. The style,
@@ -290,7 +301,6 @@ transformations. Four of them come out longer.
 | | `/concise:trim` | cuts the dead text out of code and screens — comments that repeat the code, copy that repeats the screen |
 | | `/concise:audit` | runs the audit agent on a draft, a file, or a PR body and relays the report |
 | | `audit` agent | returns only the violations in a draft — quote, rule, fix |
-| **Off the keyboard** | `/concise:woman` | answers a heavy vent from someone close: heard, not advised, no fix offered |
 | **Guards** | credit guard | `PreToolUse` hook that denies `git commit` / `gh pr create` carrying AI credit |
 | | PR route hint | `PreToolUse` hook that stops the session's first `gh pr create` to point at `/concise:pr`; repeat the call to go ahead |
 | | [`extras/stop-audit`](extras/stop-audit/README.md) | opt-in per-turn style judge, installed by hand |
