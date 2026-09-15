@@ -29,11 +29,38 @@ case "$tool" in
     # A message passed as a file is invisible in the command string — read
     # every file the call names, by flag or by `cat`, quoted or bare. Quotes
     # arrive JSON-escaped, and single ones become double so one pattern holds.
-    files=$(printf '%s' "$in" | sed 's/\\"/"/g' | tr "'" '"' |
+    cmd=$(printf '%s' "$in" | sed 's/\\"/"/g' | tr "'" '"')
+    files=$(printf '%s' "$cmd" |
       grep -oE '(--body-file|--notes-file|--file|-F|\$\(cat|Get-Content( -[A-Za-z]+)*)[= ]+("[^"]+"|[^ ")]+)' |
       sed -E 's/^[^ =]+( -[A-Za-z]+)*[= ]+"?//; s/"$//')
+
+    # A script names the file through a variable — `W=...; gh pr create
+    # --body-file "$W/pr.md"` — or through the home. Resolve what the call
+    # itself assigns, in bash or PowerShell, then the hook's environment; a
+    # path still holding an unknown variable stays unread.
+    resolve () {
+      local f=$1 i=0 name val
+      case "$f" in "~"/*) f="$HOME/${f#\~/}" ;; esac
+      while [ "$i" -lt 5 ]; do
+        name=$(printf '%s' "$f" | sed -nE 's/.*\$(env:)?\{?([A-Za-z_][A-Za-z0-9_]*).*/\2/p')
+        [ -n "$name" ] || break
+        val=$(printf '%s' "$cmd" |
+          grep -oE "(^|[ ;&|(\"])(export +)?\\\$?$name *= *(\"[^\"]*\"|[^ ;&|\"]+)" | tail -1 |
+          sed -E "s/^.*$name *= *\"?//; s/\"$//")
+        [ -n "$val" ] || val=${!name}
+        [ -n "$val" ] || break
+        f=${f//\$\{$name\}/$val}
+        f=${f//\$env:$name/$val}
+        f=${f//\$$name/$val}
+        i=$((i + 1))
+      done
+      printf '%s' "$f" | sed 's#\\\\#/#g; s#\\#/#g'
+    }
+
     while IFS= read -r f; do
-      [ -n "$f" ] && [ -f "$f" ] && body="$body
+      [ -n "$f" ] || continue
+      f=$(resolve "$f")
+      [ -f "$f" ] && body="$body
 $(cat "$f")"
     done <<EOF
 $files
