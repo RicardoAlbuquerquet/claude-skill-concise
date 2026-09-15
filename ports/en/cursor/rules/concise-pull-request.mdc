@@ -60,4 +60,4 @@ If the description naturally needs multiple unrelated sections or “and also”
 
 * The title says **what changes**, with the affected area first, using the repository's existing style.
 * Describe the post-merge behavior, not only the symptom.
-* Link the motivating issue or card when one is known and verified,
+* Link the motivating issue or card when one is known and verified.

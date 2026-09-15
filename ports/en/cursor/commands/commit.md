@@ -1,7 +1,7 @@
 Draft one commit message for the currently staged changes. First read
 `.cursor/rules/concise-commit.mdc`; it defines the writing rules.
 
-`(Your arguments: whatever you typed after the command name, when there was any.)` may provide extra context. The literal word `run` grants
+The argument may provide extra context. The literal word `run` grants
 permission to commit.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
@@ -22,8 +22,8 @@ Process:
 
 Output the complete message in a fenced block: title, blank line, body.
 
-By default, only draft. Run `git commit` only when `(Your arguments: whatever you typed after the command name, when there was any.)` contains the
+By default, only draft. Run `git commit` only when the argument contains the
 literal word `run`, using exactly the generated message, then report the short
 SHA.
 
-Do not commit when unrelated changes must first be split.
+Commit only once unrelated changes are split apart.

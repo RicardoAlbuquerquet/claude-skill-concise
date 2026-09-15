@@ -6,7 +6,7 @@ argument-hint: "[what to draw — empty uses the last explained mechanism]"
 Draw one diagram following the "Show the shape" section of the `concise`
 ruleset.
 
-Use `$ARGUMENTS` as the subject. If empty, use the mechanism most recently
+Use the argument as the subject. If empty, use the mechanism most recently
 explained in this conversation.
 
 $ARGUMENTS

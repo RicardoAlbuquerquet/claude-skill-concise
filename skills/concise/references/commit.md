@@ -41,7 +41,8 @@ Prefer:
 * Usually leave it empty.
 * When needed, explain **why**, not what the diff already shows.
 * Keep it to **≤6 lines** and wrap near 72 columns.
-* Do not include investigation history, test logs, file-by-file summaries, or release notes.
+* Investigation history, test logs, file-by-file summaries and release notes belong
+  elsewhere: the PR, the test step, the changelog.
 
 ### References
 

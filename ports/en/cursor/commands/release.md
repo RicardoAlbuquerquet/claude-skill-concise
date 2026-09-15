@@ -1,7 +1,7 @@
 Draft the changelog entry and, when applicable, the release body. First read
 `.cursor/rules/concise-changelog.mdc`; it defines the writing rules.
 
-`(Your arguments: whatever you typed after the command name, when there was any.)` may contain a version, commit range, or extra context.
+The argument may contain a version, commit range, or extra context.
 Default range: latest tag to `HEAD`.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
@@ -28,5 +28,5 @@ Output:
 
 Use four-backtick fences when the content contains its own code fence.
 
-Draft only. Never edit the changelog, push tags, or run `gh release create`
-without explicit user instruction.
+Draft only. Editing the changelog, pushing tags and `gh release create` wait
+for the user's explicit instruction.

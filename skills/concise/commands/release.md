@@ -6,7 +6,7 @@ argument-hint: "[version, commit range, or extra context]"
 Draft the changelog entry and, when applicable, the release body. First read
 `${CLAUDE_PLUGIN_ROOT}/references/changelog.md`; it defines the writing rules.
 
-`$ARGUMENTS` may contain a version, commit range, or extra context.
+The argument may contain a version, commit range, or extra context.
 Default range: latest tag to `HEAD`.
 
 $ARGUMENTS
@@ -33,5 +33,5 @@ Output:
 
 Use four-backtick fences when the content contains its own code fence.
 
-Draft only. Never edit the changelog, push tags, or run `gh release create`
-without explicit user instruction.
+Draft only. Editing the changelog, pushing tags and `gh release create` wait
+for the user's explicit instruction.

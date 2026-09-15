@@ -1,7 +1,7 @@
 Write a complete handoff using the `concise` ruleset. If it is absent from
 context, invoke it first. Standing caveats must be restated in full.
 
-`(Your arguments: whatever you typed after the command name, when there was any.)` identifies the recipient or narrows the scope. If empty, write
+The argument identifies the recipient or narrows the scope. If empty, write
 for a competent reader with no conversation context.
 
 (Your arguments: whatever you typed after the command name, when there was any.)

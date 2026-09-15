@@ -6,7 +6,7 @@ argument-hint: "[who picks it up or scope — optional]"
 Write a complete handoff using the `concise` ruleset. If it is absent from
 context, invoke it first. Standing caveats must be restated in full.
 
-`$ARGUMENTS` identifies the recipient or narrows the scope. If empty, write
+The argument identifies the recipient or narrows the scope. If empty, write
 for a competent reader with no conversation context.
 
 $ARGUMENTS

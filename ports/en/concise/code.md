@@ -18,7 +18,7 @@
 
 * **Comment only what the code leaves unsaid:** why, traps, assumptions, or units.
 * Remove comments that repeat the next line or docstrings that restate signatures.
-* Do not describe the edit itself in comments; that belongs in the commit.
+* The edit itself belongs in the commit message.
 * Remove commented-out code and decorative section banners.
 * Respect the file's existing comment style and density.
 

@@ -1,7 +1,7 @@
 Audit a finished text against the `concise` checklist. Report only; rewriting
 belongs to `/rewrite`.
 
-Resolve `(Your arguments: whatever you typed after the command name, when there was any.)` in order:
+Resolve the argument in order:
 1. existing file path → read it;
 2. reachable PR/issue → fetch its body;
 3. otherwise → use the argument as text;

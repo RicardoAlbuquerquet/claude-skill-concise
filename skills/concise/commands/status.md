@@ -6,14 +6,14 @@ argument-hint: "[reader and destination — optional]"
 Write one concise status update using the `concise` ruleset. If unavailable,
 invoke the skill first.
 
-`$ARGUMENTS` identifies the reader/destination. If empty, write for the person
+The argument identifies the reader and destination. If empty, write for the person
 in this conversation.
 
 $ARGUMENTS
 
 Process:
 
-1. Find the previous update. Do not repeat what the reader already knows.
+1. Find the previous update, and send only what changed since it.
 2. Verify what changed in the repo, CI, and tracker since then.
 3. Lead with bad news: failures, skipped steps, changed estimates, or shared
    state mutations.
