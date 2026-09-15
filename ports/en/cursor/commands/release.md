@@ -1,35 +1,32 @@
-Draft the changelog entry and, when a release is being cut, the release body.
-Read `.cursor/rules/concise-changelog.mdc` first: it holds the
-rules, and this file only the procedure.
+Draft the changelog entry and, when applicable, the release body. First read
+`.cursor/rules/concise-changelog.mdc`; it defines the writing rules.
 
-The argument below may carry the version to release, a commit range, or
-context beyond the commits. Empty, the range is the last tag to `HEAD`.
+`(Your arguments: whatever you typed after the command name, when there was any.)` may contain a version, commit range, or extra context.
+Default range: latest tag to `HEAD`.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
 
-How:
+Process:
 
-1. The range: `git describe --tags --abbrev=0` for the last tag, then
-   `git log <tag>..HEAD --oneline`. With zero tags, `git log --oneline -30`
-   and one line saying which range you assumed. Empty range: say so and stop.
-2. The existing changelog, for its shape — heading, date format, grouping
-   under `Added`/`Fixed` or prose, bullets or paragraphs. With the changelog
-   absent, say which shape you picked.
-3. The diff, wherever a commit title leaves out what the reader will see — a
-   title written for the log is often too short to be an entry.
-4. Write it as the reference says. The version number is proposed with the
-   single change that forces it — a break the major, a new capability the
-   minor, everything else the patch; the date comes from the caller or the
-   environment. Plain voice throughout: "we're thrilled to" is postamble with
-   a megaphone on it.
-5. Check the draft against the reference and fix what fails.
+1. Resolve the range. Use the latest tag and `git log <tag>..HEAD --oneline`.
+   With no tags, inspect the last 30 commits and state the assumed range.
+   If empty, say so and stop.
+2. Match the existing changelog's structure and style. If none exists, state
+   the chosen format.
+3. Inspect the diff when commits do not fully describe user-visible behavior.
+4. Write according to the reference, with breaking changes first.
+   Propose the version from the highest-impact change:
+   breaking → major, feature → minor, otherwise → patch.
+   Use the caller/environment date and plain language.
+5. Validate against the reference and fix any violations.
 
-Delivery: the changelog entry first, in a fenced block ready to paste at the
-top of the file — four backticks when an entry carries a fence of its own, as
-a migration command does. Then the release body in its own block, only when
-the invocation is cutting a release: the same content plus the compare link
-and the install line the file leaves out. After them, only values the range
-left open, one line each, opening with **Missing:**.
+Output:
+- changelog entry in a fenced block, ready to paste;
+- release body in a separate block only when cutting a release, adding the
+  compare link and install command omitted from the changelog;
+- unresolved values afterward as `Missing: ...`, one per line.
 
-Draft only: `gh release create`, the tag push and the edit to the changelog
-file stay with the user — each happens on their word.
+Use four-backtick fences when the content contains its own code fence.
+
+Draft only. Never edit the changelog, push tags, or run `gh release create`
+without explicit user instruction.

@@ -10,9 +10,7 @@ on:
     paths:
       - 'skills/**/SKILL.md'
       - 'skills/**/references/**'
-      - 'skills/**/referencias/**'
       - 'skills/**/hooks/core.md'
-      - 'skills/**/hooks/nucleo.md'
       - 'skills/**/commands/**'
       - 'evals/**'
   workflow_dispatch:
@@ -56,8 +54,6 @@ jobs:
       matrix:
         include:
           - skill: concise
-            mode: skill
-          - skill: respostas-curtas
             mode: skill
           - skill: concise
             mode: core

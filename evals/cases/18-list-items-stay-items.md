@@ -38,9 +38,11 @@ terminou? me conta o que ficou pronto e como eu testo.
 - No item stacks three or more parenthetical asides inside itself; details
   that don't fit are split into their own item or dropped.
 - These exact values survive: `pdfmake` 0.3.11, ~1.5 MB out of the initial
-  bundle, 25×25 mm, and the smoke test numbers (120 rows, 6 pages).
+  bundle, 25×25 mm, and the smoke test numbers (120 rows, 6 pages). A decimal
+  comma, as in "~1,5 MB", is the same value.
 - The gate result is reported including the 3 pre-existing warnings — not
   presented as fully clean.
 - The paths `web/src/shared/lib/pdf/` and
   `web/src/modules/estoque/movimento/movimento-pdf.ts` appear.
-- No preamble before the answer.
+- No preamble before the answer. An opening line that answers "terminou?"
+  itself — finished, nothing committed yet — is the answer, not a preamble.

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Exercises the hook scripts outside a session, with a fake $HOME and a
 # fake `claude` on PATH — no API calls, no writes outside the temp dir.
-# Runs the EN copies; the PT ones are byte-identical (check-parity enforces).
 cd "$(dirname "$0")/.." || exit 1
 REPO=$PWD
 G="$REPO/skills/concise/hooks/credit-guard.sh"
@@ -37,6 +36,16 @@ printf 'fix\n\n%s\n' "$CRED" > "$FH/msg.txt"
 t "git commit -F arquivo com credito"    deny  "{\"command\":\"git commit -F $FH/msg.txt\"}"
 printf 'fix limpo\n' > "$FH/ok.txt"
 t "git commit -F arquivo limpo"          allow "{\"command\":\"git commit -F $FH/ok.txt\"}"
+
+# o caminho entre aspas e a mensagem lida de volta com cat passavam sem leitura
+t "-F com caminho entre aspas duplas"    deny  "{\"command\":\"git commit -F \\\"$FH/msg.txt\\\"\"}"
+t "--body-file entre aspas simples"      deny  "{\"command\":\"gh pr create --title x --body-file '$FH/msg.txt'\"}"
+t "-m com \$(cat arquivo)"               deny  "{\"command\":\"git commit -m \\\"\$(cat $FH/msg.txt)\\\"\"}"
+t "PowerShell Get-Content -Raw"          deny  "{\"command\":\"git commit -m (Get-Content -Raw $FH/msg.txt)\"}"
+t "o segundo arquivo da chamada"         deny  "{\"command\":\"gh pr create --body-file $FH/ok.txt && git commit -F $FH/msg.txt\"}"
+t "arquivo limpo entre aspas"            allow "{\"command\":\"git commit -F \\\"$FH/ok.txt\\\"\"}"
+# o squash grava a mensagem no historico da main
+t "gh pr merge --body"                   deny  "{\"command\":\"gh pr merge 3 --squash --body '$CRED'\"}"
 
 # opt-out e escape hatch
 touch "$FH/.claude/.concise-no-credit-guard"
@@ -101,7 +110,7 @@ chmod +x "$FH/bin/claude"; rm -f "$FH/calls.log"
 n1=$(wc -l < "$FH/calls.log" 2>/dev/null | tr -d ' ')
 (cd "$FH" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
 n2=$(wc -l < "$FH/calls.log" | tr -d ' ')
-[ "$n1" = "2" ] && [ "$n2" = "2" ] && { pass=$((pass+1)); echo "ok    throttle diario (2 chamadas, 2a sessao zero)"; } || { fail=$((fail+1)); echo "FALHA throttle: n1=$n1 n2=$n2"; }
+[ "$n1" = "2" ] && [ "$n2" = "2" ] && { pass=$((pass+1)); echo "ok    throttle da janela (2 chamadas, 2a sessao zero)"; } || { fail=$((fail+1)); echo "FALHA throttle: n1=$n1 n2=$n2"; }
 # dentro do repo do proprio marketplace o carimbo do dia nao segura
 (cd "$REPO" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
 n3=$(wc -l < "$FH/calls.log" | tr -d ' ')
@@ -117,16 +126,85 @@ n4=$(wc -l < "$FH/calls.log" | tr -d ' ')
 [ "$n4" = "6" ] && { pass=$((pass+1)); echo "ok    fora do repo o carimbo continua valendo"; } || { fail=$((fail+1)); echo "FALHA carimbo fora do repo: n4=$n4"; }
 grep -q "1.13.0" "$FH/.claude/.concise-update-note" 2>/dev/null && { pass=$((pass+1)); echo "ok    grava nota de versao"; } || { fail=$((fail+1)); echo "FALHA nota de versao"; }
 [ -d "$FH/.claude/.concise-update-lock" ] && { fail=$((fail+1)); echo "FALHA lock ficou para tras"; } || { pass=$((pass+1)); echo "ok    lock liberado"; }
-# falha permanente: carimba mesmo assim (nao repete toda sessao)
+# janela configuravel: com 0 hora, a sessao seguinte checa de novo
+rm -f "$FH/calls.log"; printf '0' > "$FH/.claude/.concise-update-hours"
+(cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+n5=$(wc -l < "$FH/calls.log" | tr -d ' ')
+[ "$n5" = "2" ] && { pass=$((pass+1)); echo "ok    janela em horas e configuravel"; } || { fail=$((fail+1)); echo "FALHA janela configuravel: n5=$n5"; }
+rm -f "$FH/.claude/.concise-update-hours"
+
+# falha nao carimba: a sessao seguinte tenta de novo, sem esperar a janela
 rm -f "$FH/.claude/.concise-update-stamp" "$FH/calls.log"
 printf '#!/usr/bin/env bash\necho chamada >> "%s/calls.log"\nexit 1\n' "$FH" > "$FH/bin/claude"; chmod +x "$FH/bin/claude"
-HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise
-[ -s "$FH/.claude/.concise-update-stamp" ] && { pass=$((pass+1)); echo "ok    falha tambem carimba"; } || { fail=$((fail+1)); echo "FALHA falha nao carimbou"; }
+(cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+(cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+n6=$(wc -l < "$FH/calls.log" | tr -d ' ')
+[ -s "$FH/.claude/.concise-update-stamp" ] && { fail=$((fail+1)); echo "FALHA falha carimbou e segurou a janela"; } || { pass=$((pass+1)); echo "ok    falha deixa o carimbo como estava"; }
+[ "$n6" = "2" ] && { pass=$((pass+1)); echo "ok    falha tenta de novo na sessao seguinte"; } || { fail=$((fail+1)); echo "FALHA retry apos falha: n6=$n6"; }
 [ -s "$FH/.claude/.concise-update-failed" ] && { pass=$((pass+1)); echo "ok    marca falha para aviso semanal"; } || { fail=$((fail+1)); echo "FALHA marcador de falha"; }
 # opt-out do self-update
 rm -f "$FH/.claude/.concise-update-stamp" "$FH/calls.log"; touch "$FH/.claude/.concise-no-self-update"
 HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise
 [ ! -s "$FH/calls.log" ] && { pass=$((pass+1)); echo "ok    opt-out do self-update"; } || { fail=$((fail+1)); echo "FALHA opt-out self-update"; }
+rm -f "$FH/.claude/.concise-no-self-update"
+
+# Uma sessao que termina antes da checagem mata o hook sem rodar o trap: a
+# trava fica e nada mais e gravado. Um `claude -p` que dura um segundo fez isso
+# em todo merge, e a trava de uma hora segurava as checagens seguintes.
+mata () { printf '#!/usr/bin/env bash\necho chamada >> "%s/calls.log"\nkill -9 $PPID\n' "$FH" > "$FH/bin/claude"; chmod +x "$FH/bin/claude"; }
+atualiza () { printf '#!/usr/bin/env bash\necho chamada >> "%s/calls.log"\n[ "$1" = "plugin" ] && [ "$2" = "update" ] && echo "concise is already at the latest version (1.84.0)."\nexit 0\n' "$FH" > "$FH/bin/claude"; chmod +x "$FH/bin/claude"; }
+rm -f "$FH/.claude/.concise-update-stamp" "$FH/.claude/.concise-update-failed" "$FH/calls.log"
+mata
+( cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise; true ) 2>/dev/null
+[ -f "$FH/.claude/.concise-update-failed" ] && { pass=$((pass+1)); echo "ok    checagem morta no meio conta como falha"; } || { fail=$((fail+1)); echo "FALHA checagem morta no meio nao marcou falha"; }
+[ -d "$FH/.claude/.concise-update-lock" ] && { pass=$((pass+1)); echo "ok    checagem morta deixa a trava, como na sessao real"; } || { fail=$((fail+1)); echo "FALHA o teste nao reproduziu a trava deixada"; }
+atualiza
+(cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+[ -f "$FH/.claude/.concise-update-stamp" ] && { fail=$((fail+1)); echo "FALHA trava recente foi ignorada"; } || { pass=$((pass+1)); echo "ok    trava de agora ainda segura a checagem"; }
+perl -e '$t = time - 180; utime $t, $t, $ARGV[0]' "$FH/.claude/.concise-update-lock"
+(cd "$FH/outro" && HOME="$FH" PATH="$FH/bin:$PATH" bash "$U" concise)
+[ -s "$FH/.claude/.concise-update-stamp" ] && { pass=$((pass+1)); echo "ok    trava de tres minutos nao segura mais a checagem"; } || { fail=$((fail+1)); echo "FALHA trava de tres minutos ainda segura a checagem"; }
+[ -f "$FH/.claude/.concise-update-failed" ] && { fail=$((fail+1)); echo "FALHA sucesso nao limpou a marca de falha"; } || { pass=$((pass+1)); echo "ok    sucesso limpa a marca de falha"; }
+
+echo "--- guarda de credito em arquivo e quadro"
+CG="$REPO/skills/concise/hooks/credit-guard.sh"
+cg () { printf '%s' "$1" | HOME="$FH" bash "$CG" "RAZAO" .concise-no-credit-guard; }
+
+# assinatura no fim de um arquivo: bloqueia
+payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"Write",tool_input:{file_path:"a.md",content:"fix: x\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\n"}}))')
+case "$(cg "$payload")" in *deny*) pass=$((pass+1)); echo "ok    credito em arquivo e barrado";; *) fail=$((fail+1)); echo "FALHA credito em arquivo passou";; esac
+
+# a regra citada em prosa continua passando: este repo documenta o formato
+payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"Write",tool_input:{file_path:"CONTRIBUTING.md",content:"A regra proibe co-authored-by de modelo na mensagem."}}))')
+[ -z "$(cg "$payload")" ] && { pass=$((pass+1)); echo "ok    texto sobre a regra passa"; } || { fail=$((fail+1)); echo "FALHA texto sobre a regra foi barrado"; }
+
+# o mesmo credito indo para um card do quadro: bloqueia
+payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"mcp__vx-work__vx_create_activity",tool_input:{title:"x",description:"feito\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)"}}))')
+case "$(cg "$payload")" in *deny*) pass=$((pass+1)); echo "ok    credito em card do quadro e barrado";; *) fail=$((fail+1)); echo "FALHA credito em card passou";; esac
+
+# e o hooks.json registra o guarda nas ferramentas de escrita e do quadro
+for port in concise; do
+  m=$(perl -MJSON::PP -e 'local $/; my $j = decode_json(<STDIN>); print join ",", map { $_->{matcher} } grep { grep { $_->{command} =~ /credit-guard/ } @{$_->{hooks}} } @{$j->{hooks}{PreToolUse}}' < "$REPO/skills/$port/hooks/hooks.json")
+  case "$m" in *Write*) case "$m" in *mcp__*) pass=$((pass+1)); echo "ok    guarda de $port cobre escrita e quadro";; *) fail=$((fail+1)); echo "FALHA guarda de $port sem o quadro: $m";; esac;; *) fail=$((fail+1)); echo "FALHA guarda de $port sem escrita: $m";; esac
+done
+
+echo "--- lacunas do guarda e do self-update"
+CG="$REPO/skills/concise/hooks/credit-guard.sh"
+for caso in "git -c k=v commit" "git tag anotada" "glab mr create"; do
+  case "$caso" in
+    "git -c k=v commit") payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"Bash",tool_input:{command:process.argv[1]}}))' "git -c core.safecrlf=false commit -m \"fix: x\\n\\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\"") ;;
+    "git tag anotada")   payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"Bash",tool_input:{command:process.argv[1]}}))' "git tag -a v1 -m \"release\\n\\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\"") ;;
+    "glab mr create")    payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"Bash",tool_input:{command:process.argv[1]}}))' "glab mr create --title x --description \"feito\\n\\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\"") ;;
+  esac
+  out=$(printf '%s' "$payload" | HOME="$FH" bash "$CG" RAZAO .concise-no-credit-guard)
+  case "$out" in *deny*) pass=$((pass+1)); echo "ok    guarda barra credito em $caso";; *) fail=$((fail+1)); echo "FALHA guarda deixou passar $caso";; esac
+done
+
+# sem o CLI no PATH nada atualiza: a marca de falha e o que chega ao aviso semanal
+SU="$FH/sem-cli"; mkdir -p "$SU/.claude" "$SU/bin"
+for b in date find git mkdir rmdir cat grep sed head printf; do p=$(command -v "$b") && ln -sf "$p" "$SU/bin/$b" 2>/dev/null || cp "$p" "$SU/bin/" 2>/dev/null; done
+(cd "$SU" && HOME="$SU" PATH="$SU/bin" "$BASH" "$REPO/skills/concise/hooks/self-update.sh" concise)
+[ -f "$SU/.claude/.concise-update-failed" ] && { pass=$((pass+1)); echo "ok    self-update sem CLI deixa a marca de falha"; } || { fail=$((fail+1)); echo "FALHA self-update sem CLI saiu calado"; }
 
 echo "--- stop-audit (extra, opt-in)"
 SA="$REPO/extras/stop-audit/stop-audit.sh"
@@ -158,7 +236,7 @@ echo "--- boas-vindas cita todo comando"
 # O texto de boas-vindas do notices.sh e um mapa do plugin, e ele envelheceu
 # calado quando o :handoff entrou. Todo arquivo em commands/ tem que aparecer
 # nele, entao um comando novo quebra este teste em vez de sair do mapa.
-for port in concise respostas-curtas; do
+for port in concise; do
   hj="$REPO/skills/$port/hooks/hooks.json"
   faltando=""
   for cmd in "$REPO/skills/$port/commands/"*.md; do
@@ -172,7 +250,7 @@ echo "--- comando aponta para secao que existe"
 # Comando diz "siga a secao X das regras". Quando a secao e renomeada, a
 # referencia envelhece calada e o comando manda ler o que nao existe mais —
 # aconteceu tres vezes entre 1.32.0 e 1.41.0.
-for port in concise respostas-curtas; do
+for port in concise; do
   secoes="$FH/secoes-$port.txt"
   sed -n 's/^###* //p' "$REPO/skills/$port/SKILL.md" | tr -d '\r' > "$secoes"
   mortas=""
@@ -192,9 +270,19 @@ echo "--- frontmatter de comando parseia"
 # abrindo item e token reservado: o parser desiste e o comando carrega com
 # metadata vazia — sem descricao e sem dica de argumento na lista de comandos,
 # calado. Foi assim que /concise:pr e :commit ficaram sem descricao.
-for port in concise respostas-curtas; do
+for port in concise; do
   cruas=$(grep -l -E '^(description|argument-hint): \[' "$REPO/skills/$port/commands/"*.md 2>/dev/null | while read -r f; do basename "$f"; done | tr '\n' ' ')
   [ -z "$cruas" ] && { pass=$((pass+1)); echo "ok    frontmatter de $port sem sequencia crua"; } || { fail=$((fail+1)); echo "FALHA frontmatter nao citado em $port: $cruas"; }
+  invalidos=""
+  for f in "$REPO/skills/$port/SKILL.md" "$REPO/skills/$port/"{commands,agents,output-styles}/*.md; do
+    awk 'NR==1 { if ($0 != "---") exit 1; next }
+         /^---$/ { closed=1; exit }
+         /^description: .+/ { description=1 }
+         END { exit !(description && closed) }' "$f" || invalidos="$invalidos $(basename "$f")"
+  done
+  [ -z "$invalidos" ] && { pass=$((pass+1)); echo "ok    frontmatter de $port abre o arquivo"; } || { fail=$((fail+1)); echo "FALHA frontmatter ausente ou cercado:$invalidos"; }
+  awk '/^---$/ { n++; next } n==1' "$REPO/skills/$port/agents/audit.md" | grep -qx 'tools: Read, Grep, Glob' &&
+    { pass=$((pass+1)); echo "ok    auditor restrito a leitura"; } || { fail=$((fail+1)); echo "FALHA ferramentas do auditor fora do frontmatter"; }
 done
 
 echo "--- route-hint: a PR passa pelo comando que a escreve"
@@ -214,6 +302,19 @@ r "outra sessao avisa de novo"           deny  '{"session_id":"s2","command":"gh
 r "gh pr edit --body avisa"              deny  '{"session_id":"s3","command":"gh pr edit 77 --body-file b.md --body x"}'
 r "gh pr view nao avisa"                 allow '{"session_id":"s4","command":"gh pr view 77 --json body"}'
 r "git push nao avisa"                   allow '{"session_id":"s5","command":"git push -u origin minha-branch"}'
+# O /concise:pr create abre a PR com o proprio gh pr create: negar essa chamada
+# mandaria a sessao rodar o comando em que ela ja esta.
+printf '%s\n' '{"type":"user","message":{"role":"user","content":"<command-message>concise:pr</command-message>\n<command-name>/concise:pr</command-name>\n<command-args>create</command-args>"}}' > "$RT/com-pr.jsonl"
+printf '%s\n' '{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Skill","input":{"skill":"concise:pr","args":"create"}}]}}' > "$RT/skill-pr.jsonl"
+printf '%s\n' '{"type":"attachment","skills":["concise:plan","concise:pr"]}' '{"type":"user","message":{"role":"user","content":"abre a PR"}}' > "$RT/sem-pr.jsonl"
+r "depois de /concise:pr passa direto"   allow "{\"session_id\":\"s8\",\"transcript_path\":\"$RT/com-pr.jsonl\",\"command\":\"gh pr create --fill\"}"
+r "depois da skill concise:pr passa"     allow "{\"session_id\":\"s9\",\"transcript_path\":\"$RT/skill-pr.jsonl\",\"command\":\"gh pr create --fill\"}"
+r "lista de skills no transcript avisa"  deny  "{\"session_id\":\"s10\",\"transcript_path\":\"$RT/sem-pr.jsonl\",\"command\":\"gh pr create --fill\"}"
+# Uma marca por sessao e nada mais as apaga: a de mais de um dia sai.
+touch -t 202001010000 "$RT/concise-route-hint.velha"
+r "sessao nova ainda avisa"              deny  '{"session_id":"s11","command":"gh pr create --fill"}'
+[ -f "$RT/concise-route-hint.velha" ] && { fail=$((fail+1)); echo "FALHA marca de mais de um dia ficou"; } || { pass=$((pass+1)); echo "ok    marca de mais de um dia sai"; }
+[ -f "$RT/concise-route-hint.s11" ] && { pass=$((pass+1)); echo "ok    marca da sessao atual fica"; } || { fail=$((fail+1)); echo "FALHA marca da sessao atual sumiu"; }
 touch "$FH/.claude/.concise-no-route-hint"
 r "opt-out pelo arquivo de flag"         allow '{"session_id":"s6","command":"gh pr create --fill"}'
 rm "$FH/.claude/.concise-no-route-hint"
@@ -237,6 +338,46 @@ case "$out" in *"Resposta na primeira frase."*) ok "lembrete leva o texto recebi
 out=$(printf '%s' '{}' | HOME="$FH" bash "$TR" 'aspas " e barra \ no texto' .concise-no-turn-reminder)
 printf '%s' "$out" | json_ok && ok "aspas e barra no texto nao quebram o JSON" || ko "texto com aspas quebrou o JSON: $out"
 
+# A regra de artefato custa atencao em todo turno que nao escreve um: ela so
+# entra quando a palavra dela aparece no pedido.
+out=$(printf '%s' '{"prompt":"escreva o card dessa mudanca"}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder 'card,tarefa|REGRA DE CARD.' 'desenh|REGRA DE DESENHO.')
+case "$out" in
+  *"REGRA DE CARD."*) case "$out" in *"REGRA DE DESENHO."*) ko "lembrete levou a regra de outro artefato" ;; *) ok "lembrete leva a regra do artefato pedido" ;; esac ;;
+  *) ko "lembrete nao levou a regra do card: $out" ;;
+esac
+out=$(printf '%s' '{"prompt":"por que o total esta errado"}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder 'card,tarefa|REGRA DE CARD.')
+case "$out" in *"REGRA DE CARD."*) ko "lembrete levou regra de card num pedido sem card" ;; *) ok "lembrete sem regra de artefato quando o pedido nao pede um" ;; esac
+# O evento real traz o caminho do transcript e o cwd antes do prompt, e
+# "Ricardo" contem "card": casando o JSON inteiro, a regra do card entrava em
+# todo turno. So o campo prompt conta.
+out=$(printf '%s' '{"session_id":"s","transcript_path":"C:\\Users\\Ricardo\\.claude\\t.jsonl","cwd":"C:\\Users\\Ricardo\\drawings","hook_event_name":"UserPromptSubmit","prompt":"vamos ver os hooks"}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder 'card|REGRA DE CARD.' ' draw|REGRA DE DESENHO.')
+case "$out" in *REGRA*) ko "lembrete casou palavra no caminho, fora do prompt: $out" ;; *) ok "lembrete ignora caminho e cwd do evento" ;; esac
+out=$(printf '%s' '{"prompt":"diz \"oi\" antes","depois":"card"}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder 'card|REGRA DE CARD.' 'antes|REGRA DE ANTES.')
+case "$out" in *"REGRA DE CARD."*) ko "lembrete leu alem do fim do prompt: $out" ;; *"REGRA DE ANTES."*) ok "prompt termina na aspa que fecha, nao na escapada" ;; *) ko "lembrete perdeu o prompt com aspas escapadas: $out" ;; esac
+# Palavra com espaco nas pontas casa a palavra inteira: " pr " nao casa em
+# "sempre", " revis" nao casa em "previsao", e a PR no fim do pedido casa.
+out=$(printf '%s' '{"prompt":"sempre a previsao"}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder ' pr |REGRA DE PR.' ' revis|REGRA DE REVISAO.')
+case "$out" in *REGRA*) ko "palavra casou dentro de outra: $out" ;; *) ok "palavra com espaco nao casa dentro de outra" ;; esac
+out=$(printf '%s' '{"prompt":"abre a PR."}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder ' pr |REGRA DE PR.')
+case "$out" in *"REGRA DE PR."*) ok "palavra no fim do pedido, com pontuacao, casa" ;; *) ko "PR no fim do pedido nao casou: $out" ;; esac
+# A palavra-chave acentuada nunca casa: a minusculizacao do bash anda byte a
+# byte e quebra o acento. Toda palavra em hooks.json tem de ser ASCII.
+for port in concise; do
+  kw=$(perl -MJSON::PP -e 'binmode STDOUT, ":utf8"; local $/; my $j = decode_json(<STDIN>); my $c = $j->{hooks}{UserPromptSubmit}[0]{hooks}[0]{command}; print join "", $c =~ /'"'"'([^|'"'"']*)|/g' < "$REPO/skills/$port/hooks/hooks.json")
+  if printf '%s' "$kw" | LC_ALL=C grep -q '[^ -~]'; then
+    ko "palavra-chave do lembrete de $port fora do ASCII: $kw"
+  else
+    ok "palavras-chave do lembrete de $port sao ASCII"
+  fi
+
+# macOS ainda traz bash 3.2: ${var,,} e mapfile matam o hook inteiro la.
+if grep -nE '${[A-Za-z_]+(,,|^^)}|mapfile|readarray|declare -A' "$REPO/skills/$port/hooks/"*.sh; then
+  ko "hook de $port usa recurso de bash 4"
+else
+  ok "hooks de $port rodam em bash 3.2"
+fi
+done
+
 touch "$FH/.claude/.concise-no-turn-reminder"
 out=$(printf '%s' '{}' | HOME="$FH" bash "$TR" "X" .concise-no-turn-reminder)
 [ -z "$out" ] && ok "lembrete: opt-out pelo arquivo de flag" || ko "lembrete ignorou a flag"
@@ -244,18 +385,55 @@ rm "$FH/.claude/.concise-no-turn-reminder"
 out=$(printf '%s' '{}' | HOME="$FH" CONCISE_NO_TURN_REMINDER=1 bash "$TR" "X" .concise-no-turn-reminder)
 [ -z "$out" ] && ok "lembrete: opt-out pela variavel de ambiente" || ko "lembrete ignorou a variavel"
 
-for port in concise respostas-curtas; do
+for port in concise; do
   grep -q '"UserPromptSubmit"' "$REPO/skills/$port/hooks/hooks.json" &&
     grep -q 'hooks/turn-reminder.sh' "$REPO/skills/$port/hooks/hooks.json" &&
     ok "hooks.json de $port registra o lembrete" || ko "hooks.json de $port sem o lembrete"
   style=$(ls "$REPO/skills/$port/output-styles/"*.md)
   awk '/^---$/{n++; next} n==1' "$style" | tr -d '\r' | grep -qx 'force-for-plugin: true' &&
     ok "output style de $port e forcado" || ko "output style de $port nao tem force-for-plugin: true"
+  # O output style e o hooks/core.md levam o mesmo nucleo por dois caminhos:
+  # divergindo, a sessao segue um e a skill audita pelo outro.
+  tr -d '\r' < "$style" | awk 'n<2 && /^---$/{n++; next} n>=2' | sed '/./,$!d' |
+    diff -q - <(tr -d '\r' < "$REPO/skills/$port/hooks/core.md") >/dev/null &&
+    ok "output style de $port igual ao hooks/core.md" || ko "output style de $port difere do hooks/core.md"
+  # O card do marketplace e o que se le antes de instalar, e ja ficou para tras
+  # da descricao do proprio plugin sem ninguem notar.
+  mkt=$(perl -MJSON::PP -e 'binmode STDOUT, ":utf8"; local $/; my $j = decode_json(<STDIN>); print map { $_->{description} } grep { $_->{name} eq $ARGV[0] } @{$j->{plugins}}' "$port" < "$REPO/.claude-plugin/marketplace.json")
+  plg=$(perl -MJSON::PP -e 'binmode STDOUT, ":utf8"; local $/; print decode_json(<STDIN>)->{description}' < "$REPO/skills/$port/.claude-plugin/plugin.json")
+  [ -n "$mkt" ] && [ "$mkt" = "$plg" ] && ok "descricao do marketplace igual a do plugin $port" || ko "descricao do marketplace difere da do plugin $port"
   # O texto do lembrete viaja entre aspas simples na linha do hooks.json: um
   # apostrofo nele quebra o bash, e o hook falha calado em todo turno.
   cmd=$(perl -MJSON::PP -e 'binmode STDOUT, ":utf8"; local $/; my $j = decode_json(<STDIN>); print $j->{hooks}{UserPromptSubmit}[0]{hooks}[0]{command}' < "$REPO/skills/$port/hooks/hooks.json")
   out=$(printf '%s' '{}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
   printf '%s' "$out" | json_ok && ok "lembrete de $port roda pela linha do hooks.json" || ko "lembrete de $port quebra na linha do hooks.json: $out"
+  # O lembrete era uma frase so, de mais de cem palavras, e a resposta copiava
+  # o tom. Frase longa volta a quebrar aqui.
+  longa=$(printf '%s' "$out" | perl -MJSON::PP -e 'local $/; my $t = decode_json(<STDIN>)->{hookSpecificOutput}{additionalContext}; for (split /(?<=\.)\s+/, $t) { my $n = () = /\S+/g; print "[$n] $_\n" if $n > 20 }')
+  [ -z "$longa" ] && ok "lembrete de $port sem frase de mais de 20 palavras" || ko "lembrete de $port com frase longa: $longa"
+  # E a brecha que deixava relatorio de trabalho feito passar de cinco linhas.
+  case "$out" in *"if it must"*) ko "lembrete de $port deixa relatorio passar de cinco linhas" ;; *"finished work fits in five lines"*) ok "lembrete de $port segura relatorio em cinco linhas" ;; *) ko "lembrete de $port sem limite para relatorio: $out" ;; esac
+  # A regra do card so vale se a palavra do pedido real a dispara pela linha
+  # que o plugin carrega.
+  out=$(printf '%s' '{"prompt":"escreva o card dessa mudanca"}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
+  case "$out" in *"If this turn writes a card"*) ok "lembrete de $port leva a regra do card no pedido de card" ;; *) ko "lembrete de $port nao levou a regra do card: $out" ;; esac
+  # Palavra dentro de outra puxava regra alheia: discard levava a do card e
+  # preview a do comentario. E o plural de PR nao levava a da PR.
+  for p in "discard the changes" "que tissue" "abre o preview" "cardinalidade da tabela"; do
+    out=$(printf '{"prompt":"%s"}' "$p" | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
+    case "$out" in *"If this turn writes"*) ko "lembrete de $port puxou regra em \"$p\"" ;; *) ok "lembrete de $port sem regra em \"$p\"" ;; esac
+  done
+  out=$(printf '%s' '{"prompt":"abre as PRs e move os cards"}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
+  case "$out" in *"writes a card"*"writes a PR description"*) ok "lembrete de $port casa o plural de PR e de card" ;; *) ko "lembrete de $port perdeu o plural: $out" ;; esac
+  # Cada artefato tem uma regra so: dois conjuntos quase iguais ja mandaram a
+  # regra do desenho e a do comentario duas vezes no mesmo turno.
+  out=$(printf '%s' '{"prompt":"desenhe o diagrama, faz o review do commit e abre a PR"}' | HOME="$FH" CLAUDE_PLUGIN_ROOT="$REPO/skills/$port" bash -c "$cmd" 2>/dev/null)
+  dup=""
+  for r in "no line past 72" "the anchor path in full" "three sections under headers" "six lines at most"; do
+    n=$(printf '%s' "$out" | grep -o "$r" | wc -l | tr -d ' ')
+    [ "$n" = 1 ] || dup="$dup [$r]=$n"
+  done
+  [ -z "$dup" ] && ok "lembrete de $port leva cada regra de artefato uma vez" || ko "lembrete de $port com regra repetida ou ausente:$dup"
 done
 
 echo "--- skill: arquivos de referencia e tamanho"
@@ -263,7 +441,7 @@ echo "--- skill: arquivos de referencia e tamanho"
 # os comandos citam. Nome errado deixa o comando sem regra, calado. E o
 # SKILL.md chegou a 696 linhas: acima de 500 a recomendacao e dividir, e
 # depois da compactacao so os primeiros 5.000 tokens da skill voltam.
-for port in concise respostas-curtas; do
+for port in concise; do
   dir="$REPO/skills/$port"
   faltando=""
   for ref in $(grep -oh 'refer[a-z]*/[a-z-]*\.md' "$dir/SKILL.md" "$dir/commands/"*.md "$dir/agents/"*.md | sort -u); do
@@ -292,6 +470,68 @@ obtido=$(CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" 2>/dev/null | sed -n 's/^
 
 CLAUDE_BIN="$EV/vazio" bash "$REPO/evals/run.sh" >/dev/null 2>&1
 [ "$?" -eq 3 ] && { pass=$((pass+1)); echo "ok    evals abortam com CLI mudo"; } || { fail=$((fail+1)); echo "FALHA evals nao abortaram com CLI mudo"; }
+
+# PLUGIN=1 carrega o plugin so na resposta: um juiz com o plugin daria a nota
+# com a regra na mao. E o HOME de rascunho e o que impede os hooks de gravar
+# estado no ~/.claude de quem roda.
+cat > "$EV/grava" <<EOF
+#!/usr/bin/env bash
+if [ "\$1" = "--help" ]; then echo "--append-system-prompt-file"; exit 0; fi
+case " \$* " in *" --append-system-prompt-file "*) papel=resposta ;; *) papel=juiz ;; esac
+case " \$* " in *" --plugin-dir "*) com="com plugin" ;; *) com="sem plugin" ;; esac
+case "\$HOME" in "$HOME") casa="HOME real" ;; *) casa="HOME de rascunho" ;; esac
+echo "\$papel \$com, \$casa" >> "$EV/chamadas"
+echo resposta
+echo PASS
+EOF
+chmod +x "$EV/grava"
+PLUGIN=1 CLAUDE_CONFIG_DIR="$FH/cfg" ONLY=01 RESPONSES="$EV/respostas" CLAUDE_BIN="$EV/grava" bash "$REPO/evals/run.sh" >/dev/null 2>&1
+[ "$(sort -u "$EV/chamadas" 2>/dev/null | tr '\n' ';')" = "juiz sem plugin, HOME real;resposta com plugin, HOME de rascunho;" ] &&
+  ok "PLUGIN=1 carrega o plugin so na resposta, com HOME de rascunho" || ko "PLUGIN=1 vazou o plugin para o juiz ou o HOME real para a resposta"
+[ -s "$EV/respostas/01-factual-question.1.txt" ] && ok "RESPONSES guarda cada resposta" || ko "RESPONSES nao guardou a resposta"
+env -u CLAUDE_CONFIG_DIR PLUGIN=1 ONLY=01 CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" >/dev/null 2>&1
+[ "$?" -eq 2 ] && ok "PLUGIN=1 recusa rodar sem config isolada" || ko "PLUGIN=1 rodou sem config isolada"
+
+# Rodada barata: ONLY com varios numeros, MIN_RUNS que para quando as tentativas
+# concordam com a rodada salva, RESULTS que so reescreve as linhas que rodaram,
+# e COMPARE que roda tudo e sai com 1 quando um caso piora.
+obtido=$(ONLY=1,03 CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" 2>/dev/null | sed -n 's/^PASS  //p' | tr '\n' ' ')
+[ "$obtido" = "01-factual-question 03-false-premise " ] && ok "ONLY aceita varios numeros" || ko "ONLY com varios numeros: $obtido"
+cat > "$EV/conta" <<EOF
+#!/usr/bin/env bash
+if [ "\$1" = "--help" ]; then echo "--append-system-prompt-file"; exit 0; fi
+case " \$* " in *" --append-system-prompt-file "*) echo resposta >> "$EV/contadas" ;; esac
+echo resposta
+echo "\${VEREDITO:-PASS}"
+EOF
+chmod +x "$EV/conta"
+printf '01-factual-question\t5\t5\r\nzz-outro\t1\t5\r\n' > "$EV/salvo.tsv"
+: > "$EV/contadas"
+RUNS=5 MIN_RUNS=2 ONLY=01 COMPARE="$EV/salvo.tsv" RESULTS="$EV/salvo.tsv" CLAUDE_BIN="$EV/conta" bash "$REPO/evals/run.sh" >/dev/null 2>&1
+[ "$(grep -c . "$EV/contadas")" = 2 ] && ok "MIN_RUNS para em 2 quando concorda com a rodada salva" || ko "MIN_RUNS nao parou: $(grep -c . "$EV/contadas") respostas"
+[ "$(tr '\t\n' ' ;' < "$EV/salvo.tsv")" = "01-factual-question 2 2;zz-outro 1 5;" ] && ok "RESULTS reescreve so as linhas que rodaram" || ko "RESULTS: $(tr '\t\n' ' ;' < "$EV/salvo.tsv")"
+printf '01-factual-question\t5\t5\n' > "$EV/salvo.tsv"
+: > "$EV/contadas"
+saida=$(RUNS=5 ONLY=01 COMPARE="$EV/salvo.tsv" VEREDITO=FAIL CLAUDE_BIN="$EV/conta" bash "$REPO/evals/run.sh" 2>/dev/null); rc=$?
+[ "$rc" -eq 1 ] && printf '%s\n' "$saida" | grep -q "^worse   01-factual-question  5/5 -> 0/2" && [ "$(grep -c . "$EV/contadas")" = 2 ] &&
+  ok "COMPARE para quando o que falta nao muda o veredito, e sai com 1" || ko "COMPARE com piora: rc=$rc, $(grep -c . "$EV/contadas") respostas"
+printf '01-factual-question\t0\t5\n03-false-premise\t5\t5\n' > "$EV/salvo.tsv"
+: > "$EV/contadas"
+saida=$(RUNS=5 MIN_RUNS=2 ONLY=01,03 WORSE_ONLY=1 COMPARE="$EV/salvo.tsv" CLAUDE_BIN="$EV/conta" bash "$REPO/evals/run.sh" 2>/dev/null); rc=$?
+[ "$rc" -eq 0 ] && printf '%s\n' "$saida" | grep -q "^0 worse, 1 not worse, 1 skipped as unable to get worse" && [ "$(grep -c . "$EV/contadas")" = 2 ] &&
+  ok "WORSE_ONLY pula o caso que nao tem como piorar" || ko "WORSE_ONLY: rc=$rc, $(grep -c . "$EV/contadas") respostas"
+WORSE_ONLY=1 ONLY=01 CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" >/dev/null 2>&1
+[ "$?" -eq 2 ] && ok "WORSE_ONLY recusa rodar sem COMPARE" || ko "WORSE_ONLY rodou sem COMPARE"
+
+# Um conjunto em evals/sets/ vira ONLY; um numero sem caso sumiria calado.
+esperado=$(sed 's/#.*//' "$REPO/evals/sets/core.txt" | tr -d '\r' | grep -o '[0-9][0-9]' | sort | tr '\n' ' ')
+obtido=$(SET=core CLAUDE_BIN="$EV/ok" bash "$REPO/evals/run.sh" 2>/dev/null | sed -n 's/^PASS  \([0-9][0-9]\)-.*/\1/p' | tr '\n' ' ')
+[ -n "$esperado" ] && [ "$esperado" = "$obtido" ] && ok "SET=core roda exatamente os casos da lista" || ko "SET=core: esperado [$esperado], obtido [$obtido]"
+faltando=""
+for n in $(sed 's/#.*//' "$REPO"/evals/sets/*.txt | tr -d '\r' | grep -o '[0-9][0-9]'); do
+  ls "$REPO"/evals/cases/"$n"-*.md >/dev/null 2>&1 || faltando="$faltando $n"
+done
+[ -z "$faltando" ] && ok "todo numero em evals/sets/ tem caso" || ko "numeros sem caso em evals/sets/:$faltando"
 
 echo "===== $pass ok, $fail falhas"
 [ "$fail" -eq 0 ]

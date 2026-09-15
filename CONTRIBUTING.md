@@ -50,77 +50,33 @@ say in the PR description which existing lines the new ones buy.
 Removals are as welcome as additions. If you can show that a rule never fires,
 or fires so constantly it has become noise, open a PR that deletes it.
 
-## Ports to other languages
+## Languages
 
-Copy the whole `skills/concise/` directory to `skills/<name>/` — every
-subdirectory, not just `SKILL.md` — translate the prose, and set `name:` to
-match the new directory in `SKILL.md` and `.claude-plugin/plugin.json`. A port
-that ships only `SKILL.md` installs as nothing: a plugin directory with no
-`.claude-plugin/plugin.json` is rejected.
-
-What has to change beyond the prose, or the port silently drives the wrong
-plugin:
-
-| File | What to change |
-|---|---|
-| `.claude-plugin/plugin.json` | `name`, `description` |
-| `SKILL.md` | frontmatter `name` and `description` |
-| `hooks/core.md` | rename to your language's core, translate |
-| `references/` | six files: translate them, rename the folder and the files to your language, and add the pairs to `check-parity.sh` |
-| `hooks/hooks.json` | the plugin name in every command, the override filename, the opt-out flag names, and the human strings (welcome, deny reasons, the turn reminder — kept free of quotes, `$` and backticks, since it rides inside single quotes on a bash command line) |
-| `hooks/*.sh` | **nothing** — the six scripts are byte-identical across ports and take everything as arguments; `check-parity.sh` enforces that |
-| `output-styles/` | one file: `name`, `description`, and the body regenerated from your core; keep `force-for-plugin: true` |
-| `commands/` | thirteen files: translate, and rename them if the command name changes |
-| `agents/` | one file: `name`, `description`, body |
-
-Then add your port to `scripts/check-parity.sh` (it only knows EN and PT
-today) and to the language table in both READMEs.
-
-Keep the structure identical — the rules describe the shape of a response, not
-its vocabulary, so a port should be recognisably the same document.
-
-Then register it, in both places:
-
-- an entry in `.claude-plugin/marketplace.json` carrying `name`, `source`
-  (`./skills/<name>`) and `description`
-- a row in the language table in the README
-
-Both manifests have a validator. Run it before opening the PR:
-
-```bash
-claude plugin validate . && claude plugin validate ./skills/<name>
-```
-
-It prints `Validation passed` twice. Neither check verifies that the `source`
-directory exists or that your port is listed at all — confirm that part by eye.
-
-A new port also gets added to `scripts/check-parity.sh` — it compares the
-ports pairwise and only knows the ones named in it.
+The plugin ships in English only, and the core tells the model to answer in
+the language the user writes in. A translated copy of the ruleset is a second
+place for every rule to drift, so ports go to other tools, not to other
+languages.
 
 ## Keeping the hook core in sync
 
-Each plugin ships the style twice: the full ruleset in `SKILL.md` and
-`references/`, and a ~60-line core in `hooks/core.md` (`hooks/nucleo.md` in the PT port) that the
-forced output style carries in the system prompt — the `SessionStart` hook
-prints it too only under `CONCISE_INJECT_CORE=1`. A PR that changes a rule
-checks whether the core states that rule — and moves it too, in both ports.
-The core drifting from the skill is worse than either alone: the model reads
-one in context and the other on invocation, and follows whichever it saw
-last.
+The plugin ships the style twice: the full ruleset in `SKILL.md` and
+`references/`, and a short core in `hooks/core.md` that the forced output
+style carries in the system prompt — the `SessionStart` hook prints it too
+only under `CONCISE_INJECT_CORE=1`. A PR that changes a rule checks whether
+the core states that rule, and moves it too. The core drifting from the skill
+is worse than either alone: the model reads one in context and the other on
+invocation, and follows whichever it saw last.
 
-CI enforces the mechanical half of this: `scripts/check-parity.sh` compares
-the structure of the two ports — section, bullet, and table counts in
-`SKILL.md` and in each reference file, bullets in the hook core, versions, file
-counts under `commands/`, `agents/` and `references/` — and the `parity`
-workflow fails the PR on any drift. It
-counts structure, not meaning: a translation that keeps the bullet count but
-drops the rule still gets through, so the by-eye check above stays.
+`scripts/test-hooks.sh` enforces the mechanical half: it fails when the output
+style stops matching `hooks/core.md`, and when the marketplace card stops
+matching the plugin's own description. Whether the core still says what the
+skill says is the by-eye half.
 
 ## Keeping the ports in sync
 
 [`ports/`](../ports/README.md) carries the same rules for Cursor, for ChatGPT
-and for every tool that reads `AGENTS.md`. Everything there except the two
-READMEs and the four ChatGPT files is generated, so a rule edited in the skill
+and for every tool that reads `AGENTS.md`. Everything there except the README
+and the two ChatGPT files is generated, so a rule edited in the skill
 reaches all of them through one command:
 
 ```bash
@@ -128,12 +84,12 @@ bash scripts/build-ports.sh
 ```
 
 Commit what it rewrites. `bash scripts/build-ports.sh --check` fails when a
-generated file is behind, and the `parity` workflow runs it on every PR. It
+generated file is behind, and the `checks` workflow runs it on every PR. It
 also fails when the plugin's own names — `${CLAUDE_PLUGIN_ROOT}`, the
 `/concise:` prefix, `$ARGUMENTS` — survive into a file whose reader has none
 of them, since each one is an instruction that reader cannot follow.
 
-The four ChatGPT files are written by hand: a 1,500-character box holds a
+The two ChatGPT files are written by hand: a 1,500-character box holds a
 compression of the core rather than the core itself, and the wording differs
 because the medium does — no shell to paste into, no diff on screen. A rule
 that changes the core changes them too, and the build holds each to its cap.
@@ -145,8 +101,7 @@ own.
 
 Every PR that changes anything inside a plugin — `SKILL.md`, the hook core,
 `hooks.json`, a command, an agent — bumps `version` in that plugin's
-`.claude-plugin/plugin.json`. Both ports move together, so they stay
-comparable.
+`.claude-plugin/plugin.json`.
 
 Since 1.4.0 the self-update hook rides on this: it runs `claude plugin
 update`, which compares version numbers, so an unbumped change lands on
@@ -175,7 +130,6 @@ every `bash …` command below from **Git Bash** — typed into PowerShell,
 `& "C:\Program Files\Git\bin\bash.exe" <script>` works from PowerShell too.
 Three layers, cheapest first:
 
-- **Parity**, free: `bash scripts/check-parity.sh` — CI runs it on every PR.
 - **Hooks**, free and offline: `bash scripts/test-hooks.sh` runs every hook
   script against a fake `$HOME` and a fake `claude` — the credit guard's
   allow and deny cases, the daily throttle, the notices, the platform line,

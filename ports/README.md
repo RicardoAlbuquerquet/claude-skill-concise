@@ -1,12 +1,9 @@
 # Ports
 
 The same ruleset, for the tools that are not Claude Code. Everything here
-except this file, its Portuguese twin and the four ChatGPT files is generated
+except this file and the two ChatGPT files is generated
 from `skills/` by [`scripts/build-ports.sh`](../scripts/build-ports.sh), and
 CI fails when a generated file falls behind the skill it came from.
-
-Two languages, `en/` and `pt-BR/` — pick one, the way you pick one plugin.
-Every command below is written for `en/`; swap the directory for the other.
 
 ## Cursor
 
@@ -24,9 +21,10 @@ for their description to match what you are doing: `concise-full.mdc` for the
 whole ruleset, and one file per surface that leaves the conversation
 (`concise-pull-request.mdc`, `concise-commit.mdc`, and four more).
 
-The thirteen commands appear when you type `/` in the chat input, under their
+The fourteen commands appear when you type `/` in the chat input, under their
 bare names: `/pr`, `/card`, `/commit`, `/comment`, `/release`, `/plan`,
-`/decide`, `/draw`, `/status`, `/handoff`, `/rewrite`, `/trim`, `/audit`.
+`/decide`, `/draw`, `/status`, `/handoff`, `/rewrite`, `/trim`, `/audit`,
+`/woman`.
 
 Cursor also reads `AGENTS.md`, so the section below works there as a lighter
 install — rules and commands are the fuller one.

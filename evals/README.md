@@ -21,14 +21,20 @@ the long form works:
 
 | Variable | What it does |
 |---|---|
-| `SKILL=respostas-curtas` | runs the PT port (rubrics check structure, not language) |
-| `CORE=1` | judges the ~60-line core the output style carries, not the full skill |
+| `CORE=1` | judges only the core the output style carries, not the full skill |
 | `BASELINE=1` | no style at all — see below |
+| `PLUGIN=1` | the plugin as an install delivers it: output style, turn reminder, hooks — see below |
+| `RESPONSES=out` | keeps every answer in `out/`, one file per case and attempt |
 | `RUNS=3` | three attempts per case; anything short of all-pass reports `FLAKY` |
 | `MODEL=claude-sonnet-5` | pins the model, so two runs are comparable |
 | `JOBS=1` | serial, for a rate limit or a log you want to read as it goes |
 | `JUDGE_MODEL=` | judges with `MODEL` instead of the fast default |
-| `ONLY=07` | a single case, by filename fragment |
+| `ONLY=07` | one case by number or filename fragment; `ONLY=10,18,26` for several |
+| `MIN_RUNS=2` | with `RUNS=5`, stops a case at two runs that agree, and agree with `COMPARE` |
+| `COMPARE=evals/baseline/claude-opus-5.tsv` | better, same or worse per case against a saved run, each case stopping once its verdict is settled; exits 1 when one got worse |
+| `WORSE_ONLY=1` | with `COMPARE`, only whether a case got worse; skips the cases whose saved side passes under 40% |
+| `SET=core` | the cases listed in `evals/sets/core.txt` — the daily ten |
+| `RESULTS=file` | saves passes and runs per case; cases that didn't run keep their line |
 | `CLAUDE_BIN=./stub` | swaps the CLI — how the harness itself is tested, free |
 
 In skill mode the harness appends every file in `references/` after `SKILL.md`:
@@ -41,63 +47,275 @@ measures the model's own habits, not the rules, and proves nothing when it
 passes with the skill. Its exit code is always 0 — the pass count is the
 signal, and a *low* one is the good news.
 
+**`PLUGIN=1` measures what an install delivers.** The other modes paste text
+into the system prompt; this one loads `skills/concise` with `--plugin-dir` on
+the answer call, so the forced output style, the turn reminder and the
+SessionStart line all run, and the judge runs without them. The hooks get a
+scratch `HOME`, and the mode refuses to start without the isolated
+`CLAUDE_CONFIG_DIR` that the baseline needs too — see
+[the last full measurement](#last-full-measurement).
+
 The style and the facts reach the CLI through `--append-system-prompt-file`,
   not the command line. That is not a detail: Windows caps a command line at
-32767 characters, the PT skill is already past 31 KB, and the full PT run died
+32767 characters, a skill past 31 KB made the full run die
 at case 17 with "Argument list too long" before the switch. A CLI old enough
 to lack the flag still works and says so.
 
-**Cost:** two API calls per case per run, so the default suite is 70 calls
+**Cost:** two API calls per case per run, so the default suite is 80 calls
 and a few minutes; `RUNS=3` triples that. The judge is a model grading prose:
 a FAIL is a signal to read the printed verdict, not a verdict by itself.
+
+## What a check costs
+
+| Check | Calls |
+|---|---|
+| Daily: the ten core cases, only whether any got worse | ~17 |
+| Daily: the ten core cases, better, same and worse | ~56 |
+| A rule change: only the cases it touches | ~30 for three cases |
+| Before a release: all cases, only whether any got worse | ~58 |
+| The README numbers: all cases, better, same and worse | ~214 |
+| The side with no plugin again, only when the model changes | ~400 |
+
+The side with no style depends on the model, not on the plugin, so it runs
+once and stays saved: [`baseline/claude-opus-5.tsv`](baseline/claude-opus-5.tsv),
+five runs per case on 2026-09-14. A plugin run compares against it instead of
+running it again. The commands need the isolated config and the directory
+described in [the last full measurement](#last-full-measurement).
+
+1. Every day, the ten cases in [`sets/core.txt`](sets/core.txt) — three
+   simple, three medium, four complex. Whether any got worse takes about 17
+   calls:
+
+   ```bash
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=1 SET=core WORSE_ONLY=1 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   ```
+
+   Better, same and worse for the same ten take about 56:
+
+   ```bash
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 SET=core COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   ```
+
+   The rules the other thirty cases test wait for a release, and ten cases
+   put the overall pass rate within about 14 points instead of 7.
+
+2. While changing a rule, run only the cases the map below ties to it —
+   about 30 calls for three cases:
+
+   ```bash
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=2 ONLY=10,18,26 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   ```
+
+3. Before a release, ask only whether any case got worse. `WORSE_ONLY=1`
+   skips the cases whose saved side passes under 40% — they have no room for a
+   two-run drop — and stops every other case as soon as "worse" is settled
+   either way, or after one run that agrees with the saved side. Simulated
+   over every order the 1.71.0 passes could have come in, that is about 58
+   calls.
+
+   ```bash
+   CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MIN_RUNS=1 WORSE_ONLY=1 COMPARE=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   ```
+
+   The README numbers need better and same as well: the same command without
+   `WORSE_ONLY`, about 214 calls. There a case stops once the runs left can no
+   longer change its verdict — 0 of 2 against a saved 5 of 5 is worse whatever
+   comes next — or after two runs that agree with the saved side, within one.
+
+4. Measure the saved side again only when the model changes, or for the one
+   case whose rubric changed — `RESULTS` rewrites that case's line and keeps
+   the others. All forty cases cost about 400 calls; one case, about 10:
+
+   ```bash
+   CLAUDE_CONFIG_DIR=~/.claude-eval BASELINE=1 RUNS=5 ONLY=18 RESULTS=~/concise/evals/baseline/claude-opus-5.tsv bash ~/concise/evals/run.sh
+   ```
+
+Each stop has a price, simulated on the 1.71.0 passes. The stop on a settled
+verdict is free: the full count would print the same line. Stopping after two
+runs that agree gets under one case per full sweep wrong. Stopping after one
+gets about 0.2 wrong in a worse-only check, where a suspicious "worse" is cheap
+to run again, and about two in a full sweep — enough to flip a "none worse",
+which is why the README numbers keep two.
+
+Grading the first two answers of a case in one judge call was tried and left
+out: on the saved 1.71.0 answers it passed 110 of 200 where one answer per call
+passed 132, lower in every case that differed, and it turned two cases worse.
 
 ## Rule → case
 
 The map is what makes an edited rule regress instead of silently drifting: if
-you change a rule here, change the rubric that tests it.
+you change a rule here, change the rubric that tests it. The two scores come
+from [the last full measurement](#last-full-measurement): a case that passes
+with no style measures the model's own habits. The no-style score is always
+out of five; the plugin score is out of the runs that case got, since a case
+stops as soon as the runs left cannot change its verdict.
 
-| Rule (`SKILL.md` or its reference file) | Case | Discriminates |
+| Rule (`SKILL.md` or its reference file) | Case | No style | Plugin |
+|---|---|---|---|
+| Answer in the first sentence; no preamble | 01, and every other rubric | 4/5 | 5/5 |
+| Completed work ≤5 lines, gate result | 02 | 1/5 | 3/3 |
+| Investigation: finding + consequence | 03 | 5/5 | 2/2 |
+| Always keep: caveat that changes what the user does | 04 | 5/5 | 2/2 |
+| Recommendation carries its cost | 05 | 5/5 | 5/5 |
+| The user's choice: options side by side + a recommendation | 06 | 0/5 | 4/5 |
+| A runnable command gets its own `bash` fence | 07 | 5/5 | 2/2 |
+| Overloaded opening: verdict first, support second | 08 | 5/5 | 2/2 |
+| Commit message: title says what changes, body says why | 09 | 4/5 | 5/5 |
+| PR description: test steps, unverified named | 10 | 3/5 | 5/5 |
+| Card: stands alone, narrow-panel structure | 11 | 0/5 | 5/5 |
+| Status update: only the delta | 12 | 5/5 | 2/2 |
+| Bad news; the second question in a two-question message | 13 | 5/5 | 5/5 |
+| Draw the shape; gloss by consequence | 14 | 0/5 | 2/4 |
+| Correcting yourself: no story of the mistake, no re-announcing | 15 | 2/5 | 2/5 |
+| Commit lands inside the repo log's convention | 16 | 5/5 | 4/5 |
+| Several deliverables read as a markdown list | 17 | 0/5 | 3/5 |
+| A list item stays an item, not a packed paragraph | 18 | 5/5 | 2/4 |
+| What waits on the reader sits apart from what informs them | 19 | 3/5 | 3/5 |
+| A name out of the code stays only if the reader will use it | 20 | 0/5 | 0/2 |
+| A fence is tagged for the shell the reader will paste into | 21 | 4/5 | 2/2 |
+| The outcome, not the itinerary of the work | 22 | 2/5 | 1/5 |
+| A table column with one repeated value is not a column | 23 | 0/5 | 1/5 |
+| The reader's choice still gets a recommendation, at the end of a long report | 24 | 2/5 | 3/5 |
+| A note on a card is the summary of the summary | 25 | 2/5 | 4/4 |
+| PR title: the area first, the state after the merge | 26 | 5/5 | 5/5 |
+| Drawing craft: one glyph set, nothing wraps, labels hang off their box | 27 | 0/5 | 0/2 |
+| One hanging note, and it sits on the finding | 28 | 0/5 | 2/3 |
+| One gloss per response; the rest of the terms become what they do | 29 | 3/5 | 5/5 |
+| One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | 1/5 | 3/3 |
+| PR description inside a screenful, and the cut comes out of what repeats | 31 | 0/5 | 2/3 |
+| Commit body: six lines at most, no investigation, no list of what was run | 32 | 3/5 | 4/5 |
+| Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | 0/5 | 4/5 |
+| Card layout: two paragraphs, then labelled lines, spans off the prose | 34 | 0/5 | 0/5 |
+| The delivered artifact is the answer; no tour of it, no praise for the tooling | 35 | 0/5 | 2/5 |
+| A comment says only what the code can't; no docstring retelling the signature, no banner | 36 | 0/5 | 2/3 |
+| A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | 1/5 | 2/5 |
+| PR description: the words are the reviewer's, and a name only the repo knows becomes what it does | 39 | 0/5 | 2/3 |
+| Status update: a background result is only its delta — the unchanged queue and risk stay unsaid | 40 | 0/5 | 2/2 |
+| A description is one sentence, plus the one thing the reader acts on | 41 | 0/5 | 5/5 |
+
+## Last full measurement
+
+Version 1.72.0 on 2026-09-14: `claude-opus-5` answering, `claude-haiku-4-5`
+judging, the plugin arm run against the saved no-style side, so a case stops
+once the runs left cannot change its verdict. Twenty-two of the forty ran all
+five times, ten of them chosen at random among the cases that had stopped
+early and perfect, to price that stop: they came back 45 of 50, not 50.
+
+| | No style | Plugin |
 |---|---|---|
-| Answer in the first sentence; no preamble | 01, and every other rubric | no |
-| Completed work ≤5 lines, gate result | 02 | no |
-| Investigation: finding + consequence | 03 | no |
-| Always keep: caveat that changes what the user does | 04 | no |
-| Recommendation carries its cost | 05 | no |
-| The user's choice: options side by side + a recommendation | 06 | **yes** |
-| A runnable command gets its own `bash` fence | 07 | **yes** |
-| Overloaded opening: verdict first, support second | 08 | no |
-| Commit message: title says what changes, body says why | 09 | **yes** |
-| PR description: test steps, unverified named | 10 | no |
-| Card: stands alone, narrow-panel structure | 11 | **yes** |
-| Status update: only the delta | 12 | no |
-| Bad news; the second question in a two-question message | 13 | no |
-| Draw the shape; gloss by consequence | 14 | **yes** |
-| Correcting yourself: no story of the mistake, no re-announcing | 15 | no |
-| Commit lands inside the repo log's convention | 16 | no |
-| Several deliverables read as a markdown list | 17 | **yes** |
-| A list item stays an item, not a packed paragraph | 18 | **yes** |
-| What waits on the reader sits apart from what informs them | 19 | **yes** |
-| A name out of the code stays only if the reader will use it | 20 | **yes** |
-| A fence is tagged for the shell the reader will paste into | 21 | **yes** |
-| The outcome, not the itinerary of the work | 22 | weakly |
-| A table column with one repeated value is not a column | 23 | **yes** |
-| The reader's choice still gets a recommendation, at the end of a long report | 24 | weakly |
-| A note on a card is the summary of the summary | 25 | not measured |
-| PR title: the area first, the state after the merge | 26 | not measured |
-| Drawing craft: one glyph set, nothing wraps, labels hang off their box | 27 | not measured |
-| One hanging note, and it sits on the finding | 28 | not measured |
-| One gloss per response; the rest of the terms become what they do | 29 | not measured |
-| One budget for the turn: a block that leaves the reader nothing gets a line, or goes | 30 | not measured |
-| PR description inside a screenful, and the cut comes out of what repeats | 31 | not measured |
-| Commit body: six lines at most, no investigation, no list of what was run | 32 | not measured |
-| Comment: three lines, no greeting, no praise, and the omission stays silent | 33 | not measured |
-| Card layout: two paragraphs, then labelled lines, spans off the prose | 34 | not measured |
-| The delivered artifact is the answer; no tour of it, no praise for the tooling | 35 | not measured |
-| A comment says only what the code can't; no docstring retelling the signature, no banner | 36 | not measured |
-| A screen says each thing once, no toast for what the user watched, and the consequence stays | 37 | not measured |
-| PR description: the words are the reviewer's, and a name only the repo knows becomes what it does | 39 | weakly |
-| Status update: a background result is only its delta — the unchanged queue and risk stay unsaid | 40 | **yes** |
-| A description is one sentence, plus the one thing the reader acts on | 41 | **yes** |
+| Runs that pass their rubric | 85 of 200 | about 141 of 200 |
+| Words per answer, median / mean | 162 / 177 | 77 / 108 |
+| Requests better / same / worse | — | 16 / 23 / 1 |
+
+**The plugin total is an estimate within about 5 points**: a case that stopped
+at 2 of 2 counts as 5 of 5, and the sample above says that costs about half a
+run per case. The 85 is exact — the no-style side ran five times everywhere.
+
+**A case counts as worse when the plugin fails at least two more runs of
+five**; one run apart is noise. The one worse is case 18, a list whose items
+each carry several helpers.
+
+What changed in 1.72.0: the turn reminder now carries the rules of the
+artifact being written — card, review comment, PR description, commit message,
+drawing — and only on the turn whose request names one. In the core those same
+rules cost more elsewhere than they won: tried there, the total stayed at 132
+of 200 while four other cases dropped.
+
+## The 1.71.0 measurement, five runs per case
+
+Version 1.71.0 on 2026-09-14: `claude-opus-5` answering, `claude-haiku-4-5`
+judging, five runs per case, with and without the plugin. With the saved side and
+today's stops, the same table costs about 214 calls.
+
+Both arms need an isolated config, or the plugin gets graded against itself: a
+global `CLAUDE.md` carrying the style, an installed copy's hooks and its forced
+output style all reach `claude -p`. Copy `~/.claude/.credentials.json` and a
+plugin-less `settings.json` into a scratch directory such as `~/.claude-eval`
+— an empty directory alone loses the login. Run from a directory with no
+`CLAUDE.md` above it, such as `/tmp`: from anywhere under your home, the walk
+up the parent directories still finds `~/.claude/CLAUDE.md`. On Windows that
+rules out Git Bash's `/tmp`, which lives inside your profile; a folder outside
+`C:\Users` works.
+
+```bash
+CLAUDE_CONFIG_DIR=~/.claude-eval BASELINE=1 RUNS=5 MODEL=claude-opus-5 RESPONSES=out/none bash ~/concise/evals/run.sh
+```
+
+```bash
+CLAUDE_CONFIG_DIR=~/.claude-eval PLUGIN=1 RUNS=5 MODEL=claude-opus-5 RESPONSES=out/plugin bash ~/concise/evals/run.sh
+```
+
+| | No style | Plugin |
+|---|---|---|
+| Runs that pass their rubric | 85 of 200 | 132 of 200 |
+| Cases that pass all five runs | 10 of 40 | 19 of 40 |
+| Words per answer, median / mean | 162 / 177 | 76 / 102 |
+
+**A case counts as worse when the plugin fails at least two more runs of
+five**; one run apart is noise, and the rule was set before the plugin arm
+ran, and the same two runs make a case better. By it, the plugin is better on
+13 cases and worse on one — case 18, 1 of 5 against 5 of 5, which still packs
+several helpers into one item — and the other 26 are within one run.
+
+What changed in 1.71.0, each tried on its own cases before this run: the first
+sentence carries the result rather than a bare "yes" or a count of steps (22);
+what waits on the reader's decision sits apart from the report, and a check
+not run is said as not run (19); a PR title keeps the log's area prefix and
+its description gets three sections under headers (10, 26); and two things
+joined by and, a semicolon or parentheses are two list items (18).
+
+## The 1.69.0 measurement, three runs per case
+
+Version 1.69.0 on 2026-09-13: `claude-opus-5` answering, `claude-haiku-4-5`
+judging, three runs per case in each arm — 480 calls.
+
+| | No style | Plugin |
+|---|---|---|
+| Runs that pass their rubric | 48 of 120 | 72 of 120 |
+| Cases that pass all three runs | 11 of 40 | 20 of 40 |
+| Words per answer, median / mean | 165 / 178 | 70 / 94 |
+
+Words are counted on the saved answers, the way `wc -w` counts them, and every
+case averaged fewer with the plugin.
+
+**The plugin wins 14 cases, ties 22 and loses 4.** Cases 19 and 22 lose by one
+run, which three runs and a model judge can't tell from noise. Cases 18 and 26
+were re-run five times, on 1.68.0 and on 1.69.0:
+
+- **Case 26 was noise.** It passed 5 of 5 on both versions; the 1 of 3 above
+  came from two runs that left the `invoices:` area off the title as a repeat
+  of the branch name.
+- **Case 18 holds, and predates the core rewrite**: 0 of 5 on both versions.
+  Most failing runs drop exact values, the smoke test's 120 rows and 6 pages
+  most often, and several pack the whole library into one table row with its
+  details in parentheses. Its rubric misfired too, grading the opening
+  "Pronto, nada commitado ainda" as a preamble and "~1,5 MB" as a lost value;
+  it now says both are fine, and re-graded with it, case 18's scores hold.
+
+**Eleven cases fail every run in both arms.** Nine ask for a PR (10, 17, 31,
+39), a card (11, 34), a comment (33) or a drawing (27, 28), and their rules
+arrive with the command that writes each; a case has no tools to run one, so
+this mode measures them without their rules. The other two are plain replies:
+14 named a signature check without saying what it protects, and 20 named a
+table the reader will never open.
+
+**Case 40 slid with the core rewrite in 1.69.0**: 4 of 5 on 1.66.0, 3 of 5 on
+1.68.0 and 1 of 5 on 1.69.0, five runs each. The failing runs add that the
+read-path switch and the PR still wait, and that the load-test risk hasn't
+changed. The cause is the status sentence: the rewrite's "only what changed
+since the previous update" lets the steps still waiting count as a change.
+
+| Core | Case 40 |
+|---|---|
+| 1.69.0 with three other sentences put back, one at a time | 0, 1 and 0 of 5 |
+| 1.69.0's beliefs, desires and intentions alone | 0 of 5 |
+| 1.68.0 with 1.69.0's sections from Structure down | 4 of 5 |
+| 1.69.0 with 1.68.0's "send only the delta since your last message" | 7 of 10 |
+
+Case 12, the other status case, passes 5 of 5 with either sentence. The fix
+is [#100](https://github.com/RicardoAlbuquerquet/concise/pull/100), for 1.70.0.
+
+## Earlier measurements
 
 **Measured 2026-08-20, on `claude-opus-5`: all 21 cases pass three times each
 with the skill.** The baseline figure is older and narrower: 11 of the first 18
@@ -109,16 +327,8 @@ not worthless — a default can regress, and a rule that matches the default
 still documents it — but the suite's discriminating power is those ten, and a
 new case should aim to fail at baseline.
 
-The baseline run needs an isolated config, or it grades the skill against
-itself: a global `CLAUDE.md` carrying the style, the plugin's own hooks, and
-since 1.56.0 its forced output style all reach `claude -p`. Copy `~/.claude/.credentials.json` and a
-plugin-less `settings.json` into a scratch directory and point
-`CLAUDE_CONFIG_DIR` at it — an empty directory alone loses the login. Run it
-from a directory with no `CLAUDE.md` above it, too: from anywhere under your
-home, the walk up the parent directories still finds `~/.claude/CLAUDE.md`.
-
-Not covered yet: plans, the expand-on-request valve, and the PT-only wording
-rules. Those are the next cases to write.
+Not covered yet: plans and the expand-on-request valve. Those are the next
+cases to write.
 
 **Case 33 found a rule that was missing rather than a rubric to loosen.** Its
 facts dangle praise the reviewer genuinely means, and two runs in three the

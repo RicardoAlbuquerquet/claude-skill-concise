@@ -1,53 +1,30 @@
-Write one status update, following the "Status update mid-work" budget and the
-"Always keep" list of the `concise` ruleset. Read `.cursor/rules/concise-full.mdc` first if the
-full ruleset is absent from the context.
+Write one concise status update using the `concise` ruleset. If unavailable,
+invoke the skill first.
 
-The argument below says who reads it and where it goes — a person, a channel,
-a comment on the card, this conversation. Empty, the reader is the person you
-are already talking to.
+`(Your arguments: whatever you typed after the command name, when there was any.)` identifies the reader/destination. If empty, write for the person
+in this conversation.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
 
-How:
+Process:
 
-1. **Find the previous update** before writing this one — your last message in
-   this conversation, the last comment on the card, the last message in the
-   thread. Everything the reader already has is old news, and an update that
-   restarts the story makes them re-read to find the two lines that moved.
-2. **Find what actually changed, in the repo and the tracker**: `git log`
-   since that point, `gh run list` or the CI page for the gate, the tracker
-   for what someone else moved. An update reporting a green build you left
-   unchecked is the one failure that costs the reader the most, because they
-   stop checking.
-3. **Bad news first** — a failing test, a step you skipped, an estimate that
-   moved, an action that rewrote shared state. It goes ahead of the part that
-   is fine. Eight confirmations followed by two defects makes the reader walk
-   past everything that is already fine.
-4. **Only the delta.** One line is the whole update when one thing happened;
-   "CI green, merging" is a complete status. A caveat you already stated and
-   that stayed the same gets a clause pointing at it, and comes back in full
-   only when the reader is about to act against it or when you hand the work
-   over.
-5. **What waits on the reader gets its own block**, apart from what merely
-   informs them — the decision, the access, the review. Say what stalls while
-   it is missing, and by when.
-6. **Say when the next update lands**, or what event produces it. "When CI
-   finishes" is an answer; silence is what makes people ask.
-7. **Exact values**: the branch, the number, the run, the error line. Say what
-   is left, where "almost done" says only how it feels.
+1. Find the previous update. Do not repeat what the reader already knows.
+2. Verify what changed in the repo, CI, and tracker since then.
+3. Lead with bad news: failures, skipped steps, changed estimates, or shared
+   state mutations.
+4. Report only the delta, using exact branches, runs, values, and errors.
+5. Put anything waiting on the reader in a separate block, including what is
+   blocked and any deadline.
+6. End with when or under what event the next update happens.
 
-When the destination is a channel or a person who may lack the previous
-update, one clause of anchor — "since Tuesday: …" — carries the link, and the
-recap stays out. Writing the first update, say so in the first line and give
-the current state in place of a delta.
+If the reader may not have the previous update, add one short anchor such as
+`Since Tuesday: ...`; do not recap the full history.
 
-Check the draft against the rules above and fix what fails before delivering.
+For the first update, say so and report the current state instead of a delta.
 
-Delivery: as prose when the destination is this conversation; in a fenced
-block when it goes somewhere else, in that surface's register — a comment on a
-card takes the narrow panel, so plain paragraphs, with headers and tables left
-for the PR.
+Delivery:
+- this conversation → plain prose;
+- external destination → fenced block in that surface's natural style.
 
-Draft only: it stays here even when the destination is named and a tool can
-reach it. Naming where it goes says the address; notifying a person waits for
-the user's word.
+Draft only. Naming a destination does not authorize posting or notifying
+anyone; wait for explicit permission.

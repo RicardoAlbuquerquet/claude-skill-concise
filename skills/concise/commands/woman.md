@@ -1,4 +1,3 @@
-```markdown
 ---
 description: Reply to a heavy vent so someone close feels heard, not advised
 argument-hint: "[paste their message]"
@@ -84,4 +83,3 @@ If the message suggests wanting to die, disappear, self-harm, or not be here,
 stop drafting normal comfort. Tell the requester what signal you noticed,
 recommend asking the person directly about immediate safety, and provide the
 appropriate local crisis resource.
-```

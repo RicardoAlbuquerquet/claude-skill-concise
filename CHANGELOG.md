@@ -1,9 +1,291 @@
 # Changelog
 
-Every `version` bump in the two ports gets an entry here. The number is what
+Every `version` bump of the plugin gets an entry here. The number is what
 propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
+
+## 1.86.1 — 2026-09-14
+
+Os comandos, as referências e o agente de auditoria ficam mais curtos,
+preservando as correções recentes do núcleo e dos hooks. O estilo de saída
+e o comando `woman` voltam a ter metadados válidos; o auditor mantém suas
+ferramentas restritas a leitura. Os arquivos gerados acompanham a refatoração.
+
+## 1.86.0 — 2026-09-14
+
+O guarda de crédito deixava passar três jeitos comuns de publicar texto, e o
+self-update ficava calado quando não havia como atualizar.
+
+- **Um commit com opção antes do verbo, como `git -c k=v commit`, agora é
+  conferido.** Antes o guarda só reconhecia `git commit` e `git -C dir commit`.
+- **Tag anotada e GitLab entram**: `git tag -m`, e `glab` criando ou editando
+  MR, issue, nota ou release.
+- **Sem o `claude` no PATH, o self-update deixa a marca de falha**, e o aviso
+  semanal passa a dizer que a cópia não está atualizando.
+
+## 1.85.0 — 2026-09-14
+
+A atualização automática volta a checar logo depois de ser cortada, e uma
+checagem cortada passa a contar como falha.
+
+- **A trava dura dois minutos.** Uma sessão que termina antes da checagem a
+  mata no meio, e a trava ficava. Por uma hora, nenhuma checagem rodava. Um
+  `claude -p` que dura um segundo reproduz isso.
+- **Checagem cortada conta como falha.** Antes ela não gravava nada, e o aviso
+  semanal nunca aparecia.
+- Cinco testes novos, e dois deles falham no código anterior.
+
+## 1.84.0 — 2026-09-14
+
+O lembrete de cada mensagem fica curto e em frases simples, e o relatório de
+trabalho feito também cabe em cinco linhas.
+
+- **Frases curtas.** O lembrete era uma frase só, de 196 palavras, e as
+  respostas copiavam o tom. Agora nenhuma frase passa de 20 palavras.
+- **Sem brecha para relatório.** Sai a exceção que deixava o relatório passar
+  de cinco linhas. Ele agrupa o trabalho, e os detalhes esperam ser pedidos.
+- **Linguagem simples a cada mensagem.** "Palavras simples" e "uma ideia por
+  frase" estavam só no núcleo, e agora vêm junto de cada pedido.
+- Dois testes novos quebram a suíte se a frase longa ou a brecha voltarem.
+- **Não medido:** os evals não rodaram. A exceção tinha entrado na 1.70.0
+  pelo caso 18, que pode voltar a cair.
+
+## 1.83.0 — 2026-09-14
+
+O guarda de crédito passa a ler a mensagem que vem de arquivo em qualquer
+forma, o `/concise:pr create` abre a PR sem ser barrado, e o lembrete para de
+puxar regra por palavra dentro de outra.
+
+- **Arquivo entre aspas é lido.** `git commit -F "msg.txt"` e
+  `gh pr create --body-file 'b.md'` passavam com a assinatura dentro, porque
+  só o caminho sem aspas era aberto. Também são lidos `$(cat msg.txt)`,
+  `Get-Content msg.txt` e todos os arquivos da chamada, não só o primeiro.
+- **`gh pr merge` é checado**, porque a mensagem do squash vai para o
+  histórico da `main`.
+- **O `/concise:pr create` passa direto.** O comando abre a PR com o próprio
+  `gh pr create`, e o aviso negava essa chamada mandando rodar o comando em
+  que a sessão já estava.
+- **As marcas do aviso de PR com mais de um dia são apagadas.** Ficava uma
+  por sessão na pasta temporária, para sempre.
+- **Card, issue e review casam a palavra inteira:** "discard" e
+  "cardinalidade" não puxam mais a regra do card, nem "preview" a do
+  comentário. "PRs" passa a puxar a regra da PR.
+- Dezoito testes novos, e catorze deles falham no código anterior.
+
+## 1.82.0 — 2026-09-14
+
+A regra de artefato do lembrete passa a entrar só quando o pedido fala do
+artefato, e não quando a pasta ou o nome do usuário contém a palavra.
+
+- **Só o texto do pedido é lido.** O evento também traz o caminho da conversa
+  e a pasta aberta, e quem se chama Ricardo recebia a regra do card em todo
+  turno, porque o nome contém "card".
+- **Cada artefato tem uma regra só.** Card, comentário, PR e desenho vinham
+  duas vezes, com texto quase igual, no mesmo turno.
+- **A palavra casa inteira:** PR não casa em "sempre", revisão não casa em
+  "previsão", e desenho não casa em "withdraw". "Mensagem" e "fluxo" saem da
+  lista, porque casavam em quase todo pedido.
+- Cinco testes novos cobrem o evento real, as aspas no pedido, a palavra
+  inteira e a regra repetida.
+
+## 1.81.0 — 2026-09-14
+
+O guarda de crédito passa a valer também para arquivo escrito e card criado
+pelo quadro, e não só para o que sai pelo terminal.
+
+- **Escrever um arquivo com a assinatura de agente é barrado**, assim como
+  criar ou editar um card por uma ferramenta de quadro.
+- **Citar a regra em prosa continua passando**: no arquivo, só a forma de
+  assinatura é barrada — a linha de crédito abrindo a própria linha, ou o
+  selo com o emoji ou o link.
+- **A saída de emergência é a mesma**: `CONCISE_ALLOW_CREDIT=1` ou o arquivo
+  de flag em `~/.claude`.
+- Quatro testes novos cobrem arquivo, prosa, card e o registro do guarda.
+
+## 1.80.0 — 2026-09-14
+
+O lembrete de todo turno passa a cobrar o que o núcleo já pedia: o nome que o
+leitor nunca vai digitar chega a ele como aquilo que faz.
+
+- **Uma linha nova no lembrete**, ao lado da primeira frase e dos valores
+  exatos, porque a regra no núcleo sozinha não estava pegando.
+- **O caso 20, que mede isso, sai de 0 de 5 para 2 de 3** em três tentativas;
+  06, 15, 22, 30 e 39 ficam dentro do ruído das mesmas três.
+
+## 1.79.0 — 2026-09-14
+
+O self-update checa de seis em seis horas e volta a tentar depois de uma
+falha, no lugar de uma vez por dia com a falha carimbada junto.
+
+- **A janela vira seis horas**, e `~/.claude/.concise-update-hours` troca esse
+  número. Sete versões saíram num dia e quem checou de manhã ficava na
+  primeira até o dia seguinte.
+- **A falha deixa o carimbo como estava**: a sessão seguinte tenta de novo, em
+  vez de esperar a janela inteira com a marca de uma tentativa que nunca
+  chegou ao marketplace.
+- **Os testes de hook passam a rodar no macOS além do Linux**, porque o hook
+  usa as ferramentas que o usuário tiver.
+- **O lembrete por turno volta a funcionar no macOS**: ele minusculizava o
+  pedido com `${in,,}`, que é bash 4, e o bash 3.2 do macOS matava o hook
+  antes de qualquer regra de artefato entrar.
+
+## 1.78.0 — 2026-09-14
+
+As dez linhas negadas que as versões 1.73.0 a 1.77.0 trouxeram para os
+comandos voltam à forma afirmativa que o CONTRIBUTING pede.
+
+- **A permissão diz o que autoriza**: a palavra `run` é a permissão inteira de
+  commitar, e `create` a de abrir a PR.
+- **A crença diz o que vale**: o card é lido por quem chega de fora da
+  conversa, o palco é o assunto inteiro, um destino nomeado é endereço e quem
+  avisa alguém é a palavra do usuário.
+- **O portão entra no update depois de você conferir**, no lugar de dizer o
+  que custa não conferir.
+- `:draw` e `:woman` ficam fora: as negativas de `:woman` estão nos exemplos
+  citados, que são dados.
+
+## 1.77.0 — 2026-09-14
+
+Os oito comandos que faltavam passam a dizer o que acreditam antes do que
+fazem, como `/concise:commit`, `:pr`, `:card` e `:comment` já faziam.
+
+- **`:status`, `:handoff`, `:decide`, `:plan`, `:trim`, `:audit`,
+  `:release` e `:rewrite`** ganham crenças, desejos e intenções, e somam 39
+  linhas a menos.
+- **A regra que trava a ação sobe para o começo de cada um**: destino nomeado
+  não autoriza avisar ninguém, código que roda fica como está, publicar a
+  release é do usuário, e o passo 1 do plano espera aprovação.
+- **Nenhuma regra sai** — cada comando manteve o que já pedia, incluindo as
+  linhas **Missing:** e **Unknown:**.
+- `:draw` e `:woman` ficam fora: são longos por causa dos exemplos, e cortar
+  ali é outro trabalho.
+
+## 1.76.0 — 2026-09-14
+
+`/concise:comment` entra na série: crenças, desejos e intenções, de 47 para 47
+linhas, com a regra de postar no topo em vez do último parágrafo.
+
+- **Comentar uma linha que você não leu é palpite com `path:line` no crachá.**
+- **Um destino nomeado só diz para onde o comentário iria**; quem publica é a
+  palavra do usuário nesta conversa.
+- **Nenhuma regra sai**: leitura do que se comenta, parada quando a linha está
+  fora de alcance, tipo assumido como comentário de revisão, o que cada tipo
+  acrescenta, contagem de três linhas, entrega com quatro crases e âncora
+  acima de cada bloco, e as linhas **Missing:**.
+
+## 1.75.0 — 2026-09-14
+
+`/concise:card` fecha a série com `/concise:commit` e `/concise:pr`: crenças,
+desejos e intenções, de 44 para 45 linhas, e a regra de criar sobe para o topo.
+
+- **Quem lê o card não estava na conversa**, e um valor que ela não deu é um
+  buraco, não algo a inventar.
+- **Só o destino nomeado na invocação autoriza criar** — antes isso só
+  aparecia na última linha.
+- **Nenhuma regra sai**: valores exatos, dois cards viram um rascunho do
+  primeiro, entrega com quatro crases quando o corpo traz bloco, busca no
+  destino antes de criar, formulário do `.github/ISSUE_TEMPLATE/`, campos do
+  destino, bloqueador ou pai ligado de verdade, e o relatório do que ficou no
+  padrão.
+
+## 1.74.0 — 2026-09-14
+
+`/concise:pr` segue `/concise:commit` e passa a dizer o que acredita antes de
+listar o que faz, de 54 para 45 linhas.
+
+- **O comando tem crenças, desejos e intenções**, como as referências.
+- **A permissão sobe para o começo**: só a palavra `create` digitada abre a PR.
+- **Nenhuma regra sai**: base `origin/main` quando não vem ref, parada em zero
+  commits sobre a base, template e card procurados, passo de teste mesmo sem
+  tela, corte do que repete acima de vinte e cinco linhas, entrega cercada por
+  quatro crases com as linhas **Missing:**, e o que impede `gh pr create`.
+
+## 1.73.0 — 2026-09-14
+
+`/concise:commit` passa a dizer o que acredita antes de listar o que faz, e
+encolhe de 40 para 35 linhas sem perder regra nenhuma.
+
+- **O comando segue a forma das referências**: crenças, desejos e intenções.
+- **Nenhuma regra sai**: o palco vazio para o trabalho, a forma do título vinda
+  do log, o ticket só quando a branch ou quem chamou deu, a entrega em bloco
+  cercado, as duas mudanças sem relação com o `git restore --staged`, e o
+  commit só na palavra `run`.
+
+## 1.72.0 — 2026-09-14
+
+The rules of each artifact now ride on the turn that writes one, instead of
+sitting in the core where every other turn pays for them. Measured against no
+style at all, the plugin goes from 132 to about 141 passing answers of 200.
+
+- **The turn reminder carries the artifact rule the request asks for**: a card,
+  a review comment, a PR description, a commit message or a drawing. The words
+  of the prompt pick it, so a turn that writes none stays as short as before.
+- **A card opens with its area**, gives current and expected state, numbered
+  steps to reproduce a bug, the open question and a done criterion.
+- **A review comment is three lines in one paragraph**, with the full anchor
+  path and whether it blocks the merge, and no praise or sign-off.
+- **A PR description keeps every path the reviewer opens** and drops the names
+  they never type, each command in its own fence with the output it prints.
+- **A drawing names what it did not measure**, and hangs each cost off its box.
+
+The same rules were tried in the core first and left there four other cases
+worse, with the total unmoved at 132 — the measurement is in
+[`evals/README.md`](evals/README.md#last-full-measurement).
+
+## 1.71.0 — 2026-09-14
+
+Five rule changes that came out of measuring every eval case five times, with
+and without the plugin. The plugin now does better than no style on 13 of the
+40 cases, the same on 26, and worse on one, the report of finished work.
+
+- **The first sentence carries the result**, not a bare "yes" or a count of
+  the steps it took; the turn reminder says the same.
+- **What waits on the reader's decision gets its own block**, now among the
+  first rules, and a check that was not run is said as not run.
+- **A PR title keeps the area prefix the log uses**, and a PR description gets
+  three sections under headers; a commit title follows the log's shape again.
+- **Two things joined by and, a semicolon or parentheses are two list items.**
+
+## 1.70.0 — 2026-09-13
+
+A background job that finishes and changes nothing else gets one line again,
+and a report on finished work keeps its exact values.
+
+- **The core's status rule is back to its 1.68.0 words**: "send only the
+  delta since your last message". The 1.69.0 rewrite said "only what changed
+  since the previous update", and the model counted the steps still waiting
+  as a change. Eval case 40 passed 7 of 10 runs on 1.66.0 and 1.68.0, 1 of 5
+  on 1.69.0, and 7 of 10 with the old sentence back; case 12, the other status
+  case, passes 5 of 5 either way.
+- **`SKILL.md` says the same** in its status row.
+- **The turn reminder lets a report in the chat pass five lines** when its
+  deliverables need them, keeps every exact value, and splits a line that
+  names three parts. Eval case 18, a finished PDF stack, went from 0 of 8 runs
+  to 3 of 5, every answer keeping the version, the size and the test counts.
+  Case 37, the text of a settings screen, went from 4 of 8 to 1 of 5, which
+  five runs can't separate from noise; worded without the "in the chat" limit,
+  the same reminder took it to 0 of 8.
+
+## 1.69.0 — 2026-09-13
+
+The Portuguese port is gone, and the English plugin answers in the language
+you write in.
+
+- **`respostas-curtas` leaves the marketplace.** An installed copy stops
+  updating, and after a week says its self-update is failing. Switch with:
+
+  ```
+  /plugin uninstall respostas-curtas@claude-skill-concise
+  /plugin install concise@claude-skill-concise
+  ```
+
+- **Replies follow your language**: the core now says "Always respond in the
+  language the user is using to communicate with you."
+- **The core and the skill are rewritten shorter**, as plain lists.
+- **The parity check goes with the second port.** `scripts/test-hooks.sh`
+  keeps the two checks that still apply: the output style matches the core,
+  and the marketplace card matches the plugin.
 
 ## 1.68.0 — 2026-09-13
 

@@ -50,7 +50,7 @@ When rules conflict, optimize for correct action.
 | Situation | Default shape |
 |---|---|
 | Factual question | Answer + essential caveat |
-| Description | What it is + consequence if relevant |
+| Description | The one sentence that says what it is; the rest waits to be asked |
 | Recommendation | Recommendation + ≤3 reasons + key downside |
 | User choice | Options + recommendation + why |
 | Completed work | What changed + where + result |
@@ -59,7 +59,7 @@ When rules conflict, optimize for correct action.
 | Failure | What broke + evidence + next move |
 | Correction | Correct answer + what to undo |
 | Blocked | Needed input + work already completed |
-| Status update | Only what changed |
+| Status update | Only the delta since your last message — a background result arriving is one |
 | Proposed plan | Steps + main risk + excluded scope |
 
 Code, commands, and diffs stay complete.
@@ -146,6 +146,7 @@ When an answer must be long, make the structure simpler, not more elaborate.
 
 ### Write for the reader
 
+- **Always respond in the language the user is using to communicate with you.**
 - **Use everyday words and short sentences.**
 - **Keep only technical terms the reader will encounter or act on.**
 - Explain a term through its consequence rather than a dictionary definition.
@@ -154,7 +155,7 @@ When an answer must be long, make the structure simpler, not more elaborate.
 
 ---
 
-## Compression rule
+### Compression rule
 
 For every sentence, ask:
 
@@ -190,6 +191,7 @@ Example:
 PWA ──resume──> /auth/refresh ──> sessions ──> users
                            │
                            └─ 2.1 s p95
+```
 
 ### Recommendations, choices and plans
 
@@ -250,3 +252,19 @@ Name the affected file, command, or artifact when it helps execution.
 Keep exploration, tool narration, and speculative branches out of the plan.
 
 The first step should be the first action performed; the last step should be the final action required.
+
+---
+
+### What leaves the conversation
+
+Each of these has its own file next to this one, read by the command that
+writes it. Writing one yourself, read the file first:
+
+| Writing | Read | Command |
+|---|---|---|
+| A pull request description | `references/pull-request.md` | `/concise:pr` |
+| A task or an issue | `references/task.md` | `/concise:card` |
+| A commit message | `references/commit.md` | `/concise:commit` |
+| A changelog entry or release notes | `references/changelog.md` | `/concise:release` |
+| A comment, a reply or a message to a person | `references/comment.md` | `/concise:comment` |
+| Comments, messages or screen text in code | `references/code.md` | `/concise:trim` |

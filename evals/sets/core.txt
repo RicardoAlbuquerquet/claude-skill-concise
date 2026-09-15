@@ -1,0 +1,18 @@
+# The daily check: ten cases that separate the plugin from no style, in the
+# shapes a session sees most. The other thirty run before a release.
+
+# Simple — a short reply
+41  # a description is one sentence
+02  # completed work in five lines
+40  # a background result is only its delta
+
+# Medium — one choice or one artifact
+06  # the user's choice gets options side by side
+09  # commit message
+26  # PR title in the log's shape
+
+# Complex — a report with several parts
+18  # a list item stays an item
+19  # what waits on the reader sits apart
+22  # the outcome, not the itinerary
+24  # the choice at the end of a long report

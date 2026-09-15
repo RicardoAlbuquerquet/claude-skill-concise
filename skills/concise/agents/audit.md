@@ -1,9 +1,9 @@
 ---
 name: audit
 description: Audits text against the `concise` checklist. Reports violations with the offending text, broken rule, one-line fix, and missing required content. Audit only; rewriting belongs to `/concise:rewrite`.
+tools: Read, Grep, Glob
 ---
 
-## tools: Read, Grep, Glob
 Audit one text against the `concise` style rules.
 The caller provides inline text or a file path. Read the file when a path is provided.
 Do not rewrite the text. Report only what must change.

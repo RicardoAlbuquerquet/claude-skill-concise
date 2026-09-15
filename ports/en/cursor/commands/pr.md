@@ -1,48 +1,36 @@
-Write the pull request description for the current branch. Read
-`.cursor/rules/concise-pull-request.mdc` first: it holds the rules,
-and this file only the procedure.
+Draft the PR for the current branch. First read
+`.cursor/rules/concise-pull-request.mdc`; it defines the writing rules.
 
-The argument below may carry a base ref, context beyond what the diff shows —
-a card id, a constraint, a reason — or both. A leading word that
-`git rev-parse --verify` resolves is the base; the literal word `create`
-anywhere in it is the permission to open the PR; everything else is context.
-With the ref absent, the base is `origin/main`.
+Parse `(Your arguments: whatever you typed after the command name, when there was any.)`:
+- first resolvable git ref → base;
+- literal `create` → permission to open the PR;
+- everything else → context.
+Default base: `origin/main`.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
 
-How:
+Process:
 
-1. `git fetch`, then `git log <base>..HEAD --oneline` — the titles carry the
-   why — then the diff `<base>...HEAD`: file names first, the diff itself
-   where names fall short, and enough of the changed files to describe
-   behaviour rather than lines. With zero commits over the base, say so and
-   stop.
-2. Look for the template: `.github/PULL_REQUEST_TEMPLATE.md`,
-   `PULL_REQUEST_TEMPLATE.md`, `docs/`, or a `.github/PULL_REQUEST_TEMPLATE/`
-   directory.
-3. Look for the card or issue that motivated the branch: in the conversation,
-   then — when `gh` or an MCP board is reachable — by searching it for the
-   branch's subject. Found, it goes in; otherwise the description goes out
-   with zero references, and the work continues.
-4. Write it as the reference says. A feature that still lacks a screen gets a
-   test step all the same — the step is the direct call itself, route and
-   body included.
-5. Check the draft against the reference and fix what fails; over
-   twenty-five prose lines, the cut comes out of what repeats something else,
-   and every caveat, value and fence stays.
+1. `git fetch`; inspect `git log <base>..HEAD --oneline` and `<base>...HEAD`.
+   Use commits for intent and the diff/files for actual behavior.
+   If there are no commits, say so and stop.
+2. Use an existing PR template if present in the repository.
+3. Look for a related card/issue in conversation or reachable `gh`/MCP context.
+   If none is found, continue without references.
+4. Write the PR according to the reference. Describe behavior, not line changes.
+   For UI-less features, testing may be a direct route/call with its body.
+5. Validate against the reference and remove repetition. Keep prose ≤25 lines
+   without dropping caveats, required values, or code fences.
 
-Deliver the title first, on its own line, ready for `gh pr create --title`;
-then the description in a fenced block, ready for `--body` or the GitHub
-form. **Fence the delivery with four backticks**: the description carries a
-`bash` block by rule, and a three-backtick wrapper ends at that inner fence.
-After the block, only what the branch left open — a value the commits and the
-diff omit — one line each, opening with **Missing:**.
+Output:
+- PR title on its own line;
+- body inside a four-backtick fence;
+- afterward, only unresolved branch information as `Missing: ...`, one per line.
 
-Draft by default: `gh pr create` runs only on the literal word `create` in
-the invocation — then you deliver the title and description as always, run
-`gh pr create` with exactly those, and report the URL. The word has to be
-typed: a base ref, a card id, a branch that obviously wants a PR, or a PR you
-opened earlier count as context, and only the word counts as permission.
-Anything that would make the call wrong stops before it — zero commits over
-the base, a hole the branch left open, `gh` logged out, the branch still
-local — and you say which, with the draft delivered anyway.
+By default, only draft. Run `gh pr create` only when `(Your arguments: whatever you typed after the command name, when there was any.)` contains the
+literal word `create`, using exactly the generated title and body, then report
+the URL.
+
+Do not create the PR if there are zero commits, required information is
+missing, `gh` is unauthenticated, or the branch is not remote. Still return
+the draft and state the blocker.

@@ -1,39 +1,32 @@
-Produce one task/issue card. Read `.cursor/rules/concise-task.mdc`
-first: it holds the rules, and this file only the procedure.
+Create one task/issue card. First read
+`.cursor/rules/concise-task.mdc`; it defines the writing rules.
 
-The subject is the text below. If it is empty, the subject is the most recent
-problem or piece of work discussed in this conversation.
+Use `(Your arguments: whatever you typed after the command name, when there was any.)` as the subject. If empty, use the latest problem or work item
+from the conversation.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
 
-How:
+Process:
 
-1. Gather the exact values the card needs — path, command, error line,
-   number, environment — from the conversation and the repo. A value the
-   conversation left out is named as a hole; the card carries only values
-   that exist.
-2. When the subject is two cards ("and also"), say so and draft the first.
-3. Write it as the reference says, then check the draft against it and fix
-   what fails.
+1. Gather concrete values from the conversation and repo: paths, commands,
+   errors, numbers, environment. Never invent missing values; mark them as holes.
+2. If the subject contains multiple tasks, say so and draft only the first.
+3. Write and validate the card against the reference.
 
-Delivery: title on the first line, body in a fenced block, ready to paste —
-four backticks when the body carries a fence of its own, as repro commands
-do.
+Output:
+- title on the first line;
+- body in a fenced block, using four backticks when it contains inner fences.
 
-When the invocation names a destination — a board, a repo, a project — and a
-tool for it is available (MCP, `gh`), create it there after drafting:
+If `(Your arguments: whatever you typed after the command name, when there was any.)` names a destination and a compatible tool is available:
 
-1. **Search the destination for the symptom or subject first.** A likely
-   match gets linked and reported, and the card stays a draft.
-2. **On GitHub, use the matching form under `.github/ISSUE_TEMPLATE/`**: its
-   headers kept, filled in this register, "none" where the section is empty.
-3. **Fields, then text**: discover what the destination offers — labels,
-   members, statuses, priority — and put what the conversation settled into
-   the fields. What stayed unsettled keeps the default, and you say so.
-4. **Wire what's connected**: a named blocker or parent gets the real link —
-   a relation or subtask on a board, a `#number` on GitHub.
-5. Create, then report the id or link, the fields you set and the ones left
-   at default.
+1. Search for an existing card/issue first. If a likely duplicate exists,
+   report it and keep this as a draft.
+2. On GitHub, use the matching `.github/ISSUE_TEMPLATE/` form and preserve
+   its sections.
+3. Apply known labels, assignees, status, priority, and relationships.
+   Leave unsettled fields at default.
+4. Link known parents/blockers using native relations or `#number`.
+5. Create the card and report its link/id, applied fields, and defaults left.
 
-With the destination absent, deliver the draft alone and say where it can go.
-Create only where the invocation named.
+Without an explicit destination, return the draft only. Never create anywhere
+the invocation did not name.

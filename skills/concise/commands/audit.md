@@ -14,7 +14,7 @@ Resolve `$ARGUMENTS` in order:
 
 $ARGUMENTS
 
-Process:
+How:
 
 1. Get the exact text. If a file/reference cannot be reached, report the
    failure and stop; never reconstruct it.

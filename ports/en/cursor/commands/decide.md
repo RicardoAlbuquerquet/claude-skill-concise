@@ -1,48 +1,38 @@
-Lay out one decision that belongs to the reader, following the
-"Recommendations, choices and plans" section of the `concise` ruleset. Read `.cursor/rules/concise-full.mdc` first if the full ruleset is absent from the context.
+Present a decision that belongs to the reader, following the
+"Recommendations, choices and plans" section of the `concise` ruleset.
+Invoke that skill first if the rules are not in context.
 
-The subject is the text below. If it is empty, the subject is the choice most
-recently raised in this conversation.
+Use `(Your arguments: whatever you typed after the command name, when there was any.)` as the subject; if empty, use the most recent decision raised
+in the conversation.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
 
-Use this for the calls that belong to the reader: product trade-offs, money,
-risk appetite, anything irreversible. A call that *is* yours gets made, with
-what it cost.
+Use this for reader-owned choices: trade-offs, money, risk, or irreversible
+decisions. Decisions that belong to you should simply be made.
 
-Rules of the layout:
+Rules:
 
-- **Only the live options**, usually two or three. An option you would refuse
-  is filler dressed as a choice, and it makes the reader work through a row
-  to discover it was off the table. Say in one line which one you dropped and
-  why, and keep the table to the live ones.
-- **Side by side, in a table**: the option, what it gets them, what it costs.
-  Cells hold values and short phrases; the argument lives in the prose under
-  the table. Build it even when the whole answer is four lines; side by side
-  is what makes it a choice instead of a pitch.
-- **Then `Recommendation: X`**, with up to three lines for why it wins
-  *against the others specifically*. "Redis is the only one of the two that
-  survives a deploy" is a comparison; "Redis is fast" is a description.
-- **Name the condition that flips it.** "If the traffic stays under one
-  replica, the in-process counter is the right call" tells the reader which
-  fact to check; the flip condition is what turns a preference into a
-  judgement.
-- **Check the costs.** Read the config, the pricing page, the code that would
-  have to change. A cost you left unverified is named as unverified, in the
-  cell.
-- **What is irreversible says so**, and what the deadline is if there is one.
-- **Always end past "your call".** A block that hands over the options with
-  the advice taken out leaves the reader exactly where they were, holding a
-  choice whose costs only you measured.
+1. Keep only viable options, usually 2–3. If you reject one, say why in one
+   line instead of adding it to the table.
+2. Compare the live options side by side:
 
-Check the draft against the rules above and fix what fails before delivering.
+| Option | Gets | Costs |
+|---|---|---|
 
-Delivery: the table and the recommendation in the conversation. When the
-invocation names another destination, take that surface's register from the
-ruleset — a card or a chat panel is narrow, so the same content goes as one
-line per option with the cost after a dash, the table left for the wide
-surface. A decision record in a file keeps the table and adds the date and
-what was rejected.
+Keep cells short; put reasoning below the table.
+3. Follow with `Recommendation: X` and explain briefly why it wins specifically
+   against the alternatives.
+4. State the condition that would change the recommendation.
+5. Verify material costs from available code, config, pricing, or evidence.
+   Mark anything unverified explicitly.
+6. Flag irreversible choices and deadlines when relevant.
+7. Never stop at "your call": provide a recommendation.
 
-Draft only: acting on the recommendation waits for the reader to choose it,
-in their own words.
+Validate the draft against these rules before delivering.
+
+For narrow surfaces, replace the table with one line per option:
+`Option — cost`. Decision records in files keep the table and add the date and
+rejected alternatives.
+
+Draft only. Do not act on the recommendation until the reader explicitly
+chooses it.

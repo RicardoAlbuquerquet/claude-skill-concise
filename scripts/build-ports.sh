@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds ports/ from the two plugins: the same rules delivered as AGENTS.md,
+# Builds ports/ from the plugin: the same rules delivered as AGENTS.md,
 # as Cursor rules and as Cursor commands. One source, so a rule edited in the
 # skill reaches every tool; ports/ is committed so a user copies a file
 # instead of running a build.
@@ -26,12 +26,12 @@ trap 'rm -rf "$TMP"' EXIT
 EXPECTED="$TMP/expected.txt"; : > "$EXPECTED"
 fail=0
 
-# Files under ports/ that this script never writes: the two READMEs and the
-# four ChatGPT boxes.
+# Files under ports/ that this script never writes: the README and the two
+# ChatGPT boxes.
 authored () {
   case $1 in
-    README.md|README.pt-BR.md) return 0 ;;
-    en/chatgpt/*.md|pt-BR/chatgpt/*.md) return 0 ;;
+    README.md) return 0 ;;
+    en/chatgpt/*.md) return 0 ;;
   esac
   return 1
 }
@@ -63,40 +63,24 @@ emit () { # $1 = path under ports/, stdin = content
 
 rules_pl () { # $1 = lang, $2 = agents|cursor  -> path to a perl program
   out="$TMP/rules-$1-$2.pl"
-  if [ "$1" = en ]; then
-    case $2 in
-      agents) repl='`concise/$1.md`'
-              close='The rest of the ruleset sits beside this file, in the table below; read the one that matches whenever the turn calls for more than the trivial.' ;;
-      *)      repl='`.cursor/rules/concise-$1.mdc`'
-              close='The full ruleset is in `.cursor/rules/concise-full.mdc`; read it whenever the turn calls for more than the trivial.' ;;
-    esac
-    {
-      printf 's{Response style, active for the whole session \\(skill `concise`\\):}{Response style, active for the whole session:}g;\n'
-      printf 's{`references/([a-z-]+)\\.md`}{%s}g;\n' "$repl"
-      printf 's{Full ruleset in the `concise` skill; invoke it whenever the turn calls for\\s+more than the trivial\\.}{%s}gs;\n' "$close"
-      printf 's{/concise:}{/}g;\n'
-    } > "$out"
-  else
-    case $2 in
-      agents) repl='`respostas-curtas/$1.md`'
-              close='O resto das regras fica ao lado deste arquivo, na tabela abaixo; leia o que casa quando o turno pedir mais que o trivial.' ;;
-      *)      repl='`.cursor/rules/respostas-curtas-$1.mdc`'
-              close='As regras completas estão em `.cursor/rules/respostas-curtas-completo.mdc`; leia quando o turno pedir mais que o trivial.' ;;
-    esac
-    {
-      printf 's{Estilo de resposta, ativo em toda a sessão \\(skill `respostas-curtas`\\):}{Estilo de resposta, ativo em toda a sessão:}g;\n'
-      printf 's{`referencias/([a-z-]+)\\.md`}{%s}g;\n' "$repl"
-      printf 's{Regras completas na skill `respostas-curtas`; invoque-a quando o turno pedir\\s+mais que o trivial\\.}{%s}gs;\n' "$close"
-      printf 's{/respostas-curtas:}{/}g;\n'
-    } > "$out"
-  fi
+  case $2 in
+    agents) repl='`concise/$1.md`'
+            close='The rest of the ruleset sits beside this file, in the table below; read the one that matches whenever the task is more than trivial.' ;;
+    *)      repl='`.cursor/rules/concise-$1.mdc`'
+            close='The full ruleset is in `.cursor/rules/concise-full.mdc`; read it whenever the task is more than trivial.' ;;
+  esac
+  {
+    printf 's{Response style for the whole session \\(`concise` skill\\):}{Response style for the whole session:}g;\n'
+    printf 's{`references/([a-z-]+)\\.md`}{%s}g;\n' "$repl"
+    printf 's{Use the full `concise` ruleset whenever the task is more than trivial\\.}{%s}gs;\n' "$close"
+    printf 's{/concise:}{/}g;\n'
+  } > "$out"
   printf '%s' "$out"
 }
 
 cmds_pl () { # $1 = lang  -> path to a perl program
   out="$TMP/cmds-$1.pl"
-  if [ "$1" = en ]; then
-    cat > "$out" <<'PL_EN'
+  cat > "$out" <<'PL_EN'
 s{\$\{CLAUDE_PLUGIN_ROOT\}/references/([a-z-]+)\.md}{.cursor/rules/concise-$1.mdc}g;
 s{\$\{CLAUDE_PLUGIN_ROOT\}/references/}{.cursor/rules/}g;
 s{invoke\s+the\s+`concise`\s+skill\s+first}{read `.cursor/rules/concise-full.mdc` first}g;
@@ -105,17 +89,6 @@ s{— Read the file if given a path}{— read the file if given a path}g;
 s{/concise:}{/}g;
 s{\$ARGUMENTS}{(Your arguments: whatever you typed after the command name, when there was any.)}g;
 PL_EN
-  else
-    cat > "$out" <<'PL_PT'
-s{\$\{CLAUDE_PLUGIN_ROOT\}/referencias/([a-z-]+)\.md}{.cursor/rules/respostas-curtas-$1.mdc}g;
-s{\$\{CLAUDE_PLUGIN_ROOT\}/referencias/}{.cursor/rules/}g;
-s{invoque\s+a\s+skill\s+`respostas-curtas`\s+primeiro}{leia `.cursor/rules/respostas-curtas-completo.mdc` antes}g;
-s{Invoque\s+a\s+skill\s+antes}{Leia `.cursor/rules/respostas-curtas-completo.mdc` antes}g;
-s{— leia com Read se vier\s+caminho}{— leia o arquivo se vier caminho}gs;
-s{/respostas-curtas:}{/}g;
-s{\$ARGUMENTS}{(Seus argumentos: o que você digitou depois do nome do comando, quando houver.)}g;
-PL_PT
-  fi
   printf '%s' "$out"
 }
 
@@ -135,7 +108,6 @@ port () {
   portable ()    { body "$1" | perl -0777 -p "$CM"; }
 
   # -- AGENTS.md: the core, plus where the rest of the ruleset sits ----------
-  if [ "$LANG" = en ]; then
     { cat <<EOF
 # Writing style
 
@@ -171,44 +143,6 @@ With those files absent, the intentions above still govern.
 Source, and the Claude Code plugin these are generated from: $URL
 EOF
     } | emit "$P/AGENTS.md"
-  else
-    { cat <<EOF
-# Estilo de escrita
-
-Toda resposta, e todo texto que sai da conversa — mensagem de commit, descrição
-de PR, tarefa, comentário de revisão, nota de release, o texto dentro do
-código — segue as regras abaixo.
-
-Um nome como \`/pr\` ou \`/commit\` é um dos comandos que vêm junto com estas
-regras. Onde a sua ferramenta não tiver esse comando, leia o arquivo nomeado
-ao lado dele e escreva o texto você mesmo.
-
-EOF
-      agents_text "$S/hooks/$CORE"
-      cat <<EOF
-
-## Onde mora o resto das regras
-
-As regras acima são o estilo inteiro de uma resposta curta. Tudo que passa
-disso, e toda superfície que sai da conversa, tem arquivo próprio ao lado
-deste:
-
-| Escrevendo | Leia |
-|---|---|
-| Resposta que passa de uma linha — orçamentos, estrutura, desenhos, recomendações | \`$NAME/$FULL.md\` |
-| Descrição de pull request | \`$NAME/pr.md\` |
-| Tarefa ou issue | \`$NAME/tarefa.md\` |
-| Mensagem de commit | \`$NAME/commit.md\` |
-| Entrada de changelog ou nota de release | \`$NAME/changelog.md\` |
-| Comentário, resposta em thread ou recado para uma pessoa | \`$NAME/comentario.md\` |
-| Comentário, mensagem ou texto de tela dentro do código | \`$NAME/codigo.md\` |
-
-Com esses arquivos ausentes, as intenções acima continuam valendo.
-
-Fonte, e o plugin de Claude Code de onde isto é gerado: $URL
-EOF
-    } | emit "$P/AGENTS.md"
-  fi
 
   # -- the ruleset and the six surfaces, as plain files next to AGENTS.md ----
   agents_text "$S/SKILL.md" | emit "$P/$NAME/$FULL.md"
@@ -226,21 +160,12 @@ EOF
     cat
   }
 
-  if [ "$LANG" = en ]; then
-    cursor_text "$S/hooks/$CORE" |
+  cursor_text "$S/hooks/$CORE" |
       mdc "Response style for every reply: the answer in the first sentence, nothing padding it, every caveat that changes what the reader does kept" true |
       emit "$P/cursor/rules/$NAME.mdc"
     cursor_text "$S/SKILL.md" |
       mdc "The full concise ruleset: budgets per situation, what always keeps, what always cuts, structure, drawings, recommendations, plans" false |
       emit "$P/cursor/rules/$NAME-$FULL.mdc"
-  else
-    cursor_text "$S/hooks/$CORE" |
-      mdc "Estilo de resposta em toda mensagem: a resposta na primeira frase, nada enchendo, toda ressalva que muda o que a pessoa faz mantida" true |
-      emit "$P/cursor/rules/$NAME.mdc"
-    cursor_text "$S/SKILL.md" |
-      mdc "As regras completas de respostas-curtas: orçamentos por situação, o que sempre fica, o que sempre corta, estrutura, desenhos, recomendações, planos" false |
-      emit "$P/cursor/rules/$NAME-$FULL.mdc"
-  fi
 
   for f in "$S/$REFS"/*.md; do
     b=$(basename "$f" .md)
@@ -251,12 +176,6 @@ EOF
       en:changelog)    d="Rules for a changelog entry and release notes: what breaks first, with the migration beside it" ;;
       en:comment)      d="Rules for a review comment, a thread reply or a message to a person: the claim, then the line that proves it" ;;
       en:code)         d="Rules for the text inside code: a comment says what the code leaves unsaid, a screen says each thing once" ;;
-      pt-BR:pr)         d="Regras da descrição de pull request: o problema primeiro, o que foi feito, e o comando de teste exato no fim" ;;
-      pt-BR:tarefa)     d="Regras do card de tarefa ou issue que se sustenta sozinho: comportamento atual, esperado, valores exatos, critério de pronto" ;;
-      pt-BR:commit)     d="Regras da mensagem de commit: título na forma que o log do repositório usa, corpo que diz o porquê" ;;
-      pt-BR:changelog)  d="Regras da entrada de changelog e da nota de release: o que quebra primeiro, com a migração ao lado" ;;
-      pt-BR:comentario) d="Regras do comentário de revisão, resposta em thread ou recado para uma pessoa: a afirmação, e depois a linha que prova" ;;
-      pt-BR:codigo)     d="Regras do texto dentro do código: comentário diz o que o código deixa por dizer, tela diz cada coisa uma vez" ;;
       *) d="" ;;
     esac
     cursor_text "$f" | mdc "$d" false | emit "$P/cursor/rules/$NAME-$b.mdc"
@@ -265,7 +184,7 @@ EOF
   # -- Cursor commands ------------------------------------------------------
   for f in "$S/commands"/*.md; do
     n=$(basename "$f" .md)
-    if [ "$n" = audit ] || [ "$n" = auditar ]; then
+    if [ "$n" = audit ]; then
       # Claude Code hands this to a subagent that holds the checklist. With no
       # subagent to hand it to, the checklist comes inline: the command keeps
       # its opening — how to find the text — and the agent supplies the rest.
@@ -281,13 +200,11 @@ EOF
 }
 
 port concise          en    concise          core.md   references  full     'How:'
-port respostas-curtas pt-BR respostas-curtas nucleo.md referencias completo 'Como:'
 
 # ------------------------------------------------------------------ verify --
 if [ "$MODE" = check ]; then
   while read -r rel; do
-    # CRLF in the checked-out copy is the checkout's doing, not a drift — the
-    # same normalization check-parity.sh applies for the same reason.
+    # CRLF in the checked-out copy is the checkout's doing, not a drift.
     if cmp -s "$TMP/ports/$rel" <(tr -d '\r' < "$ROOT/ports/$rel" 2>/dev/null); then
       printf '%-46s ok\n' "$rel"
     else
@@ -324,11 +241,11 @@ fi
 # The plugin's own names reach a tool that has none of them: a path under
 # `references/`, the `/concise:` prefix, `$ARGUMENTS`, the skill to invoke.
 # Each one is an instruction the reader cannot follow. Generated files only —
-# the two READMEs name this syntax for a living, and a guard that flags the
+# the README names this syntax for a living, and a guard that flags the
 # document explaining it is the false positive this repo keeps rediscovering.
 leftovers=""
 while read -r rel; do
-  grep -qE '\$ARGUMENTS|CLAUDE_PLUGIN_ROOT|/concise:|/respostas-curtas:|`referenc' "$TMP/ports/$rel" 2>/dev/null &&
+  grep -qE '\$ARGUMENTS|CLAUDE_PLUGIN_ROOT|/concise:|`referenc' "$TMP/ports/$rel" 2>/dev/null &&
     leftovers="$leftovers $rel"
 done < "$EXPECTED"
 if [ -n "$leftovers" ]; then
@@ -368,7 +285,5 @@ size () { # $1 = path under ports/, $2 = ceiling
 
 size en/chatgpt/custom-instructions.md          1500
 size en/chatgpt/project-instructions.md         8000
-size pt-BR/chatgpt/instrucoes-personalizadas.md 1500
-size pt-BR/chatgpt/instrucoes-de-projeto.md     8000
 
 exit $fail
