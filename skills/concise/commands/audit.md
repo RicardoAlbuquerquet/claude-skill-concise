@@ -29,5 +29,4 @@ Output:
 - include every violation and hole;
 - if clean, stop after that line.
 
-Then add exactly one final line with the `/concise:rewrite` invocation that
-would fix the findings. Do not rewrite or modify the source here.
+Then add exactly one final line with the `/concise:rewrite` invocation only when the report contains violations or holes. If the report is `clean`, stop after the verdict line.
