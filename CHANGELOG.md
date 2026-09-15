@@ -5,6 +5,19 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.87.0 — 2026-09-15
+
+O guarda de crédito passa a ler a mensagem de commit ou PR guardada num
+arquivo cujo caminho usa variável — o jeito mais comum de um script passar o
+texto.
+
+- **`W=...; gh pr create --body-file "$W/pr.md"` agora é conferido**, assim
+  como `export`, `~`, `$HOME` e, no PowerShell, `$W = ...` e `$env:`.
+  Antes o guarda não achava o arquivo e deixava passar.
+- **Uma variável que o comando não define e o ambiente não tem continua sem
+  leitura**, sem inventar um caminho.
+- Sete testes novos; os seis de leitura falham no guarda antigo.
+
 ## 1.86.1 — 2026-09-14
 
 Os comandos, as referências e o agente de auditoria ficam mais curtos,

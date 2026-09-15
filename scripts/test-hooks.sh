@@ -206,6 +206,26 @@ for b in date find git mkdir rmdir cat grep sed head printf; do p=$(command -v "
 (cd "$SU" && HOME="$SU" PATH="$SU/bin" "$BASH" "$REPO/skills/concise/hooks/self-update.sh" concise)
 [ -f "$SU/.claude/.concise-update-failed" ] && { pass=$((pass+1)); echo "ok    self-update sem CLI deixa a marca de falha"; } || { fail=$((fail+1)); echo "FALHA self-update sem CLI saiu calado"; }
 
+echo "--- guarda le o arquivo nomeado por variavel"
+CG="$REPO/skills/concise/hooks/credit-guard.sh"
+VD="$FH/vars"; mkdir -p "$VD"
+T="Co-Authored"; T="$T-By: Claude Opus 5 <noreply@anthropic.com>"
+printf 'fix: x\n\n%s\n' "$T" > "$VD/msg.txt"; cp "$VD/msg.txt" "$FH/msg.txt"
+printf 'fix: x\n' > "$VD/limpo.txt"
+cgv () { payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:process.argv[1],tool_input:{command:process.argv[2]}}))' "$1" "$2"); printf '%s' "$payload" | HOME="$FH" bash "$CG" RAZAO .concise-no-credit-guard; }
+while IFS='|' read -r nome ferramenta comando; do
+  case "$(cgv "$ferramenta" "$comando")" in *deny*) pass=$((pass+1)); echo "ok    guarda le arquivo por $nome";; *) fail=$((fail+1)); echo "FALHA guarda nao leu arquivo por $nome";; esac
+done <<LISTA
+variavel do bash|Bash|W="$VD"; gh pr create --title x --body-file "\$W/msg.txt"
+export|Bash|export W=$VD && git commit -F "\$W/msg.txt"
+til|Bash|git commit -F ~/msg.txt
+variavel HOME|Bash|git commit -F "\$HOME/msg.txt"
+variavel do PowerShell|PowerShell|\$W = "$VD"; gh pr create --title x --body-file "\$W/msg.txt"
+env do PowerShell|PowerShell|git commit -F "\$env:HOME/msg.txt"
+LISTA
+# a mesma resolucao nao inventa credito numa mensagem limpa
+case "$(cgv Bash "W=\"$VD\"; git commit -F \"\$W/limpo.txt\"")" in *deny*) fail=$((fail+1)); echo "FALHA guarda barrou mensagem limpa por variavel";; *) pass=$((pass+1)); echo "ok    mensagem limpa por variavel passa";; esac
+
 echo "--- stop-audit (extra, opt-in)"
 SA="$REPO/extras/stop-audit/stop-audit.sh"
 SAD="$FH/sa"; mkdir -p "$SAD/bin"
