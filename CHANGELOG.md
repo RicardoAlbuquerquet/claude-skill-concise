@@ -5,6 +5,21 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.89.0 — 2026-09-15
+
+O guarda de crédito passa a conferir o commit como o git o guardou, na hora do
+push, e não só o texto do comando que o criou.
+
+- **Antes de `git push`, `gh pr create` e `glab mr create`, o guarda lê a
+  mensagem de cada commit que vai subir.** Uma assinatura de agente que entrou
+  por script, editor ou arquivo apagado depois é barrada ali, com o commit
+  apontado.
+- **O intervalo é o que o push manda**: depois do upstream da branch, ou do
+  branch padrão do remoto quando a branch ainda não tem upstream.
+- As três lacunas desta semana vieram do mesmo lugar — ler o comando em vez do
+  resultado. A leitura do comando continua, e o push fecha o que ela deixar
+  passar.
+
 ## 1.88.1 — 2026-09-15
 
 - **O guarda de crédito barra a assinatura que um patch do Codex adiciona.** O

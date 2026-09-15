@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Denies a call that would put AI credit into a commit, PR, issue, release,
-# card or file. Deterministic string match, no API call.
+# card or file. Deterministic string match, no API call. Reading the command
+# text leaks: a message can reach git through a variable, a script or an
+# editor. So a push also reads the messages git actually stored for every
+# commit about to leave, whatever wrote them.
 #   $1 = deny reason shown to the model
 #   $2 = opt-out flag file under ~/.claude
 # Escape hatch for writing *about* the rule (this repo does): export
@@ -22,9 +25,34 @@ case "$tool" in
     # issue body or comment, a squash merge, a release note, a raw API write —
     # on GitHub or GitLab. Git takes options before the verb: `git -c k=v
     # commit` is a commit too.
+    publishes=0; pushes=0
     printf '%s' "$in" |
-      grep -qE 'git( +-[cC] +[^ ]+| +--[a-z-]+(=[^ ]+)?)* +(commit|tag)|gh (pr|issue) (create|edit|comment|review|merge)|gh release (create|edit)|gh api|glab (mr|issue) (create|update|note|merge)|glab release (create|update)|glab api' ||
-      exit 0
+      grep -qE 'git( +-[cC] +[^ ]+| +--[a-z-]+(=[^ ]+)?)* +(commit|tag)|gh (pr|issue) (create|edit|comment|review|merge)|gh release (create|edit)|gh api|glab (mr|issue) (create|update|note|merge)|glab release (create|update)|glab api' &&
+      publishes=1
+    printf '%s' "$in" |
+      grep -qE 'git( +-[cC] +[^ ]+| +--[a-z-]+(=[^ ]+)?)* +push|gh pr create|glab mr create' &&
+      pushes=1
+    [ "$publishes" = 1 ] || [ "$pushes" = 1 ] || exit 0
+
+    # The commits a push sends: past the upstream when the branch has one,
+    # past the remote's default branch otherwise. `git -C dir` names the repo;
+    # without it the hook's own directory is the project.
+    if [ "$pushes" = 1 ]; then
+      repo=$(printf '%s' "$in" | sed 's/\\"/"/g' | grep -oE 'git +-C +("[^"]+"|[^ ]+)' | head -1 | sed -E 's/^git +-C +"?//; s/"$//')
+      g () { if [ -n "$repo" ]; then git -C "$repo" "$@"; else git "$@"; fi; }
+      base=$(g rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null) ||
+        base=$(g rev-parse --abbrev-ref origin/HEAD 2>/dev/null) || base=""
+      if [ -n "$base" ]; then
+        hit=$(g log --format='%h%x09%B%x00' "$base..HEAD" 2>/dev/null | tr '\000' '\036' |
+          awk 'BEGIN{RS="\036"} tolower($0) ~ /(^|\n)[ \t]*co-authored-by:[^\n]*(claude|copilot|gemini|cursor|codex|gpt|anthropic\.com)|generated with[^\n]*(claude|copilot|gemini|cursor|codex)/ {sub(/^\n/,""); split($0,a,"\t"); print a[1]; exit}')
+        if [ -n "$hit" ]; then
+          reason="$reason Commit $hit, about to be pushed, carries it: reword it with git commit --amend or an interactive rebase."
+          printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"%s"}}\n' "$reason"
+          exit 0
+        fi
+      fi
+      [ "$publishes" = 1 ] || exit 0
+    fi
 
     # A message passed as a file is invisible in the command string — read
     # every file the call names, by flag or by `cat`, quoted or bare. Quotes
