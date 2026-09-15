@@ -5,6 +5,15 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.88.1 — 2026-09-15
+
+- **O guarda de crédito barra a assinatura que um patch do Codex adiciona.** O
+  Codex edita arquivo por patch, e a linha adicionada chega com `+` na frente,
+  que o guarda não reconhecia.
+- **O README ensina a instalar no Codex**, e descreve o self-update como ele é
+  desde a 1.79.0: a cada seis horas, com nova tentativa na sessão seguinte a
+  uma falha.
+
 ## 1.88.0 — 2026-09-15
 
 O plugin passa a funcionar também no Codex, que lê este mesmo marketplace e os

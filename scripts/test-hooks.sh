@@ -255,6 +255,13 @@ out=$(printf '{"tool_name":"Bash","session_id":"cx","tool_input":{"command":"gh 
 out=$(cx bash "$HK/notices.sh" concise "BEM-VINDO" "AVISO %s")
 [ -z "$out" ] && { pass=$((pass+1)); echo "ok    codex nao mostra as notas do claude"; } || { fail=$((fail+1)); echo "FALHA notices falou no codex: $out"; }
 
+# o codex edita arquivo por patch, e a linha adicionada chega com "+"
+T="Co-Authored"; T="$T-By: Claude Opus 5 <noreply@anthropic.com>"
+patch=$(printf '*** Begin Patch\n*** Update File: msg.txt\n@@\n fix: x\n+\n+%s\n*** End Patch' "$T")
+payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"apply_patch",tool_input:{command:process.argv[1]}}))' "$patch")
+out=$(printf '%s' "$payload" | cx bash "$HK/credit-guard.sh" RAZAO .concise-no-credit-guard)
+case "$out" in *deny*) pass=$((pass+1)); echo "ok    codex: credito num patch e barrado";; *) fail=$((fail+1)); echo "FALHA codex: credito num patch passou";; esac
+
 # o manifesto do codex acompanha o do claude em nome e versao
 cm="$REPO/skills/concise/.codex-plugin/plugin.json"; lm="$REPO/skills/concise/.claude-plugin/plugin.json"
 nv () { perl -MJSON::PP -e 'local $/; my $j = decode_json(<STDIN>); print "$j->{name} $j->{version}"' < "$1"; }
