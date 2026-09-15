@@ -5,7 +5,7 @@
 * Comments and replies are read mid-task and without this conversation.
 * File and line references make feedback actionable.
 * Threads are temporary; permanent context belongs in the card, PR, or linked document.
-* Do not hide requests behind generic praise.
+* State the request plainly, apart from any praise.
 
 ## Desires
 
@@ -23,7 +23,7 @@ Example:
 
 * Keep comments to **≤3 lines**; one line is preferred.
 * Use plain text. Move complex explanations to the PR, card, or document.
-* Do not repeat context already present in the thread.
+* Add only what is new to the thread.
 * **One comment, one point** so it can be resolved independently.
 
 ### Uncertainty

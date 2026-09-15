@@ -9,7 +9,7 @@ alwaysApply: false
 
 * A task or issue must **stand alone**; the reader may see it weeks later without the original conversation.
 * The title is scanned first, so it must say what changes quickly.
-* Do not repeat tracker fields in the body.
+* Tracker fields live in the tracker; the body carries the rest.
 * Duplicates split discussion and waste triage.
 * Keep decision history out unless it changes what must be done.
 
@@ -47,7 +47,7 @@ Avoid:
 
 `Invoice filter`
 
-Do not repeat information already carried by labels or tracker fields.
+Labels and tracker fields carry their own information; the body carries the rest.
 
 ## Body
 
@@ -72,7 +72,8 @@ Keep one label per line.
 * Use headers only when the body exceeds ~15 lines and has distinct sections.
 * Use tables only for real comparisons with several rows and columns.
 * Keep technical references in prose only when the reader will open, type, or use them; move the rest to **Where**.
-* Never write references such as “as discussed” or “the issue you mentioned”. State the fact directly.
+* State the fact directly, in place of references such as “as discussed” or “the
+  issue you mentioned”.
 
 ## Scope
 

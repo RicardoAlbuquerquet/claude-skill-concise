@@ -12,7 +12,7 @@ $ARGUMENTS
 Process:
 
 1. Determine the target:
-   - paths from `$ARGUMENTS`; directories mean their source files;
+   - paths from the argument; directories mean their source files;
    - otherwise, files changed from `origin/main...HEAD` plus uncommitted files.
    If none exist, say so and stop.
    Exclude generated/vendor code, lockfiles, and migrations.
@@ -28,8 +28,8 @@ Process:
    string and report why.
 6. Run the repository's relevant lint/tests and retain the result line.
 
-Do not change executable behavior, names, conditions, or structure. Do not
-commit.
+Executable behavior, names, conditions and structure stay as they are. The
+commit is the user's.
 
 Deliver:
 - intentionally preserved text and reason, when any;

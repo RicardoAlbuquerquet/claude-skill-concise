@@ -1,11 +1,11 @@
 Draft one plan for approval following the `concise` ruleset. If its full rules
 are missing, invoke the skill first.
 
-Use `(Your arguments: whatever you typed after the command name, when there was any.)` as the subject; if empty, use the work most recently discussed.
+Use the argument as the subject; if empty, use the work most recently discussed.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
 
-This only drafts the plan. Do not execute step 1 until approval in a later turn.
+This only drafts the plan. Step 1 starts on approval, in a later turn.
 
 Rules:
 
@@ -22,12 +22,12 @@ Rules:
 7. If the flow has 3+ hops, retries, branches, or rollback paths, include a
    labelled ASCII flow in a fenced block.
 
-Do not include investigation already completed just to build the plan.
+Keep the investigation that led here in your notes.
 
 Validate the draft against these rules before delivering it.
 
 Output the plan as prose in the conversation. Use a fenced block only when
-`(Your arguments: whatever you typed after the command name, when there was any.)` explicitly says the plan is for another surface such as a card,
+the argument explicitly says the plan is for another surface such as a card,
 document, or message.
 
 After the plan, include only information needed from the reader.

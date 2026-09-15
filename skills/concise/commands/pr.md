@@ -6,7 +6,7 @@ argument-hint: "[base ref, `create`, extra context]"
 Draft the PR for the current branch. First read
 `${CLAUDE_PLUGIN_ROOT}/references/pull-request.md`; it defines the writing rules.
 
-Parse `$ARGUMENTS`:
+Parse the argument:
 - first resolvable git ref → base;
 - literal `create` → permission to open the PR;
 - everything else → context.
@@ -32,10 +32,10 @@ Output:
 - body inside a four-backtick fence;
 - afterward, only unresolved branch information as `Missing: ...`, one per line.
 
-By default, only draft. Run `gh pr create` only when `$ARGUMENTS` contains the
+By default, only draft. Run `gh pr create` only when the argument contains the
 literal word `create`, using exactly the generated title and body, then report
 the URL.
 
-Do not create the PR if there are zero commits, required information is
-missing, `gh` is unauthenticated, or the branch is not remote. Still return
-the draft and state the blocker.
+Create the PR only with commits over the base, every required value filled,
+`gh` authenticated and the branch on the remote. Otherwise return the draft
+and state the blocker.

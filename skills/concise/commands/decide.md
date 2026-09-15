@@ -7,7 +7,7 @@ Present a decision that belongs to the reader, following the
 "Recommendations, choices and plans" section of the `concise` ruleset.
 Invoke that skill first if the rules are not in context.
 
-Use `$ARGUMENTS` as the subject; if empty, use the most recent decision raised
+Use the argument as the subject; if empty, use the most recent decision raised
 in the conversation.
 
 $ARGUMENTS
@@ -31,7 +31,7 @@ Keep cells short; put reasoning below the table.
 5. Verify material costs from available code, config, pricing, or evidence.
    Mark anything unverified explicitly.
 6. Flag irreversible choices and deadlines when relevant.
-7. Never stop at "your call": provide a recommendation.
+7. End past "your call", with a recommendation.
 
 Validate the draft against these rules before delivering.
 
@@ -39,5 +39,5 @@ For narrow surfaces, replace the table with one line per option:
 `Option — cost`. Decision records in files keep the table and add the date and
 rejected alternatives.
 
-Draft only. Do not act on the recommendation until the reader explicitly
+Draft only. Act on the recommendation once the reader explicitly
 chooses it.

@@ -6,7 +6,7 @@ argument-hint: "[subject, optionally destination]"
 Draft one comment or message. First read
 `${CLAUDE_PLUGIN_ROOT}/references/comment.md`; it defines the writing rules.
 
-Use `$ARGUMENTS` as the subject. If empty, use the most recent relevant
+Use the argument as the subject. If empty, use the most recent relevant
 context.
 
 $ARGUMENTS

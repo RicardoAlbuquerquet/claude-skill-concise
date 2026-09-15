@@ -1,7 +1,7 @@
 Draw one diagram following the "Show the shape" section of the `concise`
 ruleset.
 
-Use `(Your arguments: whatever you typed after the command name, when there was any.)` as the subject. If empty, use the mechanism most recently
+Use the argument as the subject. If empty, use the mechanism most recently
 explained in this conversation.
 
 (Your arguments: whatever you typed after the command name, when there was any.)

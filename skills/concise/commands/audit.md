@@ -6,7 +6,7 @@ argument-hint: "[text, file, PR/issue URL — empty audits previous reply]"
 Audit a finished text against the `concise` checklist. Report only; rewriting
 belongs to `/concise:rewrite`.
 
-Resolve `$ARGUMENTS` in order:
+Resolve the argument in order:
 1. existing file path → read it;
 2. reachable PR/issue → fetch its body;
 3. otherwise → use the argument as text;
@@ -17,7 +17,7 @@ $ARGUMENTS
 How:
 
 1. Get the exact text. If a file/reference cannot be reached, report the
-   failure and stop; never reconstruct it.
+   failure and stop; the audit reads only the real text.
 2. Identify the destination: chat, PR, issue/task, commit, or comment.
    If unclear, assume chat and state that.
 3. Send the text and destination to the `audit` agent.

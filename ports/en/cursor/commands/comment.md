@@ -1,7 +1,7 @@
 Draft one comment or message. First read
 `.cursor/rules/concise-comment.mdc`; it defines the writing rules.
 
-Use `(Your arguments: whatever you typed after the command name, when there was any.)` as the subject. If empty, use the most recent relevant
+Use the argument as the subject. If empty, use the most recent relevant
 context.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
