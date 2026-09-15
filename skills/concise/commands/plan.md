@@ -1,51 +1,40 @@
 ---
-description: Draft the plan for approval — steps, risk, what it leaves out
-argument-hint: "[what the plan is for — empty uses the work under discussion]"
+description: Draft an approval plan — steps, risks, exclusions
+argument-hint: "[plan subject — empty uses the current work]"
 ---
 
-Write one plan for approval, following the "Recommendations, choices and
-plans" section of the `concise` ruleset. Invoke the skill first if the full
-ruleset is absent from the context.
+Draft one plan for approval following the `concise` ruleset. If its full rules
+are missing, invoke the skill first.
 
-The subject is the text below. If it is empty, the subject is the work most
-recently under discussion in this conversation.
+Use `$ARGUMENTS` as the subject; if empty, use the work most recently discussed.
 
 $ARGUMENTS
 
-This drafts the *text* of a plan; plan mode and step one stay off until the
-reader approves it — the reader is deciding whether to let you spend their
-time, and that decision happens after they read it.
+This only drafts the plan. Do not execute step 1 until approval in a later turn.
 
-Rules of the plan:
+Rules:
 
-- **It opens with what you will do**; what you found out getting here stays
-  in your notes. The first line is step one and the last line is the last
-  step.
-- **Numbered steps you will actually run**, in order, each naming the file it
-  touches or the command it runs. `src/auth/refresh.rs` and
-  `npm test -- auth` are steps; "investigate the auth flow" is what you
-  already did to write this.
-- **One step, one action.** A step carrying "and then" is two steps, and the
-  reader approving it needs to see which half is which.
-- **The risk, named** — what could break, what is irreversible, what you are
-  unsure of and would find out only by starting. The risk section is what
-  shows the plan was stress-tested. Anything that rewrites shared state — a
-  force-push, a migration, a deleted branch — gets its own line, apart from
-  the step it belongs to.
-- **What it leaves out**, when a reader could reasonably expect it in scope.
-- **What you need from them before step 1** — an access, a decision, a value
-  you lack — goes in its own block, apart from what merely informs them.
-- **Ground it before you write it.** Read the files the steps name. A step
-  pointing at a function that is missing is found by the reader, after they
-  approved it. Say which steps you left unverified.
-- **Draw it when it branches** — a plan with three or more hops, a retry, or
-  a rollback path gets the ASCII in a fenced block, arrows labelled.
+1. Start directly with numbered execution steps, in order.
+2. Each step must be one concrete action and name the file touched or command run.
+3. Ground the plan first: read every file referenced by a step. Mark any
+   unverified step explicitly.
+4. Add **Risks**: what may break, is irreversible, or remains uncertain.
+   Shared-state changes such as migrations, force-pushes, or deletions get
+   their own risk line.
+5. Add **Out of scope** when something could reasonably be expected but is excluded.
+6. Add **Needed before step 1** only for access, decisions, or missing values
+   required to begin.
+7. If the flow has 3+ hops, retries, branches, or rollback paths, include a
+   labelled ASCII flow in a fenced block.
 
-Check the draft against the rules above and fix what fails before delivering.
+Do not include investigation already completed just to build the plan.
 
-Delivery: the plan as prose in the conversation, since it is read here to be
-approved. Put it in a fenced block only when the invocation says it goes
-somewhere else — a card, a doc, a message — and pick that surface's register
-from the ruleset. After it, only what you need from the reader.
+Validate the draft against these rules before delivering it.
 
-Draft only: step 1 starts on the reader's approval, given in a later turn.
+Output the plan as prose in the conversation. Use a fenced block only when
+`$ARGUMENTS` explicitly says the plan is for another surface such as a card,
+document, or message.
+
+After the plan, include only information needed from the reader.
+
+Draft only: execution starts only after explicit approval in a later turn.

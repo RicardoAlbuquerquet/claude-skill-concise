@@ -1,41 +1,34 @@
 ---
-description: Draft the commit message for what is staged — `run` commits it
-argument-hint: "[`run` to commit it, context beyond the diff]"
+description: Draft a commit for staged changes — `run` commits it
+argument-hint: "[`run`, extra context]"
 ---
 
-Draft one commit message for what is currently staged. Read
-`${CLAUDE_PLUGIN_ROOT}/references/commit.md` first: it holds the rules, and
-this file only the procedure.
+Draft one commit message for the currently staged changes. First read
+`${CLAUDE_PLUGIN_ROOT}/references/commit.md`; it defines the writing rules.
 
-Optional context from the caller — constraints or reasons beyond the diff.
-The literal word `run` anywhere in it is the permission to commit:
+`$ARGUMENTS` may provide extra context. The literal word `run` grants
+permission to commit.
 
 $ARGUMENTS
 
-How:
+Process:
 
-1. `git diff --staged --stat`, then the staged diff itself. With the stage
-   empty, say so and stop — the draft comes from the stage alone.
-2. `git log --oneline -15` for the shape the titles share — prefix, ticket
-   codes, language, casing — and a commitlint config (`.commitlintrc*`,
-   `commitlint.config.*`), where the prefix is a requirement. When the log
-   carries tickets, the branch name often holds this one (`ABC-123-…`); a
-   ticket goes in only when the branch or the caller gave it.
-3. Which area the staged paths touch, when the repo holds more than one, and
-   how the log writes it (`fix(invoices):`, a bare `invoices:`, a ticket
-   code). One area only: the title stays bare in a repo whose log is bare.
-4. Write it as the reference says; count the body lines before delivering.
-5. Two unrelated changes staged: say so, draft the message for the dominant
-   one, and give the exact `git restore --staged <paths>` that splits the
-   other out.
+1. Inspect `git diff --staged --stat` and the staged diff.
+   If nothing is staged, say so and stop.
+2. Inspect `git log --oneline -15` and any commitlint config to infer title
+   conventions: prefix, scope, ticket, language, and casing.
+   Add a ticket only when supplied by the branch name or caller.
+3. Infer the affected area from staged paths and follow the repository's
+   existing scope style.
+4. Write the message according to the reference and validate body length.
+5. If staged changes contain two unrelated concerns, stop: draft for the
+   dominant one and provide the exact `git restore --staged <paths>` needed
+   to separate the other.
 
-Deliver the message in a fenced block, ready for the editor or
-`git commit -m` — title, blank line, body.
+Output the complete message in a fenced block: title, blank line, body.
 
-Draft by default: `git commit` runs only on the literal word `run` in the
-invocation — then you deliver the message as always, commit exactly it, and
-report the short sha. The word has to be typed; staged changes waiting, or a
-commit you made earlier, count as context, and only the word counts as
-permission. If step 5 found two unrelated changes, you stop and give the
-`git restore --staged`, and the commit waits for a message that describes all
-of what lands.
+By default, only draft. Run `git commit` only when `$ARGUMENTS` contains the
+literal word `run`, using exactly the generated message, then report the short
+SHA.
+
+Do not commit when unrelated changes must first be split.
