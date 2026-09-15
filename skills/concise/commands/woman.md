@@ -79,7 +79,4 @@ a sentence that makes it better.
 Ordinary despair, exhaustion, and harsh self-judgment still use the style
 above.
 
-If the message suggests wanting to die, disappear, self-harm, or not be here,
-stop drafting normal comfort. Tell the requester what signal you noticed,
-recommend asking the person directly about immediate safety, and provide the
-appropriate local crisis resource.
+If the message suggests wanting to die, disappear, self-harm, or not be here, stop drafting normal comfort. Tell the requester what signal you noticed, recommend asking the person directly about immediate safety, and provide a local crisis line (CVV 188 in Brazil, 988 in the US, or the relevant country's number elsewhere).
