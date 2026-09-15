@@ -1,46 +1,40 @@
 ---
-description: Draft the plan for approval — steps, risk, what it leaves out
-argument-hint: "[what the plan is for — empty uses the work under discussion]"
+description: Draft an approval plan — steps, risks, exclusions
+argument-hint: "[plan subject — empty uses the current work]"
 ---
 
-Write one plan for approval, following the "Recommendations, choices and
-plans" section of the `concise` ruleset. Invoke the skill first if the full
-ruleset is absent from the context.
+Draft one plan for approval following the `concise` ruleset. If its full rules
+are missing, invoke the skill first.
 
-The subject is the text below; empty, it is the work most recently under
-discussion:
+Use the argument as the subject; if empty, use the work most recently discussed.
 
 $ARGUMENTS
 
-## Beliefs
+This only drafts the plan. Step 1 starts on approval, in a later turn.
 
-- The reader is deciding whether to let you spend their time, and decides
-  after reading — plan mode and step one stay off until they approve.
-- What you found out getting here belongs in your notes.
-- A step carrying "and then" is two steps.
-- A step pointing at a function that is missing gets found by the reader,
-  after they approved it.
+Rules:
 
-## Desires
+1. Start directly with numbered execution steps, in order.
+2. Each step must be one concrete action and name the file touched or command run.
+3. Ground the plan first: read every file referenced by a step. Mark any
+   unverified step explicitly.
+4. Add **Risks**: what may break, is irreversible, or remains uncertain.
+   Shared-state changes such as migrations, force-pushes, or deletions get
+   their own risk line.
+5. Add **Out of scope** when something could reasonably be expected but is excluded.
+6. Add **Needed before step 1** only for access, decisions, or missing values
+   required to begin.
+7. If the flow has 3+ hops, retries, branches, or rollback paths, include a
+   labelled ASCII flow in a fenced block.
 
-- The reader approves knowing the risk, the cost and what is out of scope.
+Keep the investigation that led here in your notes.
 
-## Intentions
+Validate the draft against these rules before delivering it.
 
-- Open on step one and close on the last step.
-- Number the steps you will actually run, each naming the file it touches or
-  the command it runs: `src/auth/refresh.rs` and `npm test -- auth` are steps.
-- Name the risk — what could break, what is irreversible, what you would learn
-  only by starting. Anything that rewrites shared state, a force-push, a
-  migration, a deleted branch, gets its own line.
-- Say what the plan leaves out, where the reader could expect it in scope.
-- Put what you need before step 1 — an access, a decision, a value you lack —
-  in its own block, apart from what merely informs them.
-- Ground it first by reading the files the steps name, and say which steps you
-  left unverified.
-- Draw it when it branches: three or more hops, a retry or a rollback path get
-  ASCII in a fenced block, arrows labelled.
-- Check the draft against these rules, then deliver it as prose here, since it
-  is read here to be approved; a fenced block in that surface's register only
-  when the invocation sends it elsewhere.
-- Draft only: step 1 starts on the reader's approval, in a later turn.
+Output the plan as prose in the conversation. Use a fenced block only when
+the argument explicitly says the plan is for another surface such as a card,
+document, or message.
+
+After the plan, include only information needed from the reader.
+
+Draft only: execution starts only after explicit approval in a later turn.

@@ -7,48 +7,61 @@ alwaysApply: false
 
 ## Beliefs
 
-- **What you write into an application is read by people who see it there for
-  the first time**: the next developer, in a comment, and whoever uses the
-  product, on the screen — mid-task, and reading each thing once.
-- **The diff's home is the commit.** After the merge, a comment about the edit
-  points at a version only git still holds.
-- **A file's own comment density is its convention.**
-- **A string that a test, a snapshot or another locale matches** breaks them
-  when it changes alone.
+* Code comments and UI text are read **in context and often only once**.
+* **Changes belong in git history**, not comments.
+* Preserve the file's existing comment density.
+* Strings referenced by tests, snapshots, or locales must change together.
 
 ## Desires
 
-- The next developer reads only what the code leaves unsaid, and the person on
-  the screen reads each thing once and keeps everything they decide with.
+* Developers read only what the code does not already explain.
+* Users see each message once and retain everything needed to act or decide.
 
 ## Intentions
 
-- **A comment says what the code leaves unsaid** — why it is this way, the
-  trap, the unit: `// the bank rejects more than 2 decimals, so round before
-  signing`. Most lines stand on their own. One the next line already says goes
-  (`// increment the counter`), and so does a docstring that retells the
-  signature in words.
-- **The edit itself stays in the commit**: "now uses the new client", "fixed
-  the race", "was 30" describe the diff.
-- **Commented-out code goes, and so does a banner splitting the file**; a
-  file with zero comments keeps its density.
-- **A message names what failed, with the value, and what to do**:
-  `port "80a" in config.yaml is not a number` beats `Invalid configuration`.
-  On screen, the same in the user's words — the stack trace, the status code
-  and "Oops" stay out.
-- **A screen says each thing once**: a subtitle repeating the title
-  (`Invoices` over `View and manage your invoices`), a placeholder repeating
-  the label, a tooltip repeating the button, a toast for a change the user
-  just watched happen — each is the same sentence twice, and the second goes.
-- **A button is the verb of what it does** — `Save draft`, `Delete` — where
-  `OK` and `Click here` say what any button does; and a confirmation asks with
-  the consequence: `Cancel the plan? Access ends on May 31.`
-- **Tone words go**: "please", "successfully", "simply", the exclamation mark,
-  the line welcoming someone to a page they already opened.
-- **What only looks cuttable stays**: the consequence of an irreversible
-  action, a value the person decides with (a price, a deadline, a file size),
-  where a result lands when the screen lacks the room to show it, the one way
-  out of an error, text a law or a contract requires, and the accessible name
-  — an icon-only button keeps its `aria-label` when the visible word goes.
-- **A string changes in every test, snapshot and locale that matches it at
-  once, or stays as it is.**
+### Code comments
+
+* **Comment only what the code leaves unsaid:** why, traps, assumptions, or units.
+* Remove comments that repeat the next line or docstrings that restate signatures.
+* The edit itself belongs in the commit message.
+* Remove commented-out code and decorative section banners.
+* Respect the file's existing comment style and density.
+
+### Errors and messages
+
+* **Say what failed, include the relevant value, and give the next action when needed.**
+
+Prefer:
+
+`port "80a" in config.yaml is not a number`
+
+over:
+
+`Invalid configuration`
+
+* Hide stack traces, status codes, and generic filler from users unless actionable.
+
+### UI text
+
+* **Say each thing once.** Remove subtitles, placeholders, tooltips, or toasts that repeat nearby text.
+* **Buttons name the action:** `Save draft`, `Delete`, `Cancel plan`; avoid `OK` or `Click here`.
+* Confirm irreversible actions with their consequence:
+
+`Cancel the plan? Access ends on May 31.`
+
+* Remove filler such as `please`, `successfully`, `simply`, unnecessary greetings, and decorative exclamation marks.
+
+### Always keep
+
+Preserve:
+
+* consequences of irreversible actions;
+* values used for decisions, such as price, deadline, or file size;
+* where a result will appear when it is not visible immediately;
+* the recovery path from an error;
+* legally or contractually required text;
+* accessibility labels such as `aria-label`.
+
+### String changes
+
+**If a string is referenced by tests, snapshots, or locales, update every matching occurrence together or leave it unchanged.**

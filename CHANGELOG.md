@@ -5,6 +5,13 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.86.1 — 2026-09-14
+
+Os comandos, as referências e o agente de auditoria ficam mais curtos,
+preservando as correções recentes do núcleo e dos hooks. O estilo de saída
+e o comando `woman` voltam a ter metadados válidos; o auditor mantém suas
+ferramentas restritas a leitura. Os arquivos gerados acompanham a refatoração.
+
 ## 1.86.0 — 2026-09-14
 
 O guarda de crédito deixava passar três jeitos comuns de publicar texto, e o

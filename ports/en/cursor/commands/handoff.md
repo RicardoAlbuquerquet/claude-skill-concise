@@ -1,48 +1,38 @@
-Write one handoff, following the "Always keep" list of the `concise` ruleset —
-in particular the clause that says a standing caveat comes back **in full**
-when you hand the work over. Read `.cursor/rules/concise-full.mdc` first if the full ruleset is
-absent from the context.
+Write a complete handoff using the `concise` ruleset. If it is absent from
+context, invoke it first. Standing caveats must be restated in full.
 
-The argument says who picks this up — a person, your future self, the next
-session — or narrows it to one part of the work. Empty, write it for someone
-competent who was away from this conversation:
+The argument identifies the recipient or narrows the scope. If empty, write
+for a competent reader with no conversation context.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
 
-## Beliefs
+A handoff starts from zero context: unlike a status update, it must restore
+all state needed to continue safely.
 
-- The reader starts from zero, so everything a status update earns the right
-  to drop, a handoff puts back.
-- What you remember doing and what is actually committed diverge exactly where
-  a handoff hurts most.
-- "As I mentioned" costs the reader an hour, because they were away when you
-  mentioned it.
-- Naming who picks it up says where it goes; sending waits for the user.
+Process:
 
-## Desires
+1. Read the real repo state: `git status`, branch/log against its base, and
+   open PR/tracker state. Prefer repository truth over memory.
+2. Record exact identifiers: branch, latest short SHA, PR/state, card/issue.
+3. Separate:
+   - **Done** — completed and verified.
+   - **Left** — remaining work plus its completion criterion.
+4. Restate every active caveat, assumption, constraint, or intentional
+   non-change in full.
+5. Capture traps: misleadingly finished work, untested paths, required command
+   order, intentional dirty state, or other continuation hazards.
+6. Record settled decisions and why, including important rejected alternatives.
+7. Provide the exact runnable command(s) needed to resume.
+8. State blockers, ownership, and what remains stalled.
 
-- The reader resumes without asking you anything.
+Validate the handoff before delivering.
 
-## Intentions
+Use prose when it stays in this conversation. Use a fenced block when intended
+for a card, document, or message; use four backticks if it contains fenced
+commands. Use headers when needed for state, remaining work, traps, and resume.
 
-- Read the state from the repo: `git status`, `git log --oneline` on the
-  branch and against its base, `gh pr list --head <branch>` or the tracker.
-- Say where it stands in exact values: the branch, the last short sha, the PR
-  number and its state, the card — each spelled out by its own name.
-- Separate done from left. Done means done and verified; something written and
-  left unrun is open. What is left carries its done criterion.
-- Restate every standing caveat in full, with the assumptions the work rests
-  on and what you decided to leave alone.
-- Write the traps, the part only you can write: what looks finished and is
-  open, what the tests leave uncovered, the command that needs a particular
-  order, the state you left dirty on purpose. All listed already, say so.
-- Give what was decided and why, one line each, a rejected option included.
-- Give the exact command that resumes the work — checkout, install, test run —
-  in a runnable block, in the reader's shell.
-- Say what is blocked and on whom, with what stalls meanwhile.
-- Check the draft, then deliver: prose when it stays here; a fenced block for
-  a card, a document or a message, four backticks since the resume command is
-  a fence. Headers earn their place — state, what is left, traps and resume
-  command are different jobs.
-- Close with one line per thing the repo and the conversation left open, each
-  opening with **Unknown:**.
+Afterward, include only unresolved information as:
+
+`Unknown: ...`
+
+Draft only. Naming a recipient or destination does not authorize sending it.

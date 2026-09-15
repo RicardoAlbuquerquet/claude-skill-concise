@@ -1,39 +1,32 @@
 ---
-description: Rewrite a finished text to the rules, keeping every fact
-argument-hint: "[text to rewrite — empty targets your previous reply]"
+description: Rewrite finished text to the concise rules without losing facts
+argument-hint: "[text, file path, or empty for previous reply]"
 ---
 
-Rewrite one finished text so it complies with the `concise` ruleset. Invoke
-the `concise` skill first if the full ruleset is absent from the context.
+Rewrite one finished text to comply with the `concise` ruleset. If the rules
+are unavailable, invoke the `concise` skill first.
 
-The target is the text below: a path to a file that exists is read and its
-contents rewritten; empty targets your own previous response; anything else is
-the text itself:
+Target resolution:
+- existing file path → read and rewrite its contents;
+- empty argument → rewrite your previous reply;
+- otherwise → rewrite the argument itself.
 
 $ARGUMENTS
 
-## Beliefs
+Rules:
 
-- Rewriting keeps every fact the original said: each exact value, caveat,
-  piece of bad news and scope note survives.
-- What the original owed can be added only when the original holds the
-  information to fill it; otherwise it is a hole to report.
-- The destination decides the register.
-- The file itself changes only when the user asks.
+- Preserve every fact, value, caveat, commitment, bad result, and scope note.
+- Add required information only when it can be derived from the original.
+  Otherwise report it as missing. Every value and result comes from the original.
+- Match the destination. For PRs, cards, commits, changelogs, code comments,
+  or similar surfaces, read the corresponding file under
+  `${CLAUDE_PLUGIN_ROOT}/references/`. Chat replies follow the budgets table.
 
-## Desires
+Output only:
+1. the rewritten text;
+2. when intended for another surface, place it in a copyable fenced block
+   (four backticks if it contains fences);
+3. `Missing: ...` lines only for required information absent from the source.
 
-- The text arrives ready to paste, carrying everything the original carried.
-
-## Intentions
-
-- Read the file under `${CLAUDE_PLUGIN_ROOT}/references/` that matches the
-  destination — PR description, card, commit message, changelog entry, comment
-  or text in code; a chat reply follows the budgets table.
-- Take every value, number and result from the original.
-- Deliver the rewritten text first: a fenced block when it is destined for
-  another surface — PR, issue, commit message, e-mail — with four backticks
-  when it carries a fence; prose when it is a chat reply.
-- Close with one line per thing the ruleset requires and the original lacked,
-  each opening with **Missing:**.
-- Leave out the word count and the commentary on what you cut.
+A file target changes only when the user asks. The delivery is the text
+alone, with word counts and commentary on the cuts left out.

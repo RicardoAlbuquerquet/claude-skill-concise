@@ -1,40 +1,32 @@
 ---
-description: Report the concise violations in a draft — quote, rule, fix — the rewrite stays separate
-argument-hint: "[text, a file path, a PR or issue URL — empty audits your previous reply]"
+description: Audit concise violations — quote, rule, fix
+argument-hint: "[text, file, PR/issue URL — empty audits previous reply]"
 ---
 
-Audit one finished text against the `concise` checklist and report what a
-rewrite would have to fix. This reports; the rewrite is `/concise:rewrite`.
+Audit a finished text against the `concise` checklist. Report only; rewriting
+belongs to `/concise:rewrite`.
 
-Resolve the target from the argument in this order: a path to a file that
-exists is read and audited; a PR or issue a tool can reach (`gh`, an MCP
-board) has its body audited, the body in place of the diff; anything else is
-the text itself; empty targets your own previous response:
+Resolve the argument in order:
+1. existing file path → read it;
+2. reachable PR/issue → fetch its body;
+3. otherwise → use the argument as text;
+4. empty → audit your previous reply.
 
 $ARGUMENTS
 
-## Beliefs
+How:
 
-- A reconstructed text carries violations of its own.
-- The destination decides which checks apply.
-- The audit belongs apart from the conversation that produced the draft.
-- Fixing what it found is the user's call.
+1. Get the exact text. If a file/reference cannot be reached, report the
+   failure and stop; the audit reads only the real text.
+2. Identify the destination: chat, PR, issue/task, commit, or comment.
+   If unclear, assume chat and state that.
+3. Send the text and destination to the `audit` agent.
+4. Return its report unchanged in content and order. If you disagree with one
+   finding, add one brief line afterward explaining why.
 
-## Desires
+Output:
+- start with `N violations, M holes` or `clean`;
+- include every violation and hole;
+- if clean, stop after that line.
 
-- The reader sees every violation, and what would fix it, in one report.
-
-## Intentions
-
-- Get the text first; with the path missing or the reference out of reach, say
-  which failed and stop.
-- Name the destination — chat reply, PR description, card, commit message,
-  comment. Unsaid and unclear, audit it as a chat reply and say you assumed.
-- Hand it to the `audit` agent with the text inline and the destination named.
-- Relay the report whole and in its order: the verdict line, the numbered
-  violations, the holes. Disagreeing with one, say so in a line after it,
-  with the reason.
-- Deliver the report alone, opening on the verdict — `N violations, M holes`
-  or `clean`, where a clean text ends in that one line.
-- Close with one line: the exact `/concise:rewrite` invocation that would fix
-  what it found.
+Then add exactly one final line with the `/concise:rewrite` invocation only when the report contains violations or holes. If the report is `clean`, stop after the verdict line.

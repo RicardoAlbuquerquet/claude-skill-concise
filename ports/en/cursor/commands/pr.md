@@ -1,39 +1,36 @@
-Write the pull request description for the current branch. The rules live in
-`.cursor/rules/concise-pull-request.mdc` — read it first.
+Draft the PR for the current branch. First read
+`.cursor/rules/concise-pull-request.mdc`; it defines the writing rules.
 
-The argument may carry a base ref, context beyond the diff — a card id,
-a constraint, a reason — or both. A leading word that `git rev-parse --verify`
-resolves is the base; the literal word `create` is the permission to open the
-PR; the rest is context. With no ref, the base is `origin/main`:
+Parse the argument:
+- first resolvable git ref → base;
+- literal `create` → permission to open the PR;
+- everything else → context.
+Default base: `origin/main`.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
 
-## Beliefs
+Process:
 
-- The diff is the subject, and the commit titles carry the why.
-- The typed word `create` is the whole permission to open the PR.
-- The repo often already says how: a template, a card, the log.
+1. `git fetch`; inspect `git log <base>..HEAD --oneline` and `<base>...HEAD`.
+   Use commits for intent and the diff/files for actual behavior.
+   If there are no commits, say so and stop.
+2. Use an existing PR template if present in the repository.
+3. Look for a related card/issue in conversation or reachable `gh`/MCP context.
+   If none is found, continue without references.
+4. Write the PR according to the reference. Describe behavior, not line changes.
+   For UI-less features, testing may be a direct route/call with its body.
+5. Validate against the reference and remove repetition. Keep prose ≤25 lines
+   without dropping caveats, required values, or code fences.
 
-## Desires
+Output:
+- PR title on its own line;
+- body inside a four-backtick fence;
+- afterward, only unresolved branch information as `Missing: ...`, one per line.
 
-- The reviewer gets one screenful that ends in a step they can run.
+By default, only draft. Run `gh pr create` only when the argument contains the
+literal word `create`, using exactly the generated title and body, then report
+the URL.
 
-## Intentions
-
-- `git fetch`, then read `git log <base>..HEAD --oneline` and the diff
-  `<base>...HEAD` — names first, the diff itself where names fall short. With
-  zero commits over the base, say so and stop.
-- Follow the template when one exists: `.github/PULL_REQUEST_TEMPLATE.md`,
-  `PULL_REQUEST_TEMPLATE.md`, `docs/`, `.github/PULL_REQUEST_TEMPLATE/`.
-- Find the card or issue in the conversation, then through `gh` or a reachable
-  board. Not found, the description goes out with no reference.
-- Write it as the reference says. A feature with no screen still gets a test
-  step: the direct call, route and body included.
-- Cut what repeats when the draft passes twenty-five prose lines; every
-  caveat, value and fence stays.
-- Deliver the title on its own line, then the description fenced with four
-  backticks, since the body carries a `bash` fence. After it, one line per
-  value the branch left open, each opening with **Missing:**.
-- On `create`: run `gh pr create` with exactly what you delivered and report
-  the URL. Zero commits over the base, a hole left open, `gh` logged out or a
-  branch still local stops the call — say which, and deliver the draft anyway.
+Create the PR only with commits over the base, every required value filled,
+`gh` authenticated and the branch on the remote. Otherwise return the draft
+and state the blocker.

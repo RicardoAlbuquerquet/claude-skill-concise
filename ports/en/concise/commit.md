@@ -2,33 +2,59 @@
 
 ## Beliefs
 
-- **`git log --oneline` shows the title alone** — the narrowest window of
-  anything that leaves the conversation, and the highest volume.
-- **The diff already shows what changed.** The investigation, the list of
-  what you ran and the release note each have a home — the PR description,
-  the test step, the changelog — and land there anyway.
-- **The repo's log is a convention** its readers already scan by.
+* `git log --oneline` shows the title first, so it must carry the change clearly.
+* The diff already shows implementation details.
+* Commit style should match the repository's existing convention.
 
 ## Desires
 
-- Someone scanning the log learns what each commit changes; someone opening
-  one learns why.
+* Someone scanning the log understands **what changed**.
+* Someone opening the commit understands **why**.
 
 ## Intentions
 
-- **The title says what changes when the commit lands**, 72 characters or
-  fewer, the last character a letter: "Fix the invoice filter dropping the
-  timezone". An imperative or a declarative that names the change both work;
-  a label ("Invoice filter", "Fixes") becomes a title only once the change is
-  in it. Where the repo holds more than one area, the area comes first.
-- **The title lands inside the log's convention** — a `fix(scope):` prefix, a
-  ticket code, a bare `scope:`, another language: whatever recent titles do
-  consistently. The log decides the shape, and the substance stays yours.
-- **The body says why, and usually stays empty**: why now, what behaviour
-  changes, what to watch. Six lines is the ceiling and an empty body is the
-  common case; what pushes a body past six is the investigation retold, the
-  list of what you ran, a file-by-file account, or the release note written
-  early — each has its home elsewhere. Wrap near 72 columns.
-- **Exact references survive** — the issue number, the path, the flag name.
-- **One commit, one change**: a message that needs "and also" describes two
-  commits.
+### Title
+
+* Describe the change introduced by the commit.
+* Keep it to **≤72 characters**.
+* End with a letter.
+* Include the area first when useful.
+* Match the repository's existing format, such as:
+
+  * `fix(scope): ...`
+  * ticket prefixes;
+  * `scope: ...`;
+  * the repository's language and wording style.
+
+Avoid vague titles such as:
+
+`Fixes`
+
+`Invoice filter`
+
+Prefer:
+
+`Fix the invoice filter dropping the timezone`
+
+### Body
+
+* Usually leave it empty.
+* When needed, explain **why**, not what the diff already shows.
+* Keep it to **≤6 lines** and wrap near 72 columns.
+* Investigation history, test logs, file-by-file summaries and release notes belong
+  elsewhere: the PR, the test step, the changelog.
+
+### References
+
+Keep exact references when useful:
+
+* issue or ticket IDs;
+* paths;
+* flags;
+* versions or other exact values.
+
+### Scope
+
+**One commit should represent one change.**
+
+If the message needs “and also” for unrelated work, split the commit.

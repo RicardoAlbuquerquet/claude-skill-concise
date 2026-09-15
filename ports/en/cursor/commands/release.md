@@ -1,40 +1,32 @@
-Draft the changelog entry and, when a release is being cut, the release body.
-The rules live in `.cursor/rules/concise-changelog.mdc` — read it
-first.
+Draft the changelog entry and, when applicable, the release body. First read
+`.cursor/rules/concise-changelog.mdc`; it defines the writing rules.
 
-The argument may carry the version to release, a commit range, or context
-beyond the commits. Empty, the range is the last tag to `HEAD`:
+The argument may contain a version, commit range, or extra context.
+Default range: latest tag to `HEAD`.
 
 (Your arguments: whatever you typed after the command name, when there was any.)
 
-## Beliefs
+Process:
 
-- A commit title was written for the log and is usually too short to be an
-  entry.
-- The existing changelog is the shape this one has to land inside.
-- One change forces the version number: a break the major, a new capability
-  the minor, everything else the patch.
-- Publishing is the user's: the tag, the release and the file edit.
+1. Resolve the range. Use the latest tag and `git log <tag>..HEAD --oneline`.
+   With no tags, inspect the last 30 commits and state the assumed range.
+   If empty, say so and stop.
+2. Match the existing changelog's structure and style. If none exists, state
+   the chosen format.
+3. Inspect the diff when commits do not fully describe user-visible behavior.
+4. Write according to the reference, with breaking changes first.
+   Propose the version from the highest-impact change:
+   breaking → major, feature → minor, otherwise → patch.
+   Use the caller/environment date and plain language.
+5. Validate against the reference and fix any violations.
 
-## Desires
+Output:
+- changelog entry in a fenced block, ready to paste;
+- release body in a separate block only when cutting a release, adding the
+  compare link and install command omitted from the changelog;
+- unresolved values afterward as `Missing: ...`, one per line.
 
-- The reader sees what breaks before what was added.
+Use four-backtick fences when the content contains its own code fence.
 
-## Intentions
-
-- Take the range from `git describe --tags --abbrev=0` and
-  `git log <tag>..HEAD --oneline`. With no tags, use `git log --oneline -30`
-  and say which range you assumed; with an empty range, say so and stop.
-- Read the existing changelog for its shape — heading, date format, grouping
-  under `Added` and `Fixed` or prose, bullets or paragraphs. Absent, say which
-  shape you picked.
-- Read the diff wherever a commit title leaves out what the reader will see.
-- Write it as the reference says, propose the version with the single change
-  that forces it, and take the date from the caller or the environment. Plain
-  voice: "we are thrilled to" is postamble with a megaphone on it.
-- Check the draft against the reference and fix what fails.
-- Deliver the changelog entry first, fenced and ready to paste at the top of
-  the file — four backticks when an entry carries a fence, as a migration
-  command does. Then the release body in its own block, only when a release is
-  being cut: the same content plus the compare link and the install line.
-- Close with one line per value the range left open, opening with **Missing:**.
+Draft only. Editing the changelog, pushing tags and `gh release create` wait
+for the user's explicit instruction.

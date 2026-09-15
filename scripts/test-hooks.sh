@@ -273,6 +273,16 @@ echo "--- frontmatter de comando parseia"
 for port in concise; do
   cruas=$(grep -l -E '^(description|argument-hint): \[' "$REPO/skills/$port/commands/"*.md 2>/dev/null | while read -r f; do basename "$f"; done | tr '\n' ' ')
   [ -z "$cruas" ] && { pass=$((pass+1)); echo "ok    frontmatter de $port sem sequencia crua"; } || { fail=$((fail+1)); echo "FALHA frontmatter nao citado em $port: $cruas"; }
+  invalidos=""
+  for f in "$REPO/skills/$port/SKILL.md" "$REPO/skills/$port/"{commands,agents,output-styles}/*.md; do
+    awk 'NR==1 { if ($0 != "---") exit 1; next }
+         /^---$/ { closed=1; exit }
+         /^description: .+/ { description=1 }
+         END { exit !(description && closed) }' "$f" || invalidos="$invalidos $(basename "$f")"
+  done
+  [ -z "$invalidos" ] && { pass=$((pass+1)); echo "ok    frontmatter de $port abre o arquivo"; } || { fail=$((fail+1)); echo "FALHA frontmatter ausente ou cercado:$invalidos"; }
+  awk '/^---$/ { n++; next } n==1' "$REPO/skills/$port/agents/audit.md" | grep -qx 'tools: Read, Grep, Glob' &&
+    { pass=$((pass+1)); echo "ok    auditor restrito a leitura"; } || { fail=$((fail+1)); echo "FALHA ferramentas do auditor fora do frontmatter"; }
 done
 
 echo "--- route-hint: a PR passa pelo comando que a escreve"
