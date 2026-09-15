@@ -12,6 +12,11 @@ warning="$3"
 dir="$HOME/.claude"
 notes=""
 
+# Both notes are about Claude Code: the welcome lists slash commands, and the
+# warning reads the self-update that Codex never runs.
+. "${0%/*}/host.sh"
+[ "$(concise_host)" = codex ] && exit 0
+
 if [ ! -f "$dir/.$plugin-welcomed" ]; then
   notes="$welcome"
   : > "$dir/.$plugin-welcomed"

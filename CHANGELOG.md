@@ -5,6 +5,23 @@ propagates a release: the self-update hook and `claude plugin update` both
 compare versions, so a change without a bump reaches nobody — and a bump
 without an entry tells nobody what it brought.
 
+## 1.88.0 — 2026-09-15
+
+O plugin passa a funcionar também no Codex, que lê este mesmo marketplace e os
+mesmos hooks. Nada disso rodou ainda num Codex de verdade: segue a
+documentação dele, e os testes simulam o ambiente.
+
+- **No Codex, o núcleo entra no início da sessão**, porque lá não existe o
+  estilo de saída forçado que o carrega no Claude Code.
+- **O lembrete de cada mensagem e o guarda de crédito** funcionam como no
+  Claude Code, sem mudança.
+- **Self-update, a nota de boas-vindas e o aviso para `/concise:pr` ficam
+  quietos no Codex**: ele atualiza plugins sozinho e não tem comandos de
+  plugin.
+- **Um manifesto próprio do Codex** acompanha o do Claude Code em nome e
+  versão, e um teste falha quando os dois se separam.
+- Os comandos e o agente de auditoria ainda não chegam ao Codex.
+
 ## 1.87.0 — 2026-09-15
 
 O guarda de crédito passa a ler a mensagem de commit ou PR guardada num
