@@ -267,6 +267,31 @@ cm="$REPO/skills/concise/.codex-plugin/plugin.json"; lm="$REPO/skills/concise/.c
 nv () { perl -MJSON::PP -e 'local $/; my $j = decode_json(<STDIN>); print "$j->{name} $j->{version}"' < "$1"; }
 [ -f "$cm" ] && [ "$(nv "$cm")" = "$(nv "$lm")" ] && { pass=$((pass+1)); echo "ok    manifesto do codex com o mesmo nome e versao"; } || { fail=$((fail+1)); echo "FALHA manifesto do codex: $(nv "$cm" 2>/dev/null) contra $(nv "$lm")"; }
 
+echo "--- trava no push: le a mensagem que o git guardou"
+CG="$REPO/skills/concise/hooks/credit-guard.sh"
+PG="$FH/push"; rm -rf "$PG"; mkdir -p "$PG"
+git init -q --bare "$PG/remoto.git"
+git init -q "$PG/repo" && cd "$PG/repo" && git config user.email t@t && git config user.name t && git checkout -q -b main
+echo a > a && git add a && git commit -q -m "base" && git remote add origin "$PG/remoto.git" && git push -q -u origin main 2>/dev/null
+T="Co-Authored"; T="$T-By: Claude Opus 5 <noreply@anthropic.com>"
+pg () { payload=$(node -e 'process.stdout.write(JSON.stringify({tool_name:"Bash",tool_input:{command:process.argv[1]}}))' "$1"); (cd "${2:-$PG/repo}" && printf '%s' "$payload" | HOME="$FH" bash "$CG" RAZAO .concise-no-credit-guard); }
+
+# commit feito por um jeito que o guarda nao le no comando: arquivo de mensagem apagado depois
+printf 'fix: b\n\n%s\n' "$T" > "$PG/msg" && echo b > b && git add b && GIT_EDITOR=true git commit -q -F "$PG/msg" && rm "$PG/msg"
+case "$(pg "git push")" in *deny*"Commit "*) pass=$((pass+1)); echo "ok    push barra commit com credito, venha de onde vier";; *) fail=$((fail+1)); echo "FALHA push deixou subir commit com credito";; esac
+case "$(pg "gh pr create --title x --body y")" in *deny*) pass=$((pass+1)); echo "ok    gh pr create tambem le os commits que vao subir";; *) fail=$((fail+1)); echo "FALHA gh pr create deixou passar";; esac
+case "$(pg "git -C \"$PG/repo\" push" "$FH")" in *deny*) pass=$((pass+1)); echo "ok    git -C aponta o repositorio certo";; *) fail=$((fail+1)); echo "FALHA git -C nao leu o repositorio";; esac
+
+# depois de reescrever o commit, o push passa
+git commit -q --amend -m "fix: b"
+[ -z "$(pg "git push")" ] && { pass=$((pass+1)); echo "ok    push limpo passa"; } || { fail=$((fail+1)); echo "FALHA push limpo foi barrado"; }
+
+# branch nova sem upstream: compara com o branch padrao do remoto
+git push -q origin main 2>/dev/null; git remote set-head origin main >/dev/null 2>&1
+git checkout -q -b nova && echo c > c && git add c && git commit -q -m "feat: c" -m "$T"
+case "$(pg "git push -u origin nova")" in *deny*) pass=$((pass+1)); echo "ok    branch sem upstream compara com o padrao do remoto";; *) fail=$((fail+1)); echo "FALHA branch nova sem upstream passou";; esac
+cd "$REPO"
+
 echo "--- stop-audit (extra, opt-in)"
 SA="$REPO/extras/stop-audit/stop-audit.sh"
 SAD="$FH/sa"; mkdir -p "$SAD/bin"
